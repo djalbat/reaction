@@ -401,11 +401,11 @@ function first(array) {
   return array[0];
 }
 
-},{"jquery":22}],4:[function(require,module,exports){
+},{"jquery":21}],4:[function(require,module,exports){
 'use strict';
 
-// var easyui = require('easyui'),
-//     Element = easyui.Element;
+///var easyui = require('easyui'),
+///   Element = easyui.Element;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -421,7 +421,8 @@ var JSXElement = function (_Element) {
   function JSXElement(elementName, attributes, childJSXElements) {
     _classCallCheck(this, JSXElement);
 
-    var element = Element.fromHTML('<' + elementName + '/>');
+    var elementHTML = '<' + elementName + '/>',
+        element = Element.fromHTML(elementHTML);
 
     if (attributes !== null) {
       var attributeNames = Object.keys(attributes);
@@ -443,11 +444,9 @@ var JSXElement = function (_Element) {
       });
     }
 
-    if (childJSXElements) {
-      childJSXElements.forEach(function (childJSXElement) {
-        element.append(childJSXElement);
-      });
-    }
+    childJSXElements.forEach(function (childJSXElement) {
+      element.append(childJSXElement);
+    });
 
     var $element = element.$element; ///
 
@@ -537,7 +536,7 @@ var ReactClass = function () {
   }], [{
     key: 'fromProperties',
     value: function fromProperties(properties) {
-      var displayName = properties.displayName;
+      var displayName = properties['displayName'];
 
       return new ReactClass(displayName);
     }
@@ -11363,7 +11362,5 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],22:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"dup":21}]},{},[2])(2)
+},{}]},{},[2])(2)
 });
