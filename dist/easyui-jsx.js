@@ -62,41 +62,7 @@ var App = function App() {
   //
   // body.append(container);
 
-  // var CommentList = React.createClass({
-  //   render: function() {
-  //     return (
-  //         <div className="commentList">
-  //           Hello, world! I am a CommentList.
-  //         </div>
-  //     );
-  //   }
-  // });
-  //
-  // var CommentForm = React.createClass({
-  //   render: function() {
-  //     return (
-  //         <div className="commentForm">
-  //           Hello, world! I am a CommentForm.
-  //         </div>
-  //     );
-  //   }
-  // });
-  //
-  // var CommentBox = React.createClass({
-  //   render: function() {
-  //     return (
-  //         <div className="commentBox">
-  //           <h1>Comments</h1>
-  //           <CommentList />
-  //           <CommentForm />
-  //         </div>
-  //     );
-  //   }
-  // });
-  //
-  // var commentBox = <CommentBox />;
-  //
-  // body.append(commentBox);
+  var data = [{ id: 1, author: "Pete Hunt", text: "This is one comment." }, { id: 2, author: "Jordan Walker", text: "This is *another* comment..." }, { id: 3, author: "Joe Bloggs", text: "This is **yet another** comment!" }];
 
   var Comment = React.createClass({ displayName: "Comment",
     render: function render() {
@@ -106,13 +72,25 @@ var App = function App() {
 
   var CommentList = React.createClass({ displayName: "CommentList",
     render: function render() {
-      return React.createElement("div", { className: "commentList" }, React.createElement(Comment, { author: "Pete Hunt" }, "This is one comment"), React.createElement(Comment, { author: "Jordan Walker" }, "This is *another* comment"));
+      var comments = this.props.data.map(function (comment) {
+        return React.createElement(Comment, { author: comment.author, key: comment.id }, comment.text);
+      });
+
+      return React.createElement("div", { className: "commentList" }, comments);
     }
   });
 
-  var commentList = React.createElement(CommentList, null);
+  var CommentForm;
 
-  body.append(commentList);
+  var CommentBox = React.createClass({ displayName: "CommentBox",
+    render: function render() {
+      return React.createElement("div", { className: "commentBox" }, React.createElement("h1", null, "Comments"), React.createElement(CommentList, { data: this.props.data }), React.createElement(CommentForm, null));
+    }
+  });
+
+  var commentBox = React.createElement(CommentBox, { data: data });
+
+  body.append(commentBox);
 };
 
 module.exports = App;
@@ -485,7 +463,7 @@ function first(array) {
 'use strict';
 
 ///var easyui = require('easyui'),
-///   Element = easyui.Element;
+///    Element = easyui.Element;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
