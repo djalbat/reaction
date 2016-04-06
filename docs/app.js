@@ -8,7 +8,7 @@ var React = require('../lib/react');  ///
 class App {
   constructor() {
     var body = new Body();
-
+    
     // var Profile,
     //     Nav = React.createClass({}),
     //     nav = <Nav color="blue"><Profile>click</Profile></Nav>;
@@ -58,12 +58,34 @@ class App {
     //
     // body.append(container);
 
+    var CommentList = React.createClass({
+      render: function() {
+        return (
+            <div className="commentList">
+              Hello, world! I am a CommentList.
+            </div>
+        );
+      }
+    });
+
+    var CommentForm = React.createClass({
+      render: function() {
+        return (
+            <div className="commentForm">
+              Hello, world! I am a CommentForm.
+            </div>
+        );
+      }
+    });
+
     var CommentBox = React.createClass({
       render: function() {
         return (
-          <div className="commentBox">
-            I am a comment box.
-          </div>
+            <div className="commentBox">
+              <h1>Comments</h1>
+              <CommentList />
+              <CommentForm />
+            </div>
         );
       }
     });

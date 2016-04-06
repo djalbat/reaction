@@ -62,9 +62,21 @@ var App = function App() {
   //
   // body.append(container);
 
+  var CommentList = React.createClass({ displayName: "CommentList",
+    render: function render() {
+      return React.createElement("div", { className: "commentList" }, "Hello, world! I am a CommentList.");
+    }
+  });
+
+  var CommentForm = React.createClass({ displayName: "CommentForm",
+    render: function render() {
+      return React.createElement("div", { className: "commentForm" }, "Hello, world! I am a CommentForm.");
+    }
+  });
+
   var CommentBox = React.createClass({ displayName: "CommentBox",
     render: function render() {
-      return React.createElement("div", { className: "commentBox" }, "I am a comment box.");
+      return React.createElement("div", { className: "commentBox" }, React.createElement("h1", null, "Comments"), React.createElement(CommentList, null), React.createElement(CommentForm, null));
     }
   });
 
@@ -511,29 +523,28 @@ var React = function () {
     }
   }, {
     key: 'createElement',
-    value: function createElement(reactClassOrElementName, attributes) {
-      for (var _len = arguments.length, childJSXElements = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        childJSXElements[_key - 2] = arguments[_key];
-      }
-
+    value: function createElement(reactClassOrElementName, attributes, childJSXElementsOrHTML) {
       if (reactClassOrElementName !== undefined) {
-        if (childJSXElements[0] === undefined) {
-          ///
-          childJSXElements = [];
-        }
+        var jsxElement,
+            elementName,
+            childJSXElements = [],
+            html = undefined; ///
 
-        var elementName, jsxElement;
+        if (typeof childJSXElementsOrHTML === 'string') {
+          html = childJSXElementsOrHTML;
+        } else {
+          var argumentsLength = arguments.length;
+
+          for (var i = 2; i < argumentsLength; i++) {
+            var argument = arguments[i],
+                childJSXElement = argument; ///
+
+            childJSXElements.push(childJSXElement);
+          }
+        }
 
         if (typeof reactClassOrElementName === 'string') {
           elementName = reactClassOrElementName;
-
-          var html = childJSXElements; ///
-
-          childJSXElements = [];
-
-          jsxElement = new JSXElement(elementName, attributes, childJSXElements);
-
-          jsxElement.html(html);
         } else {
           var reactClass = reactClassOrElementName,
               render = reactClass.getRender();
@@ -543,8 +554,12 @@ var React = function () {
           }
 
           elementName = reactClass.getElementName();
+        }
 
-          jsxElement = new JSXElement(elementName, attributes, childJSXElements);
+        jsxElement = new JSXElement(elementName, attributes, childJSXElements);
+
+        if (html !== undefined) {
+          jsxElement.html(html);
         }
 
         return jsxElement;
