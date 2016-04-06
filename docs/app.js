@@ -98,7 +98,7 @@ class App {
       render: function() {
         return (
           <div className="comment">
-            <h2 className="commentAuthor">
+            <h2>
               {this.props.author}
             </h2>
             {this.props.children}
@@ -110,10 +110,10 @@ class App {
     var CommentList = React.createClass({
       render: function() {
         return (
-          <div className="commentList">
-            <Comment author="Pete Hunt">This is one comment</Comment>
-            <Comment author="Jordan Walker">This is *another* comment</Comment>
-          </div>
+            <div className="commentList">
+              <Comment author="Pete Hunt">This is one comment</Comment>
+              <Comment author="Jordan Walker">This is *another* comment</Comment>
+            </div>
         );
       }
     });

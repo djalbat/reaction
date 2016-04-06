@@ -100,7 +100,7 @@ var App = function App() {
 
   var Comment = React.createClass({ displayName: "Comment",
     render: function render() {
-      return React.createElement("div", { className: "comment" }, React.createElement("h2", { className: "commentAuthor" }, this.props.author), this.props.children);
+      return React.createElement("div", { className: "comment" }, React.createElement("h2", null, this.props.author), this.props.children);
     }
   });
 
@@ -117,7 +117,7 @@ var App = function App() {
 
 module.exports = App;
 
-},{"../lib/react":5,"easyui":7}],2:[function(require,module,exports){
+},{"../lib/react":6,"easyui":8}],2:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -238,8 +238,17 @@ var Element = function () {
     }
   }, {
     key: 'append',
-    value: function append(element) {
-      this.$element.append(element.$element);
+    value: function append(elementOrString) {
+      if (typeof elementOrString === 'string') {
+        var string = elementOrString; ///
+
+        this.$element.append(string);
+      } else {
+        var element = elementOrString,
+            $element = element.$element;
+
+        this.$element.append($element);
+      }
     }
   }, {
     key: 'remove',
@@ -446,7 +455,7 @@ function instance(Class, $element, args) {
 
   args.unshift(null); ///
 
-  var instance = new (Class.bind.apply(Class, args))(); ///
+  var instance = new (Function.prototype.bind.apply(Class, args))(); ///
 
   return instance;
 }
@@ -472,7 +481,7 @@ function first(array) {
   return array[0];
 }
 
-},{"jquery":21}],4:[function(require,module,exports){
+},{"jquery":22}],4:[function(require,module,exports){
 'use strict';
 
 ///var easyui = require('easyui'),
@@ -484,7 +493,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Element = require('./element');
+var Element = require('./element'),
+    JSXTextElement = require('./jsxTextElement');
 
 var JSXElement = function (_Element) {
   _inherits(JSXElement, _Element);
@@ -521,9 +531,7 @@ var JSXElement = function (_Element) {
       });
     }
 
-    childJSXElements.forEach(function (childJSXElement) {
-      element.append(childJSXElement);
-    });
+    appendChildJSXElements(element, childJSXElements);
 
     var $element = element.$element; ///
 
@@ -533,17 +541,62 @@ var JSXElement = function (_Element) {
   return JSXElement;
 }(Element);
 
+function appendChildJSXElements(element, childJSXElements) {
+  childJSXElements.forEach(function (childJSXElement) {
+    if (childJSXElement instanceof Array) {
+      var childJSXElements = childJSXElement; ///
+
+      appendChildJSXElements(element, childJSXElements);
+    } else if (childJSXElement instanceof JSXTextElement) {
+      var childJSXTextElement = childJSXElement,
+          ///
+      text = childJSXTextElement.getText();
+
+      element.append(text);
+    } else if (childJSXElement instanceof JSXElement) {
+      element.append(childJSXElement);
+    }
+  });
+}
+
 module.exports = JSXElement;
 
-},{"./element":3}],5:[function(require,module,exports){
+},{"./element":3,"./jsxTextElement":5}],5:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var JSXElement = require('../lib/jsxElement'),
-    ReactClass = require('../lib/reactClass');
+var JSXTextElement = function () {
+  function JSXTextElement(text) {
+    _classCallCheck(this, JSXTextElement);
+
+    this.text = text;
+  }
+
+  _createClass(JSXTextElement, [{
+    key: 'getText',
+    value: function getText() {
+      return this.text;
+    }
+  }]);
+
+  return JSXTextElement;
+}();
+
+module.exports = JSXTextElement;
+
+},{}],6:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ReactClass = require('../lib/reactClass'),
+    JSXElement = require('../lib/jsxElement'),
+    JSXTextElement = require('../lib/jsxTextElement');
 
 var React = function () {
   function React() {
@@ -559,28 +612,15 @@ var React = function () {
     }
   }, {
     key: 'createElement',
-    value: function createElement(reactClassOrElementName, properties, childJSXElementsOrHTML) {
+    value: function createElement(reactClassOrElementName, properties) {
       if (reactClassOrElementName !== undefined) {
+        for (var _len = arguments.length, remainingArguments = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+          remainingArguments[_key - 2] = arguments[_key];
+        }
+
         var jsxElement,
             elementName,
-            childJSXElements = [],
-            html = undefined; ///
-
-        if (typeof childJSXElementsOrHTML === 'string') {
-          html = childJSXElementsOrHTML;
-        } else {
-          var argumentsLength = arguments.length;
-
-          for (var i = 2; i < argumentsLength; i++) {
-            var argument = arguments[i];
-
-            if (argument !== undefined) {
-              var childJSXElement = argument; ///
-
-              childJSXElements.push(childJSXElement);
-            }
-          }
-        }
+            childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments);
 
         if (typeof reactClassOrElementName === 'string') {
           elementName = reactClassOrElementName;
@@ -589,9 +629,12 @@ var React = function () {
               render = reactClass.getRender();
 
           if (render !== undefined) {
-            var props = properties,
-                ///
-            instance = {
+            var props = properties === null ? {} : properties,
+                children = childJSXElements; ///
+
+            props.children = children;
+
+            var instance = {
               props: props
             };
 
@@ -603,10 +646,6 @@ var React = function () {
 
         jsxElement = new JSXElement(elementName, properties, childJSXElements);
 
-        if (html !== undefined) {
-          jsxElement.html(html);
-        }
-
         return jsxElement;
       }
     }
@@ -615,9 +654,43 @@ var React = function () {
   return React;
 }();
 
+function childJSXElementsFromRemainingArguments() {
+  var childJSXElements = undefined,
+      ///
+  remainingArguments = Array.prototype.slice.call(arguments),
+      ///
+  firstRemainingArgument = first(remainingArguments);
+
+  if (firstRemainingArgument === undefined) {
+    childJSXElements = [];
+  } else if (firstRemainingArgument instanceof Array) {
+    childJSXElements = firstRemainingArgument; ///
+  } else {
+      childJSXElements = remainingArguments.map(function (remainingArgument) {
+        if (typeof remainingArgument === 'string') {
+          var text = remainingArgument,
+              ///
+          childJSXTextElement = new JSXTextElement(text);
+
+          return childJSXTextElement;
+        } else {
+          var childJSXElement = remainingArgument; ///
+
+          return childJSXElement;
+        }
+      });
+    }
+
+  return childJSXElements;
+}
+
+function first(array) {
+  return array[0];
+}
+
 module.exports = React;
 
-},{"../lib/jsxElement":4,"../lib/reactClass":6}],6:[function(require,module,exports){
+},{"../lib/jsxElement":4,"../lib/jsxTextElement":5,"../lib/reactClass":7}],7:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -664,7 +737,7 @@ var ReactClass = function () {
 
 module.exports = ReactClass;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -681,7 +754,7 @@ module.exports = {
   TextArea: require('./lib/textArea')
 };
 
-},{"./lib/body":8,"./lib/bounds":9,"./lib/button":10,"./lib/checkbox":11,"./lib/div":12,"./lib/element":13,"./lib/input":14,"./lib/link":16,"./lib/select":17,"./lib/textArea":18,"./lib/window":19}],8:[function(require,module,exports){
+},{"./lib/body":9,"./lib/bounds":10,"./lib/button":11,"./lib/checkbox":12,"./lib/div":13,"./lib/element":14,"./lib/input":15,"./lib/link":17,"./lib/select":18,"./lib/textArea":19,"./lib/window":20}],9:[function(require,module,exports){
 'use strict';
 
 var Element = require('./element');
@@ -724,7 +797,7 @@ Body.fromHTML = function(html) {
 
 module.exports = Body;
 
-},{"./element":13}],9:[function(require,module,exports){
+},{"./element":14}],10:[function(require,module,exports){
 'use strict';
 
 class Bounds {
@@ -761,7 +834,7 @@ class Bounds {
 
 module.exports = Bounds;
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 var InputElement = require('./inputElement');
@@ -804,7 +877,7 @@ Button.fromHTML = function(html, clickHandler) {
 
 module.exports = Button;
 
-},{"./inputElement":15}],11:[function(require,module,exports){
+},{"./inputElement":16}],12:[function(require,module,exports){
 'use strict';
 
 var InputElement = require('./inputElement');
@@ -855,7 +928,7 @@ Checkbox.fromHTML = function(html, changeHandler) {
 
 module.exports = Checkbox;
 
-},{"./inputElement":15}],12:[function(require,module,exports){
+},{"./inputElement":16}],13:[function(require,module,exports){
 'use strict';
 
 var Element = require('./element');
@@ -878,7 +951,7 @@ Div.fromHTML = function(html) {
 
 module.exports = Div;
 
-},{"./element":13}],13:[function(require,module,exports){
+},{"./element":14}],14:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -1102,7 +1175,7 @@ function elementsFromDOMElements(domElements) {
 
 function first(array) { return array[0]; }
 
-},{"./bounds":9,"jquery":21}],14:[function(require,module,exports){
+},{"./bounds":10,"jquery":22}],15:[function(require,module,exports){
 'use strict';
 
 require('jquery-textrange');
@@ -1169,7 +1242,7 @@ Input.fromHTML = function(html) {
 
 module.exports = Input;
 
-},{"./inputElement":15,"jquery-textrange":20}],15:[function(require,module,exports){
+},{"./inputElement":16,"jquery-textrange":21}],16:[function(require,module,exports){
 'use strict';
 
 var Element = require('./element');
@@ -1203,7 +1276,7 @@ InputElement.fromHTML = Element.fromHTML;
 
 module.exports = InputElement;
 
-},{"./element":13}],16:[function(require,module,exports){
+},{"./element":14}],17:[function(require,module,exports){
 'use strict';
 
 var InputElement = require('./inputElement');
@@ -1240,7 +1313,7 @@ Link.fromHTML = function(html, clickHandler) {
 
 module.exports = Link;
 
-},{"./inputElement":15}],17:[function(require,module,exports){
+},{"./inputElement":16}],18:[function(require,module,exports){
 'use strict';
 
 var InputElement = require('./inputElement');
@@ -1286,7 +1359,7 @@ Select.fromHTML = function(html, changeHandler) {
 
 module.exports = Select;
 
-},{"./inputElement":15}],18:[function(require,module,exports){
+},{"./inputElement":16}],19:[function(require,module,exports){
 'use strict';
 
 require('jquery-textrange');
@@ -1368,7 +1441,7 @@ TextArea.fromHTML = function(html) {
 
 module.exports = TextArea;
 
-},{"./inputElement":15,"jquery-textrange":20}],19:[function(require,module,exports){
+},{"./inputElement":16,"jquery-textrange":21}],20:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -1387,7 +1460,7 @@ var window = new Window();
 
 module.exports = window;
 
-},{"jquery":21}],20:[function(require,module,exports){
+},{"jquery":22}],21:[function(require,module,exports){
 /**
  * jquery-textrange
  * A jQuery plugin for getting, setting and replacing the selected text in input fields and textareas.
@@ -1635,7 +1708,7 @@ module.exports = window;
 	};
 });
 
-},{"jquery":21}],21:[function(require,module,exports){
+},{"jquery":22}],22:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.2
  * http://jquery.com/
