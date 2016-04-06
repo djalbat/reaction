@@ -58,41 +58,71 @@ class App {
     //
     // body.append(container);
 
-    var CommentList = React.createClass({
+    // var CommentList = React.createClass({
+    //   render: function() {
+    //     return (
+    //         <div className="commentList">
+    //           Hello, world! I am a CommentList.
+    //         </div>
+    //     );
+    //   }
+    // });
+    //
+    // var CommentForm = React.createClass({
+    //   render: function() {
+    //     return (
+    //         <div className="commentForm">
+    //           Hello, world! I am a CommentForm.
+    //         </div>
+    //     );
+    //   }
+    // });
+    //
+    // var CommentBox = React.createClass({
+    //   render: function() {
+    //     return (
+    //         <div className="commentBox">
+    //           <h1>Comments</h1>
+    //           <CommentList />
+    //           <CommentForm />
+    //         </div>
+    //     );
+    //   }
+    // });
+    //
+    // var commentBox = <CommentBox />;
+    //
+    // body.append(commentBox);
+
+    // var Comment = React.createClass({
+    //   render: function() {
+    //     return (
+    //         <div className="comment">
+    //           {this.props.author}
+    //         </div>
+    //     );
+    //   }
+    // });
+    //
+    // var comment = <Comment author="James Smith"/>;
+    //
+    // body.append(comment);
+
+    var Comment = React.createClass({
       render: function() {
         return (
-            <div className="commentList">
-              Hello, world! I am a CommentList.
+            <div className="comment">
+              <h2 className="commentAuthor">
+                {this.props.author}
+              </h2>
             </div>
         );
       }
     });
 
-    var CommentForm = React.createClass({
-      render: function() {
-        return (
-            <div className="commentForm">
-              Hello, world! I am a CommentForm.
-            </div>
-        );
-      }
-    });
+    var comment = <Comment author="James Smith" />;
 
-    var CommentBox = React.createClass({
-      render: function() {
-        return (
-            <div className="commentBox">
-              <h1>Comments</h1>
-              <CommentList />
-              <CommentForm />
-            </div>
-        );
-      }
-    });
-
-    var content = <CommentBox />;
-
-    body.append(content);
+    body.append(comment);
   }
 }
 

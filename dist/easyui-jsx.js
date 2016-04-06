@@ -62,27 +62,65 @@ var App = function App() {
   //
   // body.append(container);
 
-  var CommentList = React.createClass({ displayName: "CommentList",
+  // var CommentList = React.createClass({
+  //   render: function() {
+  //     return (
+  //         <div className="commentList">
+  //           Hello, world! I am a CommentList.
+  //         </div>
+  //     );
+  //   }
+  // });
+  //
+  // var CommentForm = React.createClass({
+  //   render: function() {
+  //     return (
+  //         <div className="commentForm">
+  //           Hello, world! I am a CommentForm.
+  //         </div>
+  //     );
+  //   }
+  // });
+  //
+  // var CommentBox = React.createClass({
+  //   render: function() {
+  //     return (
+  //         <div className="commentBox">
+  //           <h1>Comments</h1>
+  //           <CommentList />
+  //           <CommentForm />
+  //         </div>
+  //     );
+  //   }
+  // });
+  //
+  // var commentBox = <CommentBox />;
+  //
+  // body.append(commentBox);
+
+  // var Comment = React.createClass({
+  //   render: function() {
+  //     return (
+  //         <div className="comment">
+  //           {this.props.author}
+  //         </div>
+  //     );
+  //   }
+  // });
+  //
+  // var comment = <Comment author="James Smith"/>;
+  //
+  // body.append(comment);
+
+  var Comment = React.createClass({ displayName: "Comment",
     render: function render() {
-      return React.createElement("div", { className: "commentList" }, "Hello, world! I am a CommentList.");
+      return React.createElement("div", { className: "comment" }, React.createElement("h2", { className: "commentAuthor" }, this.props.author));
     }
   });
 
-  var CommentForm = React.createClass({ displayName: "CommentForm",
-    render: function render() {
-      return React.createElement("div", { className: "commentForm" }, "Hello, world! I am a CommentForm.");
-    }
-  });
+  var comment = React.createElement(Comment, { author: "James Smith" });
 
-  var CommentBox = React.createClass({ displayName: "CommentBox",
-    render: function render() {
-      return React.createElement("div", { className: "commentBox" }, React.createElement("h1", null, "Comments"), React.createElement(CommentList, null), React.createElement(CommentForm, null));
-    }
-  });
-
-  var content = React.createElement(CommentBox, null);
-
-  body.append(content);
+  body.append(comment);
 };
 
 module.exports = App;
@@ -459,25 +497,31 @@ var Element = require('./element');
 var JSXElement = function (_Element) {
   _inherits(JSXElement, _Element);
 
-  function JSXElement(elementName, attributes, childJSXElements) {
+  function JSXElement(elementName, properties, childJSXElements) {
     _classCallCheck(this, JSXElement);
 
     var elementHTML = '<' + elementName + '/>',
         element = Element.fromHTML(elementHTML);
 
-    if (attributes !== null) {
-      var attributeNames = Object.keys(attributes);
+    if (properties !== null) {
+      var propertyNames = Object.keys(properties);
 
-      attributeNames.forEach(function (attributeName) {
-        var attributeValue = attributes[attributeName];
+      propertyNames.forEach(function (propertyName) {
+        var attributeName,
+            propertyValue = properties[propertyName],
+            attributeValue = propertyValue;
 
-        switch (attributeName) {
+        switch (propertyName) {
           case 'className':
             attributeName = 'class';
             break;
 
           case 'htmlFor':
             attributeName = 'for';
+            break;
+
+          default:
+            attributeName = propertyName;
             break;
         }
 
@@ -523,7 +567,7 @@ var React = function () {
     }
   }, {
     key: 'createElement',
-    value: function createElement(reactClassOrElementName, attributes, childJSXElementsOrHTML) {
+    value: function createElement(reactClassOrElementName, properties, childJSXElementsOrHTML) {
       if (reactClassOrElementName !== undefined) {
         var jsxElement,
             elementName,
@@ -550,13 +594,19 @@ var React = function () {
               render = reactClass.getRender();
 
           if (render !== undefined) {
-            return render();
+            var props = properties,
+                ///
+            instance = {
+              props: props
+            };
+
+            return render.apply(instance);
           }
 
           elementName = reactClass.getElementName();
         }
 
-        jsxElement = new JSXElement(elementName, attributes, childJSXElements);
+        jsxElement = new JSXElement(elementName, properties, childJSXElements);
 
         if (html !== undefined) {
           jsxElement.html(html);
