@@ -94,35 +94,33 @@ class App {
     //
     // body.append(commentBox);
 
-    // var Comment = React.createClass({
-    //   render: function() {
-    //     return (
-    //         <div className="comment">
-    //           {this.props.author}
-    //         </div>
-    //     );
-    //   }
-    // });
-    //
-    // var comment = <Comment author="James Smith"/>;
-    //
-    // body.append(comment);
-
     var Comment = React.createClass({
       render: function() {
         return (
-            <div className="comment">
-              <h2 className="commentAuthor">
-                {this.props.author}
-              </h2>
-            </div>
+          <div className="comment">
+            <h2 className="commentAuthor">
+              {this.props.author}
+            </h2>
+            {this.props.children}
+          </div>
         );
       }
     });
 
-    var comment = <Comment author="James Smith" />;
+    var CommentList = React.createClass({
+      render: function() {
+        return (
+          <div className="commentList">
+            <Comment author="Pete Hunt">This is one comment</Comment>
+            <Comment author="Jordan Walker">This is *another* comment</Comment>
+          </div>
+        );
+      }
+    });
 
-    body.append(comment);
+    var commentList = <CommentList />;
+
+    body.append(commentList);
   }
 }
 

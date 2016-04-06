@@ -98,29 +98,21 @@ var App = function App() {
   //
   // body.append(commentBox);
 
-  // var Comment = React.createClass({
-  //   render: function() {
-  //     return (
-  //         <div className="comment">
-  //           {this.props.author}
-  //         </div>
-  //     );
-  //   }
-  // });
-  //
-  // var comment = <Comment author="James Smith"/>;
-  //
-  // body.append(comment);
-
   var Comment = React.createClass({ displayName: "Comment",
     render: function render() {
-      return React.createElement("div", { className: "comment" }, React.createElement("h2", { className: "commentAuthor" }, this.props.author));
+      return React.createElement("div", { className: "comment" }, React.createElement("h2", { className: "commentAuthor" }, this.props.author), this.props.children);
     }
   });
 
-  var comment = React.createElement(Comment, { author: "James Smith" });
+  var CommentList = React.createClass({ displayName: "CommentList",
+    render: function render() {
+      return React.createElement("div", { className: "commentList" }, React.createElement(Comment, { author: "Pete Hunt" }, "This is one comment"), React.createElement(Comment, { author: "Jordan Walker" }, "This is *another* comment"));
+    }
+  });
 
-  body.append(comment);
+  var commentList = React.createElement(CommentList, null);
+
+  body.append(commentList);
 };
 
 module.exports = App;
@@ -580,10 +572,13 @@ var React = function () {
           var argumentsLength = arguments.length;
 
           for (var i = 2; i < argumentsLength; i++) {
-            var argument = arguments[i],
-                childJSXElement = argument; ///
+            var argument = arguments[i];
 
-            childJSXElements.push(childJSXElement);
+            if (argument !== undefined) {
+              var childJSXElement = argument; ///
+
+              childJSXElements.push(childJSXElement);
+            }
           }
         }
 
