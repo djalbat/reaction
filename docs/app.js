@@ -9,43 +9,68 @@ class App {
   constructor() {
     var body = new Body();
 
-    var Profile,
-        Nav = React.createClass({}),
-        nav = <Nav color="blue"><Profile>click</Profile></Nav>;
+    // var Profile,
+    //     Nav = React.createClass({}),
+    //     nav = <Nav color="blue"><Profile>click</Profile></Nav>;
+    //
+    // body.append(nav);
 
-    body.append(nav);
+    // var Form = React.createClass({});
+    //     Form.Row = React.createClass({});
+    //     Form.Label = React.createClass({});
+    //     Form.Input = React.createClass({});
+    // var form = (
+    //
+    //     <Form>
+    //       {/* It's okay to put comments in here as long as you enclose them in curly braces. */}
+    //       <Form.Row /* Comments in here
+    //                    on the other hand
+    //                    are fine without
+    //                    curly braces. */>
+    //         <Form.Label />
+    //         <Form.Input />
+    //       </Form.Row>
+    //     </Form>
+    // );
+    //
+    // body.append(form);
 
-    var Form = React.createClass({});
-        Form.Row = React.createClass({});
-        Form.Label = React.createClass({});
-        Form.Input = React.createClass({});
-    var form = (
+    // var Input = React.createClass({}),
+    //     firstDisabledInput = <Input type="button" disabled />,
+    //     secondDisabledInput = <Input type="button" disabled={true} />,
+    //     firstEnabledInput = <Input type="button" />,
+    //     secondEnabledInput = <Input type="button" disabled={false} />;
+    //
+    // body.append(firstDisabledInput);
+    // body.append(secondDisabledInput);
+    // body.append(firstEnabledInput);
+    // body.append(secondEnabledInput);
 
-        <Form>
-          <Form.Row>
-            <Form.Label />
-            <Form.Input />
-          </Form.Row>
-        </Form>
-    );
+    // var Person = React.createClass({}),
+    //     person = <Person name={window.isLoggedIn ? window.name : ''} />;
+    //
+    // body.append(person);
 
-    body.append(form);
+    // var Nav = React.createClass({}),
+    //     Login = React.createClass({}),
+    //     Container = React.createClass({}),
+    //     container = <Container>{!window.isLoggedIn ? <Nav /> : <Login />}</Container>;
+    //
+    // body.append(container);
 
-    var Input = React.createClass({}),
-        firstDisabledInput = <Input type="button" disabled />,
-        secondDisabledInput = <Input type="button" disabled={true} />,
-        firstEnabledInput = <Input type="button" />,
-        secondEnabledInput = <Input type="button" disabled={false} />;
+    var CommentBox = React.createClass({
+      render: function() {
+        return (
+          <div className="commentBox">
+            I am a comment box.
+          </div>
+        );
+      }
+    });
 
-    body.append(firstDisabledInput);
-    body.append(secondDisabledInput);
-    body.append(firstEnabledInput);
-    body.append(secondEnabledInput);
+    var content = <CommentBox />;
 
-    var Person = React.createClass({}),
-        person = <Person name={window.isLoggedIn ? window.name : ''} />;
-
-    body.append(person);
+    body.append(content);
   }
 }
 

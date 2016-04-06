@@ -9,39 +9,68 @@ var easyUI = require('easyui'),
 var React = require('../lib/react'); ///
 
 var App = function App() {
-    _classCallCheck(this, App);
+  _classCallCheck(this, App);
 
-    var body = new Body();
+  var body = new Body();
 
-    var Profile,
-        Nav = React.createClass({ displayName: "Nav" }),
-        nav = React.createElement(Nav, { color: "blue" }, React.createElement(Profile, null, "click"));
+  // var Profile,
+  //     Nav = React.createClass({}),
+  //     nav = <Nav color="blue"><Profile>click</Profile></Nav>;
+  //
+  // body.append(nav);
 
-    body.append(nav);
+  // var Form = React.createClass({});
+  //     Form.Row = React.createClass({});
+  //     Form.Label = React.createClass({});
+  //     Form.Input = React.createClass({});
+  // var form = (
+  //
+  //     <Form>
+  //       {/* It's okay to put comments in here as long as you enclose them in curly braces. */}
+  //       <Form.Row /* Comments in here
+  //                    on the other hand
+  //                    are fine without
+  //                    curly braces. */>
+  //         <Form.Label />
+  //         <Form.Input />
+  //       </Form.Row>
+  //     </Form>
+  // );
+  //
+  // body.append(form);
 
-    var Form = React.createClass({ displayName: "Form" });
-    Form.Row = React.createClass({ displayName: "Row" });
-    Form.Label = React.createClass({ displayName: "Label" });
-    Form.Input = React.createClass({ displayName: "Input" });
-    var form = React.createElement(Form, null, React.createElement(Form.Row, null, React.createElement(Form.Label, null), React.createElement(Form.Input, null)));
+  // var Input = React.createClass({}),
+  //     firstDisabledInput = <Input type="button" disabled />,
+  //     secondDisabledInput = <Input type="button" disabled={true} />,
+  //     firstEnabledInput = <Input type="button" />,
+  //     secondEnabledInput = <Input type="button" disabled={false} />;
+  //
+  // body.append(firstDisabledInput);
+  // body.append(secondDisabledInput);
+  // body.append(firstEnabledInput);
+  // body.append(secondEnabledInput);
 
-    body.append(form);
+  // var Person = React.createClass({}),
+  //     person = <Person name={window.isLoggedIn ? window.name : ''} />;
+  //
+  // body.append(person);
 
-    var Input = React.createClass({ displayName: "Input" }),
-        firstDisabledInput = React.createElement(Input, { type: "button", disabled: true }),
-        secondDisabledInput = React.createElement(Input, { type: "button", disabled: true }),
-        firstEnabledInput = React.createElement(Input, { type: "button" }),
-        secondEnabledInput = React.createElement(Input, { type: "button", disabled: false });
+  // var Nav = React.createClass({}),
+  //     Login = React.createClass({}),
+  //     Container = React.createClass({}),
+  //     container = <Container>{!window.isLoggedIn ? <Nav /> : <Login />}</Container>;
+  //
+  // body.append(container);
 
-    body.append(firstDisabledInput);
-    body.append(secondDisabledInput);
-    body.append(firstEnabledInput);
-    body.append(secondEnabledInput);
+  var CommentBox = React.createClass({ displayName: "CommentBox",
+    render: function render() {
+      return React.createElement("div", { className: "commentBox" }, "I am a comment box.");
+    }
+  });
 
-    var Person = React.createClass({ displayName: "Person" }),
-        person = React.createElement(Person, { name: window.isLoggedIn ? window.name : '' });
+  var content = React.createElement(CommentBox, null);
 
-    body.append(person);
+  body.append(content);
 };
 
 module.exports = App;
@@ -482,20 +511,41 @@ var React = function () {
     }
   }, {
     key: 'createElement',
-    value: function createElement(reactClass, attributes) {
+    value: function createElement(reactClassOrElementName, attributes) {
       for (var _len = arguments.length, childJSXElements = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
         childJSXElements[_key - 2] = arguments[_key];
       }
 
-      if (reactClass !== undefined) {
-        var elementName = reactClass.getElementName();
-
+      if (reactClassOrElementName !== undefined) {
         if (childJSXElements[0] === undefined) {
           ///
           childJSXElements = [];
         }
 
-        var jsxElement = new JSXElement(elementName, attributes, childJSXElements);
+        var elementName, jsxElement;
+
+        if (typeof reactClassOrElementName === 'string') {
+          elementName = reactClassOrElementName;
+
+          var html = childJSXElements; ///
+
+          childJSXElements = [];
+
+          jsxElement = new JSXElement(elementName, attributes, childJSXElements);
+
+          jsxElement.html(html);
+        } else {
+          var reactClass = reactClassOrElementName,
+              render = reactClass.getRender();
+
+          if (render !== undefined) {
+            return render();
+          }
+
+          elementName = reactClass.getElementName();
+
+          jsxElement = new JSXElement(elementName, attributes, childJSXElements);
+        }
 
         return jsxElement;
       }
@@ -515,16 +565,22 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ReactClass = function () {
-  function ReactClass(displayName) {
+  function ReactClass(displayName, render) {
     _classCallCheck(this, ReactClass);
 
     this.displayName = displayName;
+    this.render = render;
   }
 
   _createClass(ReactClass, [{
     key: 'getDisplayName',
     value: function getDisplayName() {
       return this.displayName;
+    }
+  }, {
+    key: 'getRender',
+    value: function getRender() {
+      return this.render;
     }
   }, {
     key: 'getElementName',
@@ -536,9 +592,10 @@ var ReactClass = function () {
   }], [{
     key: 'fromProperties',
     value: function fromProperties(properties) {
-      var displayName = properties['displayName'];
+      var displayName = properties['displayName'],
+          render = properties['render'];
 
-      return new ReactClass(displayName);
+      return new ReactClass(displayName, render);
     }
   }]);
 
