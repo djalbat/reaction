@@ -62,7 +62,7 @@ var App = function App() {
   //
   // body.append(container);
 
-  var data = [{ id: 1, author: "Pete Hunt", text: "This is one comment." }, { id: 2, author: "Jordan Walker", text: "This is *another* comment..." }, { id: 3, author: "Joe Bloggs", text: "This is **yet another** comment!" }];
+  var data = [{ id: 1, author: "Pete Hunt", text: "This is one comment." }, { id: 2, author: "Joe Bloggs", text: "This is *another* comment..." }, { id: 3, author: "Jordan Walker", text: "This is **yet another** comment!" }];
 
   var Comment = React.createClass({ displayName: "Comment",
     render: function render() {

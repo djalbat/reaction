@@ -1,7 +1,7 @@
 {
   "name": "easyui-jsx",
   "author": "James Smith",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "license": "MIT",
   "repository": "https://github.com/djalbat/EasyUI-JSX",
   "dependencies": {
