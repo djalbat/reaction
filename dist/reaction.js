@@ -84,7 +84,7 @@ var App = function App() {
 
   var CommentBox = React.createClass({ displayName: "CommentBox",
     getInitialState: function getInitialState() {
-      var data = [{ id: 1, author: "Pete Hunt", text: "This is one comment." }, { id: 2, author: "Joe Bloggs", text: "This is *another* comment..." }, { id: 3, author: "Jordan Walker", text: "This is **yet another** comment!" }, { id: 4, author: "Billy Bignuts", text: "This is the last comment for now..." }],
+      var data = [{ id: 1, author: "Pete Hunt", text: "This is one comment." }, { id: 2, author: "Joe Bloggs", text: "This is *another* comment..." }, { id: 3, author: "Jordan Walker", text: "This is **yet another** comment!" }],
           initialState = {
         data: data
       };
@@ -102,6 +102,15 @@ var App = function App() {
   var commentBox = React.createElement(CommentBox, null);
 
   body.append(commentBox);
+
+  setTimeout(function () {
+    var data = [{ id: 4, author: "Billy Bignuts", text: "This is the last comment for now..." }],
+        state = {
+      data: data
+    };
+
+    commentBox.setState(state);
+  }, 1000); ///
 };
 
 module.exports = App;
@@ -525,6 +534,11 @@ var JSXElement = function () {
       this.componentDidMount = componentDidMount;
     }
   }, {
+    key: 'setState',
+    value: function setState(state) {
+      console.log(JSON.stringify(state, null, '\t'));
+    }
+  }, {
     key: 'getComponentDidMount',
     value: function getComponentDidMount() {
       return this.componentDidMount;
@@ -778,11 +792,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ReactClass = function () {
-  function ReactClass(render, elementName, getInitialState, componentDidMount) {
+  function ReactClass(render, displayName, getInitialState, componentDidMount) {
     _classCallCheck(this, ReactClass);
 
     this.render = render;
-    this.elementName = elementName;
+    this.displayName = displayName;
     this.getInitialState = getInitialState;
     this.componentDidMount = componentDidMount;
   }
@@ -793,9 +807,9 @@ var ReactClass = function () {
       return this.render;
     }
   }, {
-    key: 'getElementName',
-    value: function getElementName() {
-      return this.elementName;
+    key: 'getDisplayName',
+    value: function getDisplayName() {
+      return this.displayName;
     }
   }, {
     key: 'getGetInitialState',
@@ -833,9 +847,7 @@ var ReactClass = function () {
           displayName = properties['displayName'],
           getInitialState = properties['getInitialState'],
           componentDidMount = properties['componentDidMount'],
-          elementName = displayName,
-          ///
-      reactClass = new ReactClass(render, elementName, getInitialState, componentDidMount);
+          reactClass = new ReactClass(render, displayName, getInitialState, componentDidMount);
 
       return reactClass;
     }

@@ -98,8 +98,7 @@ class App {
         var data = [
               {id: 1, author: "Pete Hunt", text: "This is one comment."},
               {id: 2, author: "Joe Bloggs", text: "This is *another* comment..."},
-              {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"},
-              {id: 4, author: "Billy Bignuts", text: "This is the last comment for now..."}
+              {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"}
             ],
             initialState = {
               data: data
@@ -122,6 +121,17 @@ class App {
     var commentBox = <CommentBox />;
 
     body.append(commentBox);
+    
+    setTimeout(function() {
+      var data = [
+            {id:4, author: "Billy Bignuts", text: "This is the last comment for now..."}  
+          ],
+          state = {
+            data: data
+          };
+      
+      commentBox.setState(state);
+    }, 1000); ///
   }
 }
 
