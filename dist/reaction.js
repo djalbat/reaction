@@ -3,15 +3,13 @@
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var easyUI = require('easyui'),
-    Body = easyUI.Body;
-
-var React = require('../lib/react'); ///
+var React = require('../lib/react'),
+    JSXElement = require('../lib/jsxElement');
 
 var App = function App() {
   _classCallCheck(this, App);
 
-  var body = new Body();
+  var body = new JSXElement('body'); ///
 
   // var Profile,
   //     Nav = React.createClass({}),
@@ -62,9 +60,27 @@ var App = function App() {
   //
   // body.append(container);
 
+  // var Component = React.createClass({
+  //   render: function() {
+  //     return (
+  //         <div className="Component"></div>
+  //     )
+  //   },
+  //   componentDidMount: function() {
+  //     console.log('component did mount')
+  //   }
+  // });
+  //
+  // var component = <Component />;
+  //
+  // body.append(component);
+
   var Comment = React.createClass({ displayName: "Comment",
     render: function render() {
       return React.createElement("div", { className: "comment" }, React.createElement("h2", null, this.props.author), this.props.children);
+    },
+    componentDidMount: function componentDidMount() {
+      console.log(this.props.author + '\'s comment mounted');
     }
   });
 
@@ -75,25 +91,26 @@ var App = function App() {
       });
 
       return React.createElement("div", { className: "commentList" }, comments);
+    },
+    componentDidMount: function componentDidMount() {
+      console.log('The comment list component mounted');
     }
   });
 
-  var CommentForm;
-
   var CommentBox = React.createClass({ displayName: "CommentBox",
     getInitialState: function getInitialState() {
-      var data = [{ id: 1, author: "Pete Hunt", text: "This is one comment." }, { id: 2, author: "Joe Bloggs", text: "This is *another* comment..." }, { id: 3, author: "Jordan Walker", text: "This is **yet another** comment!" }],
+      var data = [{ id: 1, author: "Pete Hunt", text: "This is one comment." }, { id: 2, author: "Joe Bloggs", text: "This is *another* comment..." }, { id: 3, author: "Jordan Walker", text: "This is **yet another** comment!" }, { id: 4, author: "Billy Bignuts", text: "This is the last comment for now..." }],
           initialState = {
         data: data
       };
 
       return initialState;
     },
-    componentDidMount: function componentDidMount() {
-      console.log('component did mount');
-    },
     render: function render() {
-      return React.createElement("div", { className: "commentBox" }, React.createElement("h1", null, "Comments"), React.createElement(CommentList, { data: this.state.data }), React.createElement(CommentForm, null));
+      return React.createElement("div", { className: "commentList" }, React.createElement(CommentList, { data: this.state.data }));
+    },
+    componentDidMount: function componentDidMount() {
+      console.log('The comment box component mounted');
     }
   });
 
@@ -104,7 +121,7 @@ var App = function App() {
 
 module.exports = App;
 
-},{"../lib/react":6,"easyui":8}],2:[function(require,module,exports){
+},{"../lib/jsxElement":4,"../lib/react":6}],2:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -232,7 +249,8 @@ var Element = function () {
         this.$element.append(string);
       } else {
         var element = elementOrString,
-            $element = element.$element;
+            ///
+        $element = element.$element;
 
         this.$element.append($element);
       }
@@ -289,6 +307,23 @@ var Element = function () {
         return _css;
       } else {
         this.$element.css(_css);
+      }
+    }
+  }, {
+    key: 'data',
+    value: function data() {
+      var argumentsLength = arguments.length,
+          key = arguments[0],
+          value;
+
+      if (argumentsLength === 1) {
+        value = this.$element.data(key);
+
+        return value;
+      } else {
+        value = arguments[1];
+
+        this.$element.data(key, value);
       }
     }
   }, {
@@ -468,7 +503,7 @@ function first(array) {
   return array[0];
 }
 
-},{"jquery":22}],4:[function(require,module,exports){
+},{"jquery":8}],4:[function(require,module,exports){
 'use strict';
 
 ///var easyui = require('easyui'),
@@ -478,84 +513,115 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Element = require('./element'),
     JSXTextElement = require('./jsxTextElement');
 
-var JSXElement = function (_Element) {
-  _inherits(JSXElement, _Element);
-
-  function JSXElement(elementName, componentDidMount, properties, childJSXElements) {
+var JSXElement = function () {
+  function JSXElement(elementOrSelector, childJSXElements) {
     _classCallCheck(this, JSXElement);
 
-    var elementHTML = '<' + elementName + '/>',
-        element = Element.fromHTML(elementHTML),
-        $element = element.$element; ///
+    var element = elementOrSelector instanceof Element ? elementOrSelector : ///
+    new Element(elementOrSelector);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(JSXElement).call(this, $element));
+    element.data('jsxElement', this);
 
-    _this.componentDidMount = componentDidMount;
+    this.element = element;
 
-    if (properties !== null) {
-      var propertyNames = Object.keys(properties);
+    this.componentDidMount = null;
 
-      propertyNames.forEach(function (propertyName) {
-        var attributeName,
-            propertyValue = properties[propertyName],
-            attributeValue = propertyValue;
-
-        switch (propertyName) {
-          case 'className':
-            attributeName = 'class';
-            break;
-
-          case 'htmlFor':
-            attributeName = 'for';
-            break;
-
-          default:
-            attributeName = propertyName;
-            break;
-        }
-
-        element.addAttribute(attributeName, attributeValue);
-      });
+    if (childJSXElements) {
+      this.appendChildJSXElements(childJSXElements);
     }
-
-    appendChildJSXElements(element, childJSXElements);
-    return _this;
   }
 
   _createClass(JSXElement, [{
+    key: 'setComponentDidMount',
+    value: function setComponentDidMount(componentDidMount) {
+      this.componentDidMount = componentDidMount;
+    }
+  }, {
     key: 'getComponentDidMount',
     value: function getComponentDidMount() {
       return this.componentDidMount;
     }
+  }, {
+    key: 'getElement',
+    value: function getElement() {
+      return this.element;
+    }
+  }, {
+    key: 'append',
+    value: function append(jsxElementOrString) {
+      if (typeof jsxElementOrString === 'string') {
+        var string = jsxElementOrString; ///
+
+        this.element.append(string);
+      } else {
+        var jsxElement = jsxElementOrString,
+            ///
+        element = jsxElement.getElement();
+
+        this.element.append(element);
+
+        this.mount();
+      }
+    }
+  }, {
+    key: 'mount',
+    value: function mount() {
+      var childJSXElements = this.childJSXElements();
+
+      childJSXElements.forEach(function (childJSXElement) {
+        childJSXElement.mount();
+      });
+
+      if (this.componentDidMount) {
+        this.componentDidMount();
+      }
+    }
+  }, {
+    key: 'childJSXElements',
+    value: function childJSXElements() {
+      var childElements = this.element.childElements(),
+          childJSXElements = childElements.reduce(function (childJSXElements, childElement) {
+        var childJSXElement = childElement.data('jsxElement');
+
+        if (childJSXElement) {
+          childJSXElements.push(childJSXElement);
+        }
+
+        return childJSXElements;
+      }, []);
+
+      return childJSXElements;
+    }
+  }, {
+    key: 'appendChildJSXElements',
+    value: function appendChildJSXElements(childJSXElements) {
+      childJSXElements.forEach(function (childJSXElement) {
+        if (childJSXElement instanceof Array) {
+          var childJSXElements = childJSXElement; ///
+
+          this.appendChildJSXElements(childJSXElements);
+        } else if (childJSXElement instanceof JSXElement) {
+          var element = childJSXElement.getElement();
+
+          this.element.append(element);
+        } else if (childJSXElement instanceof JSXTextElement) {
+          var childJSXTextElement = childJSXElement,
+              ///
+          text = childJSXTextElement.getText();
+
+          this.element.append(text);
+        } else if (childJSXElement instanceof JSXElement) {
+          this.append(childJSXElement);
+        }
+      }.bind(this));
+    }
   }]);
 
   return JSXElement;
-}(Element);
-
-function appendChildJSXElements(element, childJSXElements) {
-  childJSXElements.forEach(function (childJSXElement) {
-    if (childJSXElement instanceof Array) {
-      var childJSXElements = childJSXElement; ///
-
-      appendChildJSXElements(element, childJSXElements);
-    } else if (childJSXElement instanceof JSXTextElement) {
-      var childJSXTextElement = childJSXElement,
-          ///
-      text = childJSXTextElement.getText();
-
-      element.append(text);
-    } else if (childJSXElement instanceof JSXElement) {
-      element.append(childJSXElement);
-    }
-  });
-}
+}();
 
 module.exports = JSXElement;
 
@@ -593,6 +659,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ReactClass = require('../lib/reactClass'),
+    Element = require('../lib/element'),
     JSXElement = require('../lib/jsxElement'),
     JSXTextElement = require('../lib/jsxTextElement');
 
@@ -604,61 +671,48 @@ var React = function () {
   _createClass(React, null, [{
     key: 'createClass',
     value: function createClass(properties) {
-      var reactClass = ReactClass.fromProperties(properties);
-
-      return reactClass;
+      return ReactClass.fromProperties(properties);
     }
   }, {
     key: 'createElement',
     value: function createElement(reactClassOrElementName, properties) {
       if (reactClassOrElementName === undefined) {
-        return undefined;
+        return undefined; ///
       }
 
       for (var _len = arguments.length, remainingArguments = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
         remainingArguments[_key - 2] = arguments[_key];
       }
 
-      var jsxElement,
-          elementName,
+      var element,
           childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments),
           ///
-      componentDidMount; ///
+      jsxElement = undefined; ///
 
       if (typeof reactClassOrElementName === 'string') {
-        elementName = reactClassOrElementName; ///
+        var elementName = reactClassOrElementName,
+            elementHTML = '<' + elementName + '/>';
+        element = Element.fromHTML(elementHTML);
 
-        componentDidMount = null;
+        addPropertiesAsAttributes(element, properties);
+
+        jsxElement = new JSXElement(element, childJSXElements);
       } else {
         var reactClass = reactClassOrElementName,
             ///
-        render = reactClass.getRender(),
-            getInitialState = reactClass.getGetInitialState();
+        render = reactClass.getRender();
 
         if (render !== undefined) {
-          var props = properties === null ? {} : properties,
+          var children = childJSXElements,
               ///
-          initialState = getInitialState(),
-              children = childJSXElements,
-              ///
-          state = initialState; ///
+          instance = reactClass.instance(properties, children),
+              componentDidMount = reactClass.getComponentDidMount();
 
-          props.children = children;
+          jsxElement = render.apply(instance);
 
-          var instance = {
-            props: props,
-            state: state
-          };
-
-          return render.apply(instance);
+          jsxElement.setComponentDidMount(componentDidMount.bind(instance));
         }
-
-        elementName = reactClass.getElementName();
-
-        componentDidMount = reactClass.getComponentDidMount();
       }
-
-      jsxElement = new JSXElement(elementName, componentDidMount, properties, childJSXElements);
 
       return jsxElement;
     }
@@ -697,13 +751,41 @@ function childJSXElementsFromRemainingArguments() {
   return childJSXElements;
 }
 
+function addPropertiesAsAttributes(element, properties) {
+  if (properties) {
+    var propertyNames = Object.keys(properties);
+
+    propertyNames.forEach(function (propertyName) {
+      var attributeName,
+          propertyValue = properties[propertyName],
+          attributeValue = propertyValue;
+
+      switch (propertyName) {
+        case 'className':
+          attributeName = 'class';
+          break;
+
+        case 'htmlFor':
+          attributeName = 'for';
+          break;
+
+        default:
+          attributeName = propertyName;
+          break;
+      }
+
+      element.addAttribute(attributeName, attributeValue);
+    });
+  }
+}
+
 function first(array) {
   return array[0];
 }
 
 module.exports = React;
 
-},{"../lib/jsxElement":4,"../lib/jsxTextElement":5,"../lib/reactClass":7}],7:[function(require,module,exports){
+},{"../lib/element":3,"../lib/jsxElement":4,"../lib/jsxTextElement":5,"../lib/reactClass":7}],7:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -711,24 +793,24 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ReactClass = function () {
-  function ReactClass(elementName, render, getInitialState, componentDidMount) {
+  function ReactClass(render, elementName, getInitialState, componentDidMount) {
     _classCallCheck(this, ReactClass);
 
-    this.elementName = elementName;
     this.render = render;
+    this.elementName = elementName;
     this.getInitialState = getInitialState;
     this.componentDidMount = componentDidMount;
   }
 
   _createClass(ReactClass, [{
-    key: 'getElementName',
-    value: function getElementName() {
-      return this.elementName;
-    }
-  }, {
     key: 'getRender',
     value: function getRender() {
       return this.render;
+    }
+  }, {
+    key: 'getElementName',
+    value: function getElementName() {
+      return this.elementName;
     }
   }, {
     key: 'getGetInitialState',
@@ -740,1004 +822,46 @@ var ReactClass = function () {
     value: function getComponentDidMount() {
       return this.componentDidMount;
     }
+  }, {
+    key: 'instance',
+    value: function instance(properties, children) {
+      var getInitialState = this.getGetInitialState(),
+          initialState = getInitialState ? getInitialState() : {},
+          ///
+      props = properties === null ? {} : properties; ///
+
+      props.children = children;
+
+      var state = initialState,
+          ///
+      instance = {
+        props: props,
+        state: state
+      };
+
+      return instance;
+    }
   }], [{
     key: 'fromProperties',
     value: function fromProperties(properties) {
-      var displayName = properties['displayName'],
-          render = properties['render'],
-          getInitialState = properties['getInitialState'] || defaultGetInitialState,
-          componentDidMount = properties['componentDidMount'] || defaultComponentDidMount,
-          elementName = displayName; ///
+      var render = properties['render'],
+          displayName = properties['displayName'],
+          getInitialState = properties['getInitialState'],
+          componentDidMount = properties['componentDidMount'],
+          elementName = displayName,
+          ///
+      reactClass = new ReactClass(render, elementName, getInitialState, componentDidMount);
 
-      return new ReactClass(elementName, render, getInitialState, componentDidMount);
+      return reactClass;
     }
   }]);
 
   return ReactClass;
 }();
 
-function defaultGetInitialState() {
-  var initialState = {};
-
-  return initialState;
-}
-
-function defaultComponentDidMount() {}
-
 module.exports = ReactClass;
 
 },{}],8:[function(require,module,exports){
-'use strict';
-
-module.exports = {
-  window: require('./lib/window'),
-  Element: require('./lib/element'),
-  Bounds: require('./lib/bounds'),
-  Body: require('./lib/body'),
-  Div: require('./lib/div'),
-  Link: require('./lib/link'),
-  Input: require('./lib/input'),
-  Select: require('./lib/select'),
-  Button: require('./lib/button'),
-  Checkbox: require('./lib/checkbox'),
-  TextArea: require('./lib/textArea')
-};
-
-},{"./lib/body":9,"./lib/bounds":10,"./lib/button":11,"./lib/checkbox":12,"./lib/div":13,"./lib/element":14,"./lib/input":15,"./lib/link":17,"./lib/select":18,"./lib/textArea":19,"./lib/window":20}],9:[function(require,module,exports){
-'use strict';
-
-var Element = require('./element');
-
-class Body extends Element {
-  constructor(selectorOr$Element) {
-    if (selectorOr$Element === undefined) {
-      selectorOr$Element = 'body';
-    }
-
-    super(selectorOr$Element);
-  }
-
-  clone() { return Body.clone(this.$element); }
-
-  onClick(handler) {
-    this.$element.click(function() {
-      handler();
-
-      return false;
-    })
-  }
-
-  onDoubleClick(handler) {
-    this.$element.dblclick(function() {
-      handler();
-
-      return false;
-    })
-  }
-}
-
-Body.clone = function(selectorOr$Element) {
-  return Element.clone(Body, selectorOr$Element);
-};
-
-Body.fromHTML = function(html) {
-  return Element.fromHTML(Body, html);
-};
-
-module.exports = Body;
-
-},{"./element":14}],10:[function(require,module,exports){
-'use strict';
-
-class Bounds {
-  constructor(top, left, bottom, right) {
-    this.top = top;
-    this.left = left;
-    this.bottom = bottom;
-    this.right = right;
-  }
-
-  getTop() {
-    return this.top;
-  }
-
-  getLeft() {
-    return this.left;
-  }
-
-  getBottom() {
-    return this.bottom;
-  }
-
-  getRight() {
-    return this.right;
-  }
-
-  areOverlapping(bounds) {
-    return this.top <= bounds.bottom
-        && this.left <= bounds.right
-        && this.bottom >= bounds.top
-        && this.right >= bounds.left;
-  }
-}
-
-module.exports = Bounds;
-
-},{}],11:[function(require,module,exports){
-'use strict';
-
-var InputElement = require('./inputElement');
-
-class Button extends InputElement {
-  constructor(selectorOr$Element, clickHandler) {
-    super(selectorOr$Element);
-
-    if (clickHandler) {
-      this.onClick(clickHandler);
-    }
-  }
-
-  clone(clickHandler) { return Button.clone(this.$element, clickHandler); }
-
-  onClick(handler) {
-    this.$element.click(function() {
-      handler();
-
-      return false;
-    })
-  }
-
-  onDoubleClick(handler) {
-    this.$element.dblclick(function() {
-      handler();
-
-      return false;
-    })
-  }
-}
-
-Button.clone = function(selectorOr$Element, clickHandler) {
-  return InputElement.clone(Button, selectorOr$Element, clickHandler);
-};
-
-Button.fromHTML = function(html, clickHandler) {
-  return InputElement.fromHTML(Button, html, clickHandler);
-};
-
-module.exports = Button;
-
-},{"./inputElement":16}],12:[function(require,module,exports){
-'use strict';
-
-var InputElement = require('./inputElement');
-
-class Checkbox extends InputElement {
-  constructor(selectorOr$Element, changeHandler) {
-    super(selectorOr$Element);
-
-    if (changeHandler) {
-      this.onChange(changeHandler);
-    }
-  }
-
-  clone(changeHandler) { return Checkbox.clone(this.$element, changeHandler); }
-
-  onChange(handler) {
-    this.$element.click(function() {
-      var checked = this.isChecked();
-
-      handler(checked);
-    }.bind(this))
-  }
-
-  check(checked) {
-    if (arguments.length === 0) {
-      checked = true;
-    }
-
-    if (checked) {
-      this.$element.attr('checked', 'checked');
-    } else {
-      this.$element.removeAttr('checked');
-    }
-  }
-
-  isChecked() {
-    return this.$element.is(':checked');
-  }
-}
-
-Checkbox.clone = function(selectorOr$Element, changeHandler) {
-  return InputElement.clone(Checkbox, selectorOr$Element, changeHandler);
-};
-
-Checkbox.fromHTML = function(html, changeHandler) {
-  return InputElement.fromHTML(Checkbox, html, changeHandler);
-};
-
-module.exports = Checkbox;
-
-},{"./inputElement":16}],13:[function(require,module,exports){
-'use strict';
-
-var Element = require('./element');
-
-class Div extends Element {
-  constructor(selectorOr$Element) {
-    super(selectorOr$Element);
-  }
-
-  clone() { return Div.clone(this.$element); }
-}
-
-Div.clone = function(selectorOr$Element) {
-  return Element.clone(Div, selectorOr$Element);
-};
-
-Div.fromHTML = function(html) {
-  return Element.fromHTML(Div, html);
-};
-
-module.exports = Div;
-
-},{"./element":14}],14:[function(require,module,exports){
-'use strict';
-
-var $ = require('jquery');
-
-var Bounds = require('./bounds');
-
-class Element {
-  constructor(selectorOr$Element) {
-    this.$element = $element(selectorOr$Element);
-
-    this.$element.data('element', this);
-  }
-
-  clone() {
-    var clonedElement = Element.clone(this.$element);
-
-    return clonedElement;
-  }
-
-  show() { this.$element.show(); }
-  hide() { this.$element.hide(); }
-  enable() { this.$element.removeAttr('disabled'); }
-  disable() { this.$element.attr('disabled', true); }
-
-  setWidth(width) { this.$element.width(width); }
-  setHeight(height) { this.$element.height(height); }
-
-  getWidth() { return this.$element.width(); }
-  getHeight() { return this.$element.height(); }
-
-  getBounds() {
-    var $offset = this.$element.offset(),
-        top = $offset.top,  ///
-        left = $offset.left,  ///
-        width = this.getWidth(),
-        height = this.getHeight(),
-        bottom = top + height,
-        right = left + width,
-        bounds = new Bounds(top, left, bottom, right);
-
-    return bounds;
-  }
-
-  getAttribute(name) { return this.$element.attr(name); }
-  addAttribute(name, value) { this.$element.attr(name, value); }
-  removeAttribute(name) { this.$element.removeAttr(name); }
-
-  prependBefore(element) { this.$element.before(element.$element); }
-  appendAfter(element) { this.$element.after(element.$element); }
-  prepend(element) { this.$element.prepend(element.$element); }
-  append(element) { this.$element.append(element.$element); }
-  remove() { this.$element.remove(); }
-  detach() { this.$element.detach(); }
-
-  hasClass(className) { return this.$element.hasClass(className); }
-  addClass(className) { this.$element.addClass(className); }
-  removeClass(className) { this.$element.removeClass(className); }
-  removeClasses() { this.$element.removeClass(); }
-
-  html(html) {
-    if (arguments.length === 1) {
-      this.$element.html(html)
-    } else {
-      html = this.$element.html();
-
-      return html;
-    }
-  }
-
-  css(css) {
-    if (typeof css === 'string') {
-      var propertyName = css;
-
-      css = this.$element.css(propertyName);
-
-      return css;
-    } else {
-      this.$element.css(css);
-    }
-  }
-
-  findElements(selector) {
-    var foundDOMElements = this.$element.find(selector),
-        foundElements = elementsFromDOMElements(foundDOMElements);
-
-    return foundElements;
-  }
-
-  childElements(selector) {
-    var childDOMElements = this.$element.children(selector),
-        childElements = elementsFromDOMElements(childDOMElements);
-
-    return childElements;
-  }
-
-  parentElement(selector) {
-    var parentDOMElements = this.$element.parent(selector),
-        parentElements = elementsFromDOMElements(parentDOMElements),
-        firstParentElement = first(parentElements),
-        parentElement = firstParentElement || null;
-
-    return parentElement;
-  }
-
-  parentElements(selector) {
-    var parentDOMElements = this.$element.parents(selector),
-        parentElements = elementsFromDOMElements(parentDOMElements);
-
-    return parentElements;
-  }
-
-  on(events, handler) { this.$element.on(events, handler); }
-
-  onMouseUp(handler) { this.$element.on('mouseup', returnMouseEventHandler(handler)); }
-  onMouseDown(handler) { this.$element.on('mousedown', returnMouseEventHandler(handler)); }
-  onMouseOver(handler) { this.$element.on('mouseover', returnMouseEventHandler(handler)); }
-  onMouseOut(handler) { this.$element.on('mouseout', returnMouseEventHandler(handler)); }
-  onMouseMove(handler) { this.$element.on('mousemove', returnMouseEventHandler(handler)); }
-
-  sameAs(element) {
-    return this.$element === element.$element;  ///
-  }
-}
-
-Element.fromHTML = function(html) {
-  var Class,
-      args;
-
-  if (arguments.length === 1) {
-    Class = Element;
-    args = [];
-  } else {
-    Class = arguments[0];
-    html = arguments[1];
-    args = Array.prototype.slice.call(arguments, 2);
-  }
-
-  var $htmlElement = $(html);
-
-  return instance(Class, $htmlElement, args);
-};
-
-Element.clone = function(selectorOr$Element) {
-  var Class,
-      args;
-
-  if (arguments.length === 1) {
-    Class = Element;
-    args = [];
-  } else {
-    Class = arguments[0];
-    selectorOr$Element = arguments[1];
-    args = Array.prototype.slice.call(arguments, 2);
-  }
-
-  var $clonedElement = $element(selectorOr$Element).clone();
-
-  return instance(Class, $clonedElement, args);
-};
-
-Element.LEFT_MOUSE_BUTTON = 1;
-Element.MIDDLE_MOUSE_BUTTON = 2;
-Element.RIGHT_MOUSE_BUTTON = 3;
-
-module.exports = Element;
-
-function returnMouseEventHandler(handler) {
-  return function(event) {
-    var mouseTop = event.pageY,  ///
-        mouseLeft = event.pageX, ///
-        mouseButton = event.which; ///
-
-    handler(mouseTop, mouseLeft, mouseButton);
-  };
-}
-
-function $element(selectorOr$Element) {
-  var $element;
-
-  if (selectorOr$Element instanceof $) {
-    $element = selectorOr$Element;
-  } else if (typeof selectorOr$Element === 'string') {
-    $element = $(selectorOr$Element);
-  } else {
-    var parentSelectorOr$Element = selectorOr$Element[0], ///
-        childSelector = selectorOr$Element[1],  ///
-        parent$Element = (parentSelectorOr$Element instanceof $) ? parentSelectorOr$Element : $(parentSelectorOr$Element);
-
-    $element = parent$Element.find(childSelector);
-  }
-
-  return $element;
-}
-
-function instance(Class, $element, args) {
-  args.unshift($element);
-
-  args.unshift(null); ///
-  
-  var instance = new (Class.bind.apply(Class, args));  ///
-
-  return instance;
-}
-
-function elementsFromDOMElements(domElements) {
-  var elements = [],
-      domElementsLength = domElements.length;
-
-  for (var i = 0; i < domElementsLength; i++) {
-    var domElement = domElements[i],
-        $element = $(domElement),
-        element = $element.data('element');
-
-    if (element) {
-      elements.push(element);
-    }
-  }
-
-  return elements;
-}
-
-function first(array) { return array[0]; }
-
-},{"./bounds":10,"jquery":22}],15:[function(require,module,exports){
-'use strict';
-
-require('jquery-textrange');
-
-var InputElement = require('./inputElement');
-
-class Input extends InputElement {
-  constructor(selectorOr$Element, changeHandler) {
-    super(selectorOr$Element);
-
-    if (changeHandler) {
-      this.onChange(changeHandler);
-    }
-  }
-
-  clone() { return Input.clone(this.$element); }
-
-  onChange(handler) {
-    this.$element.keydown(function() {
-      setTimeout(function() {
-        var value = this.getValue();
-
-        handler(value);
-      }.bind(this));
-    }.bind(this));
-  }
-
-  getValue() {
-    var value = this.$element.val();
-
-    return value;
-  }
-
-  getSelectionStart() {
-    var textrange = this.$element.textrange('get'),
-        selectionStart = textrange['start'];  ///
-
-    return selectionStart;
-  }
-
-  getSelectionEnd() {
-    var textrange = this.$element.textrange('get'),
-        selectionEnd = textrange['end'];  ///
-
-    return selectionEnd;
-  }
-
-  setValue(value) {
-    this.$element.val(value);
-  }
-
-  select() {
-    this.$element.select();
-  }
-}
-
-Input.clone = function(selectorOr$Element) {
-  return InputElement.clone(Input, selectorOr$Element);
-};
-
-Input.fromHTML = function(html) {
-  return InputElement.fromHTML(Input, html);
-};
-
-module.exports = Input;
-
-},{"./inputElement":16,"jquery-textrange":21}],16:[function(require,module,exports){
-'use strict';
-
-var Element = require('./element');
-
-class InputElement extends Element {
-  constructor(selectorOr$Element) {
-    super(selectorOr$Element);
-  }
-
-  hasFocus() {
-    var focused = document.activeElement === this.$element[0];  ///
-
-    return focused;
-  }
-
-  onFocus(focusHandler) {
-    this.$element.focus(focusHandler);
-  }
-
-  onBlur(blurHandler) {
-    this.$element.blur(blurHandler);
-  }
-
-  focus() {
-    this.$element.focus();
-  }
-}
-
-InputElement.clone = Element.clone;
-InputElement.fromHTML = Element.fromHTML;
-
-module.exports = InputElement;
-
-},{"./element":14}],17:[function(require,module,exports){
-'use strict';
-
-var InputElement = require('./inputElement');
-
-class Link extends InputElement {
-  constructor(selectorOr$Element, clickHandler) {
-    super(selectorOr$Element);
-
-    if (clickHandler) {
-      this.onClick(clickHandler);
-    }
-  }
-
-  clone(clickHandler) { return Link.clone(this.$element, clickHandler); }
-
-  onClick(handler) {
-    this.$element.click(function() {
-      var href = this.$element.attr('href');
-
-      handler(href);
-
-      return false;
-    }.bind(this))
-  }
-}
-
-Link.clone = function(selectorOr$Element, clickHandler) {
-  return InputElement.clone(Link, selectorOr$Element, clickHandler);
-};
-
-Link.fromHTML = function(html, clickHandler) {
-  return InputElement.fromHTML(Link, html, clickHandler);
-};
-
-module.exports = Link;
-
-},{"./inputElement":16}],18:[function(require,module,exports){
-'use strict';
-
-var InputElement = require('./inputElement');
-
-class Select extends InputElement {
-  constructor(selectorOr$Element, changeHandler) {
-    super(selectorOr$Element);
-
-    if (changeHandler) {
-      this.onChange(changeHandler);
-    }
-  }
-
-  clone(changeHandler) { return Select.clone(this.$element, changeHandler); }
-
-  onChange(handler) {
-    this.$element.change(function() {
-      var selectedOptionValue = this.getSelectedOptionValue();
-
-      handler(selectedOptionValue);
-    }.bind(this));
-  }
-
-  getSelectedOptionValue() {
-    var $selectedOption = this.$element.find(':selected'),
-        selectedOptionValue = $selectedOption.val();
-
-    return selectedOptionValue;
-  }
-
-  setSelectedOptionByValue(value) {
-    this.$element.val(value);
-  }
-}
-
-Select.clone = function(selectorOr$Element, changeHandler) {
-  return InputElement.clone(Select, selectorOr$Element, changeHandler);
-};
-
-Select.fromHTML = function(html, changeHandler) {
-  return InputElement.fromHTML(Select, html, changeHandler);
-};
-
-module.exports = Select;
-
-},{"./inputElement":16}],19:[function(require,module,exports){
-'use strict';
-
-require('jquery-textrange');
-
-var InputElement = require('./inputElement');
-
-class TextArea extends InputElement {
-  constructor(selectorOr$Element, changeHandler) {
-    super(selectorOr$Element);
-
-    if (changeHandler) {
-      this.onChange(changeHandler);
-    }
-  }
-
-  clone() { return TextArea.clone(this.$element); }
-
-  onChange(handler) {
-    this.$element.keydown(function() {
-      setTimeout(function() {
-        var value = this.getValue();
-
-        handler(value);
-      }.bind(this));
-    }.bind(this));
-  }
-
-  onScroll(handler) {
-    this.$element.scroll(function() {
-      var scrollTop = this.getScrollTop(),
-          scrollLeft = this.getScrollLeft();
-
-      handler(scrollTop, scrollLeft);
-    }.bind(this));
-  }
-
-  getScrollTop() { return this.$element.scrollTop(); }
-  getScrollLeft() { return this.$element.scrollLeft(); }
-
-  getValue() {
-    var value = this.$element.val();
-
-    return value;
-  }
-
-  getSelectionStart() {
-    var textrange = this.$element.textrange('get'),
-        selectionStart = textrange['start'];  ///
-
-    return selectionStart;
-  }
-
-  getSelectionEnd() {
-    var textrange = this.$element.textrange('get'),
-        selectionEnd = textrange['end'];  ///
-
-    return selectionEnd;
-  }
-
-  setValue(value) {
-    this.$element.val(value);
-  }
-
-  setScrollTop(scrollTop) { this.$element.scrollTop(scrollTop); }
-  setScrollLeft(scrollLeft) { this.$element.scrollLeft(scrollLeft); }
-
-  select() {
-    this.$element.select();
-  }
-}
-
-TextArea.clone = function(selectorOr$Element) {
-  return InputElement.clone(TextArea, selectorOr$Element);
-};
-
-TextArea.fromHTML = function(html) {
-  return InputElement.fromHTML(TextArea, html);
-};
-
-module.exports = TextArea;
-
-},{"./inputElement":16,"jquery-textrange":21}],20:[function(require,module,exports){
-'use strict';
-
-var $ = require('jquery');
-
-class Window {
-  constructor() {
-    this.$element = $(window);  ///
-  }
-
-  onResize(handler) {
-    this.$element.resize(handler);
-  }
-}
-
-var window = new Window();
-
-module.exports = window;
-
-},{"jquery":22}],21:[function(require,module,exports){
-/**
- * jquery-textrange
- * A jQuery plugin for getting, setting and replacing the selected text in input fields and textareas.
- * See the [README](https://github.com/dwieeb/jquery-textrange/blob/1.x/README.md) for usage and examples.
- *
- * (c) 2012-2014 Daniel Imhoff <dwieeb@gmail.com> - danielimhoff.com
- */
-
-(function(factory) {
-
-	if (typeof define === 'function' && define.amd) {
-		define(['jquery'], factory);
-	} else if (typeof exports === 'object') {
-		factory(require('jquery'));
-	} else {
-		factory(jQuery);
-	}
-
-})(function($) {
-
-	var browserType,
-
-	textrange = {
-
-		/**
-		 * $().textrange() or $().textrange('get')
-		 *
-		 * Retrieves an object containing the start and end location of the text range, the length of the range and the
-		 * substring of the range.
-		 *
-		 * @param (optional) property
-		 * @return An object of properties including position, start, end, length, and text or a specific property.
-		 */
-		get: function(property) {
-			return _textrange[browserType].get.apply(this, [property]);
-		},
-
-		/**
-		 * $().textrange('set')
-		 *
-		 * Sets the selected text of an object by specifying the start and length of the selection.
-		 *
-		 * The start and length parameters are identical to PHP's substr() function with the following changes:
-		 *  - excluding start will select all the text in the field.
-		 *  - passing 0 for length will set the cursor at start. See $().textrange('setcursor')
-		 *
-		 * @param (optional) start
-		 * @param (optional) length
-		 *
-		 * @see http://php.net/manual/en/function.substr.php
-		 */
-		set: function(start, length) {
-			var s = parseInt(start),
-			    l = parseInt(length),
-			    e;
-
-			if (typeof start === 'undefined') {
-				s = 0;
-			} else if (start < 0) {
-				s = this[0].value.length + s;
-			}
-
-			if (typeof length !== 'undefined') {
-				if (length >= 0) {
-					e = s + l;
-				} else {
-					e = this[0].value.length + l;
-				}
-			}
-
-			_textrange[browserType].set.apply(this, [s, e]);
-
-			return this;
-		},
-
-		/**
-		 * $().textrange('setcursor')
-		 *
-		 * Sets the cursor at a position of the text field.
-		 *
-		 * @param position
-		 */
-		setcursor: function(position) {
-			return this.textrange('set', position, 0);
-		},
-
-		/**
-		 * $().textrange('replace')
-		 * Replaces the selected text in the input field or textarea with text.
-		 *
-		 * @param text The text to replace the selection with.
-		 */
-		replace: function(text) {
-			_textrange[browserType].replace.apply(this, [String(text)]);
-
-			return this;
-		},
-
-		/**
-		 * Alias for $().textrange('replace')
-		 */
-		insert: function(text) {
-			return this.textrange('replace', text);
-		}
-	},
-
-	_textrange = {
-		xul: {
-			get: function(property) {
-				var props = {
-					position: this[0].selectionStart,
-					start: this[0].selectionStart,
-					end: this[0].selectionEnd,
-					length: this[0].selectionEnd - this[0].selectionStart,
-					text: this.val().substring(this[0].selectionStart, this[0].selectionEnd)
-				};
-
-				return typeof property === 'undefined' ? props : props[property];
-			},
-
-			set: function(start, end) {
-				if (typeof end === 'undefined') {
-					end = this[0].value.length;
-				}
-
-				this[0].selectionStart = start;
-				this[0].selectionEnd = end;
-			},
-
-			replace: function(text) {
-				var start = this[0].selectionStart;
-				var end = this[0].selectionEnd;
-				var val = this.val();
-				this.val(val.substring(0, start) + text + val.substring(end, val.length));
-				this[0].selectionStart = start;
-				this[0].selectionEnd = start + text.length;
-			}
-		},
-
-		msie: {
-			get: function(property) {
-				var range = document.selection.createRange();
-
-				if (typeof range === 'undefined') {
-					var props = {
-						position: 0,
-						start: 0,
-						end: this.val().length,
-						length: this.val().length,
-						text: this.val()
-					};
-
-					return typeof property === 'undefined' ? props : props[property];
-				}
-
-				var start = 0;
-				var end = 0;
-				var length = this[0].value.length;
-				var lfValue = this[0].value.replace(/\r\n/g, '\n');
-				var rangeText = this[0].createTextRange();
-				var rangeTextEnd = this[0].createTextRange();
-				rangeText.moveToBookmark(range.getBookmark());
-				rangeTextEnd.collapse(false);
-
-				if (rangeText.compareEndPoints('StartToEnd', rangeTextEnd) === -1) {
-					start = -rangeText.moveStart('character', -length);
-					start += lfValue.slice(0, start).split('\n').length - 1;
-
-					if (rangeText.compareEndPoints('EndToEnd', rangeTextEnd) === -1) {
-						end = -rangeText.moveEnd('character', -length);
-						end += lfValue.slice(0, end).split('\n').length - 1;
-					} else {
-						end = length;
-					}
-				} else {
-					start = length;
-					end = length;
-				}
-
-				var props = {
-					position: start,
-					start: start,
-					end: end,
-					length: length,
-					text: range.text
-				};
-
-				return typeof property === 'undefined' ? props : props[property];
-			},
-
-			set: function(start, end) {
-				var range = this[0].createTextRange();
-
-				if (typeof range === 'undefined') {
-					return;
-				}
-
-				if (typeof end === 'undefined') {
-					end = this[0].value.length;
-				}
-
-				var ieStart = start - (this[0].value.slice(0, start).split("\r\n").length - 1);
-				var ieEnd = end - (this[0].value.slice(0, end).split("\r\n").length - 1);
-
-				range.collapse(true);
-
-				range.moveEnd('character', ieEnd);
-				range.moveStart('character', ieStart);
-
-				range.select();
-			},
-
-			replace: function(text) {
-				document.selection.createRange().text = text;
-			}
-		}
-	};
-
-	$.fn.textrange = function(method) {
-		if (typeof this[0] === 'undefined') {
-			return this;
-		}
-
-		if (typeof browserType === 'undefined') {
-			browserType = 'selectionStart' in this[0] ? 'xul' : document.selection ? 'msie' : 'unknown';
-		}
-
-		// I don't know how to support this browser. :c
-		if (browserType === 'unknown') {
-			return this;
-		}
-
-		// Focus on the element before operating upon it.
-		if (document.activeElement !== this[0]) {
-			this[0].focus();
-		}
-
-		if (typeof method === 'undefined' || typeof method !== 'string') {
-			return textrange.get.apply(this);
-		} else if (typeof textrange[method] === 'function') {
-			return textrange[method].apply(this, Array.prototype.slice.call(arguments, 1));
-		} else {
-			$.error("Method " + method + " does not exist in jQuery.textrange");
-		}
-	};
-});
-
-},{"jquery":22}],22:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.2
  * http://jquery.com/

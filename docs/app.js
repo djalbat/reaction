@@ -1,13 +1,11 @@
 'use strict';
 
-var easyUI = require('easyui'),
-    Body = easyUI.Body;
-
-var React = require('../lib/react');  ///
+var React = require('../lib/react'),
+    JSXElement = require('../lib/jsxElement');
 
 class App {
   constructor() {
-    var body = new Body();
+    var body = new JSXElement('body');  ///
     
     // var Profile,
     //     Nav = React.createClass({}),
@@ -58,6 +56,21 @@ class App {
     //
     // body.append(container);
 
+    // var Component = React.createClass({
+    //   render: function() {
+    //     return (
+    //         <div className="Component"></div>
+    //     )
+    //   },
+    //   componentDidMount: function() {
+    //     console.log('component did mount')
+    //   }
+    // });
+    //
+    // var component = <Component />;
+    //
+    // body.append(component);
+
     var Comment = React.createClass({
       render: function() {
         return (
@@ -68,6 +81,9 @@ class App {
             {this.props.children}
           </div>
         );
+      },
+      componentDidMount: function() {
+        console.log(this.props.author + '\'s comment mounted')
       }
     });
 
@@ -86,34 +102,35 @@ class App {
             {comments}
           </div>
         );
+      },
+      componentDidMount: function() {
+        console.log('The comment list component mounted')
       }
     });
-
-    var CommentForm;
 
     var CommentBox = React.createClass({
       getInitialState: function() {
         var data = [
               {id: 1, author: "Pete Hunt", text: "This is one comment."},
               {id: 2, author: "Joe Bloggs", text: "This is *another* comment..."},
-              {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"}
-            ],initialState = {
+              {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"},
+              {id: 4, author: "Billy Bignuts", text: "This is the last comment for now..."}
+            ],
+            initialState = {
               data: data
             };
-        
+
         return initialState;
-      },
-      componentDidMount: function() {
-        console.log('component did mount')
       },
       render: function() {
         return (
-          <div className="commentBox">
-            <h1>Comments</h1>
-            <CommentList data={this.state.data} />
-            <CommentForm />
+          <div className="commentList">
+            <CommentList data={this.state.data}/>
           </div>
         );
+      },
+      componentDidMount: function() {
+        console.log('The comment box component mounted')
       }
     });
 
