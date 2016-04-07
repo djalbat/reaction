@@ -1,6 +1,6 @@
-# EasyUI-JSX
+# Reaction
 
-An extension to EasyUI that admits JSX syntax.
+An alternative implementation of React.
     
 ## Contact
 

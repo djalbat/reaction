@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.easyuiJsx = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.reaction = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -88,6 +88,9 @@ var App = function App() {
       };
 
       return initialState;
+    },
+    componentDidMount: function componentDidMount() {
+      console.log('component did mount');
     },
     render: function render() {
       return React.createElement("div", { className: "commentBox" }, React.createElement("h1", null, "Comments"), React.createElement(CommentList, { data: this.state.data }), React.createElement(CommentForm, null));
@@ -471,6 +474,8 @@ function first(array) {
 ///var easyui = require('easyui'),
 ///    Element = easyui.Element;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -483,11 +488,16 @@ var Element = require('./element'),
 var JSXElement = function (_Element) {
   _inherits(JSXElement, _Element);
 
-  function JSXElement(elementName, properties, childJSXElements) {
+  function JSXElement(elementName, componentDidMount, properties, childJSXElements) {
     _classCallCheck(this, JSXElement);
 
     var elementHTML = '<' + elementName + '/>',
-        element = Element.fromHTML(elementHTML);
+        element = Element.fromHTML(elementHTML),
+        $element = element.$element; ///
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(JSXElement).call(this, $element));
+
+    _this.componentDidMount = componentDidMount;
 
     if (properties !== null) {
       var propertyNames = Object.keys(properties);
@@ -516,11 +526,15 @@ var JSXElement = function (_Element) {
     }
 
     appendChildJSXElements(element, childJSXElements);
-
-    var $element = element.$element; ///
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(JSXElement).call(this, $element));
+    return _this;
   }
+
+  _createClass(JSXElement, [{
+    key: 'getComponentDidMount',
+    value: function getComponentDidMount() {
+      return this.componentDidMount;
+    }
+  }]);
 
   return JSXElement;
 }(Element);
@@ -607,38 +621,44 @@ var React = function () {
 
       var jsxElement,
           elementName,
-          childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments); ///
+          childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments),
+          ///
+      componentDidMount; ///
 
       if (typeof reactClassOrElementName === 'string') {
         elementName = reactClassOrElementName; ///
+
+        componentDidMount = null;
       } else {
-          var reactClass = reactClassOrElementName,
+        var reactClass = reactClassOrElementName,
+            ///
+        render = reactClass.getRender(),
+            getInitialState = reactClass.getGetInitialState();
+
+        if (render !== undefined) {
+          var props = properties === null ? {} : properties,
               ///
-          render = reactClass.getRender(),
-              getInitialState = reactClass.getGetInitialState();
+          initialState = getInitialState(),
+              children = childJSXElements,
+              ///
+          state = initialState; ///
 
-          if (render !== undefined) {
-            var props = properties === null ? {} : properties,
-                ///
-            initialState = getInitialState(),
-                children = childJSXElements,
-                ///
-            state = initialState; ///
+          props.children = children;
 
-            props.children = children;
+          var instance = {
+            props: props,
+            state: state
+          };
 
-            var instance = {
-              props: props,
-              state: state
-            };
-
-            return render.apply(instance);
-          }
-
-          elementName = reactClass.getElementName();
+          return render.apply(instance);
         }
 
-      jsxElement = new JSXElement(elementName, properties, childJSXElements);
+        elementName = reactClass.getElementName();
+
+        componentDidMount = reactClass.getComponentDidMount();
+      }
+
+      jsxElement = new JSXElement(elementName, componentDidMount, properties, childJSXElements);
 
       return jsxElement;
     }
@@ -691,12 +711,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ReactClass = function () {
-  function ReactClass(elementName, render, getInitialState) {
+  function ReactClass(elementName, render, getInitialState, componentDidMount) {
     _classCallCheck(this, ReactClass);
 
     this.elementName = elementName;
     this.render = render;
     this.getInitialState = getInitialState;
+    this.componentDidMount = componentDidMount;
   }
 
   _createClass(ReactClass, [{
@@ -714,15 +735,21 @@ var ReactClass = function () {
     value: function getGetInitialState() {
       return this.getInitialState;
     }
+  }, {
+    key: 'getComponentDidMount',
+    value: function getComponentDidMount() {
+      return this.componentDidMount;
+    }
   }], [{
     key: 'fromProperties',
     value: function fromProperties(properties) {
       var displayName = properties['displayName'],
           render = properties['render'],
           getInitialState = properties['getInitialState'] || defaultGetInitialState,
+          componentDidMount = properties['componentDidMount'] || defaultComponentDidMount,
           elementName = displayName; ///
 
-      return new ReactClass(elementName, render, getInitialState);
+      return new ReactClass(elementName, render, getInitialState, componentDidMount);
     }
   }]);
 
@@ -734,6 +761,8 @@ function defaultGetInitialState() {
 
   return initialState;
 }
+
+function defaultComponentDidMount() {}
 
 module.exports = ReactClass;
 

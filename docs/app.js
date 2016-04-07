@@ -103,6 +103,9 @@ class App {
         
         return initialState;
       },
+      componentDidMount: function() {
+        console.log('component did mount')
+      },
       render: function() {
         return (
           <div className="commentBox">

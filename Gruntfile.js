@@ -12,11 +12,11 @@ module.exports = function(grunt) {
           ],
           browserifyOptions: {
             // debug: true,
-            standalone: 'easyui-jsx'
+            standalone: 'reaction'
           }
         },
         src: ['./index.js'],
-        dest: 'dist/easyui-jsx.js'
+        dest: 'dist/reaction.js'
       }
     },
     bumpup: {

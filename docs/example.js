@@ -2,9 +2,9 @@
 
 define(function(require) {
 
-  var easyuiJSX = require('../dist/easyui-jsx'),
-      App = easyuiJSX.App;
+  var reaction = require('../dist/reaction'),
+      App = reaction.App;
 
   new App();
-
+  
 });
