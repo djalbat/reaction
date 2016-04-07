@@ -56,21 +56,6 @@ class App {
     //
     // body.append(container);
 
-    // var Component = React.createClass({
-    //   render: function() {
-    //     return (
-    //         <div className="Component"></div>
-    //     )
-    //   },
-    //   componentDidMount: function() {
-    //     console.log('component did mount')
-    //   }
-    // });
-    //
-    // var component = <Component />;
-    //
-    // body.append(component);
-
     var Comment = React.createClass({
       render: function() {
         return (

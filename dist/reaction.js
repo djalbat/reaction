@@ -60,21 +60,6 @@ var App = function App() {
   //
   // body.append(container);
 
-  // var Component = React.createClass({
-  //   render: function() {
-  //     return (
-  //         <div className="Component"></div>
-  //     )
-  //   },
-  //   componentDidMount: function() {
-  //     console.log('component did mount')
-  //   }
-  // });
-  //
-  // var component = <Component />;
-  //
-  // body.append(component);
-
   var Comment = React.createClass({ displayName: "Comment",
     render: function render() {
       return React.createElement("div", { className: "comment" }, React.createElement("h2", null, this.props.author), this.props.children);
@@ -658,10 +643,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ReactClass = require('../lib/reactClass'),
-    Element = require('../lib/element'),
-    JSXElement = require('../lib/jsxElement'),
-    JSXTextElement = require('../lib/jsxTextElement');
+var ReactClass = require('./reactClass'),
+    Element = require('./element'),
+    JSXElement = require('./jsxElement'),
+    JSXTextElement = require('./jsxTextElement');
 
 var React = function () {
   function React() {
@@ -710,7 +695,7 @@ var React = function () {
 
           jsxElement = render.apply(instance);
 
-          jsxElement.setComponentDidMount(componentDidMount.bind(instance));
+          jsxElement.setComponentDidMount(componentDidMount.bind(instance)); ///
         }
       }
 
@@ -785,7 +770,7 @@ function first(array) {
 
 module.exports = React;
 
-},{"../lib/element":3,"../lib/jsxElement":4,"../lib/jsxTextElement":5,"../lib/reactClass":7}],7:[function(require,module,exports){
+},{"./element":3,"./jsxElement":4,"./jsxTextElement":5,"./reactClass":7}],7:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
