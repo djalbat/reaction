@@ -62,8 +62,6 @@ var App = function App() {
   //
   // body.append(container);
 
-  var data = [{ id: 1, author: "Pete Hunt", text: "This is one comment." }, { id: 2, author: "Joe Bloggs", text: "This is *another* comment..." }, { id: 3, author: "Jordan Walker", text: "This is **yet another** comment!" }];
-
   var Comment = React.createClass({ displayName: "Comment",
     render: function render() {
       return React.createElement("div", { className: "comment" }, React.createElement("h2", null, this.props.author), this.props.children);
@@ -83,12 +81,20 @@ var App = function App() {
   var CommentForm;
 
   var CommentBox = React.createClass({ displayName: "CommentBox",
+    getInitialState: function getInitialState() {
+      var data = [{ id: 1, author: "Pete Hunt", text: "This is one comment." }, { id: 2, author: "Joe Bloggs", text: "This is *another* comment..." }, { id: 3, author: "Jordan Walker", text: "This is **yet another** comment!" }],
+          initialState = {
+        data: data
+      };
+
+      return initialState;
+    },
     render: function render() {
-      return React.createElement("div", { className: "commentBox" }, React.createElement("h1", null, "Comments"), React.createElement(CommentList, { data: this.props.data }), React.createElement(CommentForm, null));
+      return React.createElement("div", { className: "commentBox" }, React.createElement("h1", null, "Comments"), React.createElement(CommentList, { data: this.state.data }), React.createElement(CommentForm, null));
     }
   });
 
-  var commentBox = React.createElement(CommentBox, { data: data });
+  var commentBox = React.createElement(CommentBox, null);
 
   body.append(commentBox);
 };
@@ -591,29 +597,39 @@ var React = function () {
   }, {
     key: 'createElement',
     value: function createElement(reactClassOrElementName, properties) {
-      if (reactClassOrElementName !== undefined) {
-        for (var _len = arguments.length, remainingArguments = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-          remainingArguments[_key - 2] = arguments[_key];
-        }
+      if (reactClassOrElementName === undefined) {
+        return undefined;
+      }
 
-        var jsxElement,
-            elementName,
-            childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments);
+      for (var _len = arguments.length, remainingArguments = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        remainingArguments[_key - 2] = arguments[_key];
+      }
 
-        if (typeof reactClassOrElementName === 'string') {
-          elementName = reactClassOrElementName;
-        } else {
+      var jsxElement,
+          elementName,
+          childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments); ///
+
+      if (typeof reactClassOrElementName === 'string') {
+        elementName = reactClassOrElementName; ///
+      } else {
           var reactClass = reactClassOrElementName,
-              render = reactClass.getRender();
+              ///
+          render = reactClass.getRender(),
+              getInitialState = reactClass.getGetInitialState();
 
           if (render !== undefined) {
             var props = properties === null ? {} : properties,
-                children = childJSXElements; ///
+                ///
+            initialState = getInitialState(),
+                children = childJSXElements,
+                ///
+            state = initialState; ///
 
             props.children = children;
 
             var instance = {
-              props: props
+              props: props,
+              state: state
             };
 
             return render.apply(instance);
@@ -622,10 +638,9 @@ var React = function () {
           elementName = reactClass.getElementName();
         }
 
-        jsxElement = new JSXElement(elementName, properties, childJSXElements);
+      jsxElement = new JSXElement(elementName, properties, childJSXElements);
 
-        return jsxElement;
-      }
+      return jsxElement;
     }
   }]);
 
@@ -676,17 +691,18 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ReactClass = function () {
-  function ReactClass(displayName, render) {
+  function ReactClass(elementName, render, getInitialState) {
     _classCallCheck(this, ReactClass);
 
-    this.displayName = displayName;
+    this.elementName = elementName;
     this.render = render;
+    this.getInitialState = getInitialState;
   }
 
   _createClass(ReactClass, [{
-    key: 'getDisplayName',
-    value: function getDisplayName() {
-      return this.displayName;
+    key: 'getElementName',
+    value: function getElementName() {
+      return this.elementName;
     }
   }, {
     key: 'getRender',
@@ -694,24 +710,30 @@ var ReactClass = function () {
       return this.render;
     }
   }, {
-    key: 'getElementName',
-    value: function getElementName() {
-      var elementName = this.displayName; ///
-
-      return elementName;
+    key: 'getGetInitialState',
+    value: function getGetInitialState() {
+      return this.getInitialState;
     }
   }], [{
     key: 'fromProperties',
     value: function fromProperties(properties) {
       var displayName = properties['displayName'],
-          render = properties['render'];
+          render = properties['render'],
+          getInitialState = properties['getInitialState'] || defaultGetInitialState,
+          elementName = displayName; ///
 
-      return new ReactClass(displayName, render);
+      return new ReactClass(elementName, render, getInitialState);
     }
   }]);
 
   return ReactClass;
 }();
+
+function defaultGetInitialState() {
+  var initialState = {};
+
+  return initialState;
+}
 
 module.exports = ReactClass;
 

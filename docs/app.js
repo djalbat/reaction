@@ -58,12 +58,6 @@ class App {
     //
     // body.append(container);
 
-    var data = [
-      {id: 1, author: "Pete Hunt", text: "This is one comment."},
-      {id: 2, author: "Joe Bloggs", text: "This is *another* comment..."},
-      {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"}
-    ];
-
     var Comment = React.createClass({
       render: function() {
         return (
@@ -98,18 +92,29 @@ class App {
     var CommentForm;
 
     var CommentBox = React.createClass({
+      getInitialState: function() {
+        var data = [
+              {id: 1, author: "Pete Hunt", text: "This is one comment."},
+              {id: 2, author: "Joe Bloggs", text: "This is *another* comment..."},
+              {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"}
+            ],initialState = {
+              data: data
+            };
+        
+        return initialState;
+      },
       render: function() {
         return (
           <div className="commentBox">
             <h1>Comments</h1>
-            <CommentList data={this.props.data} />
+            <CommentList data={this.state.data} />
             <CommentForm />
           </div>
         );
       }
     });
 
-    var commentBox = <CommentBox data={data} />;
+    var commentBox = <CommentBox />;
 
     body.append(commentBox);
   }
