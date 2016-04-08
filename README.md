@@ -4,7 +4,7 @@ An alternative implementation of React.
 
 ## Installation
 
-There is no [npm](https://www.npmjs.com/) packge quite yet. Please use [git](https://git-scm.com/):
+There is no [npm](https://www.npmjs.com/) package yet. Please use [git](https://git-scm.com/):
 
     git clone https://github.com/djalbat/Reaction.git
 
@@ -12,7 +12,7 @@ Launch the `example.html` file in the `docs` folder. This references the `exampl
 
 ## Usage
 
-There is a working example in the `app.js` file in the `docs` directory. To compile this, install the necessary npm modules...
+To compile this, install the necessary npm modules...
 
     npm install
 
@@ -24,6 +24,8 @@ There is a working example in the `app.js` file in the `docs` directory. To comp
 
     grunt b
     grunt w
+
+There is a working example in the `app.js` file in the `lib` directory, remember.
 
 #### What's the idea?
 

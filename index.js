@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-  App: require('./docs/app'), ///
+  App: require('./lib/app'), ///
   JSXElement: require('./lib/jsxElement')
 };

@@ -1,6 +1,14 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.reaction = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+module.exports = {
+  App: require('./lib/app'), ///
+  JSXElement: require('./lib/jsxElement')
+};
+
+},{"./lib/app":2,"./lib/jsxElement":4}],2:[function(require,module,exports){
+'use strict';
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var React = require('../lib/react'),
@@ -60,29 +68,52 @@ var App = function App() {
   //
   // body.append(container);
 
-  var Comment = React.createClass({ displayName: "Comment",
+  var Comment = React.createClass({
+    displayName: 'Comment',
+
     render: function render() {
-      return React.createElement("div", { className: "comment" }, React.createElement("h2", null, this.props.author), this.props.children);
+      return React.createElement(
+        'div',
+        { className: 'comment' },
+        React.createElement(
+          'h2',
+          null,
+          this.props.author
+        ),
+        this.props.children
+      );
     },
     componentDidMount: function componentDidMount() {
       console.log(this.props.author + '\'s comment mounted');
     }
   });
 
-  var CommentList = React.createClass({ displayName: "CommentList",
+  var CommentList = React.createClass({
+    displayName: 'CommentList',
+
     render: function render() {
       var comments = this.props.data.map(function (comment) {
-        return React.createElement(Comment, { author: comment.author, key: comment.id }, comment.text);
+        return React.createElement(
+          Comment,
+          { author: comment.author, key: comment.id },
+          comment.text
+        );
       });
 
-      return React.createElement("div", { className: "commentList" }, comments);
+      return React.createElement(
+        'div',
+        { className: 'commentList' },
+        comments
+      );
     },
     componentDidMount: function componentDidMount() {
       console.log('The comment list component mounted');
     }
   });
 
-  var CommentBox = React.createClass({ displayName: "CommentBox",
+  var CommentBox = React.createClass({
+    displayName: 'CommentBox',
+
     getInitialState: function getInitialState() {
       var data = [{ id: 1, author: "Pete Hunt", text: "This is one comment." }, { id: 2, author: "Joe Bloggs", text: "This is *another* comment..." }, { id: 3, author: "Jordan Walker", text: "This is **yet another** comment!" }],
           initialState = {
@@ -92,7 +123,11 @@ var App = function App() {
       return initialState;
     },
     render: function render() {
-      return React.createElement("div", { className: "commentList" }, React.createElement(CommentList, { data: this.state.data }));
+      return React.createElement(
+        'div',
+        { className: 'commentList' },
+        React.createElement(CommentList, { data: this.state.data })
+      );
     },
     componentDidMount: function componentDidMount() {
       console.log('The comment box component mounted');
@@ -115,15 +150,8 @@ var App = function App() {
 
 module.exports = App;
 
-},{"../lib/jsxElement":4,"../lib/react":6}],2:[function(require,module,exports){
-'use strict';
 
-module.exports = {
-  App: require('./docs/app'), ///
-  JSXElement: require('./lib/jsxElement')
-};
-
-},{"./docs/app":1,"./lib/jsxElement":4}],3:[function(require,module,exports){
+},{"../lib/jsxElement":4,"../lib/react":6}],3:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -497,6 +525,7 @@ function first(array) {
   return array[0];
 }
 
+
 },{"jquery":8}],4:[function(require,module,exports){
 'use strict';
 
@@ -624,6 +653,7 @@ var JSXElement = function () {
 
 module.exports = JSXElement;
 
+
 },{"./element":3,"./jsxTextElement":5}],5:[function(require,module,exports){
 'use strict';
 
@@ -649,6 +679,7 @@ var JSXTextElement = function () {
 }();
 
 module.exports = JSXTextElement;
+
 
 },{}],6:[function(require,module,exports){
 'use strict';
@@ -784,6 +815,7 @@ function first(array) {
 
 module.exports = React;
 
+
 },{"./element":3,"./jsxElement":4,"./jsxTextElement":5,"./reactClass":7}],7:[function(require,module,exports){
 'use strict';
 
@@ -857,6 +889,7 @@ var ReactClass = function () {
 }();
 
 module.exports = ReactClass;
+
 
 },{}],8:[function(require,module,exports){
 /*!
@@ -10702,5 +10735,5 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}]},{},[2])(2)
+},{}]},{},[1])(1)
 });
