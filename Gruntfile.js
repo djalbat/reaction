@@ -22,7 +22,7 @@ module.exports = function(grunt) {
       dist: {
         options: {
           browserifyOptions: {
-            // debug: true,
+            debug: true,
             standalone: 'reaction'
           }
         },
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
       },
       npm: {
         command: [
-          // 'npm install easyui@latest --save'
+          'npm install easyui@latest --save'
         ].join('&&')
       }
     },
@@ -82,6 +82,6 @@ module.exports = function(grunt) {
     grunt.task.run('babel');
     grunt.task.run('browserify');
     grunt.task.run('bumpup:' + type);
-    grunt.task.run('shell:git')
+    grunt.task.run('shell:git');
   });
 };

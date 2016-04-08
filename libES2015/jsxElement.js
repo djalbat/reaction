@@ -1,10 +1,9 @@
 'use strict';
 
-///var easyui = require('easyui'),
-///    Element = easyui.Element;
+var easyui = require('easyui'),
+    Element = easyui.Element;
 
-var Element = require('./element'),
-    JSXTextElement = require('./jsxTextElement');
+var JSXTextElement = require('./jsxTextElement');
 
 class JSXElement {
   constructor(elementOrSelector, childJSXElements) {

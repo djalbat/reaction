@@ -1,7 +1,9 @@
 'use strict';
 
+var easyui = require('easyui'),
+    Element = easyui.Element;
+
 var ReactClass = require('./reactClass'),
-    Element = require('./element'),
     JSXElement = require('./jsxElement'),
     JSXTextElement = require('./jsxTextElement');
 
