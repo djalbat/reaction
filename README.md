@@ -8,7 +8,7 @@ There is no [npm](https://www.npmjs.com/) package yet. Please use [git](https://
 
     git clone https://github.com/djalbat/Reaction.git
 
-Launch the `example.html` file in the `docs` folder. This references the `example.js` file which loads the browserified distribution file and invokes the example app, such as it is. This indirection is because the `app.js` file contains [JSX](https://facebook.github.io/jsx/) and so needs to be built along with the library files for now.
+Launch the `example.html` file in the `docs` folder. This references the `example.js` file which instantiates and invokes the example app, such as it is. This indirection is because the `app.js` file contains [JSX](https://facebook.github.io/jsx/) and so needs to be built along with the library files for now.
 
 ## Usage
 

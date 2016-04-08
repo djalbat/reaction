@@ -1,11 +1,11 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "license": "MIT",
   "repository": "https://github.com/djalbat/Reaction",
   "dependencies": {
-    "easyui": "^3.2.14",
+    "easyui": "^3.2.15",
     "jquery": "^2.2.2"
   },
   "devDependencies": {
