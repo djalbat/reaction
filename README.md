@@ -4,15 +4,15 @@ An alternative implementation of React.
 
 ## Installation
 
-There is no [npm](https://www.npmjs.com/) quite yet. Please use [git](https://git-scm.com/) for now:
+There is no [npm](https://www.npmjs.com/) packge quite yet. Please use [git](https://git-scm.com/):
 
     git clone https://github.com/djalbat/Reaction.git
 
-Launch the `example.html` file in the `docs` folder. This references the `example.js` file which loads the browserified distribution file and invokes the example app, such as it is. This indirection is because the `app.js` file contains [JSX](https://facebook.github.io/jsx/) and therefore needs to be built along with the library files, at least for now.
+Launch the `example.html` file in the `docs` folder. This references the `example.js` file which loads the browserified distribution file and invokes the example app, such as it is. This indirection is because the `app.js` file contains [JSX](https://facebook.github.io/jsx/) and so needs to be built along with the library files for now.
 
 ## Usage
 
-There is a working example in the aforementioned `app.js` file in the `docs` directory. To compile this, install the necessary npm modules...
+There is a working example in the `app.js` file in the `docs` directory. To compile this, install the necessary npm modules...
 
     npm install
 
@@ -20,7 +20,7 @@ There is a working example in the aforementioned `app.js` file in the `docs` dir
 
     npm install -g grunt-cli
 
-...then build or watch with (grunt)[http://gruntjs.com/]:
+...then build or watch with [grunt](http://gruntjs.com/):
 
     grunt b
     grunt w
