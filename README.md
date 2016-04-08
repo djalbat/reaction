@@ -10,7 +10,7 @@ There is no [npm](https://www.npmjs.com/) package yet. Please use [git](https://
 
 ## Example
 
-The `example.html` file in the `docs` folder contains the script that instantiates and invokes the example app, such as it is. The `app.js` file contains [JSX](https://facebook.github.io/jsx/) and is built alongside with the library files for now.
+The `example.html` file in the `docs` folder contains the script that instantiates and invokes the example application. The `app.js` file contains [JSX](https://facebook.github.io/jsx/) and is built alongside with the library files for now.
 
 ## Compiling from source
 
