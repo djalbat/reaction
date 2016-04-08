@@ -8,9 +8,11 @@ There is no [npm](https://www.npmjs.com/) package yet. Please use [git](https://
 
     git clone https://github.com/djalbat/Reaction.git
 
-Launch the `example.html` file in the `docs` folder. This references the `example.js` file which instantiates and invokes the example app, such as it is. This indirection is because the `app.js` file contains [JSX](https://facebook.github.io/jsx/) and so needs to be built along with the library files for now.
+## Example
 
-## Usage
+The `example.html` file in the `docs` folder contains the script that instantiates and invokes the example app, such as it is. The `app.js` file contains [JSX](https://facebook.github.io/jsx/) and is built alongside with the library files for now.
+
+## Compiling from source
 
 To compile this, install the necessary npm modules...
 
@@ -25,9 +27,7 @@ To compile this, install the necessary npm modules...
     grunt b
     grunt w
 
-There is a working example in the `app.js` file in the `lib` directory, remember.
-
-#### What's the idea?
+## What's the idea?
 
 To replace Facebook's implementation of React with another. You can create what are called JSX elements directly using the constructor of the `JSXElement` class or you can use the `React.createClass(...)` method and JSX in the usual way:
 
@@ -42,11 +42,11 @@ body.append(nav);
 
 There is no need to use, and no support for, the `ReactDOM.render(...)` method. Just append JSX elements directly to each other.
 
-#### What's supported at the moment?
+## What's supported at the moment?
 
 Apart from JSX and the `React.createClass(...)` method, properties and initial state, plus mounting.
 
-#### What's coming up?
+## What's coming up?
 
 - JSX elements can be thought of pretty much as DOM elements, hence the `append()` method. Other methods from [EasyUI](https://github.com/djalbat/EasyUI)'s `Element` class will follow.
 - Hooking into [Redux](https://github.com/reactjs/react-redux) is a priority, watch this space.
