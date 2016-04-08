@@ -35,7 +35,7 @@ To replace Facebook's implementation of React with another. You can create what 
 var body = new JSXElement('body');  ///
 
 var Nav = React.createClass({}),
-    nav = <Nav className="mainNavigation">...</Nav>;
+    nav = <Nav className="...">...</Nav>;
 
 body.append(nav);
 ```
