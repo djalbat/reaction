@@ -45,11 +45,7 @@ Install the necessary npm modules...
     grunt b
     grunt w
 
-## What's the idea?
-
-To replace Facebook's implementation of React with another.
-
-## What's supported at the moment?
+## Currently supported functionality
 
 - JSX (the `React.createElement(...)` method is implemented)
 - The `React.createClass(...)` method
@@ -57,9 +53,10 @@ To replace Facebook's implementation of React with another.
 - initial state, namely the `getInitialState` property of your react class properties
 - mounting, namely the `componentDidMount` property of your react class properties
 
-## What's coming up?
+## Roadmap
 
-- Hooking into [Redux](https://github.com/reactjs/react-redux) is a priority, watch this space.
+- Getting state working
+- The hooking into [Redux](https://github.com/reactjs/react-redux) is a priority, watch this space.
 
 ## Contact
 

@@ -6,6 +6,7 @@ var reaction = require('reaction'),
 
 class App {
   constructor() {
+
     // var Profile,
     //     Nav = React.createClass({}),
     //     nav = <Nav color="blue"><Profile>click</Profile></Nav>;
