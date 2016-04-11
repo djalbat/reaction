@@ -96,7 +96,7 @@ class App {
       getInitialState: function() {
         var data = [
               {id: 1, author: "Pete Hunt", text: "This is one comment."},
-              {id: 2, author: "Joe Bloggs", text: "This is *another* comment..."},
+              {id: 2, author: "Joe Winner", text: "This is *another* comment..."},
               {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"}
             ],
             initialState = {
@@ -123,7 +123,7 @@ class App {
     
     setTimeout(function() {
       var data = [
-            {id:4, author: "Billy Bignuts", text: "This is the last comment for now..."}  
+            {id:4, author: "Billy Wright", text: "This is the last comment for now..."}
           ],
           state = {
             data: data
