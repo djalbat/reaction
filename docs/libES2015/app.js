@@ -1,12 +1,11 @@
 'use strict';
 
-var React = require('../lib/react'),
-    JSXElement = require('../lib/jsxElement');
+var reaction = require('reaction'),
+    React = reaction.React,
+    ReactDOM = reaction.ReactDOM;
 
 class App {
   constructor() {
-    var body = new JSXElement('body');  ///
-    
     // var Profile,
     //     Nav = React.createClass({}),
     //     nav = <Nav color="blue"><Profile>click</Profile></Nav>;
@@ -120,7 +119,7 @@ class App {
 
     var commentBox = <CommentBox />;
 
-    body.append(commentBox);
+    ReactDOM.render(commentBox, document.getElementsByTagName('body')[0]);
     
     setTimeout(function() {
       var data = [

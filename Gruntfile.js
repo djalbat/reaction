@@ -15,6 +15,11 @@ module.exports = function(grunt) {
           cwd: './libES2015/',
           src: ['**/*.js'],
           dest: './lib/'
+        }, {
+          expand: true,
+          cwd: './docs/libES2015/',
+          src: ['**/*.js'],
+          dest: './docs/lib/'
         }]
       }
     },
@@ -23,11 +28,11 @@ module.exports = function(grunt) {
         options: {
           browserifyOptions: {
             debug: true,
-            standalone: 'reaction'
+            standalone: 'example'
           }
         },
-        src: ['./index.js'],
-        dest: 'dist/reaction.js'
+        src: ['./docs/index.js'],
+        dest: './docs/example.js'
       }
     },
     bumpup: {
@@ -41,25 +46,25 @@ module.exports = function(grunt) {
           'git push'
         ].join('&&')
       },
-      npm: {
+      npmEasyUI: {
         command: [
           'npm install easyui@latest --save'
         ].join('&&')
-      }
-    },
-    copy: {
-      main: {
-        files: [
-          {src: './node_modules/easyui/dist/easyui.js', dest: './docs/lib/easyui.js'}
-        ]
+      },
+      npm: {
+        command: [
+          'npm install'
+        ].join('&&')
       }
     },
     watch: {
       files: [
+        './docs/libES2015/**/*.js',
         './libES2015/**/*.js',
+        './docs/index.js',
         './index.js'
       ],
-      tasks: ['babel', 'browserify']
+      tasks: ['babel', 'bumpup', 'shell:npm', 'browserify']
     }
   });
 
@@ -67,18 +72,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-bumpup');
   grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['babel']);
+  grunt.registerTask('default', []);
 
-  grunt.registerTask('b', ['shell:npm', 'copy', 'babel', 'browserify']);
-  grunt.registerTask('w', ['shell:npm', 'copy', 'babel', 'browserify', 'watch']);
+  grunt.registerTask('b', ['shell:npmEasyUI', 'babel', 'bumpup', 'shell:npm', 'browserify']);
+  grunt.registerTask('w', ['shell:npmEasyUI', 'babel', 'bumpup', 'shell:npm', 'browserify', 'watch']);
   grunt.registerTask('g', function() {
     var type = grunt.option('type') || 'patch';
 
     grunt.task.run('shell:npm');
-    grunt.task.run('copy');
     grunt.task.run('babel');
     grunt.task.run('browserify');
     grunt.task.run('bumpup:' + type);

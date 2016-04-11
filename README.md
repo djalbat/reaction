@@ -4,17 +4,33 @@ An alternative implementation of React.
 
 ## Installation
 
-There is no [npm](https://www.npmjs.com/) package yet. Please use [git](https://git-scm.com/):
+There is no [npm](https://www.npmjs.com/) package yet. Please use [git](https://git-scm.com/) to install Reaction locally:
 
     git clone https://github.com/djalbat/Reaction.git
 
+Assuming your own proejct sits alongside the Reaction directory, add the following to your package JSON dependencies:
+
+    "reaction": "../Reaction"
+
+Now you can install Reaction with the usual npm install:
+
+   npm install reaction
+
+## Usage
+
+```js
+var reaction = require('reaction'),
+    React = reaction.React,
+    ReactDOM = reaction.ReactDOM;
+```
+
 ## Example
 
-The `example.html` file in the `docs` folder contains the script that instantiates and invokes the example application. The `app.js` file contains [JSX](https://facebook.github.io/jsx/) and is built alongside with the library files for now.
+The `example.html` file in the `docs` folder contains a script that instantiates and invokes an example application. The `app.js` file can be found in the `docs/libES2015 folder`
 
 ## Compiling from source
 
-To compile this, install the necessary npm modules...
+Install the necessary npm modules...
 
     npm install
 
@@ -29,22 +45,17 @@ To compile this, install the necessary npm modules...
 
 ## What's the idea?
 
-To replace Facebook's implementation of React with another. You can create what are called JSX elements directly using the constructor of the `JSXElement` class or you can use the `React.createClass(...)` method and JSX in the usual way:
-
-```js
-var body = new JSXElement('body');  ///
-
-var Nav = React.createClass({}),
-    nav = <Nav className="...">...</Nav>;
-
-body.append(nav);
-```
-
-There is no need to use, and no support for, the `ReactDOM.render(...)` method. Just append JSX elements directly to each other.
+To replace Facebook's implementation of React with another.
 
 ## What's supported at the moment?
 
-Apart from JSX and the `React.createClass(...)` method, properties and initial state, plus mounting.
+[JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) is supported with the `React.createElement(...)` method. Just compile your JSX in the usual way.
+
+- JSX
+- The `React.createClass(...)` method
+- properties
+- initial state, namely the `getInitialState` property of your react class properties
+- mounting, namely the `componentDidMount` property of your react class properties
 
 ## What's coming up?
 

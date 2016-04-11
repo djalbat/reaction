@@ -100,6 +100,12 @@ class JSXElement {
       }
     }.bind(this));
   }
+  
+  static fromDOMElement(domElement) {
+    var element = Element.fromDOMElement(domElement);
+    
+    return new JSXElement(element);
+  }
 }
 
 module.exports = JSXElement;
