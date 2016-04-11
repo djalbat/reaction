@@ -14,15 +14,17 @@ Assuming your own proejct sits alongside the Reaction directory, add the followi
 
 Now you can install Reaction with the usual npm install:
 
-   npm install reaction
+    npm install reaction
 
 ## Usage
 
 ```js
 var reaction = require('reaction'),
-    React = reaction.React,
-    ReactDOM = reaction.ReactDOM;
+    ReactDOM = reaction.ReactDOM,
+    React = reaction.React;
 ```
+
+Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way.
 
 ## Example
 
@@ -49,9 +51,7 @@ To replace Facebook's implementation of React with another.
 
 ## What's supported at the moment?
 
-[JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) is supported with the `React.createElement(...)` method. Just compile your JSX in the usual way.
-
-- JSX
+- JSX (the `React.createElement(...)` method is implemented)
 - The `React.createClass(...)` method
 - properties
 - initial state, namely the `getInitialState` property of your react class properties
@@ -59,7 +59,6 @@ To replace Facebook's implementation of React with another.
 
 ## What's coming up?
 
-- JSX elements can be thought of pretty much as DOM elements, hence the `append()` method. Other methods from [EasyUI](https://github.com/djalbat/EasyUI)'s `Element` class will follow.
 - Hooking into [Redux](https://github.com/reactjs/react-redux) is a priority, watch this space.
 
 ## Contact

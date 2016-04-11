@@ -1,8 +1,8 @@
 'use strict';
 
 var reaction = require('reaction'),
-    React = reaction.React,
-    ReactDOM = reaction.ReactDOM;
+    ReactDOM = reaction.ReactDOM,
+    React = reaction.React;
 
 class App {
   constructor() {
