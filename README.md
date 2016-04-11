@@ -28,7 +28,7 @@ Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.htm
 
 ## Example
 
-The `example.html` file in the `docs` folder contains a script that instantiates and invokes an example application. The `app.js` file can be found in the `docs/libES2015 folder`
+The `example.html` file in the `docs` folder contains a script that instantiates and invokes an example application. The relevant `app.js` file can be found in the `docs/libES2015` folder.
 
 ## Compiling from source
 
