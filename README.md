@@ -14,7 +14,7 @@ Assuming your own proejct sits alongside the Reaction directory, add the followi
 
 Now you can install Reaction with the usual npm install:
 
-    npm install reaction
+    npm install
 
 ## Usage
 
