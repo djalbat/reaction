@@ -96,22 +96,43 @@ class App {
     // });
 
     var CommentList = React.createClass({
+      getInitialState: function() {
+        var title = "Some title",
+            initialState = {
+              title: title
+            };
+
+        return initialState;
+      },
       render: function() {
         return (
 
           <div className="commentList">
-            {this.props.message}
+            <h2>
+              {this.state.title}
+            </h2>
+            <p>
+              {this.props.message}
+            </p>
           </div>
         );
       }
     });
 
     var CommentBox = React.createClass({
+      getInitialState: function() {
+        var message = "Hello, world!!!",
+            initialState = {
+              message: message
+            };
+
+        return initialState;
+      },
       render: function() {
         return (
 
           <div className="commentBox">
-            <CommentList message="Hello, world!"/>
+            <CommentList message={this.state.message}/>
           </div>
         );
       }

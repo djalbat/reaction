@@ -108,11 +108,28 @@ var App = function App() {
   var CommentList = React.createClass({
     displayName: 'CommentList',
 
+    getInitialState: function getInitialState() {
+      var title = "Some title",
+          initialState = {
+        title: title
+      };
+
+      return initialState;
+    },
     render: function render() {
       return React.createElement(
         'div',
         { className: 'commentList' },
-        this.props.message
+        React.createElement(
+          'h2',
+          null,
+          this.state.title
+        ),
+        React.createElement(
+          'p',
+          null,
+          this.props.message
+        )
       );
     }
   });
@@ -120,11 +137,19 @@ var App = function App() {
   var CommentBox = React.createClass({
     displayName: 'CommentBox',
 
+    getInitialState: function getInitialState() {
+      var message = "Hello, world!!!",
+          initialState = {
+        message: message
+      };
+
+      return initialState;
+    },
     render: function render() {
       return React.createElement(
         'div',
         { className: 'commentBox' },
-        React.createElement(CommentList, { message: 'Hello, world!' })
+        React.createElement(CommentList, { message: this.state.message })
       );
     }
   });
