@@ -17,7 +17,7 @@ class JSXReactElement {
 
     this.state = initialState;
 
-    this.renderJSXElement();
+    this.render();
 
     this.jsxElement.mount(parentJSXElement);
 
@@ -29,14 +29,14 @@ class JSXReactElement {
 
     this.jsxElement.remove();
 
-    this.renderJSXElement();
+    this.render();
 
     var parentJSXElement = this.parentJSXElement;
 
     this.jsxElement.mount(parentJSXElement);  ///
   }
 
-  renderJSXElement() {
+  render() {
     var props = this.properties || {},  ///
         state = this.state;
     

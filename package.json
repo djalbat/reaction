@@ -1,7 +1,7 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "1.0.3",
+  "version": "1.0.13",
   "license": "MIT",
   "repository": "https://github.com/djalbat/Reaction",
   "dependencies": {
