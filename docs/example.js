@@ -11516,13 +11516,15 @@ var easyui = require('easyui'),
 var JSXTextElement = require('./jsxTextElement');
 
 var JSXElement = function () {
-  function JSXElement(elementOrSelector, childJSXElements) {
+  function JSXElement(elementOrSelector, properties, childJSXElements) {
     _classCallCheck(this, JSXElement);
 
     var element = elementOrSelector instanceof Element ? elementOrSelector : ///
     new Element(elementOrSelector);
 
     this.element = element;
+
+    this.addPropertiesAsElementAttributes(properties);
 
     this.appendChildJSXElements(childJSXElements);
   }
@@ -11531,11 +11533,6 @@ var JSXElement = function () {
     key: 'getElement',
     value: function getElement() {
       return this.element;
-    }
-  }, {
-    key: 'remove',
-    value: function remove() {
-      this.element.remove();
     }
   }, {
     key: 'append',
@@ -11551,6 +11548,42 @@ var JSXElement = function () {
 
         this.element.append(element);
       }
+    }
+  }, {
+    key: 'remove',
+    value: function remove() {
+      this.element.remove();
+    }
+  }, {
+    key: 'addPropertiesAsElementAttributes',
+    value: function addPropertiesAsElementAttributes(properties) {
+      if (properties === null) {
+        return;
+      }
+
+      var propertyNames = Object.keys(properties);
+
+      propertyNames.forEach(function (propertyName) {
+        var attributeName,
+            propertyValue = properties[propertyName],
+            attributeValue = propertyValue;
+
+        switch (propertyName) {
+          case 'className':
+            attributeName = 'class';
+            break;
+
+          case 'htmlFor':
+            attributeName = 'for';
+            break;
+
+          default:
+            attributeName = propertyName;
+            break;
+        }
+
+        this.element.addAttribute(attributeName, attributeValue);
+      }.bind(this));
     }
   }, {
     key: 'appendChildJSXElements',
@@ -11579,9 +11612,10 @@ var JSXElement = function () {
     key: 'fromDOMElement',
     value: function fromDOMElement(domElement) {
       var element = Element.fromDOMElement(domElement),
+          properties = null,
           childJSXElements = [];
 
-      return new JSXElement(element, childJSXElements);
+      return new JSXElement(element, properties, childJSXElements);
     }
   }]);
 
@@ -11745,9 +11779,7 @@ var React = function () {
         elementHTML = '<' + elementName + '/>';
         element = Element.fromHTML(elementHTML);
 
-        addPropertiesToElementAsAttributes(element, properties);
-
-        jsxElement = new JSXElement(element, childJSXElements);
+        jsxElement = new JSXElement(element, properties, childJSXElements);
 
         return jsxElement;
       }
@@ -11763,9 +11795,7 @@ var React = function () {
         elementHTML = '<' + elementName + '/>';
         element = Element.fromHTML(elementHTML);
 
-        addPropertiesToElementAsAttributes(element, properties);
-
-        jsxElement = new JSXElement(element, childJSXElements);
+        jsxElement = new JSXElement(element, properties, childJSXElements);
 
         return jsxElement;
       }
@@ -11806,34 +11836,6 @@ function childJSXElementsFromRemainingArguments() {
     }
 
   return childJSXElements;
-}
-
-function addPropertiesToElementAsAttributes(element, properties) {
-  if (properties !== null) {
-    var propertyNames = Object.keys(properties);
-
-    propertyNames.forEach(function (propertyName) {
-      var attributeName,
-          propertyValue = properties[propertyName],
-          attributeValue = propertyValue;
-
-      switch (propertyName) {
-        case 'className':
-          attributeName = 'class';
-          break;
-
-        case 'htmlFor':
-          attributeName = 'for';
-          break;
-
-        default:
-          attributeName = propertyName;
-          break;
-      }
-
-      element.addAttribute(attributeName, attributeValue);
-    });
-  }
 }
 
 function first(array) {

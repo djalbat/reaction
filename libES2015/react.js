@@ -28,9 +28,7 @@ class React {
       elementHTML = '<' + elementName + '/>';
       element = Element.fromHTML(elementHTML);
 
-      addPropertiesToElementAsAttributes(element, properties);
-
-      jsxElement = new JSXElement(element, childJSXElements);
+      jsxElement = new JSXElement(element, properties, childJSXElements);
 
       return jsxElement;
     }
@@ -45,9 +43,7 @@ class React {
       elementHTML = '<' + elementName + '/>';
       element = Element.fromHTML(elementHTML);
 
-      addPropertiesToElementAsAttributes(element, properties);
-
-      jsxElement = new JSXElement(element, childJSXElements);
+      jsxElement = new JSXElement(element, properties, childJSXElements);
 
       return jsxElement;
     }
@@ -85,34 +81,6 @@ function childJSXElementsFromRemainingArguments() {
   }
 
   return childJSXElements;
-}
-
-function addPropertiesToElementAsAttributes(element, properties) {
-  if (properties !== null) {
-    var propertyNames = Object.keys(properties);
-
-    propertyNames.forEach(function (propertyName) {
-      var attributeName,
-          propertyValue = properties[propertyName],
-          attributeValue = propertyValue;
-
-      switch (propertyName) {
-        case 'className':
-          attributeName = 'class';
-          break;
-
-        case 'htmlFor':
-          attributeName = 'for';
-          break;
-
-        default:
-          attributeName = propertyName;
-          break;
-      }
-
-      element.addAttribute(attributeName, attributeValue);
-    });
-  }
 }
 
 function first(array) { return array[0]; }

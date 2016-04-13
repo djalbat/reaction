@@ -6,22 +6,20 @@ var easyui = require('easyui'),
 var JSXTextElement = require('./jsxTextElement');
 
 class JSXElement {
-  constructor(elementOrSelector, childJSXElements) {
+  constructor(elementOrSelector, properties, childJSXElements) {
     var element = (elementOrSelector instanceof Element) ?
       elementOrSelector :  ///
         new Element(elementOrSelector);
 
     this.element = element;
 
+    this.addPropertiesAsElementAttributes(properties);
+
     this.appendChildJSXElements(childJSXElements);
   }
   
   getElement() {
     return this.element;
-  }
-
-  remove() {
-    this.element.remove();
   }
 
   append(jsxElementOrString) {
@@ -35,6 +33,40 @@ class JSXElement {
 
       this.element.append(element);
     }
+  }
+
+  remove() {
+    this.element.remove();
+  }
+
+  addPropertiesAsElementAttributes(properties) {
+    if (properties === null) {
+      return;
+    }
+    
+    var propertyNames = Object.keys(properties);
+
+    propertyNames.forEach(function (propertyName) {
+      var attributeName,
+          propertyValue = properties[propertyName],
+          attributeValue = propertyValue;
+
+      switch (propertyName) {
+        case 'className':
+          attributeName = 'class';
+          break;
+
+        case 'htmlFor':
+          attributeName = 'for';
+          break;
+
+        default:
+          attributeName = propertyName;
+          break;
+      }
+
+      this.element.addAttribute(attributeName, attributeValue);
+    }.bind(this));
   }
 
   appendChildJSXElements(childJSXElements) {
@@ -60,10 +92,12 @@ class JSXElement {
 
   static fromDOMElement(domElement) {
     var element = Element.fromDOMElement(domElement),
+        properties = null,
         childJSXElements = [];
     
-    return new JSXElement(element, childJSXElements);
+    return new JSXElement(element, properties, childJSXElements);
   }
 }
 
 module.exports = JSXElement;
+
