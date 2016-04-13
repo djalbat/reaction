@@ -105,60 +105,66 @@ var App = function App() {
   //   }
   // });
 
-  // var CommentBox = React.createClass({
+  var CommentList = React.createClass({
+    displayName: 'CommentList',
+
+    render: function render() {
+      return React.createElement(
+        'div',
+        { className: 'commentList' },
+        ' '
+      );
+    }
+  });
+
+  var CommentBox = React.createClass({
+    displayName: 'CommentBox'
+  });
+
+  var commentBox = React.createElement(
+    'div',
+    { className: 'commentBox' },
+    React.createElement(CommentList, null)
+  );
+
+  ReactDOM.render(commentBox, bodyDOMElement);
+
+  // var StatefulDiv = React.createClass({
   //   getInitialState: function() {
-  //     var data = [
-  //           {id: 1, author: "Pete Hunt", text: "This is one comment."},
-  //           {id: 2, author: "Joe Winner", text: "This is *another* comment..."},
-  //           {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"}
-  //         ],
+  //     var title = "Hello world...",
   //         initialState = {
-  //           data: data
+  //           title: title
   //         };
   //
   //     return initialState;
   //   },
   //   render: function() {
   //     return (
-  //       <div className="commentList">
-  //         <CommentList data={this.state.data}/>
+  //       <div>
+  //         <h2>
+  //           {this.state.title}
+  //         </h2>
+  //         <p>
+  //           {this.props.message}
+  //         </p>
   //       </div>
   //     );
   //   },
   //   componentDidMount: function() {
-  //     console.log('The comment box component mounted')
+  //     console.log('the stateful div mounted')
   //   }
   // });
-
-  // var commentBox = <CommentBox />;
   //
-  // ReactDOM.render(commentBox, bodyDOMElement);
-
-  var StatefulDiv = React.createClass({
-    displayName: 'StatefulDiv',
-
-    getInitialState: function getInitialState() {
-      var initialState = "Hello world...";
-
-      return initialState;
-    },
-    render: function render() {
-      return React.createElement(
-        'p',
-        null,
-        this.state
-      );
-    },
-    componentDidMount: function componentDidMount() {
-      console.log('the stateful div mounted');
-    }
-  });
-
-  var statefulDiv = React.createElement(StatefulDiv, { message: 'Another message...' });
-
-  ReactDOM.render(statefulDiv, bodyDOMElement);
-
-  statefulDiv.setState('Hello world again!');
+  // var statefulDiv = <StatefulDiv message="Another message..."/>;
+  //
+  // ReactDOM.render(statefulDiv, bodyDOMElement);
+  //
+  // var title = "Hello world again!",
+  //     state = {
+  //       title: title
+  //     };
+  //
+  // statefulDiv.setState(state);
 };
 
 module.exports = App;
@@ -11513,8 +11519,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var easyui = require('easyui'),
     Element = easyui.Element;
 
-var JSXTextElement = require('./jsxTextElement');
-
 var JSXElement = function () {
   function JSXElement(elementOrElementName, properties, childJSXElements) {
     _classCallCheck(this, JSXElement);
@@ -11525,22 +11529,33 @@ var JSXElement = function () {
       element = elementOrElementName; ///
     } else {
         var elementName = elementOrElementName,
-            elementHTML = '<' + elementName + '/>';
+            ///
+        elementHTML = '<' + elementName + '/>';
 
         element = Element.fromHTML(elementHTML);
       }
 
     this.element = element;
 
-    this.addPropertiesAsElementAttributes(properties);
-
-    this.appendChildJSXElements(childJSXElements);
+    this.properties = properties;
+    this.childJSXElements = childJSXElements;
   }
 
   _createClass(JSXElement, [{
     key: 'getElement',
     value: function getElement() {
       return this.element;
+    }
+  }, {
+    key: 'mount',
+    value: function mount(parentJSXElement) {
+      this.addPropertiesAsAttributesToElement();
+
+      this.childJSXElements.forEach(function (childJSXElement) {
+        childJSXElement.mount(this);
+      }.bind(this));
+
+      parentJSXElement.append(this);
     }
   }, {
     key: 'append',
@@ -11563,17 +11578,17 @@ var JSXElement = function () {
       this.element.remove();
     }
   }, {
-    key: 'addPropertiesAsElementAttributes',
-    value: function addPropertiesAsElementAttributes(properties) {
-      if (properties === null) {
+    key: 'addPropertiesAsAttributesToElement',
+    value: function addPropertiesAsAttributesToElement() {
+      if (this.properties === null) {
         return;
       }
 
-      var propertyNames = Object.keys(properties);
+      var propertyNames = Object.keys(this.properties);
 
       propertyNames.forEach(function (propertyName) {
         var attributeName,
-            propertyValue = properties[propertyName],
+            propertyValue = this.properties[propertyName],
             attributeValue = propertyValue;
 
         switch (propertyName) {
@@ -11593,29 +11608,6 @@ var JSXElement = function () {
         this.element.addAttribute(attributeName, attributeValue);
       }.bind(this));
     }
-  }, {
-    key: 'appendChildJSXElements',
-    value: function appendChildJSXElements(childJSXElements) {
-      childJSXElements.forEach(function (childJSXElement) {
-        if (childJSXElement instanceof Array) {
-          var childJSXElements = childJSXElement; ///
-
-          this.appendChildJSXElements(childJSXElements);
-        } else if (childJSXElement instanceof JSXElement) {
-          var element = childJSXElement.getElement();
-
-          this.element.append(element);
-        } else if (childJSXElement instanceof JSXTextElement) {
-          var childJSXTextElement = childJSXElement,
-              ///
-          text = childJSXTextElement.getText();
-
-          this.element.append(text);
-        } else if (childJSXElement instanceof JSXElement) {
-          this.append(childJSXElement);
-        }
-      }.bind(this));
-    }
   }], [{
     key: 'fromDOMElement',
     value: function fromDOMElement(domElement) {
@@ -11633,38 +11625,36 @@ var JSXElement = function () {
 module.exports = JSXElement;
 
 
-},{"./jsxTextElement":22,"easyui":3}],21:[function(require,module,exports){
+},{"easyui":3}],21:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var JSXRenderedElement = function () {
-  function JSXRenderedElement(reactClass, properties, childJSXElements) {
-    _classCallCheck(this, JSXRenderedElement);
+var JSXReactElement = function () {
+  function JSXReactElement(reactClass, properties, childJSXElements) {
+    _classCallCheck(this, JSXReactElement);
 
     this.reactClass = reactClass;
     this.properties = properties;
     this.childJSXElements = childJSXElements;
 
-    this.parentJSXElement = null;
-
     this.jsxElement = null;
   }
 
-  _createClass(JSXRenderedElement, [{
+  _createClass(JSXReactElement, [{
     key: 'mount',
     value: function mount(parentJSXElement) {
-      this.parentJSXElement = parentJSXElement;
-
       var reactClass = this.reactClass,
-          getInitialState = reactClass.getInitialState,
+          getInitialState = reactClass.getGetInitialState(),
           initialState = getInitialState();
 
       this.state = initialState;
 
       this.update();
+
+      this.jsxElement.mount(parentJSXElement);
     }
   }, {
     key: 'setState',
@@ -11683,30 +11673,27 @@ var JSXRenderedElement = function () {
   }, {
     key: 'update',
     value: function update() {
-      var parentJSXElement = this.parentJSXElement,
-          props = this.properties,
+      var props = this.properties || {},
           ///
       state = this.state;
 
       props.children = this.childJSXElements; ///;
 
       var reactClass = this.reactClass,
-          render = reactClass.render,
+          render = reactClass.getRender(),
           instance = {
         props: props,
         state: state
       };
 
       this.jsxElement = render.apply(instance);
-
-      parentJSXElement.append(this.jsxElement);
     }
   }]);
 
-  return JSXRenderedElement;
+  return JSXReactElement;
 }();
 
-module.exports = JSXRenderedElement;
+module.exports = JSXReactElement;
 
 
 },{}],22:[function(require,module,exports){
@@ -11746,13 +11733,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var easyui = require('easyui'),
-    Element = easyui.Element;
-
 var ReactClass = require('./reactClass'),
     JSXElement = require('./jsxElement'),
     JSXTextElement = require('./jsxTextElement'),
-    JSXRenderedElement = require('./jsxRenderedElement');
+    JSXReactElement = require('./jsxReactElement');
 
 var React = function () {
   function React() {
@@ -11762,13 +11746,13 @@ var React = function () {
   _createClass(React, null, [{
     key: 'createClass',
     value: function createClass(properties) {
-      return ReactClass.fromProperties(properties);
+      var reactClass = ReactClass.fromProperties(properties);
+
+      return reactClass;
     }
   }, {
     key: 'createElement',
-    value: function createElement(reactClassOrElementName) {
-      var properties = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
+    value: function createElement(reactClassOrElementName, properties) {
       if (reactClassOrElementName === undefined) {
         return undefined;
       }
@@ -11780,31 +11764,27 @@ var React = function () {
       var jsxElement = undefined,
           childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments);
 
-      var elementName, elementHTML, element;
-
       if (typeof reactClassOrElementName === 'string') {
-        elementName = reactClassOrElementName;
+        var elementName = reactClassOrElementName; ///
 
         jsxElement = new JSXElement(elementName, properties, childJSXElements);
+      } else {
+        var reactClass = reactClassOrElementName,
+            ///
+        render = reactClass.getRender();
 
-        return jsxElement;
+        if (render === undefined) {
+          var displayName = reactClass.getDisplayName();
+
+          elementName = displayName; ///
+
+          jsxElement = new JSXElement(elementName, properties, childJSXElements);
+
+          return jsxElement;
+        } else {
+          jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
+        }
       }
-
-      var reactClass = reactClassOrElementName,
-          ///
-      render = reactClass.getRender();
-
-      if (render === undefined) {
-        var displayName = reactClass.getDisplayName();
-
-        elementName = displayName; ///
-
-        jsxElement = new JSXElement(elementName, properties, childJSXElements);
-
-        return jsxElement;
-      }
-
-      jsxElement = new JSXRenderedElement(reactClass, properties, childJSXElements);
 
       return jsxElement;
     }
@@ -11822,6 +11802,8 @@ function childJSXElementsFromRemainingArguments() {
   if (false) {} else if (firstRemainingArgument === undefined) {
     childJSXElements = [];
   } else if (firstRemainingArgument instanceof Array) {
+    debugger;
+
     childJSXElements = firstRemainingArgument; ///
   } else {
       childJSXElements = remainingArguments.map(function (remainingArgument) {
@@ -11849,7 +11831,7 @@ function first(array) {
 module.exports = React;
 
 
-},{"./jsxElement":20,"./jsxRenderedElement":21,"./jsxTextElement":22,"./reactClass":24,"easyui":3}],24:[function(require,module,exports){
+},{"./jsxElement":20,"./jsxReactElement":21,"./jsxTextElement":22,"./reactClass":24}],24:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();

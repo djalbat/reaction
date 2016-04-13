@@ -1,17 +1,18 @@
 'use strict';
 
-var easyui = require('easyui'),
-    Element = easyui.Element;
-
 var ReactClass = require('./reactClass'),
     JSXElement = require('./jsxElement'),
     JSXTextElement = require('./jsxTextElement'),
-    JSXRenderedElement = require('./jsxRenderedElement');
+    JSXReactElement = require('./jsxReactElement');
 
 class React {
-  static createClass(properties) { return ReactClass.fromProperties(properties); }
+  static createClass(properties) {
+    var reactClass = ReactClass.fromProperties(properties);
 
-  static createElement(reactClassOrElementName, properties = {}, ...remainingArguments) {
+    return reactClass;
+  }
+
+  static createElement(reactClassOrElementName, properties, ...remainingArguments) {
     if (reactClassOrElementName === undefined) {
       return undefined;
     }
@@ -19,33 +20,28 @@ class React {
     var jsxElement = undefined,
         childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments);
 
-    var elementName,
-        elementHTML,
-        element;
-
     if (typeof reactClassOrElementName === 'string') {
-      elementName = reactClassOrElementName;
+      var elementName = reactClassOrElementName;  ///
 
       jsxElement = new JSXElement(elementName, properties, childJSXElements);
+    } else {
+      var reactClass = reactClassOrElementName, ///
+          render = reactClass.getRender();
 
-      return jsxElement;
+      if (render === undefined) {
+        var displayName = reactClass.getDisplayName();
+
+        elementName = displayName;  ///
+
+        jsxElement = new JSXElement(elementName, properties, childJSXElements);
+
+        return jsxElement;
+      } else {
+        jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
+      }
     }
 
-    var reactClass = reactClassOrElementName, ///
-        render = reactClass.getRender();
 
-    if (render === undefined) {
-      var displayName = reactClass.getDisplayName();
-
-      elementName = displayName;  ///
-
-      jsxElement = new JSXElement(elementName, properties, childJSXElements);
-
-      return jsxElement;
-    }
-
-    jsxElement = new JSXRenderedElement(reactClass, properties, childJSXElements);
-    
     return jsxElement;
   }
 }
@@ -60,6 +56,8 @@ function childJSXElementsFromRemainingArguments() {
   } else if (firstRemainingArgument === undefined) {
     childJSXElements = [];
   } else if (firstRemainingArgument instanceof Array) {
+    debugger
+
     childJSXElements = firstRemainingArgument;  ///
   } else {
     childJSXElements = remainingArguments.map(function(remainingArgument) {

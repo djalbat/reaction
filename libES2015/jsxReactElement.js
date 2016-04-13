@@ -1,26 +1,24 @@
 'use strict';
 
-class JSXRenderedElement {
+class JSXReactElement {
   constructor(reactClass, properties, childJSXElements) {
     this.reactClass = reactClass;
     this.properties = properties;
     this.childJSXElements = childJSXElements;
 
-    this.parentJSXElement = null;
-
     this.jsxElement = null;
   }
-  
-  mount(parentJSXElement) {
-    this.parentJSXElement = parentJSXElement;
 
+  mount(parentJSXElement) {
     var reactClass = this.reactClass,
-        getInitialState = reactClass.getInitialState,
+        getInitialState = reactClass.getGetInitialState(),
         initialState = getInitialState();
 
     this.state = initialState;
 
     this.update();
+
+    this.jsxElement.mount(parentJSXElement);
   }
 
   setState(state) {
@@ -31,28 +29,23 @@ class JSXRenderedElement {
     this.update();
   }
 
-  remove() {
-    this.jsxElement.remove();
-  }
+  remove() { this.jsxElement.remove(); }
 
   update() {
-    var parentJSXElement = this.parentJSXElement,
-        props = this.properties,  ///
+    var props = this.properties || {},  ///
         state = this.state;
     
     props.children = this.childJSXElements; ///;
 
     var reactClass = this.reactClass,
-        render = reactClass.render,
+        render = reactClass.getRender(),
         instance = {
           props: props,
           state: state
-        };
-    
+        }; 
+
     this.jsxElement = render.apply(instance);
-    
-    parentJSXElement.append(this.jsxElement);
   }
 }
 
-module.exports = JSXRenderedElement;
+module.exports = JSXReactElement;

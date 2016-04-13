@@ -3,8 +3,6 @@
 var easyui = require('easyui'),
     Element = easyui.Element;
 
-var JSXTextElement = require('./jsxTextElement');
-
 class JSXElement {
   constructor(elementOrElementName, properties, childJSXElements) {
     var element;
@@ -12,7 +10,7 @@ class JSXElement {
     if (elementOrElementName instanceof Element) {
       element = elementOrElementName; ///
     } else {
-      var elementName = elementOrElementName,
+      var elementName = elementOrElementName, ///
           elementHTML = '<' + elementName + '/>';
 
       element = Element.fromHTML(elementHTML);
@@ -20,13 +18,22 @@ class JSXElement {
 
     this.element = element;
 
-    this.addPropertiesAsElementAttributes(properties);
-
-    this.appendChildJSXElements(childJSXElements);
+    this.properties = properties;
+    this.childJSXElements = childJSXElements;
   }
   
   getElement() {
     return this.element;
+  }
+
+  mount(parentJSXElement) {
+    this.addPropertiesAsAttributesToElement();
+
+    this.childJSXElements.forEach(function(childJSXElement) {
+      childJSXElement.mount(this);
+    }.bind(this));
+
+    parentJSXElement.append(this);
   }
 
   append(jsxElementOrString) {
@@ -46,16 +53,16 @@ class JSXElement {
     this.element.remove();
   }
 
-  addPropertiesAsElementAttributes(properties) {
-    if (properties === null) {
+  addPropertiesAsAttributesToElement() {
+    if (this.properties === null) {
       return;
     }
 
-    var propertyNames = Object.keys(properties);
+    var propertyNames = Object.keys(this.properties);
 
     propertyNames.forEach(function (propertyName) {
       var attributeName,
-          propertyValue = properties[propertyName],
+          propertyValue = this.properties[propertyName],
           attributeValue = propertyValue;
 
       switch (propertyName) {
@@ -76,27 +83,6 @@ class JSXElement {
     }.bind(this));
   }
 
-  appendChildJSXElements(childJSXElements) {
-    childJSXElements.forEach(function(childJSXElement) {
-      if (childJSXElement instanceof Array) {
-        var childJSXElements = childJSXElement; ///
-
-        this.appendChildJSXElements(childJSXElements);
-      } else if (childJSXElement instanceof JSXElement) {
-        var element = childJSXElement.getElement();
-
-        this.element.append(element);
-      } else if (childJSXElement instanceof JSXTextElement) {
-        var childJSXTextElement = childJSXElement,  ///
-            text = childJSXTextElement.getText();
-
-        this.element.append(text);
-      } else if (childJSXElement instanceof JSXElement) {
-        this.append(childJSXElement)
-      }
-    }.bind(this));
-  }
-
   static fromDOMElement(domElement) {
     var element = Element.fromDOMElement(domElement),
         properties = null,
@@ -107,4 +93,3 @@ class JSXElement {
 }
 
 module.exports = JSXElement;
-

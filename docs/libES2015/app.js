@@ -95,58 +95,61 @@ class App {
     //   }
     // });
 
-    // var CommentBox = React.createClass({
+    var CommentList = React.createClass({
+      render: function() {
+        return (
+          <div className="commentList"> </div>
+        );
+      }
+    });
+
+    var CommentBox = React.createClass({});
+
+    var commentBox = (
+
+      <div className="commentBox">
+        <CommentList />
+      </div>
+    );
+
+    ReactDOM.render(commentBox, bodyDOMElement);
+
+    // var StatefulDiv = React.createClass({
     //   getInitialState: function() {
-    //     var data = [
-    //           {id: 1, author: "Pete Hunt", text: "This is one comment."},
-    //           {id: 2, author: "Joe Winner", text: "This is *another* comment..."},
-    //           {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"}
-    //         ],
+    //     var title = "Hello world...",
     //         initialState = {
-    //           data: data
+    //           title: title
     //         };
     //
     //     return initialState;
     //   },
     //   render: function() {
     //     return (
-    //       <div className="commentList">
-    //         <CommentList data={this.state.data}/>
+    //       <div>
+    //         <h2>
+    //           {this.state.title}
+    //         </h2>
+    //         <p>
+    //           {this.props.message}
+    //         </p>
     //       </div>
     //     );
     //   },
     //   componentDidMount: function() {
-    //     console.log('The comment box component mounted')
+    //     console.log('the stateful div mounted')
     //   }
     // });
-
-    // var commentBox = <CommentBox />;
     //
-    // ReactDOM.render(commentBox, bodyDOMElement);
-
-    var StatefulDiv = React.createClass({
-      getInitialState: function() {
-        var initialState = "Hello world...";
-
-        return initialState;
-      },
-      render: function() {
-        return (
-          <p>
-          {this.state}
-          </p>
-        );
-      },
-      componentDidMount: function() {
-        console.log('the stateful div mounted')
-      }
-    });
-
-    var statefulDiv = <StatefulDiv message="Another message..."/>;
-
-    ReactDOM.render(statefulDiv, bodyDOMElement);
-
-    statefulDiv.setState('Hello world again!');
+    // var statefulDiv = <StatefulDiv message="Another message..."/>;
+    //
+    // ReactDOM.render(statefulDiv, bodyDOMElement);
+    //
+    // var title = "Hello world again!",
+    //     state = {
+    //       title: title
+    //     };
+    //
+    // statefulDiv.setState(state);
   }
 }
 
