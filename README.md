@@ -39,9 +39,7 @@ Install the necessary npm modules...
     grunt b
     grunt w
 
-## Supported functionality
-
-Currently:
+## Currently supported functionality
 
 - `React.createElement`
 - `React.createClass`
