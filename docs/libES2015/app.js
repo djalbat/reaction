@@ -6,7 +6,6 @@ var reaction = require('reaction'),
 
 class App {
   constructor() {
-
     var bodyDOMElement = document.getElementsByTagName('body')[0];
 
     var Comment = React.createClass({
@@ -66,4 +65,3 @@ class App {
 }
 
 module.exports = App;
-
