@@ -4,17 +4,7 @@ An alternative implementation of React.
 
 ## Installation
 
-There is no [npm](https://www.npmjs.com/) package yet. Please use [git](https://git-scm.com/) to install Reaction locally:
-
-    git clone https://github.com/djalbat/Reaction.git
-
-Assuming your own proejct sits alongside the Reaction directory, add the following to your package JSON dependencies:
-
-    "reaction": "../Reaction"
-
-Now you can install Reaction with the usual npm install:
-
-    npm install
+    npm reaction
 
 ## Usage
 
@@ -32,6 +22,10 @@ The `example.html` file in the `docs` folder contains a script that instantiates
 
 ## Compiling from source
 
+Clone the repository with [git](https://git-scm.com/):
+
+    git clone https://github.com/djalbat/Reaction.git
+
 Install the necessary npm modules...
 
     npm install
@@ -45,18 +39,24 @@ Install the necessary npm modules...
     grunt b
     grunt w
 
-## Currently supported functionality
+## Supported functionality
 
-- JSX (the `React.createElement(...)` method is implemented)
-- The `React.createClass(...)` method
-- properties
-- initial state, namely the `getInitialState` property of your react class properties
-- mounting, namely the `componentDidMount` property of your react class properties
+Currently:
+
+- `React.createElement`
+- `React.createClass`
+- `ReactDOM.render`
+- `setState` on JSX elements
+
+These properties can be passed to the `React.createClass` method:
+
+- getInitialState
+- render
 
 ## Roadmap
 
-- Getting state working
-- The hooking into [Redux](https://github.com/reactjs/react-redux) is a priority, watch this space.
+- Bring back the `componentDidMount` property
+- Hooking into [Redux](https://github.com/reactjs/react-redux) is a priority, watch this space.
 
 ## Contact
 
