@@ -50,9 +50,7 @@ class JSXElement {
     }
   }
 
-  remove() {
-    this.element.remove();
-  }
+  remove() { this.element.remove(); }
 
   addPropertiesToElementAsAttributes() {
     if (this.properties === null) {

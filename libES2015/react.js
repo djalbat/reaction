@@ -48,7 +48,7 @@ class React {
 
 function childJSXElementsFromRemainingArguments() {
   var childJSXElements,
-      remainingArguments = Array.prototype.slice.call(arguments), ///
+      remainingArguments = Array.prototype.slice.call(arguments),
       firstRemainingArgument = first(remainingArguments);
 
   if (false) {

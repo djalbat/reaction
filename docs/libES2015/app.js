@@ -95,56 +95,9 @@ class App {
     //   }
     // });
 
-    var CommentList = React.createClass({
-      getInitialState: function() {
-        var title = "Some title",
-            initialState = {
-              title: title
-            };
-
-        return initialState;
-      },
-      render: function() {
-        return (
-
-          <div className="commentList">
-            <h2>
-              {this.state.title}
-            </h2>
-            <p>
-              {this.props.message}
-            </p>
-          </div>
-        );
-      }
-    });
-
-    var CommentBox = React.createClass({
-      getInitialState: function() {
-        var message = "Hello, world!!!",
-            initialState = {
-              message: message
-            };
-
-        return initialState;
-      },
-      render: function() {
-        return (
-
-          <div className="commentBox">
-            <CommentList message={this.state.message}/>
-          </div>
-        );
-      }
-    });
-
-    var commentBox = <CommentBox />;
-
-    ReactDOM.render(commentBox, bodyDOMElement);
-
-    // var StatefulDiv = React.createClass({
+    // var CommentList = React.createClass({
     //   getInitialState: function() {
-    //     var title = "Hello world...",
+    //     var title = "Some title",
     //         initialState = {
     //           title: title
     //         };
@@ -153,7 +106,8 @@ class App {
     //   },
     //   render: function() {
     //     return (
-    //       <div>
+    //
+    //       <div className="commentList">
     //         <h2>
     //           {this.state.title}
     //         </h2>
@@ -162,22 +116,54 @@ class App {
     //         </p>
     //       </div>
     //     );
-    //   },
-    //   componentDidMount: function() {
-    //     console.log('the stateful div mounted')
     //   }
     // });
+
+    // var CommentBox = React.createClass({
+    //   getInitialState: function() {
+    //     var message = "Hello, world!!!",
+    //         initialState = {
+    //           message: message
+    //         };
     //
-    // var statefulDiv = <StatefulDiv message="Another message..."/>;
+    //     return initialState;
+    //   },
+    //   render: function() {
+    //     return (
     //
-    // ReactDOM.render(statefulDiv, bodyDOMElement);
+    //       <div className="commentBox">
+    //         <CommentList message={this.state.message}/>
+    //       </div>
+    //     );
+    //   }
+    // });
+
+    // var commentBox = <CommentBox />;
     //
-    // var title = "Hello world again!",
-    //     state = {
-    //       title: title
-    //     };
-    //
-    // statefulDiv.setState(state);
+    // ReactDOM.render(commentBox, bodyDOMElement);
+
+    var StatefulDiv = React.createClass({
+      getInitialState: function() {
+        var initialState = "Initial state...";
+
+        return initialState;
+      },
+      render: function() {
+        return (
+          <div>
+            {this.state}
+          </div>
+        );
+      }
+    });
+
+    var statefulDiv = <StatefulDiv />;
+
+    ReactDOM.render(statefulDiv, bodyDOMElement);
+
+    var state = "...set state.";
+    
+    statefulDiv.setState(state);
   }
 }
 

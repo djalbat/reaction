@@ -6,6 +6,8 @@ class JSXReactElement {
     this.properties = properties;
 
     this.jsxElement = null;
+
+    this.parentJSXElement = null;
   }
 
   mount(parentJSXElement) {
@@ -18,17 +20,21 @@ class JSXReactElement {
     this.update();
 
     this.jsxElement.mount(parentJSXElement);
+
+    this.parentJSXElement = parentJSXElement;
   }
 
   setState(state) {
     this.state = state;
 
-    this.remove();
+    this.jsxElement.remove();
 
     this.update();
-  }
 
-  remove() { this.jsxElement.remove(); }
+    var parentJSXElement = this.parentJSXElement;
+
+    this.jsxElement.mount(parentJSXElement);  ///
+  }
 
   update() {
     var props = this.properties || {},  ///

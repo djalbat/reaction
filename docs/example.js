@@ -105,62 +105,9 @@ var App = function App() {
   //   }
   // });
 
-  var CommentList = React.createClass({
-    displayName: 'CommentList',
-
-    getInitialState: function getInitialState() {
-      var title = "Some title",
-          initialState = {
-        title: title
-      };
-
-      return initialState;
-    },
-    render: function render() {
-      return React.createElement(
-        'div',
-        { className: 'commentList' },
-        React.createElement(
-          'h2',
-          null,
-          this.state.title
-        ),
-        React.createElement(
-          'p',
-          null,
-          this.props.message
-        )
-      );
-    }
-  });
-
-  var CommentBox = React.createClass({
-    displayName: 'CommentBox',
-
-    getInitialState: function getInitialState() {
-      var message = "Hello, world!!!",
-          initialState = {
-        message: message
-      };
-
-      return initialState;
-    },
-    render: function render() {
-      return React.createElement(
-        'div',
-        { className: 'commentBox' },
-        React.createElement(CommentList, { message: this.state.message })
-      );
-    }
-  });
-
-  var commentBox = React.createElement(CommentBox, null);
-
-  ReactDOM.render(commentBox, bodyDOMElement);
-
-  // var StatefulDiv = React.createClass({
+  // var CommentList = React.createClass({
   //   getInitialState: function() {
-  //     var title = "Hello world...",
+  //     var title = "Some title",
   //         initialState = {
   //           title: title
   //         };
@@ -169,7 +116,8 @@ var App = function App() {
   //   },
   //   render: function() {
   //     return (
-  //       <div>
+  //
+  //       <div className="commentList">
   //         <h2>
   //           {this.state.title}
   //         </h2>
@@ -178,22 +126,56 @@ var App = function App() {
   //         </p>
   //       </div>
   //     );
-  //   },
-  //   componentDidMount: function() {
-  //     console.log('the stateful div mounted')
   //   }
   // });
+
+  // var CommentBox = React.createClass({
+  //   getInitialState: function() {
+  //     var message = "Hello, world!!!",
+  //         initialState = {
+  //           message: message
+  //         };
   //
-  // var statefulDiv = <StatefulDiv message="Another message..."/>;
+  //     return initialState;
+  //   },
+  //   render: function() {
+  //     return (
   //
-  // ReactDOM.render(statefulDiv, bodyDOMElement);
+  //       <div className="commentBox">
+  //         <CommentList message={this.state.message}/>
+  //       </div>
+  //     );
+  //   }
+  // });
+
+  // var commentBox = <CommentBox />;
   //
-  // var title = "Hello world again!",
-  //     state = {
-  //       title: title
-  //     };
-  //
-  // statefulDiv.setState(state);
+  // ReactDOM.render(commentBox, bodyDOMElement);
+
+  var StatefulDiv = React.createClass({
+    displayName: 'StatefulDiv',
+
+    getInitialState: function getInitialState() {
+      var initialState = "Initial state...";
+
+      return initialState;
+    },
+    render: function render() {
+      return React.createElement(
+        'div',
+        null,
+        this.state
+      );
+    }
+  });
+
+  var statefulDiv = React.createElement(StatefulDiv, null);
+
+  ReactDOM.render(statefulDiv, bodyDOMElement);
+
+  var state = "...set state.";
+
+  statefulDiv.setState(state);
 };
 
 module.exports = App;
@@ -11670,6 +11652,8 @@ var JSXReactElement = function () {
     this.properties = properties;
 
     this.jsxElement = null;
+
+    this.parentJSXElement = null;
   }
 
   _createClass(JSXReactElement, [{
@@ -11684,20 +11668,21 @@ var JSXReactElement = function () {
       this.update();
 
       this.jsxElement.mount(parentJSXElement);
+
+      this.parentJSXElement = parentJSXElement;
     }
   }, {
     key: 'setState',
     value: function setState(state) {
       this.state = state;
 
-      this.remove();
+      this.jsxElement.remove();
 
       this.update();
-    }
-  }, {
-    key: 'remove',
-    value: function remove() {
-      this.jsxElement.remove();
+
+      var parentJSXElement = this.parentJSXElement;
+
+      this.jsxElement.mount(parentJSXElement); ///
     }
   }, {
     key: 'update',
@@ -11829,8 +11814,7 @@ var React = function () {
 function childJSXElementsFromRemainingArguments() {
   var childJSXElements,
       remainingArguments = Array.prototype.slice.call(arguments),
-      ///
-  firstRemainingArgument = first(remainingArguments);
+      firstRemainingArgument = first(remainingArguments);
 
   if (false) {} else if (firstRemainingArgument === undefined) {
     childJSXElements = [];
