@@ -28,7 +28,7 @@ class ReactClass {
     var render = properties['render'],
         displayName = properties['displayName'],
         getInitialState = properties['getInitialState'] || defaultGetInitialState,
-        componentDidMount = properties['componentDidMount'],
+        componentDidMount = properties['componentDidMount'] || defaultComponentDidMount,
         reactClass = new ReactClass(render, displayName, getInitialState, componentDidMount);
     
     return reactClass;
@@ -41,4 +41,8 @@ function defaultGetInitialState() {
   var initialState = {};
 
   return initialState;
+}
+
+function defaultComponentDidMount() {
+  
 }

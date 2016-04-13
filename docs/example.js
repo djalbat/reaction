@@ -144,18 +144,9 @@ var App = function App() {
     },
     render: function render() {
       return React.createElement(
-        'div',
+        'p',
         null,
-        React.createElement(
-          'h2',
-          null,
-          this.props.message
-        ),
-        React.createElement(
-          'p',
-          null,
-          this.state
-        )
+        this.state
       );
     },
     componentDidMount: function componentDidMount() {
@@ -11531,34 +11522,20 @@ var JSXElement = function () {
     var element = elementOrSelector instanceof Element ? elementOrSelector : ///
     new Element(elementOrSelector);
 
-    // element.data('jsxElement', this);
-
     this.element = element;
 
-    this.childJSXElements = childJSXElements;
-
-    this.componentDidMount = null;
-
-    this.render();
+    this.appendChildJSXElements(childJSXElements);
   }
 
   _createClass(JSXElement, [{
-    key: 'setComponentDidMount',
-    value: function setComponentDidMount(componentDidMount) {
-      this.componentDidMount = componentDidMount;
-    }
-  }, {
-    key: 'setState',
-    value: function setState(state) {}
-  }, {
     key: 'getElement',
     value: function getElement() {
       return this.element;
     }
   }, {
-    key: 'getComponentDidMount',
-    value: function getComponentDidMount() {
-      return this.componentDidMount;
+    key: 'remove',
+    value: function remove() {
+      this.element.remove();
     }
   }, {
     key: 'append',
@@ -11573,46 +11550,6 @@ var JSXElement = function () {
         element = jsxElement.getElement();
 
         this.element.append(element);
-      }
-    }
-  }, {
-    key: 'mount',
-    value: function mount() {
-      // var childJSXElements = this.childJSXElements();
-      //
-      // childJSXElements.forEach(function(childJSXElement) {
-      //   childJSXElement.mount();
-      // });
-
-      this.childJSXElements.forEach(function (childJSXElement) {
-        childJSXElement.mount();
-      });
-
-      if (this.componentDidMount) {
-        this.componentDidMount();
-      }
-    }
-
-    // childJSXElements() {
-    //   var childElements = this.element.childElements(),
-    //       childJSXElements = childElements.reduce(function(childJSXElements, childElement) {
-    //         var childJSXElement = childElement.data('jsxElement');
-    //
-    //         if (childJSXElement) {
-    //           childJSXElements.push(childJSXElement);
-    //         }
-    //
-    //         return childJSXElements;
-    //       }, []);
-    //
-    //   return childJSXElements;
-    // }
-
-  }, {
-    key: 'render',
-    value: function render() {
-      if (this.childJSXElements !== undefined) {
-        this.appendChildJSXElements(this.childJSXElements);
       }
     }
   }, {
@@ -11641,9 +11578,10 @@ var JSXElement = function () {
   }], [{
     key: 'fromDOMElement',
     value: function fromDOMElement(domElement) {
-      var element = Element.fromDOMElement(domElement);
+      var element = Element.fromDOMElement(domElement),
+          childJSXElements = [];
 
-      return new JSXElement(element);
+      return new JSXElement(element, childJSXElements);
     }
   }]);
 
@@ -11670,12 +11608,12 @@ var JSXRenderedElement = function () {
 
     this.parentJSXElement = null;
 
-    this.element = null;
+    this.jsxElement = null;
   }
 
   _createClass(JSXRenderedElement, [{
-    key: 'render',
-    value: function render(parentJSXElement) {
+    key: 'mount',
+    value: function mount(parentJSXElement) {
       this.parentJSXElement = parentJSXElement;
 
       var reactClass = this.reactClass,
@@ -11684,7 +11622,7 @@ var JSXRenderedElement = function () {
 
       this.state = initialState;
 
-      this.renderElement();
+      this.update();
     }
   }, {
     key: 'setState',
@@ -11693,34 +11631,33 @@ var JSXRenderedElement = function () {
 
       this.remove();
 
-      this.renderElement();
+      this.update();
     }
   }, {
-    key: 'renderElement',
-    value: function renderElement() {
+    key: 'remove',
+    value: function remove() {
+      this.jsxElement.remove();
+    }
+  }, {
+    key: 'update',
+    value: function update() {
       var parentJSXElement = this.parentJSXElement,
-          reactClass = this.reactClass,
           props = this.properties,
           ///
       state = this.state;
 
       props.children = this.childJSXElements; ///;
 
-      var render = reactClass.render,
+      var reactClass = this.reactClass,
+          render = reactClass.render,
           instance = {
         props: props,
         state: state
-      },
-          jsxElement = render.apply(instance); ///
+      };
 
-      this.element = jsxElement.element; ///
+      this.jsxElement = render.apply(instance);
 
-      parentJSXElement.append(jsxElement);
-    }
-  }, {
-    key: 'remove',
-    value: function remove() {
-      this.element.remove();
+      parentJSXElement.append(this.jsxElement);
     }
   }]);
 
@@ -11843,13 +11780,12 @@ var React = function () {
 }();
 
 function childJSXElementsFromRemainingArguments() {
-  var childJSXElements = undefined,
-      ///
-  remainingArguments = Array.prototype.slice.call(arguments),
+  var childJSXElements,
+      remainingArguments = Array.prototype.slice.call(arguments),
       ///
   firstRemainingArgument = first(remainingArguments);
 
-  if (firstRemainingArgument === undefined) {
+  if (false) {} else if (firstRemainingArgument === undefined) {
     childJSXElements = [];
   } else if (firstRemainingArgument instanceof Array) {
     childJSXElements = firstRemainingArgument; ///
@@ -11950,7 +11886,7 @@ var ReactClass = function () {
       var render = properties['render'],
           displayName = properties['displayName'],
           getInitialState = properties['getInitialState'] || defaultGetInitialState,
-          componentDidMount = properties['componentDidMount'],
+          componentDidMount = properties['componentDidMount'] || defaultComponentDidMount,
           reactClass = new ReactClass(render, displayName, getInitialState, componentDidMount);
 
       return reactClass;
@@ -11967,6 +11903,8 @@ function defaultGetInitialState() {
 
   return initialState;
 }
+
+function defaultComponentDidMount() {}
 
 
 },{}],25:[function(require,module,exports){
@@ -11988,7 +11926,7 @@ var ReactDOM = function () {
     value: function render(jsxElement, parentDOMElement) {
       var parentJSXElement = JSXElement.fromDOMElement(parentDOMElement);
 
-      jsxElement.render(parentJSXElement); ///
+      jsxElement.mount(parentJSXElement); ///
     }
   }]);
 

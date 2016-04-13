@@ -132,14 +132,9 @@ class App {
       },
       render: function() {
         return (
-          <div>
-            <h2>
-              {this.props.message}
-            </h2>
-            <p>
-              {this.state}
-            </p>
-          </div>
+          <p>
+          {this.state}
+          </p>
         );
       },
       componentDidMount: function() {

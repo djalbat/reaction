@@ -8,10 +8,10 @@ class JSXRenderedElement {
 
     this.parentJSXElement = null;
 
-    this.element = null;
+    this.jsxElement = null;
   }
   
-  render(parentJSXElement) {
+  mount(parentJSXElement) {
     this.parentJSXElement = parentJSXElement;
 
     var reactClass = this.reactClass,
@@ -20,7 +20,7 @@ class JSXRenderedElement {
 
     this.state = initialState;
 
-    this.renderElement();
+    this.update();
   }
 
   setState(state) {
@@ -28,31 +28,30 @@ class JSXRenderedElement {
 
     this.remove();
 
-    this.renderElement();
+    this.update();
   }
 
-  renderElement() {
+  remove() {
+    this.jsxElement.remove();
+  }
+
+  update() {
     var parentJSXElement = this.parentJSXElement,
-        reactClass = this.reactClass,
         props = this.properties,  ///
         state = this.state;
     
     props.children = this.childJSXElements; ///;
 
-    var render = reactClass.render,
+    var reactClass = this.reactClass,
+        render = reactClass.render,
         instance = {
           props: props,
           state: state
-        },
-        jsxElement = render.apply(instance); ///
-
-    this.element = jsxElement.element;  ///
-
-    parentJSXElement.append(jsxElement);
-  }
-
-  remove() {
-    this.element.remove();
+        };
+    
+    this.jsxElement = render.apply(instance);
+    
+    parentJSXElement.append(this.jsxElement);
   }
 }
 

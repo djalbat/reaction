@@ -59,11 +59,13 @@ class React {
 }
 
 function childJSXElementsFromRemainingArguments() {
-  var childJSXElements = undefined, ///
+  var childJSXElements,
       remainingArguments = Array.prototype.slice.call(arguments), ///
       firstRemainingArgument = first(remainingArguments);
 
-  if (firstRemainingArgument === undefined) {
+  if (false) {
+    
+  } else if (firstRemainingArgument === undefined) {
     childJSXElements = [];
   } else if (firstRemainingArgument instanceof Array) {
     childJSXElements = firstRemainingArgument;  ///

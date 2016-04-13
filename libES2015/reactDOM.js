@@ -6,7 +6,7 @@ class ReactDOM {
   static render(jsxElement, parentDOMElement) {
     var parentJSXElement = JSXElement.fromDOMElement(parentDOMElement);
 
-    jsxElement.render(parentJSXElement); ///
+    jsxElement.mount(parentJSXElement); ///
   }
 }
 
