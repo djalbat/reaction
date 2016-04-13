@@ -28,7 +28,7 @@ class JSXElement {
   }
 
   mount(parentJSXElement) {
-    this.addPropertiesAsAttributesToElement();
+    this.addPropertiesToElementAsAttributes();
 
     this.childJSXElements.forEach(function(childJSXElement) {
       childJSXElement.mount(this);
@@ -54,7 +54,7 @@ class JSXElement {
     this.element.remove();
   }
 
-  addPropertiesAsAttributesToElement() {
+  addPropertiesToElementAsAttributes() {
     if (this.properties === null) {
       return;
     }

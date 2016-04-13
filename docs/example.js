@@ -11579,7 +11579,7 @@ var JSXElement = function () {
   }, {
     key: 'mount',
     value: function mount(parentJSXElement) {
-      this.addPropertiesAsAttributesToElement();
+      this.addPropertiesToElementAsAttributes();
 
       this.childJSXElements.forEach(function (childJSXElement) {
         childJSXElement.mount(this);
@@ -11608,8 +11608,8 @@ var JSXElement = function () {
       this.element.remove();
     }
   }, {
-    key: 'addPropertiesAsAttributesToElement',
-    value: function addPropertiesAsAttributesToElement() {
+    key: 'addPropertiesToElementAsAttributes',
+    value: function addPropertiesToElementAsAttributes() {
       if (this.properties === null) {
         return;
       }
