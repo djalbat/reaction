@@ -5,43 +5,58 @@ var easyui = require('easyui'),
 
 var ReactClass = require('./reactClass'),
     JSXElement = require('./jsxElement'),
-    JSXTextElement = require('./jsxTextElement');
+    JSXTextElement = require('./jsxTextElement'),
+    JSXRenderedElement = require('./jsxRenderedElement');
 
 class React {
   static createClass(properties) { return ReactClass.fromProperties(properties); }
 
   static createElement(reactClassOrElementName, properties, ...remainingArguments) {
     if (reactClassOrElementName === undefined) {
-      return undefined; ///
+      return undefined;
     }
 
-    var element,
-        childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments),  ///
-        jsxElement = undefined; ///
+    var jsxElement = undefined,
+        childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments);
+
+    var elementName,
+        elementHTML,
+        element;
 
     if (typeof reactClassOrElementName === 'string') {
-      var elementName = reactClassOrElementName,
-          elementHTML = '<' + elementName + '/>';
-          element = Element.fromHTML(elementHTML);
+      elementName = reactClassOrElementName;
+      elementHTML = '<' + elementName + '/>';
+      element = Element.fromHTML(elementHTML);
 
-      addPropertiesAsAttributes(element, properties);
+      addPropertiesToElementAsAttributes(element, properties);
 
       jsxElement = new JSXElement(element, childJSXElements);
-    } else {
-      var reactClass = reactClassOrElementName, ///
-          render = reactClass.getRender();
 
-      if (render !== undefined) {
-        var children = childJSXElements,  ///
-            instance = reactClass.instance(properties, children),
-            componentDidMount = reactClass.getComponentDidMount();
-
-        jsxElement = render.apply(instance);
-
-        jsxElement.setComponentDidMount(componentDidMount.bind(instance));  ///
-      }
+      return jsxElement;
     }
 
+    var reactClass = reactClassOrElementName, ///
+        render = reactClass.getRender();
+
+    if (render === undefined) {
+      var displayName = reactClass.getDisplayName();
+
+      elementName = displayName;  ///
+      elementHTML = '<' + elementName + '/>';
+      element = Element.fromHTML(elementHTML);
+
+      addPropertiesToElementAsAttributes(element, properties);
+
+      jsxElement = new JSXElement(element, childJSXElements);
+
+      return jsxElement;
+    }
+
+    var getInitialState = reactClass.getGetInitialState(), ///
+        componentDidMount = reactClass.getComponentDidMount();
+    
+    jsxElement = new JSXRenderedElement(reactClass, childJSXElements, properties);
+    
     return jsxElement;
   }
 }
@@ -73,8 +88,8 @@ function childJSXElementsFromRemainingArguments() {
   return childJSXElements;
 }
 
-function addPropertiesAsAttributes(element, properties) {
-  if (properties) {
+function addPropertiesToElementAsAttributes(element, properties) {
+  if (properties !== null) {
     var propertyNames = Object.keys(properties);
 
     propertyNames.forEach(function (propertyName) {

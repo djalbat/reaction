@@ -11,33 +11,33 @@ class JSXElement {
       elementOrSelector :  ///
         new Element(elementOrSelector);
 
-    element.data('jsxElement', this);
+    // element.data('jsxElement', this);
 
     this.element = element;
 
-    this.componentDidMount = null;
+    this.childJSXElements = childJSXElements;
 
-    if (childJSXElements) {
-      this.appendChildJSXElements(childJSXElements);
-    }
+    this.componentDidMount = null;
+    
+    this.render();
   }
   
   setComponentDidMount(componentDidMount) {
     this.componentDidMount = componentDidMount;    
   }
-
+  
   setState(state) {
-    console.log(JSON.stringify(state, null, '\t'))
+    
+  }
+
+  getElement() {
+    return this.element;
   }
 
   getComponentDidMount() {
     return this.componentDidMount;
   }
   
-  getElement() {
-    return this.element;
-  }
-
   append(jsxElementOrString) {
     if (typeof jsxElementOrString === 'string') {
       var string = jsxElementOrString;  ///
@@ -48,36 +48,44 @@ class JSXElement {
           element = jsxElement.getElement();
 
       this.element.append(element);
-
-      this.mount();
     }
   }
 
   mount() {
-    var childJSXElements = this.childJSXElements();
+    // var childJSXElements = this.childJSXElements();
+    //
+    // childJSXElements.forEach(function(childJSXElement) {
+    //   childJSXElement.mount();
+    // });
 
-    childJSXElements.forEach(function(childJSXElement) {
+    this.childJSXElements.forEach(function(childJSXElement) {
       childJSXElement.mount();
     });
-    
+
     if (this.componentDidMount) {
       this.componentDidMount();
     }
   }
 
-  childJSXElements() {
-    var childElements = this.element.childElements(),
-        childJSXElements = childElements.reduce(function(childJSXElements, childElement) {
-          var childJSXElement = childElement.data('jsxElement');
+  // childJSXElements() {
+  //   var childElements = this.element.childElements(),
+  //       childJSXElements = childElements.reduce(function(childJSXElements, childElement) {
+  //         var childJSXElement = childElement.data('jsxElement');
+  //
+  //         if (childJSXElement) {
+  //           childJSXElements.push(childJSXElement);
+  //         }
+  //
+  //         return childJSXElements;
+  //       }, []);
+  //
+  //   return childJSXElements;
+  // }
 
-          if (childJSXElement) {
-            childJSXElements.push(childJSXElement);
-          }
-
-          return childJSXElements;
-        }, []);
-
-    return childJSXElements;
+  render() {
+    if (this.childJSXElements !== undefined) {
+      this.appendChildJSXElements(this.childJSXElements);
+    }
   }
 
   appendChildJSXElements(childJSXElements) {

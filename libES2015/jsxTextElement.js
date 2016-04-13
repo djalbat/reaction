@@ -8,6 +8,10 @@ class JSXTextElement {
   getText() {
     return this.text;
   }
+
+  mount() {
+    
+  }
 }
 
 module.exports = JSXTextElement;

@@ -3,10 +3,10 @@
 var JSXElement = require('./jsxElement');
 
 class ReactDOM {
-  static render(childJSXElement, domElement) {
-    var jsxElement = JSXElement.fromDOMElement(domElement);
+  static render(jsxElement, parentDOMElement) {
+    var parentJSXElement = JSXElement.fromDOMElement(parentDOMElement);
 
-    jsxElement.append(childJSXElement);
+    jsxElement.render(parentJSXElement); ///
   }
 }
 

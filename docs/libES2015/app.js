@@ -7,6 +7,8 @@ var reaction = require('reaction'),
 class App {
   constructor() {
 
+    var bodyDOMElement = document.getElementsByTagName('body')[0];
+
     // var Profile,
     //     Nav = React.createClass({}),
     //     nav = <Nav color="blue"><Profile>click</Profile></Nav>;
@@ -56,82 +58,100 @@ class App {
     //
     // body.append(container);
 
-    var Comment = React.createClass({
-      render: function() {
-        return (
-          <div className="comment">
-            <h2>
-              {this.props.author}
-            </h2>
-            {this.props.children}
-          </div>
-        );
-      },
-      componentDidMount: function() {
-        console.log(this.props.author + '\'s comment mounted')
-      }
-    });
+    // var Comment = React.createClass({
+    //   render: function() {
+    //     return (
+    //       <div className="comment">
+    //         <h2>
+    //           {this.props.author}
+    //         </h2>
+    //         {this.props.children}
+    //       </div>
+    //     );
+    //   },
+    //   componentDidMount: function() {
+    //     console.log(this.props.author + '\'s comment mounted')
+    //   }
+    // });
 
-    var CommentList = React.createClass({
-      render: function() {
-        var comments = this.props.data.map(function(comment) {
-          return (
-            <Comment author={comment.author} key={comment.id}>
-              {comment.text}
-            </Comment>
-          );
-        });
+    // var CommentList = React.createClass({
+    //   render: function() {
+    //     var comments = this.props.data.map(function(comment) {
+    //       return (
+    //         <Comment author={comment.author} key={comment.id}>
+    //           {comment.text}
+    //         </Comment>
+    //       );
+    //     });
+    //
+    //     return (
+    //       <div className="commentList">
+    //         {comments}
+    //       </div>
+    //     );
+    //   },
+    //   componentDidMount: function() {
+    //     console.log('The comment list component mounted')
+    //   }
+    // });
 
-        return (
-          <div className="commentList">
-            {comments}
-          </div>
-        );
-      },
-      componentDidMount: function() {
-        console.log('The comment list component mounted')
-      }
-    });
+    // var CommentBox = React.createClass({
+    //   getInitialState: function() {
+    //     var data = [
+    //           {id: 1, author: "Pete Hunt", text: "This is one comment."},
+    //           {id: 2, author: "Joe Winner", text: "This is *another* comment..."},
+    //           {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"}
+    //         ],
+    //         initialState = {
+    //           data: data
+    //         };
+    //
+    //     return initialState;
+    //   },
+    //   render: function() {
+    //     return (
+    //       <div className="commentList">
+    //         <CommentList data={this.state.data}/>
+    //       </div>
+    //     );
+    //   },
+    //   componentDidMount: function() {
+    //     console.log('The comment box component mounted')
+    //   }
+    // });
 
-    var CommentBox = React.createClass({
+    // var commentBox = <CommentBox />;
+    //
+    // ReactDOM.render(commentBox, bodyDOMElement);
+
+    var StatefulDiv = React.createClass({
       getInitialState: function() {
-        var data = [
-              {id: 1, author: "Pete Hunt", text: "This is one comment."},
-              {id: 2, author: "Joe Winner", text: "This is *another* comment..."},
-              {id: 3, author: "Jordan Walker", text: "This is **yet another** comment!"}
-            ],
-            initialState = {
-              data: data
-            };
+        var initialState = "Hello world...";
 
         return initialState;
       },
       render: function() {
         return (
-          <div className="commentList">
-            <CommentList data={this.state.data}/>
+          <div>
+            <h2>
+              {this.props.message}
+            </h2>
+            <p>
+              {this.state}
+            </p>
           </div>
         );
       },
       componentDidMount: function() {
-        console.log('The comment box component mounted')
+        console.log('the stateful div mounted')
       }
     });
 
-    var commentBox = <CommentBox />;
+    var statefulDiv = <StatefulDiv message="Another message..."/>;
 
-    ReactDOM.render(commentBox, document.getElementsByTagName('body')[0]);
-    
-    setTimeout(function() {
-      var data = [
-            {id:4, author: "Billy Wright", text: "This is the last comment for now..."}
-          ],
-          state = {
-            data: data
-          };
-      
-      commentBox.setState(state);
-    }, 1000); ///
+    ReactDOM.render(statefulDiv, bodyDOMElement);
+
+    statefulDiv.setState('Hello world, again!');
   }
 }
 
