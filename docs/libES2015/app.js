@@ -98,19 +98,26 @@ class App {
     var CommentList = React.createClass({
       render: function() {
         return (
-          <div className="commentList"> </div>
+
+          <div className="commentList">
+            {this.props.message}
+          </div>
         );
       }
     });
 
-    var CommentBox = React.createClass({});
+    var CommentBox = React.createClass({
+      render: function() {
+        return (
 
-    var commentBox = (
+          <div className="commentBox">
+            <CommentList message="Hello, world!"/>
+          </div>
+        );
+      }
+    });
 
-      <div className="commentBox">
-        <CommentList />
-      </div>
-    );
+    var commentBox = <CommentBox />;
 
     ReactDOM.render(commentBox, bodyDOMElement);
 
@@ -154,3 +161,4 @@ class App {
 }
 
 module.exports = App;
+

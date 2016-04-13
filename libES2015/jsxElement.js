@@ -19,6 +19,7 @@ class JSXElement {
     this.element = element;
 
     this.properties = properties;
+    
     this.childJSXElements = childJSXElements;
   }
   

@@ -112,20 +112,24 @@ var App = function App() {
       return React.createElement(
         'div',
         { className: 'commentList' },
-        ' '
+        this.props.message
       );
     }
   });
 
   var CommentBox = React.createClass({
-    displayName: 'CommentBox'
+    displayName: 'CommentBox',
+
+    render: function render() {
+      return React.createElement(
+        'div',
+        { className: 'commentBox' },
+        React.createElement(CommentList, { message: 'Hello, world!' })
+      );
+    }
   });
 
-  var commentBox = React.createElement(
-    'div',
-    { className: 'commentBox' },
-    React.createElement(CommentList, null)
-  );
+  var commentBox = React.createElement(CommentBox, null);
 
   ReactDOM.render(commentBox, bodyDOMElement);
 
@@ -11538,6 +11542,7 @@ var JSXElement = function () {
     this.element = element;
 
     this.properties = properties;
+
     this.childJSXElements = childJSXElements;
   }
 
@@ -11633,12 +11638,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var JSXReactElement = function () {
-  function JSXReactElement(reactClass, properties, childJSXElements) {
+  function JSXReactElement(reactClass, properties) {
     _classCallCheck(this, JSXReactElement);
 
     this.reactClass = reactClass;
     this.properties = properties;
-    this.childJSXElements = childJSXElements;
 
     this.jsxElement = null;
   }
@@ -11677,7 +11681,7 @@ var JSXReactElement = function () {
           ///
       state = this.state;
 
-      props.children = this.childJSXElements; ///;
+      // props.children = this.childJSXElements; ///;
 
       var reactClass = this.reactClass,
           render = reactClass.getRender(),
@@ -11711,13 +11715,17 @@ var JSXTextElement = function () {
   }
 
   _createClass(JSXTextElement, [{
-    key: 'getText',
-    value: function getText() {
-      return this.text;
+    key: 'getElement',
+    value: function getElement() {
+      var element = this.text; ///
+
+      return element;
     }
   }, {
     key: 'mount',
-    value: function mount() {}
+    value: function mount(parentJSXElement) {
+      parentJSXElement.append(this);
+    }
   }]);
 
   return JSXTextElement;
@@ -11782,7 +11790,7 @@ var React = function () {
 
           return jsxElement;
         } else {
-          jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
+          jsxElement = new JSXReactElement(reactClass, properties);
         }
       }
 

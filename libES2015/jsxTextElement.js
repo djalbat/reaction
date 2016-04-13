@@ -4,13 +4,15 @@ class JSXTextElement {
   constructor(text) {
     this.text = text;
   }
-  
-  getText() {
-    return this.text;
-  }
 
-  mount() {
-    
+  getElement() {
+    var element = this.text;  ///
+
+    return element;
+  }
+  
+  mount(parentJSXElement) {
+    parentJSXElement.append(this);
   }
 }
 
