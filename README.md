@@ -2,6 +2,10 @@
 
 An alternative implementation of React.
 
+#### But why?!
+
+The idea is to improve on [React](https://facebook.github.io/react/)'s component lifecycle with a view to better handshaking with solutions like [Redux](http://redux.js.org/) and [Falcor](http://netflix.github.io/falcor/), though it's early days yet. [Deku](https://github.com/dekujs/deku) are doing much the same.
+
 ## Installation
 
     npm reaction
