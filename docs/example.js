@@ -11540,11 +11540,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var JSXReactElement = function () {
-  function JSXReactElement(reactClass, properties) {
+  function JSXReactElement(reactClass, properties, childJSXElements) {
     _classCallCheck(this, JSXReactElement);
 
     this.reactClass = reactClass;
     this.properties = properties;
+    this.childJSXElements = childJSXElements;
 
     this.jsxElement = null;
 
@@ -11586,7 +11587,7 @@ var JSXReactElement = function () {
           ///
       state = this.state;
 
-      // props.children = this.childJSXElements; ///;
+      props.children = this.childJSXElements; ///;
 
       var reactClass = this.reactClass,
           render = reactClass.getRender(),
@@ -11681,25 +11682,28 @@ var React = function () {
         var elementName = reactClassOrElementName; ///
 
         jsxElement = new JSXElement(elementName, properties, childJSXElements);
-      } else {
-        var reactClass = reactClassOrElementName,
-            ///
-        render = reactClass.getRender();
 
-        if (render === undefined) {
-          var displayName = reactClass.getDisplayName();
-
-          elementName = displayName; ///
-
-          jsxElement = new JSXElement(elementName, properties, childJSXElements);
-
-          return jsxElement;
-        } else {
-          jsxElement = new JSXReactElement(reactClass, properties);
-        }
+        return jsxElement;
       }
 
-      return jsxElement;
+      var reactClass = reactClassOrElementName,
+          ///
+      render = reactClass.getRender();
+
+      if (render === undefined) {
+        var displayName = reactClass.getDisplayName();
+        elementName = displayName; ///
+
+        jsxElement = new JSXElement(elementName, properties, childJSXElements);
+
+        return jsxElement;
+      }
+
+      {
+        jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
+
+        return jsxElement;
+      }
     }
   }]);
 

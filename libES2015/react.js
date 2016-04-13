@@ -41,7 +41,7 @@ class React {
     } 
     
     {
-      jsxElement = new JSXReactElement(reactClass, properties);
+      jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
 
       return jsxElement;
     }

@@ -1,9 +1,10 @@
 'use strict';
 
 class JSXReactElement {
-  constructor(reactClass, properties) {
+  constructor(reactClass, properties, childJSXElements) {
     this.reactClass = reactClass;
     this.properties = properties;
+    this.childJSXElements = childJSXElements;
 
     this.jsxElement = null;
 
@@ -40,7 +41,7 @@ class JSXReactElement {
     var props = this.properties || {},  ///
         state = this.state;
     
-    // props.children = this.childJSXElements; ///;
+    props.children = this.childJSXElements; ///;
 
     var reactClass = this.reactClass,
         render = reactClass.getRender(),
