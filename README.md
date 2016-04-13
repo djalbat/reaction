@@ -53,7 +53,8 @@ These properties can be passed to the `React.createClass` method:
 
 ## Roadmap
 
-- Bring back the `componentDidMount` property
+- Bring back the `componentDidMount` property.
+- Pass JSX child elements has the `children` property of `props` again.
 - Hooking into [Redux](https://github.com/reactjs/react-redux) is a priority, watch this space.
 
 ## Contact
