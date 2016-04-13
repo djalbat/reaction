@@ -11516,11 +11516,19 @@ var easyui = require('easyui'),
 var JSXTextElement = require('./jsxTextElement');
 
 var JSXElement = function () {
-  function JSXElement(elementOrSelector, properties, childJSXElements) {
+  function JSXElement(elementOrElementName, properties, childJSXElements) {
     _classCallCheck(this, JSXElement);
 
-    var element = elementOrSelector instanceof Element ? elementOrSelector : ///
-    new Element(elementOrSelector);
+    var element;
+
+    if (elementOrElementName instanceof Element) {
+      element = elementOrElementName; ///
+    } else {
+        var elementName = elementOrElementName,
+            elementHTML = '<' + elementName + '/>';
+
+        element = Element.fromHTML(elementHTML);
+      }
 
     this.element = element;
 
@@ -11776,10 +11784,8 @@ var React = function () {
 
       if (typeof reactClassOrElementName === 'string') {
         elementName = reactClassOrElementName;
-        elementHTML = '<' + elementName + '/>';
-        element = Element.fromHTML(elementHTML);
 
-        jsxElement = new JSXElement(element, properties, childJSXElements);
+        jsxElement = new JSXElement(elementName, properties, childJSXElements);
 
         return jsxElement;
       }
@@ -11792,10 +11798,8 @@ var React = function () {
         var displayName = reactClass.getDisplayName();
 
         elementName = displayName; ///
-        elementHTML = '<' + elementName + '/>';
-        element = Element.fromHTML(elementHTML);
 
-        jsxElement = new JSXElement(element, properties, childJSXElements);
+        jsxElement = new JSXElement(elementName, properties, childJSXElements);
 
         return jsxElement;
       }

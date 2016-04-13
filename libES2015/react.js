@@ -25,10 +25,8 @@ class React {
 
     if (typeof reactClassOrElementName === 'string') {
       elementName = reactClassOrElementName;
-      elementHTML = '<' + elementName + '/>';
-      element = Element.fromHTML(elementHTML);
 
-      jsxElement = new JSXElement(element, properties, childJSXElements);
+      jsxElement = new JSXElement(elementName, properties, childJSXElements);
 
       return jsxElement;
     }
@@ -40,10 +38,8 @@ class React {
       var displayName = reactClass.getDisplayName();
 
       elementName = displayName;  ///
-      elementHTML = '<' + elementName + '/>';
-      element = Element.fromHTML(elementHTML);
 
-      jsxElement = new JSXElement(element, properties, childJSXElements);
+      jsxElement = new JSXElement(elementName, properties, childJSXElements);
 
       return jsxElement;
     }

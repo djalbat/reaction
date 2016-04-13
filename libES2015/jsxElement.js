@@ -6,10 +6,17 @@ var easyui = require('easyui'),
 var JSXTextElement = require('./jsxTextElement');
 
 class JSXElement {
-  constructor(elementOrSelector, properties, childJSXElements) {
-    var element = (elementOrSelector instanceof Element) ?
-      elementOrSelector :  ///
-        new Element(elementOrSelector);
+  constructor(elementOrElementName, properties, childJSXElements) {
+    var element;
+
+    if (elementOrElementName instanceof Element) {
+      element = elementOrElementName; ///
+    } else {
+      var elementName = elementOrElementName,
+          elementHTML = '<' + elementName + '/>';
+
+      element = Element.fromHTML(elementHTML);
+    }
 
     this.element = element;
 
@@ -43,7 +50,7 @@ class JSXElement {
     if (properties === null) {
       return;
     }
-    
+
     var propertyNames = Object.keys(properties);
 
     propertyNames.forEach(function (propertyName) {
