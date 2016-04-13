@@ -27,7 +27,7 @@ class ReactClass {
   static fromProperties(properties) {
     var render = properties['render'],
         displayName = properties['displayName'],
-        getInitialState = properties['getInitialState'],
+        getInitialState = properties['getInitialState'] || defaultGetInitialState,
         componentDidMount = properties['componentDidMount'],
         reactClass = new ReactClass(render, displayName, getInitialState, componentDidMount);
     
@@ -36,3 +36,9 @@ class ReactClass {
 }
 
 module.exports = ReactClass;
+
+function defaultGetInitialState() {
+  var initialState = {};
+
+  return initialState;
+}

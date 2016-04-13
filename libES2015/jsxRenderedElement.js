@@ -1,10 +1,10 @@
 'use strict';
 
 class JSXRenderedElement {
-  constructor(reactClass, childJSXElements, properties) {
+  constructor(reactClass, properties, childJSXElements) {
     this.reactClass = reactClass;
-    this.childJSXElements = childJSXElements;
     this.properties = properties;
+    this.childJSXElements = childJSXElements;
 
     this.parentJSXElement = null;
 
@@ -12,13 +12,13 @@ class JSXRenderedElement {
   }
   
   render(parentJSXElement) {
+    this.parentJSXElement = parentJSXElement;
+
     var reactClass = this.reactClass,
-        getInitialState = reactClass.getInitialState || defaultGetInitialState,
+        getInitialState = reactClass.getInitialState,
         initialState = getInitialState();
 
     this.state = initialState;
-
-    this.parentJSXElement = parentJSXElement;
 
     this.renderElement();
   }
@@ -34,11 +34,10 @@ class JSXRenderedElement {
   renderElement() {
     var parentJSXElement = this.parentJSXElement,
         reactClass = this.reactClass,
-        children = this.childJSXElements, ///
-        props = this.properties || {},  ///
+        props = this.properties,  ///
         state = this.state;
     
-    props.children = children;
+    props.children = this.childJSXElements; ///;
 
     var render = reactClass.render,
         instance = {
@@ -58,9 +57,3 @@ class JSXRenderedElement {
 }
 
 module.exports = JSXRenderedElement;
-
-function defaultGetInitialState() {
-  var initialState = {};
-  
-  return initialState;
-}

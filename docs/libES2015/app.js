@@ -151,7 +151,7 @@ class App {
 
     ReactDOM.render(statefulDiv, bodyDOMElement);
 
-    statefulDiv.setState('Hello world, again!');
+    statefulDiv.setState('Hello world again!');
   }
 }
 

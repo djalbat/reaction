@@ -167,7 +167,7 @@ var App = function App() {
 
   ReactDOM.render(statefulDiv, bodyDOMElement);
 
-  statefulDiv.setState('Hello world, again!');
+  statefulDiv.setState('Hello world again!');
 };
 
 module.exports = App;
@@ -11661,12 +11661,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var JSXRenderedElement = function () {
-  function JSXRenderedElement(reactClass, childJSXElements, properties) {
+  function JSXRenderedElement(reactClass, properties, childJSXElements) {
     _classCallCheck(this, JSXRenderedElement);
 
     this.reactClass = reactClass;
-    this.childJSXElements = childJSXElements;
     this.properties = properties;
+    this.childJSXElements = childJSXElements;
 
     this.parentJSXElement = null;
 
@@ -11676,13 +11676,13 @@ var JSXRenderedElement = function () {
   _createClass(JSXRenderedElement, [{
     key: 'render',
     value: function render(parentJSXElement) {
+      this.parentJSXElement = parentJSXElement;
+
       var reactClass = this.reactClass,
-          getInitialState = reactClass.getInitialState || defaultGetInitialState,
+          getInitialState = reactClass.getInitialState,
           initialState = getInitialState();
 
       this.state = initialState;
-
-      this.parentJSXElement = parentJSXElement;
 
       this.renderElement();
     }
@@ -11700,13 +11700,11 @@ var JSXRenderedElement = function () {
     value: function renderElement() {
       var parentJSXElement = this.parentJSXElement,
           reactClass = this.reactClass,
-          children = this.childJSXElements,
-          ///
-      props = this.properties || {},
+          props = this.properties,
           ///
       state = this.state;
 
-      props.children = children;
+      props.children = this.childJSXElements; ///;
 
       var render = reactClass.render,
           instance = {
@@ -11730,12 +11728,6 @@ var JSXRenderedElement = function () {
 }();
 
 module.exports = JSXRenderedElement;
-
-function defaultGetInitialState() {
-  var initialState = {};
-
-  return initialState;
-}
 
 
 },{}],22:[function(require,module,exports){
@@ -11795,7 +11787,9 @@ var React = function () {
     }
   }, {
     key: 'createElement',
-    value: function createElement(reactClassOrElementName, properties) {
+    value: function createElement(reactClassOrElementName) {
+      var properties = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
       if (reactClassOrElementName === undefined) {
         return undefined;
       }
@@ -11839,11 +11833,7 @@ var React = function () {
         return jsxElement;
       }
 
-      var getInitialState = reactClass.getGetInitialState(),
-          ///
-      componentDidMount = reactClass.getComponentDidMount();
-
-      jsxElement = new JSXRenderedElement(reactClass, childJSXElements, properties);
+      jsxElement = new JSXRenderedElement(reactClass, properties, childJSXElements);
 
       return jsxElement;
     }
@@ -11959,7 +11949,7 @@ var ReactClass = function () {
     value: function fromProperties(properties) {
       var render = properties['render'],
           displayName = properties['displayName'],
-          getInitialState = properties['getInitialState'],
+          getInitialState = properties['getInitialState'] || defaultGetInitialState,
           componentDidMount = properties['componentDidMount'],
           reactClass = new ReactClass(render, displayName, getInitialState, componentDidMount);
 
@@ -11971,6 +11961,12 @@ var ReactClass = function () {
 }();
 
 module.exports = ReactClass;
+
+function defaultGetInitialState() {
+  var initialState = {};
+
+  return initialState;
+}
 
 
 },{}],25:[function(require,module,exports){

@@ -11,7 +11,7 @@ var ReactClass = require('./reactClass'),
 class React {
   static createClass(properties) { return ReactClass.fromProperties(properties); }
 
-  static createElement(reactClassOrElementName, properties, ...remainingArguments) {
+  static createElement(reactClassOrElementName, properties = {}, ...remainingArguments) {
     if (reactClassOrElementName === undefined) {
       return undefined;
     }
@@ -52,10 +52,7 @@ class React {
       return jsxElement;
     }
 
-    var getInitialState = reactClass.getGetInitialState(), ///
-        componentDidMount = reactClass.getComponentDidMount();
-    
-    jsxElement = new JSXRenderedElement(reactClass, childJSXElements, properties);
+    jsxElement = new JSXRenderedElement(reactClass, properties, childJSXElements);
     
     return jsxElement;
   }
