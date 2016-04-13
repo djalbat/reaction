@@ -68,63 +68,13 @@ var App = function App() {
   //
   // body.append(container);
 
-  // var Comment = React.createClass({
-  //   render: function() {
-  //     return (
-  //       <div className="comment">
-  //         <h2>
-  //           {this.props.author}
-  //         </h2>
-  //         {this.props.children}
-  //       </div>
-  //     );
-  //   },
-  //   componentDidMount: function() {
-  //     console.log(this.props.author + '\'s comment mounted')
-  //   }
-  // });
+  var Comment = React.createClass({
+    displayName: 'Comment',
 
-  // var CommentList = React.createClass({
-  //   render: function() {
-  //     var comments = this.props.data.map(function(comment) {
-  //       return (
-  //         <Comment author={comment.author} key={comment.id}>
-  //           {comment.text}
-  //         </Comment>
-  //       );
-  //     });
-  //
-  //     return (
-  //       <div className="commentList">
-  //         {comments}
-  //       </div>
-  //     );
-  //   },
-  //   componentDidMount: function() {
-  //     console.log('The comment list component mounted')
-  //   }
-  // });
-
-  var CommentList = React.createClass({
-    displayName: 'CommentList',
-
-    getInitialState: function getInitialState() {
-      var title = "Some title",
-          initialState = {
-        title: title
-      };
-
-      return initialState;
-    },
     render: function render() {
       return React.createElement(
         'div',
-        { className: 'commentList' },
-        React.createElement(
-          'h2',
-          null,
-          this.state.title
-        ),
+        { className: 'comment' },
         React.createElement(
           'p',
           null,
@@ -134,59 +84,42 @@ var App = function App() {
     }
   });
 
-  var CommentBox = React.createClass({
-    displayName: 'CommentBox',
+  var CommentsList = React.createClass({
+    displayName: 'CommentsList',
 
     getInitialState: function getInitialState() {
-      var message = "Hello, world!!!",
+      var messages = ["Hello, world!", "Hello world again..."],
           initialState = {
-        message: message
+        messages: messages
       };
 
       return initialState;
     },
     render: function render() {
+      var comments = this.state.messages.map(function (message) {
+        return React.createElement(Comment, { message: message });
+      });
+
       return React.createElement(
         'div',
-        { className: 'commentBox' },
-        React.createElement(CommentList, { message: this.state.message })
+        { className: 'commentsList' },
+        comments
       );
     }
   });
 
-  var commentBox = React.createElement(CommentBox, null);
+  var commentsList = React.createElement(CommentsList, null);
 
-  ReactDOM.render(commentBox, bodyDOMElement);
+  ReactDOM.render(commentsList, bodyDOMElement);
 
-  var message = "Hello world again...",
+  var messages = ["Hello world yet again!!!"],
       state = {
-    message: message
+    messages: messages
   };
 
-  commentBox.setState(state);
-
-  // var StatefulDiv = React.createClass({
-  //   getInitialState: function() {
-  //     var initialState = "Initial state...";
-  //
-  //     return initialState;
-  //   },
-  //   render: function() {
-  //     return (
-  //       <div>
-  //         {this.state}
-  //       </div>
-  //     );
-  //   }
-  // });
-  //
-  // var statefulDiv = <StatefulDiv />;
-  //
-  // ReactDOM.render(statefulDiv, bodyDOMElement);
-  //
-  // var state = "...set state.";
-  //
-  // statefulDiv.setState(state);
+  setTimeout(function () {
+    commentsList.setState(state);
+  }, 1000); ///
 };
 
 module.exports = App;
@@ -11676,7 +11609,7 @@ var JSXReactElement = function () {
 
       this.state = initialState;
 
-      this.update();
+      this.renderJSXElement();
 
       this.jsxElement.mount(parentJSXElement);
 
@@ -11689,15 +11622,15 @@ var JSXReactElement = function () {
 
       this.jsxElement.remove();
 
-      this.update();
+      this.renderJSXElement();
 
       var parentJSXElement = this.parentJSXElement;
 
       this.jsxElement.mount(parentJSXElement); ///
     }
   }, {
-    key: 'update',
-    value: function update() {
+    key: 'renderJSXElement',
+    value: function renderJSXElement() {
       var props = this.properties || {},
           ///
       state = this.state;
@@ -11830,8 +11763,6 @@ function childJSXElementsFromRemainingArguments() {
   if (false) {} else if (firstRemainingArgument === undefined) {
     childJSXElements = [];
   } else if (firstRemainingArgument instanceof Array) {
-    debugger;
-
     childJSXElements = firstRemainingArgument; ///
   } else {
       childJSXElements = remainingArguments.map(function (remainingArgument) {

@@ -56,8 +56,6 @@ function childJSXElementsFromRemainingArguments() {
   } else if (firstRemainingArgument === undefined) {
     childJSXElements = [];
   } else if (firstRemainingArgument instanceof Array) {
-    debugger
-
     childJSXElements = firstRemainingArgument;  ///
   } else {
     childJSXElements = remainingArguments.map(function(remainingArgument) {

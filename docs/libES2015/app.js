@@ -58,59 +58,11 @@ class App {
     //
     // body.append(container);
 
-    // var Comment = React.createClass({
-    //   render: function() {
-    //     return (
-    //       <div className="comment">
-    //         <h2>
-    //           {this.props.author}
-    //         </h2>
-    //         {this.props.children}
-    //       </div>
-    //     );
-    //   },
-    //   componentDidMount: function() {
-    //     console.log(this.props.author + '\'s comment mounted')
-    //   }
-    // });
-
-    // var CommentList = React.createClass({
-    //   render: function() {
-    //     var comments = this.props.data.map(function(comment) {
-    //       return (
-    //         <Comment author={comment.author} key={comment.id}>
-    //           {comment.text}
-    //         </Comment>
-    //       );
-    //     });
-    //
-    //     return (
-    //       <div className="commentList">
-    //         {comments}
-    //       </div>
-    //     );
-    //   },
-    //   componentDidMount: function() {
-    //     console.log('The comment list component mounted')
-    //   }
-    // });
-
-    var CommentList = React.createClass({
-      getInitialState: function() {
-        var title = "Some title",
-            initialState = {
-              title: title
-            };
-
-        return initialState;
-      },
+    var Comment = React.createClass({
       render: function() {
         return (
 
-          <div className="commentList">
-            <h2>
-              {this.state.title}
-            </h2>
+          <div className="comment">
             <p>
               {this.props.message}
             </p>
@@ -119,58 +71,46 @@ class App {
       }
     });
 
-    var CommentBox = React.createClass({
+    var CommentsList = React.createClass({
       getInitialState: function() {
-        var message = "Hello, world!!!",
+        var messages = [
+              "Hello, world!",
+              "Hello world again..."
+            ],
             initialState = {
-              message: message
+              messages: messages
             };
 
         return initialState;
       },
       render: function() {
+        var comments = this.state.messages.map(function(message) {
+          return <Comment message={message} />;
+        });
+
         return (
 
-          <div className="commentBox">
-            <CommentList message={this.state.message}/>
+          <div className="commentsList">
+            {comments}
           </div>
         );
       }
     });
 
-    var commentBox = <CommentBox />;
+    var commentsList = <CommentsList />;
 
-    ReactDOM.render(commentBox, bodyDOMElement);
+    ReactDOM.render(commentsList, bodyDOMElement);
 
-    var message = "Hello world again...",
+    var messages = [
+          "Hello world yet again!!!"
+        ],
         state = {
-          message: message
+          messages: messages
         };
 
-    commentBox.setState(state);
-
-    // var StatefulDiv = React.createClass({
-    //   getInitialState: function() {
-    //     var initialState = "Initial state...";
-    //
-    //     return initialState;
-    //   },
-    //   render: function() {
-    //     return (
-    //       <div>
-    //         {this.state}
-    //       </div>
-    //     );
-    //   }
-    // });
-    //
-    // var statefulDiv = <StatefulDiv />;
-    //
-    // ReactDOM.render(statefulDiv, bodyDOMElement);
-    //
-    // var state = "...set state.";
-    //
-    // statefulDiv.setState(state);
+    setTimeout(function() {
+      commentsList.setState(state);
+    }, 1000); ///
   }
 }
 
