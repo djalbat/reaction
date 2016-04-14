@@ -19,58 +19,71 @@ var App = function App() {
 
   var bodyDOMElement = document.getElementsByTagName('body')[0];
 
-  var Comment = React.createClass({
-    displayName: 'Comment',
+  // var Comment = React.createClass({
+  //   render: function() {
+  //     return (
+  //
+  //       <div className="comment">
+  //         <p>
+  //           {this.props.message}
+  //         </p>
+  //       </div>
+  //     );
+  //   }
+  // });
+  //
+  // var CommentsList = React.createClass({
+  //   getInitialState: function() {
+  //     var messages = [
+  //           "Hello, world!",
+  //           "Hello world again..."
+  //         ],
+  //         initialState = {
+  //           messages: messages
+  //         };
+  //
+  //     return initialState;
+  //   },
+  //   render: function() {
+  //     var comments = this.state.messages.map(function(message) {
+  //       return <Comment message={message} />;
+  //     });
+  //
+  //     return (
+  //
+  //       <div className="commentsList">
+  //         {comments}
+  //       </div>
+  //     );
+  //   }
+  // });
+  //
+  // var commentsList = <CommentsList />;
+  //
+  // ReactDOM.render(commentsList, bodyDOMElement);
+  //
+  // var messages = [
+  //       "Hello world yet again!!!"
+  //     ],
+  //     state = {
+  //       messages: messages
+  //     };
+  //
+  // setTimeout(function() {
+  //   commentsList.setState(state);
+  // }, 1000); ///
 
-    render: function render() {
-      return React.createElement(
-        'div',
-        { className: 'comment' },
-        React.createElement(
-          'p',
-          null,
-          this.props.message
-        )
-      );
-    }
-  });
-
-  var CommentsList = React.createClass({
-    displayName: 'CommentsList',
+  var Div = React.createClass({
+    displayName: 'Div',
 
     getInitialState: function getInitialState() {
-      var messages = ["Hello, world!", "Hello world again..."],
-          initialState = {
-        messages: messages
-      };
-
-      return initialState;
-    },
-    render: function render() {
-      var comments = this.state.messages.map(function (message) {
-        return React.createElement(Comment, { message: message });
-      });
-
-      return React.createElement(
-        'div',
-        { className: 'commentsList' },
-        comments
-      );
+      return "";
     }
   });
 
-  var commentsList = React.createElement(CommentsList, null);
+  var div = React.createElement(Div, null);
 
-  ReactDOM.render(commentsList, bodyDOMElement);
-
-  var messages = ["Hello world yet again!!!"],
-      state = {
-    messages: messages
-  };
-
-  setTimeout(function () {
-    commentsList.setState(state);
-  }, 1000); ///
+  ReactDOM.render(div, bodyDOMElement);
 };
 
 module.exports = App;
@@ -11591,9 +11604,11 @@ var JSXReactElement = function () {
 
       var reactClass = this.reactClass,
           render = reactClass.getRender(),
+          displayName = reactClass.getDisplayName(),
           instance = {
         props: props,
-        state: state
+        state: state,
+        displayName: displayName
       };
 
       this.jsxElement = render.apply(instance);
@@ -11682,28 +11697,13 @@ var React = function () {
         var elementName = reactClassOrElementName; ///
 
         jsxElement = new JSXElement(elementName, properties, childJSXElements);
+      } else {
+        var reactClass = reactClassOrElementName; ///
 
-        return jsxElement;
-      }
-
-      var reactClass = reactClassOrElementName,
-          ///
-      render = reactClass.getRender();
-
-      if (render === undefined) {
-        var displayName = reactClass.getDisplayName();
-        elementName = displayName; ///
-
-        jsxElement = new JSXElement(elementName, properties, childJSXElements);
-
-        return jsxElement;
-      }
-
-      {
         jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
-
-        return jsxElement;
       }
+
+      return jsxElement;
     }
   }]);
 
@@ -11752,6 +11752,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var JSXElement = require('./jsxElement');
+
 var ReactClass = function () {
   function ReactClass(render, displayName, getInitialState, componentDidMount) {
     _classCallCheck(this, ReactClass);
@@ -11785,8 +11787,8 @@ var ReactClass = function () {
   }], [{
     key: 'fromProperties',
     value: function fromProperties(properties) {
-      var render = properties['render'],
-          displayName = properties['displayName'],
+      var render = properties['render'] || defaultRender,
+          displayName = properties['displayName'] || defaultDisplayName,
           getInitialState = properties['getInitialState'] || defaultGetInitialState,
           componentDidMount = properties['componentDidMount'] || defaultComponentDidMount,
           reactClass = new ReactClass(render, displayName, getInitialState, componentDidMount);
@@ -11800,6 +11802,22 @@ var ReactClass = function () {
 
 module.exports = ReactClass;
 
+function defaultRender() {
+  var elementName = this.displayName,
+      ///
+  properties = this.props,
+      ///
+  childJSXElements = this.props.children; ///
+
+  delete properties.children;
+
+  var jsxElement = new JSXElement(elementName, properties, childJSXElements);
+
+  return jsxElement;
+}
+
+var defaultDisplayName = undefined; ///
+
 function defaultGetInitialState() {
   var initialState = {};
 
@@ -11809,7 +11827,7 @@ function defaultGetInitialState() {
 function defaultComponentDidMount() {}
 
 
-},{}],25:[function(require,module,exports){
+},{"./jsxElement":20}],25:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();

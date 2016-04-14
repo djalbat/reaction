@@ -24,27 +24,13 @@ class React {
       var elementName = reactClassOrElementName;  ///
 
       jsxElement = new JSXElement(elementName, properties, childJSXElements);
-      
-      return jsxElement;
-    }
+    } else {
+      var reactClass = reactClassOrElementName; ///
 
-    var reactClass = reactClassOrElementName, ///
-        render = reactClass.getRender();
-
-    if (render === undefined) {
-      var displayName = reactClass.getDisplayName();
-          elementName = displayName;  ///
-
-      jsxElement = new JSXElement(elementName, properties, childJSXElements);
-      
-      return jsxElement;
-    } 
-    
-    {
       jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
-
-      return jsxElement;
     }
+    
+    return jsxElement;
   }
 }
 

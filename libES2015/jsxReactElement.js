@@ -45,9 +45,11 @@ class JSXReactElement {
 
     var reactClass = this.reactClass,
         render = reactClass.getRender(),
+        displayName = reactClass.getDisplayName(),
         instance = {
           props: props,
-          state: state
+          state: state,
+          displayName: displayName
         }; 
 
     this.jsxElement = render.apply(instance);

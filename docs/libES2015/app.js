@@ -8,59 +8,69 @@ class App {
   constructor() {
     var bodyDOMElement = document.getElementsByTagName('body')[0];
 
-    var Comment = React.createClass({
-      render: function() {
-        return (
+    // var Comment = React.createClass({
+    //   render: function() {
+    //     return (
+    //
+    //       <div className="comment">
+    //         <p>
+    //           {this.props.message}
+    //         </p>
+    //       </div>
+    //     );
+    //   }
+    // });
+    //
+    // var CommentsList = React.createClass({
+    //   getInitialState: function() {
+    //     var messages = [
+    //           "Hello, world!",
+    //           "Hello world again..."
+    //         ],
+    //         initialState = {
+    //           messages: messages
+    //         };
+    //
+    //     return initialState;
+    //   },
+    //   render: function() {
+    //     var comments = this.state.messages.map(function(message) {
+    //       return <Comment message={message} />;
+    //     });
+    //
+    //     return (
+    //
+    //       <div className="commentsList">
+    //         {comments}
+    //       </div>
+    //     );
+    //   }
+    // });
+    //
+    // var commentsList = <CommentsList />;
+    //
+    // ReactDOM.render(commentsList, bodyDOMElement);
+    //
+    // var messages = [
+    //       "Hello world yet again!!!"
+    //     ],
+    //     state = {
+    //       messages: messages
+    //     };
+    //
+    // setTimeout(function() {
+    //   commentsList.setState(state);
+    // }, 1000); ///
 
-          <div className="comment">
-            <p>
-              {this.props.message}
-            </p>
-          </div>
-        );
-      }
-    });
-
-    var CommentsList = React.createClass({
+    var Div = React.createClass({
       getInitialState: function() {
-        var messages = [
-              "Hello, world!",
-              "Hello world again..."
-            ],
-            initialState = {
-              messages: messages
-            };
-
-        return initialState;
-      },
-      render: function() {
-        var comments = this.state.messages.map(function(message) {
-          return <Comment message={message} />;
-        });
-
-        return (
-
-          <div className="commentsList">
-            {comments}
-          </div>
-        );
+        return "";
       }
     });
 
-    var commentsList = <CommentsList />;
+    var div = <Div></Div>;
 
-    ReactDOM.render(commentsList, bodyDOMElement);
-
-    var messages = [
-          "Hello world yet again!!!"
-        ],
-        state = {
-          messages: messages
-        };
-
-    setTimeout(function() {
-      commentsList.setState(state);
-    }, 1000); ///
+    ReactDOM.render(div, bodyDOMElement);
   }
 }
 
