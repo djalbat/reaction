@@ -52,8 +52,9 @@ Install the necessary npm modules...
 
 These properties can be passed to the `React.createClass` method:
 
-- getInitialState
 - render
+- getInitialState
+- componentDidMount
 
 ## Roadmap
 
