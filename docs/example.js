@@ -32,6 +32,11 @@ var App = function App() {
           this.props.message
         )
       );
+    },
+    componentDidMount: function componentDidMount() {
+      var message = this.props.message;
+
+      console.log('comment mounted with message ' + message);
     }
   });
 
@@ -56,6 +61,9 @@ var App = function App() {
         { className: 'commentsList' },
         comments
       );
+    },
+    componentDidMount: function componentDidMount() {
+      console.log('comments list mounted');
     }
   });
 
@@ -11564,6 +11572,12 @@ var JSXReactElement = function () {
       this.render();
 
       this.remount();
+
+      var reactClass = this.reactClass,
+          componentDidMount = reactClass.getComponentDidMount(),
+          instance = this.instance();
+
+      componentDidMount.apply(instance);
     }
   }, {
     key: 'setState',
@@ -11584,22 +11598,29 @@ var JSXReactElement = function () {
   }, {
     key: 'render',
     value: function render() {
-      var props = this.properties || {},
-          ///
-      state = this.state;
-
-      props.children = this.childJSXElements; ///;
-
       var reactClass = this.reactClass,
           render = reactClass.getRender(),
           displayName = reactClass.getDisplayName(),
-          instance = {
-        props: props,
-        state: state,
-        displayName: displayName
-      };
+          instance = this.instance();
+
+      instance.displayName = displayName;
 
       this.jsxElement = render.apply(instance);
+    }
+  }, {
+    key: 'instance',
+    value: function instance() {
+      var props = this.properties || {},
+          ///
+      state = this.state,
+          instance = {
+        props: props,
+        state: state
+      };
+
+      props.children = this.childJSXElements; ///;
+
+      return instance;
     }
   }]);
 

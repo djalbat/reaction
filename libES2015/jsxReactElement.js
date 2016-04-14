@@ -21,6 +21,12 @@ class JSXReactElement {
     this.render();
     
     this.remount();
+
+    var reactClass = this.reactClass,
+        componentDidMount = reactClass.getComponentDidMount(),
+        instance = this.instance();
+
+    componentDidMount.apply(instance);
   }
 
   setState(state) {
@@ -38,21 +44,27 @@ class JSXReactElement {
   }
 
   render() {
-    var props = this.properties || {},  ///
-        state = this.state;
-    
-    props.children = this.childJSXElements; ///;
-
     var reactClass = this.reactClass,
         render = reactClass.getRender(),
         displayName = reactClass.getDisplayName(),
-        instance = {
-          props: props,
-          state: state,
-          displayName: displayName
-        };
+        instance = this.instance();
+
+    instance.displayName = displayName;
 
     this.jsxElement = render.apply(instance);
+  }
+
+  instance() {
+    var props = this.properties || {},  ///
+        state = this.state,
+        instance = {
+          props: props,
+          state: state
+        };
+
+    props.children = this.childJSXElements; ///;
+
+    return instance;
   }
 }
 

@@ -18,6 +18,11 @@ class App {
             </p>
           </div>
         );
+      },
+      componentDidMount: function() {
+        var message = this.props.message;
+
+        console.log('comment mounted with message ' + message)
       }
     });
 
@@ -44,6 +49,9 @@ class App {
             {comments}
           </div>
         );
+      },
+      componentDidMount: function() {
+        console.log('comments list mounted')
       }
     });
 
