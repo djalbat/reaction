@@ -21,6 +21,8 @@ class JSXElement {
     this.properties = properties;
     
     this.childJSXElements = childJSXElements;
+
+    this.addPropertiesToElementAsAttributes();
   }
   
   getElement() {
@@ -28,12 +30,10 @@ class JSXElement {
   }
 
   mount(parentJSXElement) {
-    this.addPropertiesToElementAsAttributes();
-
     this.childJSXElements.forEach(function(childJSXElement) {
       childJSXElement.mount(this);
     }.bind(this));
-
+    
     parentJSXElement.append(this);
   }
 

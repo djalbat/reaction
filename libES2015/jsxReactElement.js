@@ -6,23 +6,21 @@ class JSXReactElement {
     this.properties = properties;
     this.childJSXElements = childJSXElements;
 
-    this.jsxElement = null;
-
-    this.parentJSXElement = null;
-  }
-
-  mount(parentJSXElement) {
-    var reactClass = this.reactClass,
-        getInitialState = reactClass.getGetInitialState(),
+    var getInitialState = reactClass.getGetInitialState(),
         initialState = getInitialState();
 
-    this.state = initialState;
+    this.state = initialState;  ///
+
+    this.jsxElement = undefined;  ///
+    this.parentJSXElement = undefined;  ///
+  }
+  
+  mount(parentJSXElement) {
+    this.parentJSXElement = parentJSXElement;
 
     this.render();
-
-    this.jsxElement.mount(parentJSXElement);
-
-    this.parentJSXElement = parentJSXElement;
+    
+    this.remount();
   }
 
   setState(state) {
@@ -32,9 +30,11 @@ class JSXReactElement {
 
     this.render();
 
-    var parentJSXElement = this.parentJSXElement;
+    this.remount();
+  }
 
-    this.jsxElement.mount(parentJSXElement);  ///
+  remount() {
+    this.jsxElement.mount(this.parentJSXElement);
   }
 
   render() {
@@ -50,7 +50,7 @@ class JSXReactElement {
           props: props,
           state: state,
           displayName: displayName
-        }; 
+        };
 
     this.jsxElement = render.apply(instance);
   }

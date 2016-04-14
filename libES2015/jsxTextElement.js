@@ -3,6 +3,8 @@
 class JSXTextElement {
   constructor(text) {
     this.text = text;
+    
+    this.parentJSXElement = undefined;  ///
   }
 
   getElement() {
@@ -10,7 +12,7 @@ class JSXTextElement {
 
     return element;
   }
-  
+
   mount(parentJSXElement) {
     parentJSXElement.append(this);
   }
