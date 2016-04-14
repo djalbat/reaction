@@ -57,7 +57,6 @@ These properties can be passed to the `React.createClass` method:
 
 ## Roadmap
 
-- Bring back the `componentDidMount` property.
 - Hooking into [Redux](https://github.com/reactjs/react-redux) is a priority, watch this space.
 
 ## Contact
