@@ -38,8 +38,8 @@ Install the necessary npm modules...
 
 Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts). Have a look at the package JSON file. The pertinent commands are:
 
-   npm run build
-   npm run watch
+    npm run build
+    npm run watch
 
 ## Currently supported functionality
 
