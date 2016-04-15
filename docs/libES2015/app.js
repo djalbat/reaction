@@ -1,6 +1,6 @@
 'use strict';
 
-var reaction = require('reaction'),
+var reaction = require('../../index'),
     ReactDOM = reaction.ReactDOM,
     React = reaction.React;
 

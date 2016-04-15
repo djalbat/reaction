@@ -22,11 +22,7 @@ class JSXReactElement {
     
     this.remount();
 
-    var reactClass = this.reactClass,
-        componentDidMount = reactClass.getComponentDidMount(),
-        instance = this.instance();
-
-    componentDidMount.apply(instance);
+    this.componentDidMount();
   }
 
   setState(state) {
@@ -52,6 +48,14 @@ class JSXReactElement {
     instance.displayName = displayName;
 
     this.jsxElement = render.apply(instance);
+  }
+
+  componentDidMount() {
+    var reactClass = this.reactClass,
+        componentDidMount = reactClass.getComponentDidMount(),
+        instance = this.instance();
+
+    componentDidMount.apply(instance);
   }
 
   instance() {
