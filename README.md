@@ -4,7 +4,9 @@ An alternative implementation of React.
 
 #### But why?!
 
-The idea is to improve on [React](https://facebook.github.io/react/)'s component lifecycle with a view to better handshaking with solutions like [Redux](http://redux.js.org/) and [Falcor](http://netflix.github.io/falcor/), though it's early days yet. [Deku](https://github.com/dekujs/deku) are doing much the same.
+To improve on [React](https://facebook.github.io/react/)'s component lifecycle to facilitate better handshaking with [Redux](http://redux.js.org/) and [Falcor](http://netflix.github.io/falcor/), though it's early days yet. [Deku](https://github.com/dekujs/deku) are doing much the same.
+
+Reverse engineering the kernel of React was a pleasure, if a bit intense. Hats off to Facebook for giving us React.
 
 ## Installation
 
@@ -34,14 +36,10 @@ Install the necessary npm modules...
 
     npm install
 
-...make sure you have [grunt-cli](http://gruntjs.com/getting-started) installed globally...
+Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts). Have a look at the package JSON file. The pertinent commands are:
 
-    npm install -g grunt-cli
-
-...then build or watch with [grunt](http://gruntjs.com/):
-
-    grunt b
-    grunt w
+   npm run build
+   npm run watch
 
 ## Currently supported functionality
 
