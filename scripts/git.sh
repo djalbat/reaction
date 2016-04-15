@@ -13,4 +13,3 @@ npm version $VERSION --no-git-tag-version
 git add . --all
 git commit -m "$COMMIT_MESSAGE"
 git push
-

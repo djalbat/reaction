@@ -4,9 +4,7 @@ An alternative implementation of React.
 
 #### But why?!
 
-To improve on [React](https://facebook.github.io/react/)'s component lifecycle to facilitate better handshaking with [Redux](http://redux.js.org/) and [Falcor](http://netflix.github.io/falcor/), though it's early days yet. [Deku](https://github.com/dekujs/deku) are doing much the same.
-
-Reverse engineering the kernel of React was a pleasure, if a bit intense. Hats off to Facebook for giving us React.
+To improve on [React](https://facebook.github.io/react/)'s component lifecycle to facilitate better handshaking with [Redux](http://redux.js.org/) and [Falcor](http://netflix.github.io/falcor/), though it's early days yet. [Deku](https://github.com/dekujs/deku) are doing much the same thing.
 
 ## Installation
 
