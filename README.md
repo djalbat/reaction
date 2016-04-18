@@ -18,21 +18,21 @@ var reaction = require('reaction'),
     React = reaction.React;
 ```
 
-You an also clone the repository with [git](https://git-scm.com/):
+You can also clone the repository with [git](https://git-scm.com/):
 
     git clone https://github.com/djalbat/Reaction.git
 
-Install the necessary npm modules...
+Install the necessary [npm](https://www.npmjs.com/) modules:
 
     npm install
 
-You will need to do this if you want to have a look at the exmaples.
+You will need to do this if you want to have a look at the examples.
 
 Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way.
 
 ## Examples
 
-Launch the `examples.html` file in the `docs` folder. THere is now a Redux example application as well as a vanilla example application.
+Launch the `examples.html` file in the `docs` folder. THere is now a Redux as well as a vanilla example application.
 
 ## Compiling from source
 
@@ -47,7 +47,7 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts). Have
 - `React.createClass`
 - `ReactDOM.render`
 - `setState` on JSX elements
-- React's now functional syntax for components. See the Redux example application.
+- React's now function syntax for components. See the Redux example application.
 
 These properties can be passed to the `React.createClass` method:
 
@@ -58,7 +58,7 @@ These properties can be passed to the `React.createClass` method:
 ## Roadmap
 
 - Pad out Redux support if necessary.
-- Look at Redux.
+- Look at Falcor.
 
 ## Contact
 
