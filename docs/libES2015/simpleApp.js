@@ -4,7 +4,7 @@ var reaction = require('../../index'),
     ReactDOM = reaction.ReactDOM,
     React = reaction.React;
 
-class App {
+class SimpleApp {
   constructor() {
     var bodyDOMElement = document.getElementsByTagName('body')[0];
 
@@ -72,4 +72,4 @@ class App {
   }
 }
 
-module.exports = App;
+module.exports = SimpleApp;

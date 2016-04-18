@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports = {
-  App: require('./lib/app')
+  SimpleApp: require('./lib/simpleApp'),
+  ReduxApp: require('./lib/reduxApp')
 };

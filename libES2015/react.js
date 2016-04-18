@@ -3,7 +3,8 @@
 var ReactClass = require('./reactClass'),
     JSXElement = require('./jsxElement'),
     JSXTextElement = require('./jsxTextElement'),
-    JSXReactElement = require('./jsxReactElement');
+    JSXReactElement = require('./jsxReactElement'),
+    JSXFunctionElement = require('./jsxFunctionElement');
 
 class React {
   static createClass(properties) {
@@ -20,16 +21,20 @@ class React {
     var jsxElement = undefined,
         childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments);
 
-    if (typeof reactClassOrElementName === 'string') {
-      var elementName = reactClassOrElementName;  ///
-
-      jsxElement = new JSXElement(elementName, properties, childJSXElements);
-    } else {
+    if (reactClassOrElementName instanceof ReactClass) {
       var reactClass = reactClassOrElementName; ///
 
       jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
+    } else if (typeof reactClassOrElementName === 'function') {
+      var reactFunction = reactClassOrElementName;  ///
+
+      jsxElement = new JSXFunctionElement(reactFunction, properties, childJSXElements);
+    } else {
+      var elementName = reactClassOrElementName;  ///
+
+      jsxElement = new JSXElement(elementName, properties, childJSXElements);
     }
-    
+
     return jsxElement;
   }
 }
@@ -47,15 +52,15 @@ function childJSXElementsFromRemainingArguments() {
     childJSXElements = firstRemainingArgument;  ///
   } else {
     childJSXElements = remainingArguments.map(function(remainingArgument) {
-      if (typeof remainingArgument === 'string') {
-        var text = remainingArgument,  ///
-            childJSXTextElement = new JSXTextElement(text);
-
-        return childJSXTextElement;
-      } else {
+      if (remainingArgument instanceof JSXElement) {
         var childJSXElement = remainingArgument;  ///
 
         return childJSXElement;
+      } else {
+        var text = '' + remainingArgument,  ///
+            childJSXTextElement = new JSXTextElement(text);
+
+        return childJSXTextElement;
       }
     });
   }
