@@ -54,7 +54,7 @@ These properties can be passed to the `React.createClass` method:
 
 ## Roadmap
 
-- Hooking into [Redux](https://github.com/reactjs/react-redux) is a priority, watch this space.
+- Hooking into [Redux](https://github.com/reactjs/react-redux) is a priority. This is now underway.
 
 ## Contact
 
