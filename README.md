@@ -2,7 +2,7 @@
 
 An alternative implementation of React.
 
-#### But why?
+#### Why?
 
 The idea is to improve on [React](https://facebook.github.io/react/)'s component lifecycle in order to facilitate better handshaking with [Redux](http://redux.js.org/) and [Falcor](http://netflix.github.io/falcor/). [Deku](https://github.com/dekujs/deku) are doing much the same thing.
 
