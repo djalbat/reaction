@@ -26,9 +26,10 @@ class React {
 
       jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
     } else if (typeof reactClassOrElementName === 'function') {
-      var reactFunction = reactClassOrElementName;  ///
+      var reactFunction = reactClassOrElementName,  ///
+          _ref = properties;  ///
 
-      jsxElement = new JSXFunctionElement(reactFunction, properties, childJSXElements);
+      jsxElement = new JSXFunctionElement(reactFunction, _ref);
     } else {
       var elementName = reactClassOrElementName;  ///
 

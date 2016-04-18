@@ -54,6 +54,7 @@ These properties can be passed to the `React.createClass` method:
 
 ## Roadmap
 
+- Add support for componentDidMount to functional components if necessary.
 - Hooking into [Redux](https://github.com/reactjs/react-redux) is a priority. This is now underway.
 
 ## Contact

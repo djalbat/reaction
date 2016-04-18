@@ -12,6 +12,7 @@ class JSXReactElement {
     this.state = initialState;  ///
 
     this.jsxElement = undefined;  ///
+    
     this.parentJSXElement = undefined;  ///
   }
   
@@ -35,10 +36,6 @@ class JSXReactElement {
     this.remount();
   }
 
-  remount() {
-    this.jsxElement.mount(this.parentJSXElement);
-  }
-
   render() {
     var reactClass = this.reactClass,
         render = reactClass.getRender(),
@@ -48,6 +45,10 @@ class JSXReactElement {
     instance.displayName = displayName;
 
     this.jsxElement = render.apply(instance);
+  }
+
+  remount() {
+    this.jsxElement.mount(this.parentJSXElement);
   }
 
   componentDidMount() {

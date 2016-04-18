@@ -1,16 +1,12 @@
 'use strict';
 
 class JSXFunctionElement {
-  constructor(reactFunction, properties, childJSXElements) {
+  constructor(reactFunction, _ref) {
     this.reactFunction = reactFunction;
-    this.properties = properties;
-    this.childJSXElements = childJSXElements;
-
-    var initialState = {};  ///
-
-    this.state = initialState;  ///
+    this._ref = _ref;
 
     this.jsxElement = undefined;  ///
+
     this.parentJSXElement = undefined;  ///
   }
   
@@ -20,33 +16,14 @@ class JSXFunctionElement {
     this.render();
     
     this.remount();
-
-    this.componentDidMount();
   }
 
-  setState(state) {
-    this.state = state;
-
-    this.jsxElement.remove();
-
-    this.render();
-
-    this.remount();
+  render() {
+    this.jsxElement = this.reactFunction(this._ref);
   }
 
   remount() {
     this.jsxElement.mount(this.parentJSXElement);
-  }
-
-  render() {
-    var reactFunction = this.reactFunction,
-        properties = this.properties;
-
-    this.jsxElement = reactFunction(properties);
-  }
-
-  componentDidMount() {
-    ///
   }
 }
 

@@ -33,7 +33,7 @@ class JSXElement {
     this.childJSXElements.forEach(function(childJSXElement) {
       childJSXElement.mount(this);
     }.bind(this));
-    
+
     parentJSXElement.append(this);
   }
 
@@ -52,6 +52,8 @@ class JSXElement {
 
   remove() { this.element.remove(); }
 
+  empty() { this.element.empty(); }
+
   addPropertiesToElementAsAttributes() {
     if (this.properties === null) {
       return;
@@ -61,24 +63,34 @@ class JSXElement {
 
     propertyNames.forEach(function (propertyName) {
       var attributeName,
-          propertyValue = this.properties[propertyName],
-          attributeValue = propertyValue;
+          propertyValue = this.properties[propertyName];
 
-      switch (propertyName) {
-        case 'className':
-          attributeName = 'class';
-          break;
+      if (typeof propertyValue === 'function') {
+        if (beginsWith(propertyName, 'on')) {
+          var events = propertyName.substring(2).toLowerCase(), ///
+              handler = propertyValue;  ///
+          
+          this.element.on(events, handler);
+        }
+      } else {
+        var attributeValue = propertyValue;
 
-        case 'htmlFor':
-          attributeName = 'for';
-          break;
+        switch (propertyName) {
+          case 'className':
+            attributeName = 'class';
+            break;
 
-        default:
-          attributeName = propertyName;
-          break;
+          case 'htmlFor':
+            attributeName = 'for';
+            break;
+
+          default:
+            attributeName = propertyName;
+            break;
+        }
+
+        this.element.addAttribute(attributeName, attributeValue);
       }
-
-      this.element.addAttribute(attributeName, attributeValue);
     }.bind(this));
   }
 
@@ -92,3 +104,10 @@ class JSXElement {
 }
 
 module.exports = JSXElement;
+
+function beginsWith(string, beginningString) {
+  var regExp = new RegExp('^' + beginningString),
+      matches = string.match(regExp);
+
+  return !!matches; ///
+}

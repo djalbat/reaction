@@ -26,8 +26,12 @@ class ReduxApp {
       }
     };
 
-    const Counter = ({ value }) => (
-      <h1>{value}</h1>
+    const Counter = ({ value, onIncrement, onDecrement }) => (
+      <div>
+        <h1>{value}</h1>
+        <button onClick={onIncrement}>+</button>
+        <button onClick={onDecrement}>-</button>
+      </div>
     );
 
     const { createStore } = redux;
@@ -35,7 +39,19 @@ class ReduxApp {
 
     const render = () => {
       ReactDOM.render(
-        <Counter value={store.getState()}/>,
+        <Counter
+          value={store.getState()}
+          onIncrement={() => {
+            store.dispatch({
+              type: 'INCREMENT'
+            })
+          }}
+          onDecrement={() => {
+            store.dispatch({
+              type: 'DECREMENT'
+            })
+          }}
+        />,
         rootDOMElement
       );
     };
@@ -46,60 +62,30 @@ class ReduxApp {
   }
 }
 
-  // expect(
-  //     counter(0, { type: 'INCREMENT' })
-  // ).toEqual(1);
-  //
-  // expect(
-  //     counter(1, { type: 'INCREMENT' })
-  // ).toEqual(2);
-  //
-  // expect(
-  //     counter(2, { type: 'DECREMENT' })
-  // ).toEqual(1);
-  //
-  // expect(
-  //     counter(1, { type: 'DECREMENT' })
-  // ).toEqual(0);
-  //
-  // expect(
-  //     counter(1, { type: 'SOMETHING_ELSE'} )
-  // ).toEqual(1);
-  //
-  // expect(
-  //     counter(undefined, {})
-  // ).toEqual(0);
-  //
-  // console.log('Tests passed!')  }
-
-
-// document.addEventListener('click', function () {
-//   store.dispatch({type: 'INCREMENT'});
-// });
+// expect(
+//     counter(0, { type: 'INCREMENT' })
+// ).toEqual(1);
 //
-// const createStore = (reducer) => {
-//   let state;
-//   let listeners = [];
+// expect(
+//     counter(1, { type: 'INCREMENT' })
+// ).toEqual(2);
 //
-//   const getState = () => state;
+// expect(
+//     counter(2, { type: 'DECREMENT' })
+// ).toEqual(1);
 //
-//   const dispatch = (action) => {
-//     state = reducer(state, action);
+// expect(
+//     counter(1, { type: 'DECREMENT' })
+// ).toEqual(0);
 //
-//     listeners.forEach(listener => listener());
-//   };
+// expect(
+//     counter(1, { type: 'SOMETHING_ELSE'} )
+// ).toEqual(1);
 //
-//   const subscribe = (listener) => {
-//     listeners.push(listener);
+// expect(
+//     counter(undefined, {})
+// ).toEqual(0);
 //
-//     return () => {
-//       listeners.filter(l => l !== listener);
-//     }
-//   };
-//
-//   dispatch({});
-//
-//   return { getState, dispatch, subscribe };
-// };
+// console.log('Tests passed!')  }
 
 module.exports = ReduxApp;
