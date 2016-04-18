@@ -32,11 +32,11 @@ Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.htm
 
 ## Examples
 
-Launch the `examples.html` file in the `docs` folder. THere is now a Redux as well as a vanilla example application.
+Launch the `examples.html` file in the `docs` folder. There is now a Redux as well as a vanilla example application.
 
 ## Compiling from source
 
-Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts). Have a look at the package JSON file. The pertinent commands are:
+Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the package.json file. The pertinent commands are:
 
     npm run build
     npm run watch
