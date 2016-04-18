@@ -4,9 +4,9 @@ var reaction = require('../../index'),
     ReactDOM = reaction.ReactDOM,
     React = reaction.React;
 
-class SimpleApp {
+class VanillaApp {
   constructor() {
-    var bodyDOMElement = document.getElementsByTagName('body')[0];
+    var rootDOMElement = document.getElementById('root');
 
     var Comment = React.createClass({
       render: function() {
@@ -57,7 +57,7 @@ class SimpleApp {
 
     var commentsList = <CommentsList />;
 
-    ReactDOM.render(commentsList, bodyDOMElement);
+    ReactDOM.render(commentsList, rootDOMElement);
 
     var messages = [
           "Hello world yet again!!!"
@@ -72,4 +72,4 @@ class SimpleApp {
   }
 }
 
-module.exports = SimpleApp;
+module.exports = VanillaApp;
