@@ -101,6 +101,78 @@ class ReduxApp {
       );
     };
 
+    let nextTodoId = 0;
+    class AddTodos extends Component {
+      render () {
+        return (
+
+          <div>
+            <input ref={node => {
+            this.input = node;
+          }} />
+            <button onClick={() => {
+            store.dispatch({
+              type: 'ADD_TODO',
+              text: this.input.value,
+              id: nextTodoId++
+            });
+            this.input.value = '';
+          }}>
+              Add todo
+            </button>
+          </div>
+        );
+      }
+    }
+
+    const Todo = ({
+      todo
+    }) => (
+
+      <li onClick={() => {store.dispatch({
+                              type: 'TOGGLE_TODO',
+                              id: todo.id
+                            })
+                          }}
+          style={{textDecoration:
+                    todo.completed ?
+                      'line-through' :
+                        'none'}}
+      >
+        {todo.text}
+      </li>
+    );
+
+    const TodosList = ({
+      visibleTodos
+    }) => (
+
+      <ul>
+        {visibleTodos.map(todo => <Todo todo={todo} />)}
+      </ul>
+    );
+
+    const Footer = ({
+      visibilityFilter
+    }) => (
+
+      <p>
+        Show:
+        {' '}
+        <FilterLink filter='SHOW_ALL' currentFilter={visibilityFilter}>
+          All
+        </FilterLink>
+        {' '}
+        <FilterLink filter='SHOW_ACTIVE' currentFilter={visibilityFilter}>
+          Active
+        </FilterLink>
+        {' '}
+        <FilterLink filter='SHOW_COMPLETED' currentFilter={visibilityFilter}>
+          Completed
+        </FilterLink>
+      </p>
+    );
+
     const getVisibleTodos = (
       todos,
       filter
@@ -121,7 +193,6 @@ class ReduxApp {
       }
     };
 
-    let nextTodoId = 0;
     class TodoApp extends Component {
       render() {
         const {
@@ -136,53 +207,9 @@ class ReduxApp {
 
         return (
           <div>
-            <input ref={node => {
-              this.input = node;
-            }} />
-            <button onClick={() => {
-              store.dispatch({
-                type: 'ADD_TODO',
-                text: this.input.value,
-                id: nextTodoId++
-              });
-              this.input.value = '';
-            }}>
-              Add todo
-            </button>
-            <ul>
-              {visibleTodos.map(todo =>
-                <li key={todo.id}
-                    onClick={() => {
-                      store.dispatch({
-                        type: 'TOGGLE_TODO',
-                        id: todo.id
-                      })
-                    }}
-                    style={{
-                      textDecoration:
-                        todo.completed ?
-                          'line-through' :
-                            'none'
-                    }}>
-                  {todo.text}
-                </li>
-              )}
-            </ul>
-            <p>
-              Show:
-              {' '}
-              <FilterLink filter='SHOW_ALL' currentFilter={visibilityFilter}>
-                All
-              </FilterLink>
-              {' '}
-              <FilterLink filter='SHOW_ACTIVE' currentFilter={visibilityFilter}>
-                Active
-              </FilterLink>
-              {' '}
-              <FilterLink filter='SHOW_COMPLETED' currentFilter={visibilityFilter}>
-                Completed
-              </FilterLink>
-            </p>
+            <AddTodos />
+            <TodosList visibleTodos={visibleTodos} />
+            <Footer visibilityFilter={visibilityFilter} />
           </div>
         );
       }
@@ -190,10 +217,7 @@ class ReduxApp {
     
     const render = () => {
       ReactDOM.render(
-        <TodoApp
-          todos={store.getState().todos}
-          visibilityFilter={store.getState().visibilityFilter}
-        />,
+        <TodoApp {...store.getState()} />,
         rootDOMElement
       );
     };
