@@ -3,8 +3,6 @@
 class JSXTextElement {
   constructor(text) {
     this.text = text;
-    
-    this.parentJSXElement = undefined;  ///
   }
 
   getElement() {

@@ -1,10 +1,12 @@
 'use strict';
 
-var ReactClass = require('./reactClass'),
+var ReactComponent = require('./reactComponent'),
+    ReactClass = require('./reactClass'),
     JSXElement = require('./jsxElement'),
     JSXTextElement = require('./jsxTextElement'),
     JSXReactElement = require('./jsxReactElement'),
-    JSXFunctionElement = require('./jsxFunctionElement');
+    JSXFunctionElement = require('./jsxFunctionElement'),
+    JSXComponentElement = require('./jsxComponentElement');
 
 class React {
   static createClass(properties) {
@@ -13,25 +15,31 @@ class React {
     return reactClass;
   }
 
-  static createElement(reactClassOrElementName, properties, ...remainingArguments) {
-    if (reactClassOrElementName === undefined) {
+  static createElement(reactThing, properties, ...remainingArguments) {
+    if (reactThing === undefined) {
       return undefined;
     }
 
     var jsxElement = undefined,
         childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments);
 
-    if (reactClassOrElementName instanceof ReactClass) {
-      var reactClass = reactClassOrElementName; ///
+    if (reactThing instanceof ReactClass) {
+      var reactClass = reactThing; ///
 
       jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
-    } else if (typeof reactClassOrElementName === 'function') {
-      var reactFunction = reactClassOrElementName,  ///
-          _ref = properties;  ///
+    } else if (typeof reactThing === 'function') {
+      try {
+        var reactComponentConstructor = reactThing,  ///
+            reactComponent = new reactComponentConstructor();
 
-      jsxElement = new JSXFunctionElement(reactFunction, _ref);
+        jsxElement = new JSXComponentElement(reactComponent, properties, childJSXElements);
+      } catch (error) {
+        var reactFunction = reactThing;  ///
+
+        jsxElement = new JSXFunctionElement(reactFunction, properties, childJSXElements);
+      }
     } else {
-      var elementName = reactClassOrElementName;  ///
+      var elementName = reactThing;  ///
 
       jsxElement = new JSXElement(elementName, properties, childJSXElements);
     }
@@ -39,6 +47,8 @@ class React {
     return jsxElement;
   }
 }
+
+React.Component = ReactComponent;
 
 function childJSXElementsFromRemainingArguments() {
   var childJSXElements,
@@ -53,7 +63,11 @@ function childJSXElementsFromRemainingArguments() {
     childJSXElements = firstRemainingArgument;  ///
   } else {
     childJSXElements = remainingArguments.map(function(remainingArgument) {
-      if (remainingArgument instanceof JSXElement) {
+      if (remainingArgument instanceof JSXElement
+       || remainingArgument instanceof JSXTextElement
+       || remainingArgument instanceof JSXReactElement
+       || remainingArgument instanceof JSXFunctionElement
+       || remainingArgument instanceof JSXComponentElement) {
         var childJSXElement = remainingArgument;  ///
 
         return childJSXElement;

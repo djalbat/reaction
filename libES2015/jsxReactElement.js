@@ -67,7 +67,7 @@ class JSXReactElement {
           state: state
         };
 
-    props.children = this.childJSXElements; ///;
+    props.children = this.childJSXElements; ///
 
     return instance;
   }

@@ -1,9 +1,10 @@
 'use strict';
 
 class JSXFunctionElement {
-  constructor(reactFunction, _ref) {
+  constructor(reactFunction, properties, childJSXElements) {
     this.reactFunction = reactFunction;
-    this._ref = _ref;
+    this.properties = properties;
+    this.childJSXElements = childJSXElements;
 
     this.jsxElement = undefined;  ///
 
@@ -19,7 +20,11 @@ class JSXFunctionElement {
   }
 
   render() {
-    this.jsxElement = this.reactFunction(this._ref);
+    var _ref = this.properties; ///
+
+    _ref.children = this.childJSXElements; ///
+
+    this.jsxElement = this.reactFunction(_ref);
   }
 
   remount() {

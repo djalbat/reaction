@@ -1,7 +1,7 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "repository": "https://github.com/djalbat/Reaction",
   "dependencies": {
@@ -15,6 +15,7 @@
     "babel-preset-react": "^6.5.0",
     "browserify": "^13.0.0",
     "chokidar-cli": "^1.2.0",
+    "deep-freeze": "0.0.1",
     "expect": "^1.16.0",
     "npm-update-outdated": "^0.1.6",
     "redux": "^3.4.0"
@@ -22,23 +23,22 @@
   "scripts": {
     "clean:lib": "rm -rf ./lib/*",
     "clean:docs": "rm -rf ./docs/lib/*",
+    "clean": "npm run clean:lib && npm run clean:docs",
     "babel:lib": "babel ./libES2015 --presets=es2015 --source-maps inline --out-dir=./lib",
     "babel:docs": "babel ./docs/libES2015 --presets es2015,react --plugins transform-react-jsx --source-maps inline --out-dir ./docs/lib",
+    "babel": "npm run babel:lib && npm run babel:docs",
     "browserify:docs": "browserify ./docs/index.js --standalone examples --debug > ./docs/examples.js",
-    "build:lib": "npm run clean:lib && npm run babel:lib && npm run browserify:docs",
-    "build:docs": "npm run clean:docs && npm run babel:docs && npm run browserify:docs",
-    "watch:lib": "chokidar './index.js' './libES2015/**/*.js' -c 'npm run build:lib'",
-    "watch:docs": "chokidar './docs/index.js' './docs/libES2015/**/*.js' -c 'npm run build:docs'",
+    "browserify": "npm run browserify:docs",
+    "build": "npm run clean && npm run babel && npm run browserify",
+    "watch": "npm run build && chokidar './index.js' './docs/index.js' './libES2015/**/*.js' './docs/libES2015/**/*.js' -c 'npm run build'",
     "babel:lib-debug": "babel ./libES2015 --presets=es2015 --out-dir=./lib",
     "babel:docs-debug": "babel ./docs/libES2015 --presets es2015,react --plugins transform-react-jsx --out-dir ./docs/lib",
+    "babel-debug": "npm run babel:lib-debug && npm run babel:docs-debug",
     "browserify:docs-debug": "browserify ./docs/index.js --standalone examples > ./docs/examples.js",
-    "build:lib-debug": "npm run clean:lib && npm run babel:lib-debug && npm run browserify:docs-debug",
-    "build:docs-debug": "npm run clean:docs && npm run babel:docs-debug && npm run browserify:docs-debug",
-    "watch:lib-debug": "chokidar './index.js' './libES2015/**/*.js' -c 'npm run build:lib-debug'",
-    "watch:docs-debug": "chokidar './docs/index.js' './docs/libES2015/**/*.js' -c 'npm run build:docs-debug'",
+    "browserify-debug": "npm run browserify:docs-debug",
+    "build-debug": "npm run clean && npm run babel-debug && npm run browserify-debug",
+    "watch-debug": "npm run build-debug && chokidar './index.js' './docs/index.js' './libES2015/**/*.js' './docs/libES2015/**/*.js' -c 'npm run build-debug'",
     "update-outdated": "npm-update-outdated",
-    "git": "./scripts/git.sh",
-    "build": "npm run build:lib && npm run build:docs",
-    "watch": "npm run watch:lib & npm run watch:docs"
+    "git": "./scripts/git.sh"
   }
 }

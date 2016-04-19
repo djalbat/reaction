@@ -22,7 +22,7 @@ class JSXElement {
     
     this.childJSXElements = childJSXElements;
 
-    this.addPropertiesToElementAsAttributes();
+    this.addPropertiesToElement();
   }
   
   getElement() {
@@ -54,7 +54,7 @@ class JSXElement {
 
   empty() { this.element.empty(); }
 
-  addPropertiesToElementAsAttributes() {
+  addPropertiesToElement() {
     if (this.properties === null) {
       return;
     }
@@ -62,36 +62,59 @@ class JSXElement {
     var propertyNames = Object.keys(this.properties);
 
     propertyNames.forEach(function (propertyName) {
-      var attributeName,
-          propertyValue = this.properties[propertyName];
+      var propertyValue = this.properties[propertyName];
 
-      if (typeof propertyValue === 'function') {
-        if (beginsWith(propertyName, 'on')) {
-          var events = propertyName.substring(2).toLowerCase(), ///
-              handler = propertyValue;  ///
-          
-          this.element.on(events, handler);
-        }
+      if (propertyName === 'ref') {
+        var callback = propertyValue, ///
+            domElement = this.element.$element[0],  ///
+            ref = domElement; ///
+
+        callback(ref)
       } else {
-        var attributeValue = propertyValue;
+        if (typeof propertyValue === 'function') {
+          if (beginsWith(propertyName, 'on')) {
+            var events = propertyName.substring(2).toLowerCase(), ///
+                handler = propertyValue;  ///
 
-        switch (propertyName) {
-          case 'className':
-            attributeName = 'class';
-            break;
+            this.element.on(events, handler);
+          }
+        } else {
+          var attributeName,
+              attributeValue = propertyValue;
 
-          case 'htmlFor':
-            attributeName = 'for';
-            break;
+          switch (propertyName) {
+            case 'className':
+              attributeName = 'class';
+              break;
 
-          default:
-            attributeName = propertyName;
-            break;
+            case 'htmlFor':
+              attributeName = 'for';
+              break;
+
+            default:
+              attributeName = propertyName;
+              break;
+          }
+
+          if (typeof attributeValue === 'object') {
+            this.addObjectAttribute(attributeName, attributeValue);
+          } else {
+            this.element.addAttribute(attributeName, attributeValue);
+          }
         }
-
-        this.element.addAttribute(attributeName, attributeValue);
       }
     }.bind(this));
+  }
+
+  addObjectAttribute(attributeName, attributeValue) {
+    var domElement = this.element.$element[0],  ///
+        keys = Object.keys(attributeValue);
+
+    keys.forEach(function(key) {
+      var value = attributeValue[key];
+
+      domElement[attributeName][key] = value;
+    });
   }
 
   static fromDOMElement(domElement) {

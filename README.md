@@ -43,11 +43,13 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 ## Currently supported functionality
 
-- `React.createElement`
-- `React.createClass`
-- `ReactDOM.render`
-- `setState` on JSX elements
-- React's now function syntax for components. See the Redux example application.
+- `React.createElement`,
+- `React.createClass`,
+- `ReactDOM.render`,
+- `setState`,
+- `ref` attributes on JSX elements,
+- React components,
+- React's new function syntax for components. See the Redux example application.
 
 These properties can be passed to the `React.createClass` method:
 
@@ -57,8 +59,8 @@ These properties can be passed to the `React.createClass` method:
 
 ## Roadmap
 
-- Pad out Redux support if necessary.
-- Look at Falcor.
+- Add an implementation of Redux,
+- then look at Falcor.
 
 ## Contact
 
