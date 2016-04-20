@@ -1,10 +1,10 @@
 'use strict';
 
-var JSXElement = require('./jsxElement');
+var JSXDOMElement = require('./jsxDOMElement');
 
 class ReactDOM {
   static render(jsxElement, parentDOMElement) {
-    var parentJSXElement = JSXElement.fromDOMElement(parentDOMElement);
+    var parentJSXElement = JSXDOMElement.fromDOMElement(parentDOMElement);
 
     parentJSXElement.empty();
 

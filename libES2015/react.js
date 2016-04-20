@@ -1,10 +1,11 @@
 'use strict';
 
-var ReactComponent = require('./reactComponent'),
-    ReactClass = require('./reactClass'),
-    JSXElement = require('./jsxElement'),
+var ReactClass = require('./reactClass'),
+    ReactComponent = require('./reactComponent'),
+    JSXBaseElement = require('./jsxBaseElement'),
+    JSXDOMElement = require('./jsxDOMElement'),
     JSXTextElement = require('./jsxTextElement'),
-    JSXReactElement = require('./jsxReactElement'),
+    JSXClassElement = require('./jsxClassElement'),
     JSXFunctionElement = require('./jsxFunctionElement'),
     JSXComponentElement = require('./jsxComponentElement');
 
@@ -15,33 +16,33 @@ class React {
     return reactClass;
   }
 
-  static createElement(reactThing, properties, ...remainingArguments) {
-    if (reactThing === undefined) {
+  static createElement(firstArgument, properties, ...remainingArguments) {
+    if (firstArgument === undefined) {
       return undefined;
     }
 
-    var jsxElement = undefined,
-        childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments);
+    var children = childrenFromRemainingArguments.apply(null, remainingArguments),
+        jsxElement;
 
     if (false) {
 
-    } else if (reactThing instanceof ReactClass) {
-      var reactClass = reactThing; ///
-
-      jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
-    } else if (reactThing.prototype instanceof ReactComponent) {
-      var reactComponentConstructor = reactThing,  ///
+    } else if (firstArgument.prototype instanceof ReactComponent) {
+      var reactComponentConstructor = firstArgument,  ///
           reactComponent = new reactComponentConstructor();
 
-      jsxElement = new JSXComponentElement(reactComponent, properties, childJSXElements);
-    } else if (typeof reactThing === 'function') {
-      var reactFunction = reactThing;  ///
+      jsxElement = new JSXComponentElement(reactComponent, properties, children);
+    } else if (firstArgument instanceof ReactClass) {
+      var reactClass = firstArgument; ///
 
-      jsxElement = new JSXFunctionElement(reactFunction, properties, childJSXElements);
+      jsxElement = new JSXClassElement(reactClass, properties, children);
+    } else if (typeof firstArgument === 'function') {
+      var reactFunction = firstArgument;  ///
+
+      jsxElement = new JSXFunctionElement(reactFunction, properties, children);
     } else {
-      var elementName = reactThing;  ///
+      var elementName = firstArgument;  ///
 
-      jsxElement = new JSXElement(elementName, properties, childJSXElements);
+      jsxElement = new JSXDOMElement(elementName, properties, children);
     }
 
     return jsxElement;
@@ -50,39 +51,37 @@ class React {
 
 React.Component = ReactComponent;
 
-function childJSXElementsFromRemainingArguments() {
-  var childJSXElements,
-      remainingArguments = Array.prototype.slice.call(arguments),
-      firstRemainingArgument = first(remainingArguments);
+module.exports = React;
+
+function childrenFromRemainingArguments() {
+  var remainingArguments = Array.prototype.slice.call(arguments),
+      firstRemainingArgument = first(remainingArguments),
+      children;
 
   if (false) {
     
   } else if (firstRemainingArgument === undefined) {
-    childJSXElements = [];
+    children = [];
   } else if (firstRemainingArgument instanceof Array) {
-    childJSXElements = firstRemainingArgument;  ///
+    children = firstRemainingArgument;  ///
   } else {
-    childJSXElements = remainingArguments.map(function(remainingArgument) {
-      if (remainingArgument instanceof JSXElement
-       || remainingArgument instanceof JSXTextElement
-       || remainingArgument instanceof JSXReactElement
-       || remainingArgument instanceof JSXFunctionElement
-       || remainingArgument instanceof JSXComponentElement) {
-        var childJSXElement = remainingArgument;  ///
-
-        return childJSXElement;
+    children = remainingArguments.map(function(remainingArgument) {
+      var child;
+      
+      if (remainingArgument.prototype instanceof JSXBaseElement) {
+        child = remainingArgument;  ///
       } else {
         var text = '' + remainingArgument,  ///
-            childJSXTextElement = new JSXTextElement(text);
-
-        return childJSXTextElement;
+            jsxTextElement = new JSXTextElement(text);
+        
+        child = jsxTextElement; ///
       }
+      
+      return child;
     });
   }
 
-  return childJSXElements;
+  return children;
 }
 
 function first(array) { return array[0]; }
-
-module.exports = React;

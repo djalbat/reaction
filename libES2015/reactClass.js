@@ -1,6 +1,6 @@
 'use strict';
 
-var JSXElement = require('./jsxElement');
+var JSXDOMElement = require('./jsxDOMElement');
 
 class ReactClass {
   constructor(render, displayName, getInitialState, componentDidMount) {
@@ -8,6 +8,10 @@ class ReactClass {
     this.displayName = displayName;
     this.getInitialState = getInitialState;
     this.componentDidMount = componentDidMount;
+  }
+  
+  getDisplayName() {
+    return this.displayName;
   }
   
   static fromProperties(properties) {
@@ -26,11 +30,11 @@ module.exports = ReactClass;
 function defaultRender() {
   var properties = this.props,  ///
       elementName = this.displayName, ///
-      childJSXElements = this.props.children; ///
+      children = this.props.children; ///
 
   delete properties.children; ///
 
-  var jsxElement = new JSXElement(elementName, properties, childJSXElements);
+  var jsxElement = new JSXDOMElement(elementName, properties, children);
 
   return jsxElement;
 }

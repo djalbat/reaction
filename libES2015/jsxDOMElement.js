@@ -3,27 +3,16 @@
 var easyui = require('easyui'),
     Element = easyui.Element;
 
-class JSXElement {
-  constructor(elementOrElementName, properties, childJSXElements) {
-    var element;
+class JSXDOMElement {
+  constructor(elementOrElementName, properties, children) {
+    this.element = (elementOrElementName instanceof Element) ?
+                     elementOrElementName : ///
+                       fromElementName(elementOrElementName); ///
 
-    if (elementOrElementName instanceof Element) {
-      element = elementOrElementName; ///
-    } else {
-      var elementName = elementOrElementName, ///
-          elementHTML = '<' + elementName + '/>';
+    this.addPropertiesToElement(properties);
 
-      element = Element.fromHTML(elementHTML);
-    }
-
-    this.element = element;
-
-    this.properties = properties;
-
-    this.addPropertiesToElement();
-
-    childJSXElements.forEach(function(childJSXElement) {
-      childJSXElement.mount(this);  ///
+    children.forEach(function(child) {
+      child.mount(this);  ///
     }.bind(this));
   }
   
@@ -41,17 +30,14 @@ class JSXElement {
     oldJSXElement.remove();
   }
 
-  append(jsxElementOrString) {
-    if (typeof jsxElementOrString === 'string') {
-      var string = jsxElementOrString;  ///
+  unmount() {
+    this.remove();
+  }
 
-      this.element.append(string);
-    } else {
-      var jsxElement = jsxElementOrString,  ///
-          element = jsxElement.getElement();
+  append(jsxElement) {
+    var element = jsxElement.getElement();
 
-      this.element.append(element);
-    }
+    this.element.append(element);
   }
 
   appendAfter(jsxElement) {
@@ -64,15 +50,15 @@ class JSXElement {
 
   empty() { this.element.empty(); }
 
-  addPropertiesToElement() {
-    if (this.properties === null) {
+  addPropertiesToElement(properties) {
+    if (properties === null) {
       return;
     }
 
-    var propertyNames = Object.keys(this.properties);
+    var propertyNames = Object.keys(properties);
 
     propertyNames.forEach(function (propertyName) {
-      var propertyValue = this.properties[propertyName];
+      var propertyValue = properties[propertyName];
 
       if (propertyName === 'ref') {
         var callback = propertyValue, ///
@@ -130,13 +116,20 @@ class JSXElement {
   static fromDOMElement(domElement) {
     var element = Element.fromDOMElement(domElement),
         properties = null,
-        childJSXElements = [];
+        children = [];
     
-    return new JSXElement(element, properties, childJSXElements);
+    return new JSXDOMElement(element, properties, children);
   }
 }
 
-module.exports = JSXElement;
+module.exports = JSXDOMElement;
+
+function fromElementName(elementName) {
+  var elementHTML = '<' + elementName + '/>',
+      element = Element.fromHTML(elementHTML);
+
+  return element;
+}
 
 function beginsWith(string, beginningString) {
   var regExp = new RegExp('^' + beginningString),

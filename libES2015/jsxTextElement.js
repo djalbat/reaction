@@ -1,18 +1,22 @@
 'use strict';
 
-class JSXTextElement {
+var JSXDOMElement = require('./jsxDOMElement'),
+    JSXBaseElement = require('./jsxBaseElement');
+
+class JSXTextElement extends JSXBaseElement {
   constructor(text) {
-    this.text = text;
+    const properties = {},
+          children = [];
+    
+    super(properties, children);
+
+    var domElement = document.createTextNode(text);
+
+    this.jsxElement = JSXDOMElement.fromDOMElement(domElement);
   }
 
-  getElement() {
-    var element = this.text;  ///
+  render() {
 
-    return element;
-  }
-
-  mount(parentJSXElement) {
-    parentJSXElement.append(this);
   }
 }
 
