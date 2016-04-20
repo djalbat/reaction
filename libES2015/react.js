@@ -2,7 +2,7 @@
 
 var ReactClass = require('./reactClass'),
     ReactComponent = require('./reactComponent'),
-    JSXBaseElement = require('./jsxBaseElement'),
+    JSXElement = require('./jsxElement'),
     JSXDOMElement = require('./jsxDOMElement'),
     JSXTextElement = require('./jsxTextElement'),
     JSXClassElement = require('./jsxClassElement'),
@@ -21,7 +21,7 @@ class React {
       return undefined;
     }
 
-    var children = childrenFromRemainingArguments.apply(null, remainingArguments),
+    var children = childrenFromRemainingArguments(remainingArguments),
         jsxElement;
 
     if (false) {
@@ -53,9 +53,10 @@ React.Component = ReactComponent;
 
 module.exports = React;
 
-function childrenFromRemainingArguments() {
-  var remainingArguments = Array.prototype.slice.call(arguments),
-      firstRemainingArgument = first(remainingArguments),
+function childrenFromRemainingArguments(remainingArguments) {
+  remainingArguments = Array.prototype.slice.call(remainingArguments);  ///
+
+  var firstRemainingArgument = first(remainingArguments),
       children;
 
   if (false) {
@@ -68,7 +69,7 @@ function childrenFromRemainingArguments() {
     children = remainingArguments.map(function(remainingArgument) {
       var child;
       
-      if (remainingArgument.prototype instanceof JSXBaseElement) {
+      if (remainingArgument.prototype instanceof JSXElement) {
         child = remainingArgument;  ///
       } else {
         var text = '' + remainingArgument,  ///

@@ -1,6 +1,6 @@
 'use strict';
 
-class JSXBaseElement {
+class JSXElement {
   constructor(properties, children) {
     const props = Object.assign({}, properties, {children: children}),
           forceUpdate = this.forceUpdate.bind(this);
@@ -51,4 +51,4 @@ class JSXBaseElement {
   }
 }
 
-module.exports = JSXBaseElement;
+module.exports = JSXElement;

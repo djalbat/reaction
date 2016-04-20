@@ -1,9 +1,9 @@
 'use strict';
 
-var JSXDOMElement = require('./jsxDOMElement'),
-    JSXBaseElement = require('./jsxBaseElement');
+var JSXElement = require('./jsxElement'),
+    JSXDOMElement = require('./jsxDOMElement');
 
-class JSXTextElement extends JSXBaseElement {
+class JSXTextElement extends JSXElement {
   constructor(text) {
     const properties = {},
           children = [];

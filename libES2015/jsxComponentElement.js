@@ -1,8 +1,8 @@
 'use strict';
 
-var JSXBaseElement = require('./jsxBaseElement');
+var JSXElement = require('./jsxElement');
 
-class JSXComponentElement extends JSXBaseElement {
+class JSXComponentElement extends JSXElement {
   constructor(reactComponent, properties, children) {
     super(properties, children);
 
