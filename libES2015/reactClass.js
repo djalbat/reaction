@@ -10,22 +10,6 @@ class ReactClass {
     this.componentDidMount = componentDidMount;
   }
   
-  getRender() {
-    return this.render;
-  }
-
-  getDisplayName() {
-    return this.displayName;
-  }
-
-  getGetInitialState() {
-    return this.getInitialState;
-  }
-  
-  getComponentDidMount() {
-    return this.componentDidMount;
-  }
-  
   static fromProperties(properties) {
     var render = properties['render'] || defaultRender,
         displayName = properties['displayName'] || defaultDisplayName,

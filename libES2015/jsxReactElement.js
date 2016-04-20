@@ -6,17 +6,14 @@ class JSXReactElement {
     this.properties = properties;
     this.childJSXElements = childJSXElements;
 
-    var getInitialState = reactClass.getGetInitialState(),
-        initialState = getInitialState();
-
-    this.state = initialState;  ///
+    this.state = reactClass.getInitialState();  ///
 
     this.jsxElement = undefined;  ///
     
     const children = this.childJSXElements, ///
           props = Object.assign({}, this.properties, {children: children}),
           state = this.state,
-          displayName = reactClass.getDisplayName();
+          displayName = reactClass.displayName;
 
     this.instance = Object.assign({
       props: props,
