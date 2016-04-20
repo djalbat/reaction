@@ -8,27 +8,31 @@ class JSXFunctionElement {
 
     this.jsxElement = undefined;  ///
 
-    this.parentJSXElement = undefined;  ///
+    const children = childJSXElements; ///
+    
+    this._ref = Object.assign({}, this.properties, {children: children});
+    
+    this.render();
   }
   
   mount(parentJSXElement) {
-    this.parentJSXElement = parentJSXElement;
+    this.jsxElement.mount(parentJSXElement);
+  }
 
-    this.render();
-    
-    this.remount();
+  remount(oldJSXElement) {
+    this.jsxElement.remount(oldJSXElement);
   }
 
   render() {
-    var _ref = this.properties; ///
-
-    _ref.children = this.childJSXElements; ///
-
-    this.jsxElement = this.reactFunction(_ref);
+    this.jsxElement = this.reactFunction(this._ref);
   }
 
-  remount() {
-    this.jsxElement.mount(this.parentJSXElement);
+  remove() {
+    this.jsxElement.remove();
+  }
+
+  appendAfter(jsxElement) {
+    this.jsxElement.appendAfter(jsxElement);
   }
 }
 

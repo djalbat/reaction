@@ -1,14 +1,20 @@
 'use strict';
 
-var JSXElement = require('./jsxElement');
-
 class ReactComponent {
   constructor() {
 
   }
 
   render() {
-    ///
+
+  }
+  
+  componentDidMount() {
+    
+  }
+  
+  componentWillUnmount() {
+
   }
 }
 

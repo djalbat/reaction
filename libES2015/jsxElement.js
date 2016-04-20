@@ -19,10 +19,12 @@ class JSXElement {
     this.element = element;
 
     this.properties = properties;
-    
-    this.childJSXElements = childJSXElements;
 
     this.addPropertiesToElement();
+
+    childJSXElements.forEach(function(childJSXElement) {
+      childJSXElement.mount(this);  ///
+    }.bind(this));
   }
   
   getElement() {
@@ -30,11 +32,13 @@ class JSXElement {
   }
 
   mount(parentJSXElement) {
-    this.childJSXElements.forEach(function(childJSXElement) {
-      childJSXElement.mount(this);
-    }.bind(this));
-
     parentJSXElement.append(this);
+  }
+
+  remount(oldJSXElement) {
+    oldJSXElement.appendAfter(this);
+
+    oldJSXElement.remove();
   }
 
   append(jsxElementOrString) {
@@ -48,6 +52,12 @@ class JSXElement {
 
       this.element.append(element);
     }
+  }
+
+  appendAfter(jsxElement) {
+    var element = jsxElement.getElement();
+
+    this.element.appendAfter(element);
   }
 
   remove() { this.element.remove(); }

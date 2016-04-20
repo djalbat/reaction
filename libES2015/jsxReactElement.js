@@ -13,63 +13,42 @@ class JSXReactElement {
 
     this.jsxElement = undefined;  ///
     
-    this.parentJSXElement = undefined;  ///
-  }
-  
-  mount(parentJSXElement) {
-    this.parentJSXElement = parentJSXElement;
+    const children = this.childJSXElements, ///
+          props = Object.assign({}, this.properties, {children: children}),
+          state = this.state,
+          displayName = reactClass.getDisplayName();
+
+    this.instance = Object.assign({
+      props: props,
+      state: state,
+      displayName: displayName
+    });
 
     this.render();
-    
-    this.remount();
+  }
 
-    this.componentDidMount();
+  mount(parentJSXElement) {
+    this.jsxElement.mount(parentJSXElement);
+
+    this.reactClass.componentDidMount.apply(this.instance);
+  }
+
+  remount(oldJSXElement) {
+    this.jsxElement.remount(oldJSXElement);
   }
 
   setState(state) {
     this.state = state;
 
-    this.jsxElement.remove();
+    var oldJSXElement = this.jsxElement;
 
     this.render();
 
-    this.remount();
+    this.jsxElement.remount(oldJSXElement)
   }
 
   render() {
-    var reactClass = this.reactClass,
-        render = reactClass.getRender(),
-        displayName = reactClass.getDisplayName(),
-        instance = this.instance();
-
-    instance.displayName = displayName;
-
-    this.jsxElement = render.apply(instance);
-  }
-
-  remount() {
-    this.jsxElement.mount(this.parentJSXElement);
-  }
-
-  componentDidMount() {
-    var reactClass = this.reactClass,
-        componentDidMount = reactClass.getComponentDidMount(),
-        instance = this.instance();
-
-    componentDidMount.apply(instance);
-  }
-
-  instance() {
-    var props = this.properties || {},  ///
-        state = this.state,
-        instance = {
-          props: props,
-          state: state
-        };
-
-    props.children = this.childJSXElements; ///
-
-    return instance;
+    this.jsxElement = this.reactClass.render.apply(this.instance);
   }
 }
 

@@ -8,36 +8,43 @@ class JSXComponentElement {
 
     this.jsxElement = undefined;  ///
 
-    this.parentJSXElement = undefined;  ///
+    const children = this.childJSXElements, ///
+          props = Object.assign({}, this.properties, {children: children}),
+          forceUpdate = this.forceUpdate.bind(this);
+
+    this.instance = Object.assign({}, {props: props}, {forceUpdate: forceUpdate});
+
+    this.render();
   }
   
   mount(parentJSXElement) {
-    this.parentJSXElement = parentJSXElement;
+    this.jsxElement.mount(parentJSXElement);
 
-    this.render();
+    this.reactComponent.componentDidMount.apply(this.instance);
+  }
+
+  remount(oldJSXElement) {
+    this.jsxElement.remount(oldJSXElement);
+  }
+
+  forceUpdate() {
+    var oldJSXElement = this.jsxElement;
     
-    this.remount();
+    this.render();
+
+    this.jsxElement.remount(oldJSXElement)
   }
 
   render() {
-    var instance = this.instance();
-    
-    this.jsxElement = this.reactComponent.render.apply(instance);
+    this.jsxElement = this.reactComponent.render.apply(this.instance);
   }
 
-  remount() {
-    this.jsxElement.mount(this.parentJSXElement);
+  remove() {
+    this.jsxElement.remove();
   }
 
-  instance() {
-    var props = this.properties || {},  ///
-        instance = {
-          props: props
-        };
-
-    instance.children = this.childJSXElements; ///
-    
-    return instance;
+  appendAfter(jsxElement) {
+    this.jsxElement.appendAfter(jsxElement);
   }
 }
 

@@ -23,21 +23,21 @@ class React {
     var jsxElement = undefined,
         childJSXElements = childJSXElementsFromRemainingArguments.apply(null, remainingArguments);
 
-    if (reactThing instanceof ReactClass) {
+    if (false) {
+
+    } else if (reactThing instanceof ReactClass) {
       var reactClass = reactThing; ///
 
       jsxElement = new JSXReactElement(reactClass, properties, childJSXElements);
+    } else if (reactThing.prototype instanceof ReactComponent) {
+      var reactComponentConstructor = reactThing,  ///
+          reactComponent = new reactComponentConstructor();
+
+      jsxElement = new JSXComponentElement(reactComponent, properties, childJSXElements);
     } else if (typeof reactThing === 'function') {
-      try {
-        var reactComponentConstructor = reactThing,  ///
-            reactComponent = new reactComponentConstructor();
+      var reactFunction = reactThing;  ///
 
-        jsxElement = new JSXComponentElement(reactComponent, properties, childJSXElements);
-      } catch (error) {
-        var reactFunction = reactThing;  ///
-
-        jsxElement = new JSXFunctionElement(reactFunction, properties, childJSXElements);
-      }
+      jsxElement = new JSXFunctionElement(reactFunction, properties, childJSXElements);
     } else {
       var elementName = reactThing;  ///
 
