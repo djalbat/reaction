@@ -29,12 +29,12 @@ module.exports = ReactClass;
 
 function defaultRender() {
   var properties = this.props,  ///
-      elementName = this.displayName, ///
+      displayName = this.displayName, ///
       children = this.props.children; ///
 
   delete properties.children; ///
 
-  var jsxElement = new JSXDOMElement(elementName, properties, children);
+  var jsxElement = new JSXDOMElement(displayName, properties, children);
 
   return jsxElement;
 }

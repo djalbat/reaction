@@ -6,6 +6,7 @@ var ReactClass = require('./reactClass'),
     JSXDOMElement = require('./jsxDOMElement'),
     JSXTextElement = require('./jsxTextElement'),
     JSXClassElement = require('./jsxClassElement'),
+    JSXDOMTextElement = require('./jsxDOMTextElement'),
     JSXFunctionElement = require('./jsxFunctionElement'),
     JSXComponentElement = require('./jsxComponentElement');
 
@@ -40,9 +41,9 @@ class React {
 
       jsxElement = new JSXFunctionElement(reactFunction, properties, children);
     } else {
-      var elementName = firstArgument;  ///
+      var displayName = firstArgument;  ///
 
-      jsxElement = new JSXDOMElement(elementName, properties, children);
+      jsxElement = new JSXDOMElement(displayName, properties, children);
     }
 
     return jsxElement;
@@ -54,33 +55,28 @@ React.Component = ReactComponent;
 module.exports = React;
 
 function childrenFromRemainingArguments(remainingArguments) {
-  remainingArguments = Array.prototype.slice.call(remainingArguments);  ///
+  var firstRemainingArgument = first(remainingArguments);
 
-  var firstRemainingArgument = first(remainingArguments),
-      children;
-
-  if (false) {
-    
-  } else if (firstRemainingArgument === undefined) {
-    children = [];
-  } else if (firstRemainingArgument instanceof Array) {
-    children = firstRemainingArgument;  ///
-  } else {
-    children = remainingArguments.map(function(remainingArgument) {
-      var child;
-      
-      if (remainingArgument.prototype instanceof JSXElement) {
-        child = remainingArgument;  ///
-      } else {
-        var text = '' + remainingArgument,  ///
-            jsxTextElement = new JSXTextElement(text);
-        
-        child = jsxTextElement; ///
-      }
-      
-      return child;
-    });
+  if (firstRemainingArgument instanceof Array) {
+    remainingArguments = firstRemainingArgument;  ///
   }
+
+  var children = remainingArguments.map(function(remainingArgument) {
+    var child;
+
+    if (remainingArgument instanceof JSXElement
+     || remainingArgument instanceof JSXDOMElement
+     || remainingArgument instanceof JSXDOMTextElement) {
+      child = remainingArgument;  ///
+    } else {
+      var text = '' + remainingArgument,  ///
+          jsxTextElement = new JSXTextElement(text);
+
+      child = jsxTextElement; ///
+    }
+
+    return child;
+  });
 
   return children;
 }

@@ -12,7 +12,9 @@ class JSXFunctionElement extends JSXElement {
   }
   
   render() {
-    this.jsxElement = this.reactFunction(this._ref);
+    var _ref = this.instance.props; ///
+
+    this.jsxElement = this.reactFunction(_ref);
   }
 }
 

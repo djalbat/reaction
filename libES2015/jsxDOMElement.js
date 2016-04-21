@@ -4,10 +4,10 @@ var easyui = require('easyui'),
     Element = easyui.Element;
 
 class JSXDOMElement {
-  constructor(elementOrElementName, properties, children) {
-    this.element = (elementOrElementName instanceof Element) ?
-                     elementOrElementName : ///
-                       fromElementName(elementOrElementName); ///
+  constructor(elementOrDisplayName, properties, children) {
+    this.element = (elementOrDisplayName instanceof Element) ?
+                     elementOrDisplayName : ///
+                       fromDisplayName(elementOrDisplayName); ///
 
     this.addPropertiesToElement(properties);
 
@@ -24,7 +24,7 @@ class JSXDOMElement {
     parentJSXElement.append(this);
   }
 
-  remount(oldJSXElement) {
+  update(oldJSXElement) {
     oldJSXElement.appendAfter(this);
 
     oldJSXElement.remove();
@@ -124,8 +124,8 @@ class JSXDOMElement {
 
 module.exports = JSXDOMElement;
 
-function fromElementName(elementName) {
-  var elementHTML = '<' + elementName + '/>',
+function fromDisplayName(displayName) {
+  var elementHTML = '<' + displayName + '/>',
       element = Element.fromHTML(elementHTML);
 
   return element;

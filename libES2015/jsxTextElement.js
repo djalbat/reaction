@@ -1,7 +1,7 @@
 'use strict';
 
 var JSXElement = require('./jsxElement'),
-    JSXDOMElement = require('./jsxDOMElement');
+    JSXDOMTextElement = require('./jsxDOMTextElement');
 
 class JSXTextElement extends JSXElement {
   constructor(text) {
@@ -10,13 +10,13 @@ class JSXTextElement extends JSXElement {
     
     super(properties, children);
 
-    var domElement = document.createTextNode(text);
-
-    this.jsxElement = JSXDOMElement.fromDOMElement(domElement);
+    this.text = text;
+    
+    this.render();
   }
 
   render() {
-
+    this.jsxElement = new JSXDOMTextElement(this.text);
   }
 }
 

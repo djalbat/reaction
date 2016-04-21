@@ -16,8 +16,8 @@ class JSXElement {
     this.componentDidMount();
   }
 
-  remount(oldJSXElement) {
-    this.jsxElement.remount(oldJSXElement);
+  update(oldJSXElement) {
+    this.jsxElement.update(oldJSXElement);
   }
   
   unmount() {
@@ -31,7 +31,7 @@ class JSXElement {
 
     this.render();
 
-    this.remount(oldJSXElement)
+    this.update(oldJSXElement)
   }
 
   remove() {
