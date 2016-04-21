@@ -60,10 +60,10 @@ These properties can be passed to the `React.createClass` method:
 ## Roadmap
 
 - Remove the dependency on EasyUI and manipulate the DOM directly instead,
-- fix the flattening of the child element tree and text with the vanilla application,
+- fix the flattening of the child element tree and test with the vanilla application,
 - add support for contexts,
 - add an implementation of Redux, possibliy,
-- then look at Falcor.
+- and then look at Falcor.
 
 ## Contact
 
