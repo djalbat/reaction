@@ -36,7 +36,7 @@ Launch the `examples.html` file in the `docs` folder. There is now a Redux as we
 
 ## Compiling from source
 
-Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the package.json file. The pertinent commands are:
+Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the `package.json` file. The pertinent commands are:
 
     npm run build
     npm run watch
