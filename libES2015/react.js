@@ -2,13 +2,13 @@
 
 var ReactClass = require('./reactClass'),
     ReactComponent = require('./reactComponent'),
-    JSXElement = require('./jsxElement'),
-    JSXDOMElement = require('./jsxDOMElement'),
-    JSXTextElement = require('./jsxTextElement'),
-    JSXClassElement = require('./jsxClassElement'),
-    JSXDisplayElement = require('./jsxDisplayElement'),
-    JSXFunctionElement = require('./jsxFunctionElement'),
-    JSXComponentElement = require('./jsxComponentElement');
+    Element = require('./element'),
+    BaseElement = require('./baseElement'),
+    TextElement = require('./textElement'),
+    ClassElement = require('./classElement'),
+    DisplayElement = require('./displayElement'),
+    FunctionElement = require('./functionElement'),
+    ComponentElement = require('./componentElement');
 
 class React {
   static createClass(properties) {
@@ -23,7 +23,7 @@ class React {
     }
 
     var children = childrenFromRemainingArguments(remainingArguments),
-        jsxElement;
+        element;
 
     if (false) {
 
@@ -31,22 +31,22 @@ class React {
       var reactComponentConstructor = firstArgument,  ///
           reactComponent = new reactComponentConstructor();
 
-      jsxElement = new JSXComponentElement(reactComponent, properties, children);
+      element = new ComponentElement(reactComponent, properties, children);
     } else if (firstArgument instanceof ReactClass) {
       var reactClass = firstArgument; ///
 
-      jsxElement = new JSXClassElement(reactClass, properties, children);
+      element = new ClassElement(reactClass, properties, children);
     } else if (typeof firstArgument === 'function') {
       var reactFunction = firstArgument;  ///
 
-      jsxElement = new JSXFunctionElement(reactFunction, properties, children);
+      element = new FunctionElement(reactFunction, properties, children);
     } else {
       var displayName = firstArgument;  ///
 
-      jsxElement = new JSXDisplayElement(displayName, properties, children);
+      element = new DisplayElement(displayName, properties, children);
     }
 
-    return jsxElement;
+    return element;
   }
 }
 
@@ -64,12 +64,12 @@ function childrenFromRemainingArguments(remainingArguments) {
   var children = remainingArguments.map(function(remainingArgument) {
     var child;
 
-    if (remainingArgument instanceof JSXElement
-     || remainingArgument instanceof JSXDOMElement) {
+    if (remainingArgument instanceof Element
+     || remainingArgument instanceof BaseElement) {
       child = remainingArgument;  ///
     } else {
       var text = '' + remainingArgument,  ///
-          jsxTextElement = new JSXTextElement(text);
+          jsxTextElement = new TextElement(text);
 
       child = jsxTextElement; ///
     }

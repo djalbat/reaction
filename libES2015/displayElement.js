@@ -1,34 +1,34 @@
 'use strict';
 
-var JSXDOMElement = require('./jsxDOMElement');
+var BaseElement = require('./baseElement');
 
-class JSXDisplayElement extends JSXDOMElement {
-  constructor(refOrDisplayName, properties, children) {
-    var ref;
+class DisplayElement extends BaseElement {
+  constructor(domElementOrDisplayName, properties, children) {
+    var domElement;
 
-    if (typeof refOrDisplayName === 'string') {
-      var displayName = refOrDisplayName;  ///
+    if (typeof domElementOrDisplayName === 'string') {
+      var displayName = domElementOrDisplayName;  ///
 
-      ref = document.createElement(displayName);
+      domElement = document.createElement(displayName);
     } else {
-      ref = refOrDisplayName; ///
+      domElement = domElementOrDisplayName; ///
     }
     
-    super(ref);
+    super(domElement);
 
-    this.addPropertiesToDOMElement(properties);
+    this.addPropertiesToBaseElement(properties);
 
     children.forEach(function(child) {
       child.mount(this);  ///
     }.bind(this));
   }
   
-  addPropertiesToDOMElement(properties) {
+  addPropertiesToBaseElement(properties) {
     if (properties === null) {
       return;
     }
 
-    var ref = this.getRef(),
+    var domElement = this.getDOMElement(),
         propertyNames = Object.keys(properties);
 
     propertyNames.forEach(function (propertyName) {
@@ -39,19 +39,20 @@ class JSXDisplayElement extends JSXDOMElement {
       if (false) {
 
       } else if (propertyName === 'ref') {
-        var callback = propertyValue; ///
-
+        var callback = propertyValue, ///
+            ref = domElement; ///
+        
         callback(ref)
       } else if (beginsWith(propertyName, 'on')) {
         var onevent = lowercase(propertyName),  ///
             handler = propertyValue;  ///
 
-        ref[onevent] = handler;
+        domElement[onevent] = handler;
       } else if (typeof propertyValue === 'string') {
         attributeName = attributeNameFromPropertyName(propertyName);
         attributeValue = propertyValue; ///
 
-        ref.setAttribute(attributeName, attributeValue);
+        domElement.setAttribute(attributeName, attributeValue);
       } else if (typeof propertyValue === 'object') {
         attributeName = propertyName; ///
 
@@ -59,7 +60,7 @@ class JSXDisplayElement extends JSXDOMElement {
         keys.forEach(function(key) {
           var value = propertyValue[key];
 
-          ref[attributeName][key] = value;
+          domElement[attributeName][key] = value;
         });
       } else {
         ///
@@ -67,15 +68,15 @@ class JSXDisplayElement extends JSXDOMElement {
     });
   }
 
-  static fromRef(ref) {
+  static fromDOMElement(domElement) {
     var properties = null,
         children = [];
     
-    return new JSXDisplayElement(ref, properties, children);
+    return new DisplayElement(domElement, properties, children);
   }
 }
 
-module.exports = JSXDisplayElement;
+module.exports = DisplayElement;
 
 function attributeNameFromPropertyName(propertyName) {
   switch (propertyName) {

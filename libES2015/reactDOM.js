@@ -1,10 +1,10 @@
 'use strict';
 
-var JSXDisplayElement = require('./jsxDisplayElement');
+var JSXDisplayElement = require('./displayElement');
 
 class ReactDOM {
   static render(jsxElement, parentDOMElement) {
-    var parentJSXElement = JSXDisplayElement.fromRef(parentDOMElement);
+    var parentJSXElement = JSXDisplayElement.fromDOMElement(parentDOMElement);
 
     parentJSXElement.empty();
 

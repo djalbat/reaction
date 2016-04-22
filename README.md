@@ -59,8 +59,7 @@ These properties can be passed to the `React.createClass` method:
 
 ## Roadmap
 
-- Rename JSX elements to elements,
-- add support for contexts,
+- Add support for contexts,
 - add an implementation of Redux, possibliy,
 - and then look at Falcor.
 

@@ -1,8 +1,8 @@
 'use strict';
 
-var JSXElement = require('./jsxElement');
+var Element = require('./element');
 
-class JSXClassElement extends JSXElement {
+class ClassElement extends Element {
   constructor(reactClass, properties, children) {
     super(properties, children);
 
@@ -28,7 +28,7 @@ class JSXClassElement extends JSXElement {
   }
 
   render() {
-    this.jsxElement = this.reactClass.render.apply(this.instance);
+    this.element = this.reactClass.render.apply(this.instance);
   }
 
   componentDidMount() {
@@ -36,4 +36,4 @@ class JSXClassElement extends JSXElement {
   }
 }
 
-module.exports = JSXClassElement;
+module.exports = ClassElement;

@@ -1,45 +1,45 @@
 'use strict';
 
-class JSXElement {
+class Element {
   constructor(properties, children) {
     const props = Object.assign({}, properties, {children: children}),
           forceUpdate = this.forceUpdate.bind(this);
 
     this.instance = Object.assign({}, {props: props}, {forceUpdate: forceUpdate});
 
-    this.jsxElement = undefined;  ///
+    this.element = undefined;  ///
   }
   
-  mount(parentJSXElement) {
-    this.jsxElement.mount(parentJSXElement);
+  mount(parentElement) {
+    this.element.mount(parentElement);
     
     this.componentDidMount();
   }
 
-  update(oldJSXElement) {
-    this.jsxElement.update(oldJSXElement);
+  update(oldElement) {
+    this.element.update(oldElement);
   }
   
   unmount() {
     this.componentWillUnmount();
     
-    this.jsxElement.unmount();
+    this.element.unmount();
   }
 
   forceUpdate() {
-    var oldJSXElement = this.jsxElement;
+    var oldElement = this.element;
 
     this.render();
 
-    this.update(oldJSXElement)
+    this.update(oldElement)
   }
 
   remove() {
-    this.jsxElement.remove();
+    this.element.remove();
   }
 
-  appendAfter(jsxElement) {
-    this.jsxElement.appendAfter(jsxElement);
+  appendAfter(element) {
+    this.element.appendAfter(element);
   }
 
   componentDidMount() {
@@ -51,4 +51,4 @@ class JSXElement {
   }
 }
 
-module.exports = JSXElement;
+module.exports = Element;

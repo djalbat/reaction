@@ -1,6 +1,6 @@
 'use strict';
 
-var JSXDisplayElement = require('./jsxDisplayElement');
+var JSXDisplayElement = require('./displayElement');
 
 class ReactClass {
   constructor(render, displayName, getInitialState, componentDidMount) {
