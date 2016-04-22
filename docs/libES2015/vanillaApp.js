@@ -6,7 +6,7 @@ var reaction = require('../../index'),
 
 class VanillaApp {
   constructor() {
-    var rootDOMElement = document.getElementById('root');
+    const rootDOMElement = document.getElementById('root');
 
     var Comment = React.createClass({
       render: function() {
@@ -70,17 +70,31 @@ class VanillaApp {
       commentsList.setState(state);
     }, 1000); ///
 
-    // var Div = React.createClass({
-    //   render() {
-    //     return <div>{this.state}</div>;
-    //   }
-    // });
-    //
-    // var div = <Div></Div>;
-    //
-    // ReactDOM.render(div, rootDOMElement);
-    //
-    // div.setState('!!!');
+
+  //   const Div = React.createClass({
+  //     render: function() {
+  //       return <div>{this.context.message}</div>;
+  //     }
+  //   });
+  //
+  //   const {Component} = React;
+  //
+  //   class Provider extends Component {
+  //     render() {
+  //       return this.props.children;
+  //     }
+  //
+  //     getChildContext() {
+  //       return "Now then...";
+  //     }
+  //   }
+  //
+  //   ReactDOM.render(
+  //     <Provider>
+  //       <Div></Div>
+  //     </Provider>,
+  //     rootDOMElement
+  //   );
   }
 }
 

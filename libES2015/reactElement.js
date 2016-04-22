@@ -16,12 +16,12 @@ class ReactElement {
   }
   
   mount(parent) {
-    var childOrChildren = this.render();
+    const childOrChildren = this.render();
 
     this.children = (childOrChildren instanceof Array) ?
                       childOrChildren :
                         [childOrChildren];
-
+    
     this.children.forEach(function(child) {
       child.mount(parent);
     });
@@ -30,15 +30,15 @@ class ReactElement {
   }
 
   remount(lastPreviousChild) {
-    var childOrChildren = this.render();
+    const childOrChildren = this.render();
 
     this.children = (childOrChildren instanceof Array) ?
                       childOrChildren :
                         [childOrChildren];
 
     this.children.forEach(function(child) {
-      var previousSibling = lastPreviousChild;  ///
-
+      var previousSibling = lastPreviousChild; ///
+      
       child.remount(previousSibling);
     });
   }

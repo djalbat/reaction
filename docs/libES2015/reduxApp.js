@@ -14,7 +14,7 @@ class ReduxApp {
   }
 
   static run() {
-    var rootDOMElement = document.getElementById('root');
+    const rootDOMElement = document.getElementById('root');
 
     const todo = (state, action) => {
       switch (action.type) {

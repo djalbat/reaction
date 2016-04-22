@@ -12,6 +12,12 @@ class ReactClassElement extends ReactElement {
     this.reactClass = reactClass;
   }
 
+  setState(state) {
+    this.instance.state = state;
+
+    this.forceUpdate();
+  }
+
   render() {
     return this.reactClass.render.apply(this.instance);
   }
@@ -20,10 +26,8 @@ class ReactClassElement extends ReactElement {
     this.reactClass.componentDidMount.apply(this.instance);
   }
 
-  setState(state) {
-    this.instance.state = state;
-
-    this.forceUpdate();
+  componentWillUnmount() {
+    this.reactClass.componentWillUnmount.apply(this.instance);
   }
 }
 

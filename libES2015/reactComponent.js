@@ -9,6 +9,10 @@ class ReactComponent {
 
   }
   
+  getChildContext() {
+    
+  }
+  
   componentDidMount() {
     
   }
