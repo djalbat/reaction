@@ -1,8 +1,6 @@
 'use strict';
 
-var Redux = require('redux'),
-    expect  = require('expect'),
-    deepFreeze = require('deep-freeze');
+var Redux = require('redux');
 
 var reaction = require('../../index'),
     ReactDOM = reaction.ReactDOM,
