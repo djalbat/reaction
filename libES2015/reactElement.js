@@ -15,38 +15,48 @@ class ReactElement {
     };
   }
   
-  mount(parent) {
-    const childOrChildren = this.render();
+  mount(parent, context) {
+    const childOrChildren = this.render(context),
+          childContext = this.getChildContext() || context;
 
     this.children = (childOrChildren instanceof Array) ?
                       childOrChildren :
-                        [childOrChildren];
-    
+                        [childOrChildren]; 
+
     this.children.forEach(function(child) {
-      child.mount(parent);
+      child.mount(parent, childContext);
     });
 
-    this.componentDidMount();
+    this.componentDidMount(context);
   }
 
-  remount(lastPreviousChild) {
-    const childOrChildren = this.render();
+  remount(previousSibling, context) {
+    const childOrChildren = this.render(context),
+          childContext = this.getChildContext() || context;
 
     this.children = (childOrChildren instanceof Array) ?
                       childOrChildren :
                         [childOrChildren];
 
     this.children.forEach(function(child) {
-      var previousSibling = lastPreviousChild; ///
-      
-      child.remount(previousSibling);
+      child.remount(previousSibling, childContext);
+    });
+  }
+
+  unmount(context) {
+    this.componentWillUnmount(context);
+
+    const childContext = this.getChildContext() || context;
+
+    this.children.forEach(function(child) {
+      child.unmount(context, childContext);
     });
   }
 
   forceUpdate() {
-    var previousChildren = this.children, ///
+    var previousChildren = this.children,
         lastPreviousChild = last(previousChildren);
-    
+
     this.remount(lastPreviousChild);
 
     previousChildren.forEach(function(previousChild) {
@@ -59,7 +69,7 @@ class ReactElement {
       child.remove();
     });
   }
-  
+
   append(parent) {
     this.children.forEach(function(child) {
       child.append(parent);

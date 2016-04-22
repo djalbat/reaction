@@ -11,7 +11,7 @@ class VanillaApp {
     var Comment = React.createClass({
       render: function() {
         return (
-
+    
           <div className="comment">
             <p>
               {this.props.message}
@@ -21,11 +21,11 @@ class VanillaApp {
       },
       componentDidMount: function() {
         var message = this.props.message;
-
+    
         console.log('comment mounted with message ' + message)
       }
     });
-
+    
     var CommentsList = React.createClass({
       getInitialState: function() {
         var messages = [
@@ -35,16 +35,16 @@ class VanillaApp {
             initialState = {
               messages: messages
             };
-
+    
         return initialState;
       },
       render: function() {
         var comments = this.state.messages.map(function(message) {
           return <Comment message={message} />;
         });
-
+    
         return (
-
+    
           <div className="commentsList">
             {comments}
           </div>
@@ -54,47 +54,21 @@ class VanillaApp {
         console.log('comments list mounted')
       }
     });
-
+    
     var commentsList = <CommentsList />;
-
+    
     ReactDOM.render(commentsList, rootDOMElement);
-
+    
     var messages = [
           "Hello world yet again!!!"
         ],
         state = {
           messages: messages
         };
-
+    
     setTimeout(function() {
       commentsList.setState(state);
     }, 1000); ///
-
-
-  //   const Div = React.createClass({
-  //     render: function() {
-  //       return <div>{this.context.message}</div>;
-  //     }
-  //   });
-  //
-  //   const {Component} = React;
-  //
-  //   class Provider extends Component {
-  //     render() {
-  //       return this.props.children;
-  //     }
-  //
-  //     getChildContext() {
-  //       return "Now then...";
-  //     }
-  //   }
-  //
-  //   ReactDOM.render(
-  //     <Provider>
-  //       <Div></Div>
-  //     </Provider>,
-  //     rootDOMElement
-  //   );
   }
 }
 

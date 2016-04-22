@@ -7,6 +7,7 @@ class ReactClassElement extends ReactElement {
     super(properties, children);
 
     this.instance.displayName = reactClass.getDisplayName();
+    
     this.instance.state = reactClass.getInitialState(); ///
 
     this.reactClass = reactClass;
@@ -18,15 +19,25 @@ class ReactClassElement extends ReactElement {
     this.forceUpdate();
   }
 
-  render() {
+  render(context) {
+    this.instance.context = context;
+    
     return this.reactClass.render.apply(this.instance);
   }
+  
+  getChildContext() {
+    return this.reactClass.getChildContext();
+  }
 
-  componentDidMount() {
+  componentDidMount(context) {
+    this.instance.context = context;
+
     this.reactClass.componentDidMount.apply(this.instance);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(context) {
+    this.instance.context = context;
+
     this.reactClass.componentWillUnmount.apply(this.instance);
   }
 }

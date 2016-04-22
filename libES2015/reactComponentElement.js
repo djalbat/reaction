@@ -9,19 +9,25 @@ class ReactComponentElement extends ReactElement {
     this.reactComponent = reactComponent;
   }
 
-  render() {
+  render(context) {
+    this.instance.context = context;
+    
     return this.reactComponent.render.apply(this.instance);
   }
 
   getChildContext() {
-    return this.reactComponent.getChildContext()
+    return this.reactComponent.getChildContext();
   }
 
-  componentDidMount() {
+  componentDidMount(context) {
+    this.instance.context = context;
+
     this.reactComponent.componentDidMount.apply(this.instance);
   }
 
-  componentWillUnMount() {
+  componentWillUnMount(context) {
+    this.instance.context = context;
+
     this.reactComponent.componentWillUnMount.apply(this.instance);
   }
 }

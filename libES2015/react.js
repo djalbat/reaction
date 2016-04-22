@@ -28,20 +28,20 @@ class React {
     if (false) {
 
     } else if (firstArgument.prototype instanceof ReactComponent) {
-      var reactComponentConstructor = firstArgument,  ///
+      var reactComponentConstructor = firstArgument,
           reactComponent = new reactComponentConstructor();
 
       element = new ReactComponentElement(reactComponent, properties, children);
     } else if (firstArgument instanceof ReactClass) {
-      var reactClass = firstArgument; ///
+      var reactClass = firstArgument;
 
       element = new ReactClassElement(reactClass, properties, children);
     } else if (typeof firstArgument === 'function') {
-      var reactFunction = firstArgument;  ///
+      var reactFunction = firstArgument;
 
       element = new ReactFunctionElement(reactFunction, properties, children);
     } else {
-      var displayName = firstArgument;  ///
+      var displayName = firstArgument;
 
       element = new DisplayElement(displayName, properties, children);
     }
@@ -58,7 +58,7 @@ function childrenFromRemainingArguments(remainingArguments) {
   var firstRemainingArgument = first(remainingArguments);
 
   if (firstRemainingArgument instanceof Array) {
-    remainingArguments = firstRemainingArgument;  ///
+    remainingArguments = firstRemainingArgument;
   }
 
   var children = remainingArguments.map(function(remainingArgument) {
@@ -66,12 +66,12 @@ function childrenFromRemainingArguments(remainingArguments) {
 
     if (remainingArgument instanceof Element
      || remainingArgument instanceof ReactElement) {
-      child = remainingArgument;  ///
+      child = remainingArgument;
     } else {
-      var text = '' + remainingArgument,  ///
-          jsxTextElement = new TextElement(text);
+      var text = '' + remainingArgument,
+          textElement = new TextElement(text);
 
-      child = jsxTextElement; ///
+      child = textElement;
     }
 
     return child;

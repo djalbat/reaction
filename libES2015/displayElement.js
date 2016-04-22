@@ -5,8 +5,8 @@ var Element = require('./element');
 class DisplayElement extends Element {
   constructor(displayNameOrDOMElement, properties, children) {
     var domElement = (typeof displayNameOrDOMElement === 'string') ? 
-                       document.createElement(displayNameOrDOMElement) : ///
-                         displayNameOrDOMElement; ///
+                       document.createElement(displayNameOrDOMElement) :
+                         displayNameOrDOMElement;
     
     super(domElement);
     
@@ -15,21 +15,21 @@ class DisplayElement extends Element {
     this.children = children;
   }
 
-  mount(parent) {
+  mount(parent, context) {
     super.mount(parent);
 
     this.children.forEach(function(child) {
-      child.mount(this);
+      child.mount(this, context);
     }.bind(this));
 
     this.applyProperties();
   }
 
-  remount(previousSibling) {
+  remount(previousSibling, context) {
     super.remount(previousSibling);
 
     this.children.forEach(function(child) {
-      child.mount(this);
+      child.mount(this, context);
     }.bind(this));
 
     this.applyProperties();
@@ -57,24 +57,24 @@ class DisplayElement extends Element {
       if (false) {
 
       } else if (propertyName === 'ref') {
-        var callback = propertyValue, ///
-            ref = domElement; ///
+        var callback = propertyValue,
+            ref = domElement;
         
         callback(ref)
       } else if (beginsWith(propertyName, 'on')) {
-        var handlerName = lowercase(propertyName),  ///
-            handler = propertyValue;  ///
+        var handlerName = lowercase(propertyName),
+            handler = propertyValue;
 
         domElement[handlerName] = handler;
       } else if (typeof propertyValue === 'string') {
         attributeName = attributeNameFromPropertyName(propertyName);
-        attributeValue = propertyValue; ///
+        attributeValue = propertyValue;
 
         domElement.setAttribute(attributeName, attributeValue);
       } else if (typeof propertyValue === 'object') {
-        attributeName = propertyName; ///
+        attributeName = propertyName;
 
-        var keys = Object.keys(propertyValue); ///
+        var keys = Object.keys(propertyValue);
         keys.forEach(function(key) {
           var value = propertyValue[key];
 
@@ -98,7 +98,7 @@ function attributeNameFromPropertyName(propertyName) {
       return 'for';
   }
 
-  return propertyName;  ///
+  return propertyName;
 }
 
 function lowercase(string) {

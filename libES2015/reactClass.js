@@ -3,10 +3,11 @@
 var DisplayElement = require('./displayElement');
 
 class ReactClass {
-  constructor(render, displayName, getInitialState, componentDidMount, componentWillUnmount) {
+  constructor(render, displayName, getInitialState, getChildContext, componentDidMount, componentWillUnmount) {
     this.render = render;
     this.displayName = displayName;
     this.getInitialState = getInitialState;
+    this.getChildContext = getChildContext;
     this.componentDidMount = componentDidMount;
     this.componentWillUnmount = componentWillUnmount;
   }
@@ -19,9 +20,10 @@ class ReactClass {
     var render = properties['render'] || defaultRender,
         displayName = properties['displayName'] || defaultDisplayName,
         getInitialState = properties['getInitialState'] || defaultGetInitialState,
+        getChildContext = properties['getChildContext'] || defaultGetChildContext,
         componentDidMount = properties['componentDidMount'] || defaultComponentDidMount,
-        componentWillUnmount = properties['componentWillUnmount'] || defaultComponentWillunmount,
-        reactClass = new ReactClass(render, displayName, getInitialState, componentDidMount, componentWillUnmount);
+        componentWillUnmount = properties['componentWillUnmount'] || defaultComponentWillUnmount,
+        reactClass = new ReactClass(render, displayName, getInitialState, getChildContext, componentDidMount, componentWillUnmount);
     
     return reactClass;
   }
@@ -43,10 +45,10 @@ function defaultRender() {
 
 const defaultDisplayName = undefined; ///
 
-function defaultGetInitialState() {
-  return {};
-}
+function defaultGetInitialState() { return {}; }
 
-function defaultComponentDidMount() {}
+function defaultGetChildContext() { return undefined; }
 
-function defaultComponentWillunmount() {}
+function defaultComponentDidMount(context) {}
+
+function defaultComponentWillUnmount(context) {}

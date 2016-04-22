@@ -7,19 +7,30 @@ class ReactFunctionElement extends ReactElement {
     super(properties, children);
     
     this.reactFunction = reactFunction;
+
+    if (!reactFunction.getChildContext) {
+      reactFunction.getChildContext = defaultGetChildContext;
+    }
   }
   
-  render() {
-    return this.reactFunction(this.instance.props); ///
+  render(context) {
+    return this.reactFunction(this.instance.props, context); ///
   }
-  
-  componentDidMount() {
+
+  getChildContext() {
+    return this.reactFunction.getChildContext();
+  }
+
+  componentDidMount(context) {
     ///
   }
   
-  componentWillUnmount() {
+  componentWillUnmount(context) {
     ///
   }
 }
 
 module.exports = ReactFunctionElement;
+
+function defaultGetChildContext() { return undefined; }
+

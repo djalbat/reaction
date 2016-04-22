@@ -13,11 +13,11 @@ class ReactComponent {
     
   }
   
-  componentDidMount() {
+  componentDidMount(context) {
     
   }
   
-  componentWillUnmount() {
+  componentWillUnmount(context) {
 
   }
 }
