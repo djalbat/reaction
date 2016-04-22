@@ -1,6 +1,6 @@
 'use strict';
 
-var JSXDOMElement = require('./jsxDOMElement');
+var JSXDisplayElement = require('./jsxDisplayElement');
 
 class ReactClass {
   constructor(render, displayName, getInitialState, componentDidMount) {
@@ -34,7 +34,7 @@ function defaultRender() {
 
   delete properties.children; ///
 
-  var jsxElement = new JSXDOMElement(displayName, properties, children);
+  var jsxElement = new JSXDisplayElement(displayName, properties, children);
 
   return jsxElement;
 }

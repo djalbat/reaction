@@ -3,7 +3,7 @@
 var easyui = require('easyui'),
     Element = easyui.Element;
 
-class JSXDOMElement {
+class JSXDisplayElement {
   constructor(elementOrDisplayName, properties, children) {
     this.element = (elementOrDisplayName instanceof Element) ?
                      elementOrDisplayName : ///
@@ -118,11 +118,11 @@ class JSXDOMElement {
         properties = null,
         children = [];
     
-    return new JSXDOMElement(element, properties, children);
+    return new JSXDisplayElement(element, properties, children);
   }
 }
 
-module.exports = JSXDOMElement;
+module.exports = JSXDisplayElement;
 
 function fromDisplayName(displayName) {
   var elementHTML = '<' + displayName + '/>',
