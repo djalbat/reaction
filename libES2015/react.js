@@ -3,10 +3,10 @@
 var ReactClass = require('./reactClass'),
     ReactComponent = require('./reactComponent'),
     JSXElement = require('./jsxElement'),
+    JSXDOMElement = require('./jsxDOMElement'),
     JSXTextElement = require('./jsxTextElement'),
     JSXClassElement = require('./jsxClassElement'),
     JSXDisplayElement = require('./jsxDisplayElement'),
-    JSXDOMTextElement = require('./jsxDOMTextElement'),
     JSXFunctionElement = require('./jsxFunctionElement'),
     JSXComponentElement = require('./jsxComponentElement');
 
@@ -65,8 +65,7 @@ function childrenFromRemainingArguments(remainingArguments) {
     var child;
 
     if (remainingArgument instanceof JSXElement
-     || remainingArgument instanceof JSXDisplayElement
-     || remainingArgument instanceof JSXDOMTextElement) {
+     || remainingArgument instanceof JSXDOMElement) {
       child = remainingArgument;  ///
     } else {
       var text = '' + remainingArgument,  ///

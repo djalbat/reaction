@@ -1,12 +1,10 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "license": "MIT",
   "repository": "https://github.com/djalbat/Reaction",
-  "dependencies": {
-    "easyui": "^3.2.26"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.7.5",

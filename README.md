@@ -59,8 +59,7 @@ These properties can be passed to the `React.createClass` method:
 
 ## Roadmap
 
-- Remove the dependency on EasyUI and manipulate the DOM directly instead,
-- fix the flattening of the child element tree and test with the vanilla application,
+- Rename JSX elements to elements,
 - add support for contexts,
 - add an implementation of Redux, possibliy,
 - and then look at Falcor.

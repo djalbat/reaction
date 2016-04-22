@@ -1,134 +1,96 @@
 'use strict';
 
-var easyui = require('easyui'),
-    Element = easyui.Element;
+var JSXDOMElement = require('./jsxDOMElement');
 
-class JSXDisplayElement {
-  constructor(elementOrDisplayName, properties, children) {
-    this.element = (elementOrDisplayName instanceof Element) ?
-                     elementOrDisplayName : ///
-                       fromDisplayName(elementOrDisplayName); ///
+class JSXDisplayElement extends JSXDOMElement {
+  constructor(refOrDisplayName, properties, children) {
+    var ref;
 
-    this.addPropertiesToElement(properties);
+    if (typeof refOrDisplayName === 'string') {
+      var displayName = refOrDisplayName;  ///
+
+      ref = document.createElement(displayName);
+    } else {
+      ref = refOrDisplayName; ///
+    }
+    
+    super(ref);
+
+    this.addPropertiesToDOMElement(properties);
 
     children.forEach(function(child) {
       child.mount(this);  ///
     }.bind(this));
   }
   
-  getElement() {
-    return this.element;
-  }
-
-  mount(parentJSXElement) {
-    parentJSXElement.append(this);
-  }
-
-  update(oldJSXElement) {
-    oldJSXElement.appendAfter(this);
-
-    oldJSXElement.remove();
-  }
-
-  unmount() {
-    this.remove();
-  }
-
-  append(jsxElement) {
-    var element = jsxElement.getElement();
-
-    this.element.append(element);
-  }
-
-  appendAfter(jsxElement) {
-    var element = jsxElement.getElement();
-
-    this.element.appendAfter(element);
-  }
-
-  remove() { this.element.remove(); }
-
-  empty() { this.element.empty(); }
-
-  addPropertiesToElement(properties) {
+  addPropertiesToDOMElement(properties) {
     if (properties === null) {
       return;
     }
 
-    var propertyNames = Object.keys(properties);
+    var ref = this.getRef(),
+        propertyNames = Object.keys(properties);
 
     propertyNames.forEach(function (propertyName) {
-      var propertyValue = properties[propertyName];
+      var propertyValue = properties[propertyName],
+          attributeName,
+          attributeValue;
 
-      if (propertyName === 'ref') {
-        var callback = propertyValue, ///
-            domElement = this.element.$element[0],  ///
-            ref = domElement; ///
+      if (false) {
+
+      } else if (propertyName === 'ref') {
+        var callback = propertyValue; ///
 
         callback(ref)
+      } else if (beginsWith(propertyName, 'on')) {
+        var onevent = lowercase(propertyName),  ///
+            handler = propertyValue;  ///
+
+        ref[onevent] = handler;
+      } else if (typeof propertyValue === 'string') {
+        attributeName = attributeNameFromPropertyName(propertyName);
+        attributeValue = propertyValue; ///
+
+        ref.setAttribute(attributeName, attributeValue);
+      } else if (typeof propertyValue === 'object') {
+        attributeName = propertyName; ///
+
+        var keys = Object.keys(propertyValue); ///
+        keys.forEach(function(key) {
+          var value = propertyValue[key];
+
+          ref[attributeName][key] = value;
+        });
       } else {
-        if (typeof propertyValue === 'function') {
-          if (beginsWith(propertyName, 'on')) {
-            var events = propertyName.substring(2).toLowerCase(), ///
-                handler = propertyValue;  ///
-
-            this.element.on(events, handler);
-          }
-        } else {
-          var attributeName,
-              attributeValue = propertyValue;
-
-          switch (propertyName) {
-            case 'className':
-              attributeName = 'class';
-              break;
-
-            case 'htmlFor':
-              attributeName = 'for';
-              break;
-
-            default:
-              attributeName = propertyName;
-              break;
-          }
-
-          if (typeof attributeValue === 'object') {
-            this.addObjectAttribute(attributeName, attributeValue);
-          } else {
-            this.element.addAttribute(attributeName, attributeValue);
-          }
-        }
+        ///
       }
-    }.bind(this));
-  }
-
-  addObjectAttribute(attributeName, attributeValue) {
-    var domElement = this.element.$element[0],  ///
-        keys = Object.keys(attributeValue);
-
-    keys.forEach(function(key) {
-      var value = attributeValue[key];
-
-      domElement[attributeName][key] = value;
     });
   }
 
-  static fromDOMElement(domElement) {
-    var element = Element.fromDOMElement(domElement),
-        properties = null,
+  static fromRef(ref) {
+    var properties = null,
         children = [];
     
-    return new JSXDisplayElement(element, properties, children);
+    return new JSXDisplayElement(ref, properties, children);
   }
 }
 
 module.exports = JSXDisplayElement;
 
-function fromDisplayName(displayName) {
-  var elementHTML = '<' + displayName + '/>',
-      element = Element.fromHTML(elementHTML);
+function attributeNameFromPropertyName(propertyName) {
+  switch (propertyName) {
+    case 'className':
+      return 'class';
 
-  return element;
+    case 'htmlFor':
+      return 'for';
+  }
+
+  return propertyName;  ///
+}
+
+function lowercase(string) {
+  return string.toLowerCase();
 }
 
 function beginsWith(string, beginningString) {
