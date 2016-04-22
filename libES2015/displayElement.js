@@ -1,38 +1,56 @@
 'use strict';
 
-var BaseElement = require('./baseElement');
+var Element = require('./element');
 
-class DisplayElement extends BaseElement {
+class DisplayElement extends Element {
   constructor(displayNameOrDOMElement, properties, children) {
-    var domElement;
-
-    if (typeof displayNameOrDOMElement === 'string') {
-      var displayName = displayNameOrDOMElement;  ///
-
-      domElement = document.createElement(displayName);
-    } else {
-      domElement = displayNameOrDOMElement; ///
-    }
+    var domElement = (typeof displayNameOrDOMElement === 'string') ? 
+                       document.createElement(displayNameOrDOMElement) : ///
+                         displayNameOrDOMElement; ///
     
     super(domElement);
+    
+    this.properties = properties;
 
-    this.addPropertiesToBaseElement(properties);
-
-    children.forEach(function(child) {
-      child.mount(this);  ///
-    }.bind(this));
+    this.children = children;
   }
-  
-  addPropertiesToBaseElement(properties) {
-    if (properties === null) {
+
+  mount(parent) {
+    super.mount(parent);
+
+    this.children.forEach(function(child) {
+      child.mount(this);
+    }.bind(this));
+
+    this.applyProperties();
+  }
+
+  remount(previousSibling) {
+    super.remount(previousSibling);
+
+    this.children.forEach(function(child) {
+      child.mount(this);
+    }.bind(this));
+
+    this.applyProperties();
+  }
+
+  remove() {
+    ///
+    
+    super.remove();
+  }
+
+  applyProperties() {
+    if (this.properties === null) {
       return;
     }
 
     var domElement = this.getDOMElement(),
-        propertyNames = Object.keys(properties);
+        propertyNames = Object.keys(this.properties);
 
     propertyNames.forEach(function (propertyName) {
-      var propertyValue = properties[propertyName],
+      var propertyValue = this.properties[propertyName],
           attributeName,
           attributeValue;
 
@@ -44,10 +62,10 @@ class DisplayElement extends BaseElement {
         
         callback(ref)
       } else if (beginsWith(propertyName, 'on')) {
-        var onevent = lowercase(propertyName),  ///
+        var handlerName = lowercase(propertyName),  ///
             handler = propertyValue;  ///
 
-        domElement[onevent] = handler;
+        domElement[handlerName] = handler;
       } else if (typeof propertyValue === 'string') {
         attributeName = attributeNameFromPropertyName(propertyName);
         attributeValue = propertyValue; ///
@@ -65,14 +83,7 @@ class DisplayElement extends BaseElement {
       } else {
         ///
       }
-    });
-  }
-
-  static fromDOMElement(domElement) {
-    var properties = null,
-        children = [];
-    
-    return new DisplayElement(domElement, properties, children);
+    }.bind(this));
   }
 }
 

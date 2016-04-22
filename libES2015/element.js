@@ -1,54 +1,46 @@
 'use strict';
 
 class Element {
-  constructor(properties, children) {
-    const props = properties || {},
-          forceUpdate = this.forceUpdate.bind(this);
-
-    props.children = children;
-
-    this.instance = {
-      props: props,
-      forceUpdate: forceUpdate
-    };
-
-    this.element = undefined;  ///
+  constructor(domElement) {
+    this.domElement = domElement;
   }
-  
+
+  getDOMElement() {
+    return this.domElement;
+  }
+
   mount(parent) {
-    this.element.mount(parent);
-    
-    this.componentDidMount();
-  }
-
-  update(previous) {
-    this.element.update(previous);
+    parent.append(this);
   }
   
+  remount(previousSibling) {
+    previousSibling.appendAfter(this);
+  }
+
   unmount() {
-    this.componentWillUnmount();
-    
-    this.element.unmount();
+    this.remove();
   }
 
-  forceUpdate() {
-    var previous = this.element;  ///
+  append(child) {
+    var childDOMElement = child.getDOMElement();
 
-    this.element = this.render();
-
-    this.update(previous)
+    this.domElement.appendChild(childDOMElement);
   }
 
-  remove() { this.element.remove(); }
+  appendAfter(previousSibling) {
+    var previousSiblingDOMElement = previousSibling.getDOMElement();
 
-  appendAfter(previousSibling) { this.element.appendAfter(previousSibling); }
-
-  componentDidMount() {
-
+    this.domElement.parentElement.insertBefore(previousSiblingDOMElement, this.domElement.nextSibling);
   }
 
-  componentWillUnmount() {
+  remove() {
+    this.domElement.parentElement.removeChild(this.domElement);
+  }
 
+  empty() {
+    while (this.domElement.firstChild) {
+      this.domElement.removeChild(this.domElement.firstChild);
+    }
   }
 }
 

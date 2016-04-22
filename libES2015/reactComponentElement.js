@@ -1,14 +1,15 @@
 'use strict';
 
-var Element = require('./element');
+var ReactElement = require('./reactElement');
 
-class ComponentElement extends Element {
+class ReactComponentElement extends ReactElement {
   constructor(reactComponent, properties, children) {
     super(properties, children);
 
-    this.reactComponent = reactComponent;
     
-    this.element = this.render();
+    
+    
+    this.reactComponent = reactComponent;
   }
 
   render() {
@@ -20,4 +21,4 @@ class ComponentElement extends Element {
   }
 }
 
-module.exports = ComponentElement;
+module.exports = ReactComponentElement;

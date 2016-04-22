@@ -69,6 +69,18 @@ class VanillaApp {
     setTimeout(function() {
       commentsList.setState(state);
     }, 1000); ///
+
+    // var Div = React.createClass({
+    //   render() {
+    //     return <div>{this.state}</div>;
+    //   }
+    // });
+    //
+    // var div = <Div></Div>;
+    //
+    // ReactDOM.render(div, rootDOMElement);
+    //
+    // div.setState('!!!');
   }
 }
 

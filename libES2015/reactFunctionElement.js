@@ -1,14 +1,15 @@
 'use strict';
 
-var Element = require('./element');
+var ReactElement = require('./reactElement');
 
-class FunctionElement extends Element {
+class ReactFunctionElement extends ReactElement {
   constructor(reactFunction, properties, children) {
     super(properties, children);
+    
+    
+    
 
     this.reactFunction = reactFunction;
-    
-    this.element = this.render();
   }
   
   render() {
@@ -16,6 +17,10 @@ class FunctionElement extends Element {
 
     return this.reactFunction(_ref);
   }
+  
+  componentDidMount() {
+    
+  }
 }
 
-module.exports = FunctionElement;
+module.exports = ReactFunctionElement;

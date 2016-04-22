@@ -1,8 +1,8 @@
 'use strict';
 
-var Element = require('./element');
+var ReactElement = require('./reactElement');
 
-class ClassElement extends Element {
+class ReactClassElement extends ReactElement {
   constructor(reactClass, properties, children) {
     super(properties, children);
 
@@ -10,14 +10,6 @@ class ClassElement extends Element {
     this.instance.state = reactClass.getInitialState(); ///
 
     this.reactClass = reactClass;
-
-    this.element = this.render();
-  }
-
-  setState(state) {
-    this.instance.state = state;
-
-    this.forceUpdate();
   }
 
   render() {
@@ -27,6 +19,12 @@ class ClassElement extends Element {
   componentDidMount() {
     this.reactClass.componentDidMount.apply(this.instance);
   }
+
+  setState(state) {
+    this.instance.state = state;
+
+    this.forceUpdate();
+  }
 }
 
-module.exports = ClassElement;
+module.exports = ReactClassElement;

@@ -1,14 +1,14 @@
 'use strict';
 
-var ReactClass = require('./reactClass'),
-    ReactComponent = require('./reactComponent'),
+var ReactComponent = require('./reactComponent'),
+    ReactClass = require('./reactClass'),
     Element = require('./element'),
-    BaseElement = require('./baseElement'),
     TextElement = require('./textElement'),
-    ClassElement = require('./classElement'),
+    ReactElement = require('./reactElement'),
     DisplayElement = require('./displayElement'),
-    FunctionElement = require('./functionElement'),
-    ComponentElement = require('./componentElement');
+    ReactClassElement = require('./reactClassElement'),
+    ReactFunctionElement = require('./reactFunctionElement'),
+    ReactComponentElement = require('./reactComponentElement');
 
 class React {
   static createClass(properties) {
@@ -31,15 +31,15 @@ class React {
       var reactComponentConstructor = firstArgument,  ///
           reactComponent = new reactComponentConstructor();
 
-      element = new ComponentElement(reactComponent, properties, children);
+      element = new ReactComponentElement(reactComponent, properties, children);
     } else if (firstArgument instanceof ReactClass) {
       var reactClass = firstArgument; ///
 
-      element = new ClassElement(reactClass, properties, children);
+      element = new ReactClassElement(reactClass, properties, children);
     } else if (typeof firstArgument === 'function') {
       var reactFunction = firstArgument;  ///
 
-      element = new FunctionElement(reactFunction, properties, children);
+      element = new ReactFunctionElement(reactFunction, properties, children);
     } else {
       var displayName = firstArgument;  ///
 
@@ -65,7 +65,7 @@ function childrenFromRemainingArguments(remainingArguments) {
     var child;
 
     if (remainingArgument instanceof Element
-     || remainingArgument instanceof BaseElement) {
+     || remainingArgument instanceof ReactElement) {
       child = remainingArgument;  ///
     } else {
       var text = '' + remainingArgument,  ///
