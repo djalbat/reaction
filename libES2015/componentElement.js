@@ -8,11 +8,11 @@ class ComponentElement extends Element {
 
     this.reactComponent = reactComponent;
     
-    this.render();
+    this.element = this.render();
   }
 
   render() {
-    this.element = this.reactComponent.render.apply(this.instance);
+    return this.reactComponent.render.apply(this.instance);
   }
 
   componentDidMount() {

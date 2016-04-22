@@ -8,13 +8,13 @@ class FunctionElement extends Element {
 
     this.reactFunction = reactFunction;
     
-    this.render();
+    this.element = this.render();
   }
   
   render() {
     var _ref = this.instance.props; ////
 
-    this.element = this.reactFunction(_ref);
+    return this.reactFunction(_ref);
   }
 }
 

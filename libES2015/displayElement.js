@@ -3,15 +3,15 @@
 var BaseElement = require('./baseElement');
 
 class DisplayElement extends BaseElement {
-  constructor(domElementOrDisplayName, properties, children) {
+  constructor(displayNameOrDOMElement, properties, children) {
     var domElement;
 
-    if (typeof domElementOrDisplayName === 'string') {
-      var displayName = domElementOrDisplayName;  ///
+    if (typeof displayNameOrDOMElement === 'string') {
+      var displayName = displayNameOrDOMElement;  ///
 
       domElement = document.createElement(displayName);
     } else {
-      domElement = domElementOrDisplayName; ///
+      domElement = displayNameOrDOMElement; ///
     }
     
     super(domElement);

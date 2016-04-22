@@ -29,7 +29,7 @@ class Element {
   forceUpdate() {
     var oldElement = this.element;
 
-    this.render();
+    this.element = this.render();
 
     this.update(oldElement)
   }

@@ -16,7 +16,7 @@ class ClassElement extends Element {
       state: state
     });
 
-    this.render();
+    this.element = this.render();
   }
 
   setState(state) {
@@ -28,7 +28,7 @@ class ClassElement extends Element {
   }
 
   render() {
-    this.element = this.reactClass.render.apply(this.instance);
+    return this.reactClass.render.apply(this.instance);
   }
 
   componentDidMount() {
