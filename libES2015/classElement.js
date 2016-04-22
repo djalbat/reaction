@@ -6,23 +6,16 @@ class ClassElement extends Element {
   constructor(reactClass, properties, children) {
     super(properties, children);
 
+    this.instance.displayName = reactClass.getDisplayName();
+    this.instance.state = reactClass.getInitialState(); ///
+
     this.reactClass = reactClass;
-
-    var displayName = reactClass.getDisplayName(),
-        state = reactClass.getInitialState(); ///
-
-    this.instance = Object.assign(this.instance, {
-      displayName: displayName,
-      state: state
-    });
 
     this.element = this.render();
   }
 
   setState(state) {
-    this.instance = Object.assign(this.instance, {
-      state: state
-    });
+    this.instance.state = state;
 
     this.forceUpdate();
   }

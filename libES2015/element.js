@@ -2,22 +2,27 @@
 
 class Element {
   constructor(properties, children) {
-    const props = Object.assign({}, properties, {children: children}),
+    const props = properties || {},
           forceUpdate = this.forceUpdate.bind(this);
 
-    this.instance = Object.assign({}, {props: props}, {forceUpdate: forceUpdate});
+    props.children = children;
+
+    this.instance = {
+      props: props,
+      forceUpdate: forceUpdate
+    };
 
     this.element = undefined;  ///
   }
   
-  mount(parentElement) {
-    this.element.mount(parentElement);
+  mount(parent) {
+    this.element.mount(parent);
     
     this.componentDidMount();
   }
 
-  update(oldElement) {
-    this.element.update(oldElement);
+  update(previous) {
+    this.element.update(previous);
   }
   
   unmount() {
@@ -27,20 +32,16 @@ class Element {
   }
 
   forceUpdate() {
-    var oldElement = this.element;
+    var previous = this.element;  ///
 
     this.element = this.render();
 
-    this.update(oldElement)
+    this.update(previous)
   }
 
-  remove() {
-    this.element.remove();
-  }
+  remove() { this.element.remove(); }
 
-  appendAfter(element) {
-    this.element.appendAfter(element);
-  }
+  appendAfter(previousSibling) { this.element.appendAfter(previousSibling); }
 
   componentDidMount() {
 
