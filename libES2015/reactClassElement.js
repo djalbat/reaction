@@ -13,22 +13,12 @@ class ReactClassElement extends ReactElement {
     this.reactClass = reactClass;
   }
 
-  setState(state) {
-    this.instance.state = state;
-
-    this.forceUpdate();
-  }
-
   render(context) {
     this.instance.context = context;
     
     return this.reactClass.render.apply(this.instance);
   }
-  
-  getChildContext() {
-    return this.reactClass.getChildContext();
-  }
-
+ 
   componentDidMount(context) {
     this.instance.context = context;
 
@@ -39,6 +29,16 @@ class ReactClassElement extends ReactElement {
     this.instance.context = context;
 
     this.reactClass.componentWillUnmount.apply(this.instance);
+  }
+
+  getChildContext() {
+    return this.reactClass.getChildContext();
+  }
+
+  setState(state) {
+    this.instance.state = state;
+
+    this.forceUpdate();
   }
 }
 

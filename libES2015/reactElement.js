@@ -53,17 +53,6 @@ class ReactElement {
     });
   }
 
-  forceUpdate() {
-    var previousChildren = this.children,
-        lastPreviousChild = last(previousChildren);
-
-    this.remount(lastPreviousChild);
-
-    previousChildren.forEach(function(previousChild) {
-      previousChild.remove();
-    });
-  }
-
   remove() {
     this.children.forEach(function(child) {
       child.remove();
@@ -79,6 +68,17 @@ class ReactElement {
   appendAfter(previousSibling) {
     this.children.forEach(function(child) {
       child.appendAfter(previousSibling);
+    });
+  }
+
+  forceUpdate() {
+    var previousChildren = this.children,
+        lastPreviousChild = last(previousChildren);
+
+    this.remount(lastPreviousChild);
+
+    previousChildren.forEach(function(previousChild) {
+      previousChild.remove();
     });
   }
 }

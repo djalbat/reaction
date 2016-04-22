@@ -5,6 +5,10 @@ var ReactElement = require('./reactElement');
 class ReactComponentElement extends ReactElement {
   constructor(reactComponent, properties, children) {
     super(properties, children);
+    
+    
+    
+    
 
     this.reactComponent = reactComponent;
   }
@@ -13,10 +17,6 @@ class ReactComponentElement extends ReactElement {
     this.instance.context = context;
     
     return this.reactComponent.render.apply(this.instance);
-  }
-
-  getChildContext() {
-    return this.reactComponent.getChildContext();
   }
 
   componentDidMount(context) {
@@ -29,6 +29,10 @@ class ReactComponentElement extends ReactElement {
     this.instance.context = context;
 
     this.reactComponent.componentWillUnMount.apply(this.instance);
+  }
+
+  getChildContext() {
+    return this.reactComponent.getChildContext();
   }
 }
 
