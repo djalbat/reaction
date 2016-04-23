@@ -11,6 +11,8 @@ class Element {
   
   remount(previousSibling) {
     previousSibling.appendAfter(this);
+
+    return this;
   }
 
   unmount() {

@@ -16,12 +16,15 @@ class ReactElement {
   }
   
   mount(parent, context) {
-    const childOrChildren = this.render(context),
-          childContext = this.getChildContext() || context;
+    const childOrChildren = this.render(context);
+
+    var childContext = this.getChildContext();
+
+    childContext = childContext || context;
 
     this.children = (childOrChildren instanceof Array) ?
                       childOrChildren :
-                        [childOrChildren]; 
+                        [childOrChildren];
 
     this.children.forEach(function(child) {
       child.mount(parent, childContext);
@@ -31,22 +34,29 @@ class ReactElement {
   }
 
   remount(previousSibling, context) {
-    const childOrChildren = this.render(context),
-          childContext = this.getChildContext() || context;
+    const childOrChildren = this.render(context);
+
+    var childContext = this.getChildContext();
+
+    childContext = childContext || context;
 
     this.children = (childOrChildren instanceof Array) ?
                       childOrChildren :
                         [childOrChildren];
 
     this.children.forEach(function(child) {
-      child.remount(previousSibling, childContext);
+      previousSibling = child.remount(previousSibling, childContext);
     });
+    
+    return this;
   }
 
   unmount(context) {
     this.componentWillUnmount(context);
 
-    const childContext = this.getChildContext() || context;
+    var childContext = this.getChildContext();
+
+    childContext = childContext || context;
 
     this.children.forEach(function(child) {
       child.unmount(context, childContext);
@@ -74,9 +84,10 @@ class ReactElement {
   forceUpdate() {
     var previousChildren = this.children,
         lastPreviousChild = last(previousChildren),
+        previousSibling = lastPreviousChild,  ///
         context = this.instance.context;
 
-    this.remount(lastPreviousChild, context);
+    this.remount(previousSibling, context);
 
     previousChildren.forEach(function(previousChild) {
       previousChild.remove();

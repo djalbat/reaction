@@ -5,10 +5,6 @@ var ReactElement = require('./reactElement');
 class ReactComponentElement extends ReactElement {
   constructor(reactComponent, properties, children) {
     super(properties, children);
-    
-    
-    
-    
 
     this.reactComponent = reactComponent;
   }
@@ -32,6 +28,8 @@ class ReactComponentElement extends ReactElement {
   }
 
   getChildContext() {
+    
+    
     return this.reactComponent.getChildContext.apply(this.instance);
   }
 }
