@@ -1,16 +1,14 @@
 'use strict';
 
 class ReactElement {
-  constructor(properties, children) {
-    const props = properties || {},
-          forceUpdate = this.forceUpdate.bind(this);
+  constructor(props, children) {
+    const forceUpdate = this.forceUpdate.bind(this);
 
     this.children = children;
 
-    props.children = children;
-
     this.instance = {
       props: props,
+      children: children,
       forceUpdate: forceUpdate
     };
   }

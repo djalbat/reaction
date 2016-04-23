@@ -3,14 +3,14 @@
 var Element = require('./element');
 
 class DisplayElement extends Element {
-  constructor(displayNameOrDOMElement, properties, children) {
+  constructor(displayNameOrDOMElement, props, children) {
     var domElement = (typeof displayNameOrDOMElement === 'string') ? 
                        document.createElement(displayNameOrDOMElement) :
                          displayNameOrDOMElement;
     
     super(domElement);
     
-    this.properties = properties;
+    this.props = props;
 
     this.children = children;
   }
@@ -22,7 +22,7 @@ class DisplayElement extends Element {
       child.mount(this, context);
     }.bind(this));
 
-    this.applyProperties();
+    this.applyProps();
   }
 
   remount(previousSibling, context) {
@@ -32,7 +32,7 @@ class DisplayElement extends Element {
       child.mount(this, context);
     }.bind(this));
 
-    this.applyProperties();
+    this.applyProps();
   }
 
   remove() {
@@ -41,16 +41,16 @@ class DisplayElement extends Element {
     super.remove();
   }
 
-  applyProperties() {
-    if (this.properties === null) {
+  applyProps() {
+    if (this.props === null) {
       return;
     }
 
     var domElement = this.getDOMElement(),
-        propertyNames = Object.keys(this.properties);
+        propertyNames = Object.keys(this.props);
 
     propertyNames.forEach(function (propertyName) {
-      var propertyValue = this.properties[propertyName];
+      var propertyValue = this.props[propertyName];
 
       if (false) {
 

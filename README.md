@@ -56,6 +56,9 @@ Contexts are handled differently, and more simply. React elements cam only pass 
 
 - State
 - Of the component lifecycle, all methods except mounting and unmounting.
+- `this.props.children`, instead use just `this.children`
+
+On this last point, children are passed as the second argument to component functions.
 
 ## Roadmap
 

@@ -3,8 +3,8 @@
 var ReactElement = require('./reactElement');
 
 class ReactClassElement extends ReactElement {
-  constructor(reactClass, properties, children) {
-    super(properties, children);
+  constructor(reactClass, props, children) {
+    super(props, children);
 
     this.reactClass = reactClass;
   }

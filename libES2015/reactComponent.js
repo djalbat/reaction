@@ -8,11 +8,7 @@ class ReactComponent {
   }
 
   render(context) {
-    var properties = this.props,  ///
-        displayName = this.displayName, ///
-        children = this.props.children; ///
-
-    return new DisplayElement(displayName, properties, children);
+    return new DisplayElement(this.displayName, this.props, this.children);
   }
 
   getChildContext() {

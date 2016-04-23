@@ -73,8 +73,8 @@ class ReduxApp {
     const { Component } = React;
 
     const getVisibleTodos = (
-        todos,
-        filter
+      todos,
+      filter
     ) => {
       switch (filter) {
         case 'SHOW_ALL':
@@ -123,11 +123,12 @@ class ReduxApp {
       </ul>
     );
 
-    const Link = ({
-      active,
-      onClick,
+    const Link = (
+      props,
       children
-    }) => {
+    ) => {
+      const { active, onClick } = props;
+
       if (active) {
         return <span>{children}</span>;
       }
@@ -160,6 +161,7 @@ class ReduxApp {
       render() {
         const { store } = this.context;
         const props = this.props;
+        const children = this.children;
         const state = store.getState();
 
         return (
@@ -173,14 +175,14 @@ class ReduxApp {
                   })
                 }
           >
-            {props.children}
+            {children}
           </Link>
         );
       }
     }
 
     let nextTodoId = 0;
-    const AddTodo = (props, {
+    const AddTodo = (props, children, {
       store
     }) => {
       let input;
@@ -278,7 +280,7 @@ class ReduxApp {
         };
       }
       render() {
-        return this.props.children;
+        return this.children;
       }
     }
 

@@ -3,8 +3,8 @@
 var ReactElement = require('./reactElement');
 
 class ReactFunctionElement extends ReactElement {
-  constructor(reactFunction, properties, children) {
-    super(properties, children);
+  constructor(reactFunction, props, children) {
+    super(props, children);
 
     this.reactFunction = reactFunction;
   }
@@ -12,18 +12,18 @@ class ReactFunctionElement extends ReactElement {
   render(context) {
     
 
-    return this.reactFunction(this.instance.props, context);
+    return this.reactFunction(this.instance.props, this.instance.children, context);
   }
 
   componentDidMount(context) {
     if (this.reactFunction.componentDidMount) {
-      this.reactFunction.componentDidMount(this.instance.props, context);
+      this.reactFunction.componentDidMount(this.instance.props, this.instance.children, context);
     }
   }
   
   componentWillUnmount(context) {
     if (this.reactFunction.componentWillUnmount) {
-      this.reactFunction.componentWillUnmount(this.instance.props, context);
+      this.reactFunction.componentWillUnmount(this.instance.props, this.instance.children, context);
     }
   }
 

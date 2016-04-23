@@ -11,12 +11,12 @@ class ReactClass {
     this.componentWillUnmount = componentWillUnmount;
   }
   
-  static fromProperties(properties) {
-    var render = properties['render'] || defaultRender,
-        displayName = properties['displayName'] || defaultDisplayName,
-        getChildContext = properties['getChildContext'] || defaultGetChildContext,
-        componentDidMount = properties['componentDidMount'] || defaultComponentDidMount,
-        componentWillUnmount = properties['componentWillUnmount'] || defaultComponentWillUnmount,
+  static fromObject(object) {
+    var render = object['render'] || defaultRender,
+        displayName = object['displayName'] || defaultDisplayName,
+        getChildContext = object['getChildContext'] || defaultGetChildContext,
+        componentDidMount = object['componentDidMount'] || defaultComponentDidMount,
+        componentWillUnmount = object['componentWillUnmount'] || defaultComponentWillUnmount,
         reactClass = new ReactClass(render, displayName, getChildContext, componentDidMount, componentWillUnmount);
     
     return reactClass;
@@ -26,11 +26,7 @@ class ReactClass {
 module.exports = ReactClass;
 
 function defaultRender() {
-  var properties = this.props,  ///
-      displayName = this.displayName, ///
-      children = this.props.children; ///
-
-  return new DisplayElement(displayName, properties, children);
+  return new DisplayElement(this.displayName, this.props, this.children);
 }
 
 const defaultDisplayName = undefined; ///

@@ -11,39 +11,39 @@ var ReactComponent = require('./reactComponent'),
     ReactComponentElement = require('./reactComponentElement');
 
 class React {
-  static createClass(properties) {
-    var reactClass = ReactClass.fromProperties(properties);
+  static createClass(object) {
+    var reactClass = ReactClass.fromObject(object);
 
     return reactClass;
   }
 
-  static createElement(firstArgument, properties, ...remainingArguments) {
-    if (firstArgument === undefined) {
+  static createElement(reactObjectOrDisplayName, props, ...childArguments) {
+    if (reactObjectOrDisplayName === undefined) {
       return undefined;
     }
 
-    var children = childrenFromRemainingArguments(remainingArguments),
+    var children = childrenFromChildArguments(childArguments),
         element;
 
     if (false) {
 
-    } else if (firstArgument.prototype instanceof ReactComponent) {
-      var reactComponentConstructor = firstArgument,
+    } else if (reactObjectOrDisplayName.prototype instanceof ReactComponent) {
+      var reactComponentConstructor = reactObjectOrDisplayName,
           reactComponent = new reactComponentConstructor();
 
-      element = new ReactComponentElement(reactComponent, properties, children);
-    } else if (firstArgument instanceof ReactClass) {
-      var reactClass = firstArgument;
+      element = new ReactComponentElement(reactComponent, props, children);
+    } else if (reactObjectOrDisplayName instanceof ReactClass) {
+      var reactClass = reactObjectOrDisplayName;
 
-      element = new ReactClassElement(reactClass, properties, children);
-    } else if (typeof firstArgument === 'function') {
-      var reactFunction = firstArgument;
+      element = new ReactClassElement(reactClass, props, children);
+    } else if (typeof reactObjectOrDisplayName === 'function') {
+      var reactFunction = reactObjectOrDisplayName;
 
-      element = new ReactFunctionElement(reactFunction, properties, children);
+      element = new ReactFunctionElement(reactFunction, props, children);
     } else {
-      var displayName = firstArgument;
+      var displayName = reactObjectOrDisplayName;
 
-      element = new DisplayElement(displayName, properties, children);
+      element = new DisplayElement(displayName, props, children);
     }
 
     return element;
@@ -54,14 +54,14 @@ React.Component = ReactComponent;
 
 module.exports = React;
 
-function childrenFromRemainingArguments(remainingArguments) {
-  var firstRemainingArgument = first(remainingArguments);
+function childrenFromChildArguments(childArguments) {
+  var firstChildArgument = first(childArguments);
 
-  if (firstRemainingArgument instanceof Array) {
-    remainingArguments = firstRemainingArgument;
+  if (firstChildArgument instanceof Array) {
+    childArguments = firstChildArgument;
   }
 
-  var children = remainingArguments.map(function(remainingArgument) {
+  var children = childArguments.map(function(remainingArgument) {
     var child;
 
     if (remainingArgument instanceof Element

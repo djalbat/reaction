@@ -4,9 +4,9 @@ var DisplayElement = require('./displayElement');
 
 class ReactDOM {
   static render(element, parentDOMElement) {
-    var properties = null,
+    var props = null,
         children = [],
-        parentElement = new DisplayElement(parentDOMElement, properties, children);
+        parentElement = new DisplayElement(parentDOMElement, props, children);
 
     parentElement.empty();
 
