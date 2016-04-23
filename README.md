@@ -4,7 +4,7 @@ An alternative implementation of React.
 
 #### Why?
 
-The idea is to improve on [React](https://facebook.github.io/react/)'s component lifecycle in order to facilitate better handshaking with [Redux](http://redux.js.org/) and [Falcor](http://netflix.github.io/falcor/). [Deku](https://github.com/dekujs/deku) are doing much the same thing.
+The idea is to improve on [React](https://facebook.github.io/react/)'s component lifecycle in order to facilitate better handshaking with [Redux](http://redux.js.org/) and [Falcor](http://netflix.github.io/falcor/).
 
 ## Installation
 
@@ -32,7 +32,7 @@ Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.htm
 
 ## Examples
 
-Launch the `examples.html` file in the `docs` folder. There is now a Redux as well as a vanilla example application.
+Launch the `examples.html` file in the root folder. There is a Redux as well as a vanilla example application.
 
 ## Compiling from source
 
@@ -43,24 +43,22 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 ## Currently supported functionality
 
-- `React.createElement`,
-- `React.createClass`,
-- `ReactDOM.render`,
-- `setState`,
-- `ref` attributes on JSX elements,
-- React components,
-- React's new function syntax for components. See the Redux example application.
+- React classes
+- React components
+- React components defined as functions
+- Component state
+- References
+- Contexts
+- Mounting and unmounting
 
-These properties can be passed to the `React.createClass` method:
+Contexts are handled differently, and more simply. React elements cam only pass down a context to child elements, and those child elements can only receive a context, in its entirety. There is no need to define any property types.
 
-- render
-- getInitialState
-- componentDidMount
+Of the component lifecycle, only mounting and unmounting are supported.
 
 ## Roadmap
 
-- Add support for contexts,
-- add an implementation of Redux, possibliy,
+- Make further small changes, aside from the changes to contexts already made,
+- then add an implementation of Redux, possibly,
 - and then look at Falcor.
 
 ## Contact

@@ -15,16 +15,16 @@ class ReactComponent {
     return new DisplayElement(displayName, properties, children);
   }
 
+  getChildContext() {
+    return undefined;
+  }
+
   componentDidMount(context) {
     
   }
   
   componentWillUnmount(context) {
 
-  }
-
-  getChildContext() {
-    return undefined;
   }
 }
 

@@ -6,7 +6,7 @@ class ReactClassElement extends ReactElement {
   constructor(reactClass, properties, children) {
     super(properties, children);
 
-    this.instance.displayName = reactClass.getDisplayName();
+    this.instance.displayName = reactClass.getDisplayName()
     
     this.instance.state = reactClass.getInitialState(); ///
 
