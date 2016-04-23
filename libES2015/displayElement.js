@@ -50,9 +50,7 @@ class DisplayElement extends Element {
         propertyNames = Object.keys(this.properties);
 
     propertyNames.forEach(function (propertyName) {
-      var propertyValue = this.properties[propertyName],
-          attributeName,
-          attributeValue;
+      var propertyValue = this.properties[propertyName];
 
       if (false) {
 
@@ -66,40 +64,17 @@ class DisplayElement extends Element {
             handler = propertyValue;
 
         domElement[handlerName] = handler;
-      } else if (typeof propertyValue === 'string') {
-        attributeName = attributeNameFromPropertyName(propertyName);
-        attributeValue = propertyValue;
-
-        domElement.setAttribute(attributeName, attributeValue);
-      } else if (typeof propertyValue === 'object') {
-        attributeName = propertyName;
-
-        var keys = Object.keys(propertyValue);
-        keys.forEach(function(key) {
-          var value = propertyValue[key];
-
-          domElement[attributeName][key] = value;
-        });
       } else {
-        ///
+        var attributeName = propertyName,
+            attributeValue = propertyValue;
+        
+        this.setAttribute(attributeName, attributeValue);
       }
     }.bind(this));
   }
 }
 
 module.exports = DisplayElement;
-
-function attributeNameFromPropertyName(propertyName) {
-  switch (propertyName) {
-    case 'className':
-      return 'class';
-
-    case 'htmlFor':
-      return 'for';
-  }
-
-  return propertyName;
-}
 
 function lowercase(string) {
   return string.toLowerCase();

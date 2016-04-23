@@ -5,17 +5,17 @@ class Element {
     this.domElement = domElement;
   }
 
-  mount(parent) {
+  mount(parent, context) {
     parent.append(this);
   }
   
-  remount(previousSibling) {
+  remount(previousSibling, context) {
     previousSibling.appendAfter(this);
 
     return this;
   }
 
-  unmount() {
+  unmount(context) {
     this.remove();
   }
 
@@ -43,6 +43,33 @@ class Element {
 
   getDOMElement() {
     return this.domElement;
+  }
+
+  setAttribute(attributeName, attributeValue) {
+    if (false) {
+
+    } else if (typeof attributeValue === 'string') {
+      switch (attributeName) {
+        case 'className':
+          attributeName = 'class';
+          break;
+
+        case 'htmlFor':
+          attributeName = 'for';
+          break;
+      }
+
+      this.domElement.setAttribute(attributeName, attributeValue);
+    } else if (typeof attributeValue === 'object') {
+      var keys = Object.keys(attributeValue);
+      keys.forEach(function (key) {
+        var value = attributeValue[key];
+
+        this.domElement[attributeName][key] = value;
+      }.bind(this));
+    } else {
+      ///
+    }
   }
 }
 
