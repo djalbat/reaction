@@ -12,24 +12,24 @@ class ReactFunctionElement extends ReactElement {
   render(context) {
     
 
-    return this.reactFunction(this.instance.props, this.instance.children, context);
+    return this.reactFunction(this.props, this.children, context);
   }
 
   componentDidMount(context) {
     if (this.reactFunction.componentDidMount) {
-      this.reactFunction.componentDidMount(this.instance.props, this.instance.children, context);
+      this.reactFunction.componentDidMount(this.props, this.children, context);
     }
   }
   
   componentWillUnmount(context) {
     if (this.reactFunction.componentWillUnmount) {
-      this.reactFunction.componentWillUnmount(this.instance.props, this.instance.children, context);
+      this.reactFunction.componentWillUnmount(this.props, this.children, context);
     }
   }
 
   getChildContext() {
     if (this.reactFunction.getChildContext) {
-      return this.reactFunction.getChildContext(this.instance.props);
+      return this.reactFunction.getChildContext(this.props);
     }
   }
 }

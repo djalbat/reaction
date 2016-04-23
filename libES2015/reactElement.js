@@ -2,15 +2,8 @@
 
 class ReactElement {
   constructor(props, children) {
-    const forceUpdate = this.forceUpdate.bind(this);
-
+    this.props = props;
     this.children = children;
-
-    this.instance = {
-      props: props,
-      children: children,
-      forceUpdate: forceUpdate
-    };
   }
   
   mount(parent, context) {
@@ -83,7 +76,7 @@ class ReactElement {
     var previousChildren = this.children,
         lastPreviousChild = last(previousChildren),
         previousSibling = lastPreviousChild,  ///
-        context = this.instance.context;
+        context = this.context;
 
     this.remount(previousSibling, context);
 

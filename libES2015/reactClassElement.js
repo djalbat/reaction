@@ -10,25 +10,25 @@ class ReactClassElement extends ReactElement {
   }
 
   render(context) {
-    this.instance.context = context;
+    this.context = context;
     
-    return this.reactClass.render.apply(this.instance);
+    return this.reactClass.render.apply(this);
   }
  
   componentDidMount(context) {
-    this.instance.context = context;
+    this.context = context;
 
-    this.reactClass.componentDidMount.apply(this.instance);
+    this.reactClass.componentDidMount.apply(this);
   }
 
   componentWillUnmount(context) {
-    this.instance.context = context;
+    this.context = context;
 
-    this.reactClass.componentWillUnmount.apply(this.instance);
+    this.reactClass.componentWillUnmount.apply(this);
   }
 
   getChildContext() {
-    return this.reactClass.getChildContext.apply(this.instance);
+    return this.reactClass.getChildContext.apply(this);
   }
 }
 
