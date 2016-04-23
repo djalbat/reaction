@@ -73,9 +73,10 @@ class ReactElement {
 
   forceUpdate() {
     var previousChildren = this.children,
-        lastPreviousChild = last(previousChildren);
+        lastPreviousChild = last(previousChildren),
+        context = this.instance.context;
 
-    this.remount(lastPreviousChild);
+    this.remount(lastPreviousChild, context);
 
     previousChildren.forEach(function(previousChild) {
       previousChild.remove();

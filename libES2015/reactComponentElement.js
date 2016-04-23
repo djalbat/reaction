@@ -32,7 +32,7 @@ class ReactComponentElement extends ReactElement {
   }
 
   getChildContext() {
-    return this.reactComponent.getChildContext();
+    return this.reactComponent.getChildContext.apply(this.instance);
   }
 }
 

@@ -32,7 +32,7 @@ class ReactFunctionElement extends ReactElement {
   }
 
   getChildContext() {
-    return this.reactFunction.getChildContext();
+    return this.reactFunction.getChildContext(this.instance.props);
   }
 }
 
@@ -41,4 +41,3 @@ module.exports = ReactFunctionElement;
 function defaultComponentDidMount() {}
 function defaultComponentWillUnmount() {}
 function defaultGetChildContext() { return undefined; }
-

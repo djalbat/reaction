@@ -36,19 +36,11 @@ function defaultRender() {
       displayName = this.displayName, ///
       children = this.props.children; ///
 
-  delete properties.children; ///
-
-  var jsxElement = new DisplayElement(displayName, properties, children);
-
-  return jsxElement;
+  return new DisplayElement(displayName, properties, children);
 }
 
 const defaultDisplayName = undefined; ///
-
 function defaultGetInitialState() { return {}; }
-
 function defaultGetChildContext() { return undefined; }
-
 function defaultComponentDidMount(context) {}
-
 function defaultComponentWillUnmount(context) {}
