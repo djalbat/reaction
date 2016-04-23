@@ -27,19 +27,13 @@ class VanillaApp {
     });
     
     var CommentsList = React.createClass({
-      getInitialState: function() {
-        var messages = [
-              "Hello, world!",
-              "Hello world again..."
-            ],
-            initialState = {
-              messages: messages
-            };
-    
-        return initialState;
-      },
       render: function() {
-        var comments = this.state.messages.map(function(message) {
+        var messages = [
+          "Hello, world!",
+          "Hello world again..."
+        ];
+
+        var comments = messages.map(function(message) {
           return <Comment message={message} />;
         });
     
@@ -58,17 +52,6 @@ class VanillaApp {
     var commentsList = <CommentsList />;
     
     ReactDOM.render(commentsList, rootDOMElement);
-    
-    var messages = [
-          "Hello world yet again!!!"
-        ],
-        state = {
-          messages: messages
-        };
-    
-    setTimeout(function() {
-      commentsList.setState(state);
-    }, 1000); ///
   }
 }
 

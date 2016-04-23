@@ -46,19 +46,20 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - React classes
 - React components
 - React components defined as functions
-- Component state
 - References
 - Contexts
 - Mounting and unmounting
 
 Contexts are handled differently, and more simply. React elements cam only pass down a context to child elements, and those child elements can only receive a context, in its entirety. There is no need to define any property types.
 
-Of the component lifecycle, only mounting and unmounting are supported.
+## Things that are deliberately not supported
+
+- State
+- Of the component lifecycle, all methods except mounting and unmounting.
 
 ## Roadmap
 
-- Make further small changes, aside from the changes to contexts already made,
-- then add an implementation of Redux, possibly,
+- Add an implementation of Redux, possibly,
 - and then look at Falcor.
 
 ## Contact

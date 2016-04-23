@@ -6,10 +6,6 @@ class ReactClassElement extends ReactElement {
   constructor(reactClass, properties, children) {
     super(properties, children);
 
-    this.instance.displayName = reactClass.getDisplayName()
-    
-    this.instance.state = reactClass.getInitialState(); ///
-
     this.reactClass = reactClass;
   }
 
@@ -33,12 +29,6 @@ class ReactClassElement extends ReactElement {
 
   getChildContext() {
     return this.reactClass.getChildContext.apply(this.instance);
-  }
-
-  setState(state) {
-    this.instance.state = state;
-
-    this.forceUpdate();
   }
 }
 
