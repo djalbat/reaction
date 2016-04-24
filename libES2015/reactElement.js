@@ -1,56 +1,80 @@
 'use strict';
 
 class ReactElement {
-  constructor(props, children) {
+  constructor(props) {
     this.props = props;
-    this.children = children;
+
+    this.parent = undefined;
+    this.sibling = undefined;
+    this.context = undefined;
+
+    this.children = props.children; ///
   }
   
-  mount(parent, context) {
-    const childOrChildren = this.render(context);
+  getDOMElement() {
+    return null;
+  }
+  
+  getParent() {
+    return this.parent;
+  }
+  
+  getSibling() {
+    return this.sibling;
+  }
+  
+  getChildren() {
+    return this.children;
+  }
 
-    var childContext = this.getChildContext();
+  mount(parent, sibling, context) {
+    this.parent = parent;
+    this.sibling = sibling;
+    this.context = context;
 
-    childContext = childContext || context;
+    var childParent = this,
+        childSibling = null,
+        childContext = this.getChildContext() || context,
+        childOrChildren = this.render();
 
     this.children = (childOrChildren instanceof Array) ?
                       childOrChildren :
                         [childOrChildren];
 
     this.children.forEach(function(child) {
-      child.mount(parent, childContext);
+      childSibling = child.mount(childParent, childSibling, childContext);
     });
 
     this.componentDidMount(context);
-  }
-
-  remount(previousSibling, context) {
-    const childOrChildren = this.render(context);
-
-    var childContext = this.getChildContext();
-
-    childContext = childContext || context;
-
-    this.children = (childOrChildren instanceof Array) ?
-                      childOrChildren :
-                        [childOrChildren];
-
-    this.children.forEach(function(child) {
-      previousSibling = child.remount(previousSibling, childContext);
-    });
     
     return this;
   }
 
   unmount(context) {
-    this.componentWillUnmount(context);
+    this.context = context;
 
-    var childContext = this.getChildContext();
+    this.componentWillUnmount();
 
-    childContext = childContext || context;
+    var childContext = this.getChildContext() || context;
 
     this.children.forEach(function(child) {
-      child.unmount(context, childContext);
+      child.unmount(childContext);
+    });
+  }
+
+  remount() {
+    var context = this.context,
+        childParent = this,
+        childSibling = null,
+        childContext = this.getChildContext() || context,
+        childOrChildren = this.render(context);
+
+    this.children = (childOrChildren instanceof Array) ?
+                      childOrChildren :
+                        [childOrChildren];
+
+    this.children.forEach(function(child) {
+      childSibling = child.mount(childParent, childSibling, childContext);
     });
   }
 
@@ -60,32 +84,11 @@ class ReactElement {
     });
   }
 
-  append(parent) {
-    this.children.forEach(function(child) {
-      child.append(parent);
-    });
-  }
-
-  appendAfter(previousSibling) {
-    this.children.forEach(function(child) {
-      child.appendAfter(previousSibling);
-    });
-  }
-
   forceUpdate() {
-    var previousChildren = this.children,
-        lastPreviousChild = last(previousChildren),
-        previousSibling = lastPreviousChild,  ///
-        context = this.context;
+    this.remove();
 
-    this.remount(previousSibling, context);
-
-    previousChildren.forEach(function(previousChild) {
-      previousChild.remove();
-    });
+    this.remount();
   }
 }
 
 module.exports = ReactElement;
-
-function last(array) { return array[array.length - 1]; }

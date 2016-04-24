@@ -3,42 +3,34 @@
 var Element = require('./element');
 
 class DisplayElement extends Element {
-  constructor(displayNameOrDOMElement, props, children) {
-    var domElement = (typeof displayNameOrDOMElement === 'string') ? 
-                       document.createElement(displayNameOrDOMElement) :
-                         displayNameOrDOMElement;
-    
-    super(domElement);
-    
-    this.props = props;
+  constructor(displayName, props) {
+    var domElement = document.createElement(displayName);
 
-    this.children = children;
+    super(domElement, props);
   }
 
-  mount(parent, context) {
-    super.mount(parent);
-
+  mount(parent, sibling, context) {
+    super.mount(parent, sibling);
+    
+    var childParent = this,
+        childSibling = null,
+        childContext = context;
+    
     this.children.forEach(function(child) {
-      child.mount(this, context);
-    }.bind(this));
+      childSibling = child.mount(childParent, childSibling, childContext);
+    });
 
     this.applyProps();
-  }
-
-  remount(previousSibling, context) {
-    super.remount(previousSibling);
-
-    this.children.forEach(function(child) {
-      child.mount(this, context);
-    }.bind(this));
-
-    this.applyProps();
-  }
-
-  remove() {
-    ///
     
-    super.remove();
+    return this;
+  }
+
+  unmount(context) {
+    this.children.forEach(function(child) {
+      child.unmount(context);
+    });
+
+    super.unmount();
   }
 
   applyProps() {
@@ -46,8 +38,7 @@ class DisplayElement extends Element {
       return;
     }
 
-    var domElement = this.getDOMElement(),
-        propertyNames = Object.keys(this.props);
+    var propertyNames = Object.keys(this.props);
 
     propertyNames.forEach(function (propertyName) {
       var propertyValue = this.props[propertyName];
@@ -56,14 +47,14 @@ class DisplayElement extends Element {
 
       } else if (propertyName === 'ref') {
         var callback = propertyValue,
-            ref = domElement;
+            domElement = this.getDOMElement();
         
-        callback(ref)
-      } else if (beginsWith(propertyName, 'on')) {
-        var handlerName = lowercase(propertyName),
+        callback(domElement)
+      } else if (propertyNameIsHandlerName(propertyName)) {
+        var eventName = eventNameFromPropertyName(propertyName),
             handler = propertyValue;
 
-        domElement[handlerName] = handler;
+        this.setHandler(eventName, handler);
       } else {
         var attributeName = propertyName,
             attributeValue = propertyValue;
@@ -76,13 +67,10 @@ class DisplayElement extends Element {
 
 module.exports = DisplayElement;
 
-function lowercase(string) {
-  return string.toLowerCase();
+function eventNameFromPropertyName(propertyName) {
+  return propertyName.toLowerCase();
 }
 
-function beginsWith(string, beginningString) {
-  var regExp = new RegExp('^' + beginningString),
-      matches = string.match(regExp);
-
-  return !!matches; ///
+function propertyNameIsHandlerName(propertyName) {
+  return propertyName.match(/^on/);
 }

@@ -1,35 +1,40 @@
 'use strict';
 
-var DisplayElement = require('./displayElement');
-
 class ReactClass {
-  constructor(render, displayName, getChildContext, componentDidMount, componentWillUnmount) {
-    this.render = render;
+  constructor(displayName, render, getChildContext, componentDidMount, componentWillUnmount) {
     this.displayName = displayName;
-    this.getChildContext = getChildContext;
-    this.componentDidMount = componentDidMount;
-    this.componentWillUnmount = componentWillUnmount;
-  }
-  
-  static fromObject(object) {
-    var render = object['render'] || defaultRender,
-        displayName = object['displayName'] || defaultDisplayName,
-        getChildContext = object['getChildContext'] || defaultGetChildContext,
-        componentDidMount = object['componentDidMount'] || defaultComponentDidMount,
-        componentWillUnmount = object['componentWillUnmount'] || defaultComponentWillUnmount,
-        reactClass = new ReactClass(render, displayName, getChildContext, componentDidMount, componentWillUnmount);
     
-    return reactClass;
+    if (render) { this.render = render; }
+    if (getChildContext) { this.getChildContext = getChildContext; }
+    if (componentDidMount) { this.componentDidMount = componentDidMount; }
+    if (componentWillUnmount) { this.componentWillUnmount = componentWillUnmount; }
+  }
+
+  render() {
+    return undefined;
+  }
+
+  getChildContext() {
+    return undefined;
+  }
+
+  componentDidMount() {
+
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  static fromObject(object) {
+    var displayName = object['displayName'],
+        render = object['render'],
+        getChildContext = object['getChildContext'],
+        componentDidMount = object['componentDidMount'],
+        componentWillUnmount = object['componentWillUnmount'];
+    
+    return new ReactClass(displayName, render, getChildContext, componentDidMount, componentWillUnmount);
   }
 }
 
 module.exports = ReactClass;
-
-function defaultRender() {
-  return new DisplayElement(this.displayName, this.props, this.children);
-}
-
-const defaultDisplayName = undefined; ///
-function defaultGetChildContext() { return undefined; }
-function defaultComponentDidMount(context) {}
-function defaultComponentWillUnmount(context) {}

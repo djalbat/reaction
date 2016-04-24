@@ -12,18 +12,16 @@ var ReactComponent = require('./reactComponent'),
 
 class React {
   static createClass(object) {
-    var reactClass = ReactClass.fromObject(object);
-
-    return reactClass;
+    return ReactClass.fromObject(object);
   }
 
-  static createElement(reactObjectOrDisplayName, props, ...childArguments) {
+  static createElement(reactObjectOrDisplayName, properties, ...childArguments) {
     if (reactObjectOrDisplayName === undefined) {
       return undefined;
     }
-
-    var children = childrenFromChildArguments(childArguments),
-        element;
+    
+    const children = childrenFromChildArguments(childArguments),
+          props = Object.assign({}, properties, {children: children});
 
     if (false) {
 
@@ -31,22 +29,20 @@ class React {
       var reactComponentConstructor = reactObjectOrDisplayName,
           reactComponent = new reactComponentConstructor();
 
-      element = new ReactComponentElement(reactComponent, props, children);
+      return new ReactComponentElement(reactComponent, props);
     } else if (reactObjectOrDisplayName instanceof ReactClass) {
       var reactClass = reactObjectOrDisplayName;
 
-      element = new ReactClassElement(reactClass, props, children);
+      return new ReactClassElement(reactClass, props);
     } else if (typeof reactObjectOrDisplayName === 'function') {
       var reactFunction = reactObjectOrDisplayName;
 
-      element = new ReactFunctionElement(reactFunction, props, children);
+      return new ReactFunctionElement(reactFunction, props);
     } else {
       var displayName = reactObjectOrDisplayName;
 
-      element = new DisplayElement(displayName, props, children);
+      return new DisplayElement(displayName, props);
     }
-
-    return element;
   }
 }
 
@@ -58,26 +54,20 @@ function childrenFromChildArguments(childArguments) {
   var firstChildArgument = first(childArguments);
 
   if (firstChildArgument instanceof Array) {
-    childArguments = firstChildArgument;
+    childArguments = firstChildArgument;  ///
   }
 
-  var children = childArguments.map(function(remainingArgument) {
-    var child;
-
-    if (remainingArgument instanceof Element
-     || remainingArgument instanceof ReactElement) {
-      child = remainingArgument;
+  return childArguments.map(function(childArgument) {
+    if (childArgument instanceof Element
+     || childArgument instanceof ReactElement) {
+      return childArgument;
     } else {
-      var text = '' + remainingArgument,
-          textElement = new TextElement(text);
-
-      child = textElement;
+      var text = '' + childArgument,
+          props = {children: []};  ///
+      
+      return new TextElement(text, props);
     }
-
-    return child;
   });
-
-  return children;
 }
 
 function first(array) { return array[0]; }

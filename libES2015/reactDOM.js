@@ -1,16 +1,15 @@
 'use strict';
 
-var DisplayElement = require('./displayElement');
+var Element = require('./element');
 
 class ReactDOM {
   static render(element, parentDOMElement) {
-    var props = null,
-        children = [],
-        parentElement = new DisplayElement(parentDOMElement, props, children);
+    const parentProps = {children: []}, ///
+          parent = new Element(parentDOMElement, parentProps),
+          sibling = null,
+          context = undefined;
 
-    parentElement.empty();
-
-    element.mount(parentElement); ///
+    element.mount(parent, sibling, context);
   }
 }
 

@@ -111,26 +111,25 @@ class ReduxApp {
     const TodoList = ({
       todos,
       onTodoClick
-    }) => (
+    }) =>  (
 
-      <ul>
-        {todos.map(todo => <Todo text={todo.text}
-                                 completed={todo.completed}
-                                 onClick={() =>
-                                   onTodoClick(todo.id)
-                                 }
-                           />)}
-      </ul>
+        <ul>
+          {todos.map(todo => <Todo text={todo.text}
+                                   completed={todo.completed}
+                                   onClick={() =>
+                                 onTodoClick(todo.id)
+                               }
+          />)}
+        </ul>
     );
 
     const Link = (
-      props,
-      children
+      props
     ) => {
       const { active, onClick } = props;
 
       if (active) {
-        return <span>{children}</span>;
+        return <span>{props.children}</span>;
       }
 
       return (
@@ -140,7 +139,7 @@ class ReduxApp {
                onClick();
              }}
           >
-            {children}
+            {props.children}
           </a>
       );
     };
@@ -149,8 +148,8 @@ class ReduxApp {
       componentDidMount() {
         const { store } = this.context;
 
-        this.unsubscribe = store.subscribe(() =>
-          this.forceUpdate()
+        this.unsubscribe = store.subscribe(() => 
+           this.forceUpdate()
         );
       }
       
@@ -160,38 +159,39 @@ class ReduxApp {
       
       render() {
         const { store } = this.context;
-        const props = this.props;
-        const children = this.children;
         const state = store.getState();
 
         return (
           <Link active={
-                  props.filter === state.visibilityFilter
+                  this.props.filter === state.visibilityFilter
                 }
                 onClick={() =>
                   store.dispatch({
                     type: 'SET_VISIBILITY_FILTER',
-                    filter: props.filter
+                    filter: this.props.filter
                   })
                 }
           >
-            {children}
+            {this.props.children}
           </Link>
         );
       }
     }
 
     let nextTodoId = 0;
-    const AddTodo = (props, children, {
-      store
-    }) => {
+    const AddTodo = (
+      props,
+      {
+        store
+      }
+    ) => {
       let input;
 
       return (
 
         <div>
-          <input ref={node => {
-                  input = node;
+          <input ref={domElement => {
+                  input = domElement;
                  }}
           />
           <button onClick={() => {
@@ -244,20 +244,19 @@ class ReduxApp {
         );
       }
     }
-
+    
     const Footer = () => (
 
       <p>
-        Show:
-        {' '}
+        {'Show: '}
         <FilterLink filter='SHOW_ALL'>
           All
         </FilterLink>
-        {' '}
+        {' - '}
         <FilterLink filter='SHOW_ACTIVE'>
           Active
         </FilterLink>
-        {' '}
+        {' - '}
         <FilterLink filter='SHOW_COMPLETED'>
           Completed
         </FilterLink>
@@ -280,14 +279,14 @@ class ReduxApp {
         };
       }
       render() {
-        return this.children;
+        return this.props.children;
       }
     }
 
     const { createStore } = Redux;
 
     ReactDOM.render(
-      <Provider store={createStore(todoApp)} >
+      <Provider store={createStore(todoApp)}>
         <TodoApp />
       </Provider>,
       rootDOMElement

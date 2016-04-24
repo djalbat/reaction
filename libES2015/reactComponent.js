@@ -1,25 +1,23 @@
 'use strict';
 
-var DisplayElement = require('./displayElement');
-
 class ReactComponent {
   constructor() {
 
   }
 
-  render(context) {
-    return new DisplayElement(this.displayName, this.props, this.children);
+  render() {
+    return undefined;
   }
 
   getChildContext() {
     return undefined;
   }
 
-  componentDidMount(context) {
+  componentDidMount() {
     
   }
   
-  componentWillUnmount(context) {
+  componentWillUnmount() {
 
   }
 }

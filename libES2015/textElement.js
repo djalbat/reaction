@@ -3,10 +3,20 @@
 var Element = require('./element');
 
 class TextElement extends Element {
-  constructor(text) {
+  constructor(text, props) {
     var domElement = document.createTextNode(text);
 
-    super(domElement);
+    super(domElement, props);
+  }
+  
+  mount(parent, sibling, context) {
+    super.mount(parent, sibling);
+    
+    return this;
+  }
+  
+  unmount(context) {
+    super.unmount();
   }
 }
 

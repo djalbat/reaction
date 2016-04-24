@@ -3,32 +3,26 @@
 var ReactElement = require('./reactElement');
 
 class ReactClassElement extends ReactElement {
-  constructor(reactClass, props, children) {
-    super(props, children);
+  constructor(reactClass, props) {
+    super(props);
 
     this.reactClass = reactClass;
   }
 
-  render(context) {
-    this.context = context;
-    
+  render() {
     return this.reactClass.render.apply(this);
-  }
- 
-  componentDidMount(context) {
-    this.context = context;
-
-    this.reactClass.componentDidMount.apply(this);
-  }
-
-  componentWillUnmount(context) {
-    this.context = context;
-
-    this.reactClass.componentWillUnmount.apply(this);
   }
 
   getChildContext() {
     return this.reactClass.getChildContext.apply(this);
+  }
+ 
+  componentDidMount() {
+    this.reactClass.componentDidMount.apply(this);
+  }
+
+  componentWillUnmount() {
+    this.reactClass.componentWillUnmount.apply(this);
   }
 }
 

@@ -11,7 +11,7 @@ class VanillaApp {
     var Comment = React.createClass({
       render: function() {
         return (
-    
+
           <div className="comment">
             <p>
               {this.props.message}
@@ -21,11 +21,11 @@ class VanillaApp {
       },
       componentDidMount: function() {
         var message = this.props.message;
-    
+
         console.log('comment mounted with message ' + message)
       }
     });
-    
+
     var CommentsList = React.createClass({
       render: function() {
         var messages = [
@@ -36,9 +36,9 @@ class VanillaApp {
         var comments = messages.map(function(message) {
           return <Comment message={message} />;
         });
-    
+
         return (
-    
+
           <div className="commentsList">
             {comments}
           </div>
@@ -48,10 +48,30 @@ class VanillaApp {
         console.log('comments list mounted')
       }
     });
-    
+
     var commentsList = <CommentsList />;
-    
+
     ReactDOM.render(commentsList, rootDOMElement);
+
+    // const InnerElement = React.createClass({
+    //   render() {
+    //
+    //     return <div></div>
+    //   }
+    // });
+    //
+    // const OuterElement = React.createClass({
+    //   render() {
+    //
+    //     return <InnerElement />
+    //   }
+    // });
+    //
+    // var outerElement = <OuterElement />;
+    //
+    // ReactDOM.render(outerElement, rootDOMElement);
+    //
+    // outerElement.forceUpdate();
   }
 }
 
