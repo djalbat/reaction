@@ -4,7 +4,7 @@ An alternative implementation of React.
 
 #### Why?
 
-The idea is to improve on [React](https://facebook.github.io/react/)'s component lifecycle in order to facilitate better handshaking with [Redux](http://redux.js.org/) and [Falcor](http://netflix.github.io/falcor/).
+For clarity. The code base is tiny compared to [React](https://facebook.github.io/react/) but React's core functionality is nonetheless implemented faithfully. Personally it lead to a greater appreciation of React.
 
 ## Installation
 
@@ -18,17 +18,17 @@ var reaction = require('reaction'),
     React = reaction.React;
 ```
 
-You can also clone the repository with [git](https://git-scm.com/):
+Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way.
+
+You can also clone the repository with [git](https://git-scm.com/)...
 
     git clone https://github.com/djalbat/Reaction.git
 
-Install the necessary [npm](https://www.npmjs.com/) modules:
+the install the necessary modules with [npm](https://www.npmjs.com/):
 
     npm install
 
-You will need to do this if you want to have a look at the examples.
-
-Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way.
+You will need to do this if you want to look at the examples.
 
 ## Examples
 
@@ -50,12 +50,12 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - Contexts
 - Mounting and unmounting
 
-Contexts are handled differently, and more simply. React elements cam only pass down a context to child elements, and those child elements can only receive a context, in its entirety. There is no need to define any property types.
+Contexts are handled differently. React elements cam only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of component functions, so you can make programmatic decisions about what context to pass down to children. 
 
 ## Things that are deliberately not supported
 
 - Component state. Use Redux!
-- Of the component lifecycle, all methods except mounting and unmounting.
+- Of the component lifecycle, all methods except `componentWillMount()` and `componentWillUnmount()` are *not* supported.
 
 ## Roadmap
 
