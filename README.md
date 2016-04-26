@@ -18,7 +18,7 @@ var reaction = require('reaction'),
     React = reaction.React;
 ```
 
-Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind only a small subset of React's functionality is currently supported.
+Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind only  subset of React's functionality is supported.
 
 You can also clone the repository with [git](https://git-scm.com/)...
 
@@ -41,27 +41,26 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
     npm run build
     npm run watch
 
-## Currently supported functionality
+## Supported functionality
 
 - React classes
 - React components
-- React components defined as functions
+- React functions
 - References
 - Contexts
 - Mounting and unmounting
 
-Contexts are handled differently. React elements can only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of component functions, so you can make programmatic decisions about what context to pass down to children. 
+Contexts are handled differently. React elements can only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of functions, so you can make programmatic decisions about what context to pass down to children. 
 
-## Things that are deliberately not supported
+## Functionality that is not supported
 
 - Component state. Use Redux!
 - Of the component lifecycle, all methods except `componentWillMount()` and `componentWillUnmount()` are *not* supported.
 
 ## Roadmap
 
-- Improve the React DOM traversal when mounting elements,
-- then add an implementation of Redux, possibly,
-- and then look at Falcor?
+- Add an implementation of Redux, possibly,
+- and then look at Falcor...
 
 ## Contact
 

@@ -7,6 +7,7 @@ class Element {
 
     this.parent = undefined;
     this.sibling = undefined;
+
     
     this.children = props.children;  ///
   }
@@ -27,27 +28,12 @@ class Element {
     return this.children;
   }
 
-  mount(parent, sibling) {
-    this.parent = parent;
-    this.sibling = sibling;
-
-    mount(this, parent, sibling);
-  }
-  
-  unmount() {
-    this.remove();
-  }
-
-  remove() {
-    remove(this);
-  }
-
   setAttribute(attributeName, attributeValue) {
     if (attributeName === 'className') { attributeName = 'class'; }
     if (attributeName === 'htmlFor') { attributeName = 'for'; }
 
     if (false ) {
-      
+
     } else if (typeof attributeValue === 'string') {
       this.domElement.setAttribute(attributeName, attributeValue);
     } else if (typeof attributeValue === 'object') {
@@ -62,81 +48,89 @@ class Element {
       ///
     }
   }
-  
+
   setHandler(eventName, handler) {
     this.domElement[eventName] = handler;
+  }
+
+  mount(parent, sibling) {
+    this.parent = parent;
+    this.sibling = sibling;
+
+    mount(this, parent, sibling);
+  }
+  
+  unmount() {
+    this.remove();
+  }
+
+  remount() {
+    ///
+  }
+
+  remove() {
+    this.domElement.parentElement.removeChild(this.domElement);
+  }
+
+  prepend(child) {
+    var childDOMElement = child.getDOMElement();
+
+    this.domElement.insertBefore(childDOMElement, this.domElement.firstChild);
+
+    return true;
+  }
+
+  appendAfter(sibling) {
+    var siblingDOMElement = sibling.getDOMElement();
+
+    this.domElement.parentElement.insertBefore(siblingDOMElement, this.domElement.nextSibling);
+
+    return true;
   }
 }
 
 module.exports = Element;
 
-function remove(element) {
-  element.domElement.parentElement.removeChild(element.domElement);
-}
-
 function mount(element, parent, sibling) {
-  var lastSibling = sibling;
+  const lastSibling = sibling;
 
-  if (!appendAfterSiblings(element, lastSibling) && !prependToParent(element, parent)) {
-    sibling = parent.getSibling();
-    parent = parent.getParent();
-
-    mount(element, parent, sibling);
-  }
-}
-
-function prependToParent(element, parent) {
-  if (!parent) {
-    return false;
-  }
-
-  var parentDOMElement = parent.getDOMElement();
-
-  if (parentDOMElement !== null) {
-    prependTo(element.domElement, parentDOMElement);
-
+  if (mountToSiblings(element, lastSibling) || mountToParent(element, parent)) {
     return true;
-  } else {
-    return false;
   }
+
+  sibling = parent.getSibling();
+  parent = parent.getParent();
+
+  mount(element, parent, sibling);
 }
 
-function appendAfterSiblings(element, lastSibling) {
-  if (!lastSibling) {
-    return false;
-  }
-
+function mountToSiblings(element, lastSibling) {
   var sibling = lastSibling;
 
   while (sibling !== null) {
-    var siblingDOMElement = sibling.getDOMElement();
-
-    if (siblingDOMElement !== null) {
-      appendAfter(element.domElement, siblingDOMElement);
-
+    if (mountToSibling(element, sibling)) {
       return true;
     } else {
-      var siblingChildren = sibling.getChildren();
-
-      lastSibling = last(siblingChildren);
-
-      if (appendAfterSiblings(element, lastSibling)) {
-        return true;
-      }
+      sibling = sibling.getSibling();
     }
-
-    sibling = sibling.getSibling();
   }
 
   return false;
 }
 
-function prependTo(domElement, existingDOMElement) {
-  existingDOMElement.insertBefore(domElement, existingDOMElement.firstChild);
+function mountToSibling(element, sibling) {
+  if (sibling.appendAfter(element)) {
+    return true;
+  }
+
+  const siblingChildren = sibling.getChildren(),
+        siblingsLastChild = last(siblingChildren);
+
+  return mount(element, sibling, siblingsLastChild);
 }
 
-function appendAfter(domElement, existingDOMElement) {
-  existingDOMElement.parentElement.insertBefore(domElement, existingDOMElement.nextSibling);
+function mountToParent(element, parent) {
+  return parent.prepend(element);
 }
 
 function last(array) { return array[array.length - 1]; }

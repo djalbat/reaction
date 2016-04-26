@@ -244,7 +244,7 @@ class ReduxApp {
         );
       }
     }
-    
+
     const Footer = () => (
 
       <p>

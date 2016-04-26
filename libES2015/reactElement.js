@@ -2,6 +2,7 @@
 
 class ReactElement {
   constructor(props) {
+    
     this.props = props;
 
     this.parent = undefined;
@@ -26,6 +27,14 @@ class ReactElement {
   getChildren() {
     return this.children;
   }
+
+  forceUpdate() {
+    this.remove();
+
+    this.remount();
+  }
+  
+  
 
   mount(parent, sibling, context) {
     this.parent = parent;
@@ -84,10 +93,12 @@ class ReactElement {
     });
   }
 
-  forceUpdate() {
-    this.remove();
-
-    this.remount();
+  prepend(child) {
+    return false;
+  }
+  
+  appendAfter(sibling) {
+    return false;
   }
 }
 
