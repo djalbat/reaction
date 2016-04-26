@@ -59,7 +59,8 @@ Contexts are handled differently. React elements can only pass down a context to
 
 ## Roadmap
 
-- Add an implementation of Redux, possibly,
+- Fix element removal to correct parent's children,
+- then add an implementation of Redux, possibly,
 - and then look at Falcor...
 
 ## Contact
