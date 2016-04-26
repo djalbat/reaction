@@ -768,7 +768,7 @@ var React = function () {
       var children = childrenFromChildArguments(childArguments),
           props = Object.assign({}, properties, { children: children });
 
-      if (false) {} else if (reactObjectOrDisplayName.prototype instanceof ReactComponent) {
+      if (reactObjectOrDisplayName.prototype instanceof ReactComponent) {
         var reactComponentConstructor = reactObjectOrDisplayName,
             reactComponent = new reactComponentConstructor();
 
@@ -800,7 +800,7 @@ function childrenFromChildArguments(childArguments) {
   var firstChildArgument = first(childArguments);
 
   if (firstChildArgument instanceof Array) {
-    childArguments = firstChildArgument; ///
+    childArguments = firstChildArgument;
   }
 
   return childArguments.map(function (childArgument) {
@@ -808,7 +808,11 @@ function childrenFromChildArguments(childArguments) {
       return childArgument;
     } else {
       var text = '' + childArgument,
-          props = { children: [] }; ///
+          ///
+      children = [],
+          props = {
+        children: children
+      };
 
       return new TextElement(text, props);
     }
@@ -1621,18 +1625,25 @@ function compose() {
     funcs[_key] = arguments[_key];
   }
 
-  return function () {
-    if (funcs.length === 0) {
-      return arguments.length <= 0 ? undefined : arguments[0];
-    }
+  if (funcs.length === 0) {
+    return function (arg) {
+      return arg;
+    };
+  } else {
+    var _ret = function () {
+      var last = funcs[funcs.length - 1];
+      var rest = funcs.slice(0, -1);
+      return {
+        v: function v() {
+          return rest.reduceRight(function (composed, f) {
+            return f(composed);
+          }, last.apply(undefined, arguments));
+        }
+      };
+    }();
 
-    var last = funcs[funcs.length - 1];
-    var rest = funcs.slice(0, -1);
-
-    return rest.reduceRight(function (composed, f) {
-      return f(composed);
-    }, last.apply(undefined, arguments));
-  };
+    if (typeof _ret === "object") return _ret.v;
+  }
 }
 },{}],21:[function(require,module,exports){
 'use strict';
@@ -1644,6 +1655,10 @@ exports["default"] = createStore;
 var _isPlainObject = require('lodash/isPlainObject');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+
+var _symbolObservable = require('symbol-observable');
+
+var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -1683,6 +1698,8 @@ var ActionTypes = exports.ActionTypes = {
  * and subscribe to changes.
  */
 function createStore(reducer, initialState, enhancer) {
+  var _ref2;
+
   if (typeof initialState === 'function' && typeof enhancer === 'undefined') {
     enhancer = initialState;
     initialState = undefined;
@@ -1839,19 +1856,59 @@ function createStore(reducer, initialState, enhancer) {
     dispatch({ type: ActionTypes.INIT });
   }
 
+  /**
+   * Interoperability point for observable/reactive libraries.
+   * @returns {observable} A minimal observable of state changes.
+   * For more information, see the observable proposal:
+   * https://github.com/zenparsing/es-observable
+   */
+  function observable() {
+    var _ref;
+
+    var outerSubscribe = subscribe;
+    return _ref = {
+      /**
+       * The minimal observable subscription method.
+       * @param {Object} observer Any object that can be used as an observer.
+       * The observer object should have a `next` method.
+       * @returns {subscription} An object with an `unsubscribe` method that can
+       * be used to unsubscribe the observable from the store, and prevent further
+       * emission of values from the observable.
+       */
+
+      subscribe: function subscribe(observer) {
+        if (typeof observer !== 'object') {
+          throw new TypeError('Expected the observer to be an object.');
+        }
+
+        function observeState() {
+          if (observer.next) {
+            observer.next(getState());
+          }
+        }
+
+        observeState();
+        var unsubscribe = outerSubscribe(observeState);
+        return { unsubscribe: unsubscribe };
+      }
+    }, _ref[_symbolObservable2["default"]] = function () {
+      return this;
+    }, _ref;
+  }
+
   // When a store is created, an "INIT" action is dispatched so that every
   // reducer returns their initial state. This effectively populates
   // the initial state tree.
   dispatch({ type: ActionTypes.INIT });
 
-  return {
+  return _ref2 = {
     dispatch: dispatch,
     subscribe: subscribe,
     getState: getState,
     replaceReducer: replaceReducer
-  };
+  }, _ref2[_symbolObservable2["default"]] = observable, _ref2;
 }
-},{"lodash/isPlainObject":27}],22:[function(require,module,exports){
+},{"lodash/isPlainObject":27,"symbol-observable":28}],22:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2067,5 +2124,38 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"./_getPrototype":24,"./_isHostObject":25,"./isObjectLike":26}]},{},[1])(1)
+},{"./_getPrototype":24,"./_isHostObject":25,"./isObjectLike":26}],28:[function(require,module,exports){
+(function (global){
+/* global window */
+'use strict';
+
+module.exports = require('./ponyfill')(global || window || this);
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./ponyfill":29}],29:[function(require,module,exports){
+'use strict';
+
+module.exports = function symbolObservablePonyfill(root) {
+	var result;
+	var Symbol = root.Symbol;
+
+	if (typeof Symbol === 'function') {
+		if (Symbol.observable) {
+			result = Symbol.observable;
+		} else {
+			if (typeof Symbol.for === 'function') {
+				result = Symbol.for('observable');
+			} else {
+				result = Symbol('observable');
+			}
+			Symbol.observable = result;
+		}
+	} else {
+		result = '@@observable';
+	}
+
+	return result;
+};
+
+},{}]},{},[1])(1)
 });
