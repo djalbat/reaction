@@ -23,9 +23,7 @@ class React {
     const children = childrenFromChildArguments(childArguments),
           props = Object.assign({}, properties, {children: children});
 
-    if (false) {
-
-    } else if (reactObjectOrDisplayName.prototype instanceof ReactComponent) {
+    if (reactObjectOrDisplayName.prototype instanceof ReactComponent) {
       var reactComponentConstructor = reactObjectOrDisplayName,
           reactComponent = new reactComponentConstructor();
 
@@ -54,7 +52,7 @@ function childrenFromChildArguments(childArguments) {
   var firstChildArgument = first(childArguments);
 
   if (firstChildArgument instanceof Array) {
-    childArguments = firstChildArgument;  ///
+    childArguments = firstChildArgument;
   }
 
   return childArguments.map(function(childArgument) {
@@ -62,8 +60,11 @@ function childrenFromChildArguments(childArguments) {
      || childArgument instanceof ReactElement) {
       return childArgument;
     } else {
-      var text = '' + childArgument,
-          props = {children: []};  ///
+      var text = '' + childArgument,  ///
+          children = [],
+          props = {
+            children: children
+          };
       
       return new TextElement(text, props);
     }
