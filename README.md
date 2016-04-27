@@ -50,7 +50,7 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - Contexts
 - Mounting and unmounting
 
-Contexts are handled differently. React elements can only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of functions, so you can make programmatic decisions about what context to pass down to children. 
+Contexts are handled differently. React elements can only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of functions, so you can make programmatic decisions about what context to pass down to children.
 
 ## Functionality that is not supported
 
@@ -59,7 +59,8 @@ Contexts are handled differently. React elements can only pass down a context to
 
 ## Roadmap
 
-- Add an implementation of Redux, possibly,
+- Fix element removal to correct parent's children,
+- then add an implementation of Redux, possibly,
 - and then look at Falcor...
 
 ## Contact
