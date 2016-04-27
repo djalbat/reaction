@@ -2,61 +2,35 @@
 
 class ReactElement {
   constructor(props) {
-    
     this.props = props;
 
-    this.parent = undefined;
-    this.sibling = undefined;
+    this.parentDOMElement = undefined;
+    this.siblingDOMElement = undefined;
+
     this.context = undefined;
 
     this.children = props.children; ///
   }
-  
-  getDOMElement() {
-    return null;
-  }
-  
-  getParent() {
-    return this.parent;
-  }
-  
-  getSibling() {
-    return this.sibling;
-  }
-  
-  getChildren() {
-    return this.children;
-  }
 
-  forceUpdate() {
-    this.remove();
+  mount(parentDOMElement, siblingDOMElement, context) {
+    this.parentDOMElement = parentDOMElement;
+    this.siblingDOMElement = siblingDOMElement;
 
-    this.remount();
-  }
-  
-  
-
-  mount(parent, sibling, context) {
-    this.parent = parent;
-    this.sibling = sibling;
     this.context = context;
 
-    var childParent = this,
-        childSibling = null,
-        childContext = this.getChildContext() || context,
-        childOrChildren = this.render();
+    this.children = toArray(this.render());
 
-    this.children = (childOrChildren instanceof Array) ?
-                      childOrChildren :
-                        [childOrChildren];
+    var childParentDOMElement = parentDOMElement,
+        childSiblingDOMElement = siblingDOMElement,
+        childContext = this.getChildContext() || context;
 
-    this.children.forEach(function(child) {
-      childSibling = child.mount(childParent, childSibling, childContext);
+    reverse(this.children).forEach(function(child) {
+      childSiblingDOMElement = child.mount(childParentDOMElement, childSiblingDOMElement, childContext);
     });
 
     this.componentDidMount(context);
     
-    return this;
+    return this.getDOMElement();
   }
 
   unmount(context) {
@@ -64,7 +38,7 @@ class ReactElement {
 
     this.componentWillUnmount();
 
-    var childContext = this.getChildContext() || context;
+    const childContext = this.getChildContext() || context;
 
     this.children.forEach(function(child) {
       child.unmount(childContext);
@@ -72,19 +46,19 @@ class ReactElement {
   }
 
   remount() {
-    var context = this.context,
-        childParent = this,
-        childSibling = null,
-        childContext = this.getChildContext() || context,
-        childOrChildren = this.render(context);
-
-    this.children = (childOrChildren instanceof Array) ?
-                      childOrChildren :
-                        [childOrChildren];
-
     this.children.forEach(function(child) {
-      childSibling = child.mount(childParent, childSibling, childContext);
+      child.remove();
     });
+
+    this.children = toArray(this.render());
+
+    var childParentDOMElement = this.parentDOMElement,
+        childSiblingDOMElement = this.siblingDOMElement,
+        childContext = this.getChildContext() || this.context;
+
+    reverse(this.children).forEach(function(child) {
+      childSiblingDOMElement = child.mount(childParentDOMElement, childSiblingDOMElement, childContext);
+    }.bind(this));
   }
 
   remove() {
@@ -93,13 +67,32 @@ class ReactElement {
     });
   }
 
-  prepend(child) {
-    return false;
+  forceUpdate() {
+    this.remount();
   }
-  
-  appendAfter(sibling) {
-    return false;
+
+  getDOMElement() {
+    var domElement = null;
+
+    this.children.some(function(child) {
+      var childDOMElement = child.getDOMElement();
+
+      if (childDOMElement !== null) {
+        domElement = childDOMElement;
+
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    return domElement;
   }
 }
 
 module.exports = ReactElement;
+
+function reverse(array) { return array.slice().reverse(); }
+function toArray(arrayOrElement) { return (arrayOrElement instanceof Array) ?
+                                            arrayOrElement :
+                                              [arrayOrElement]; }

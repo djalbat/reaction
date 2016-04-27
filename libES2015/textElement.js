@@ -9,10 +9,10 @@ class TextElement extends Element {
     super(domElement, props);
   }
   
-  mount(parent, sibling, context) {
-    super.mount(parent, sibling);
+  mount(parentDOMElement, siblingDOMElement, context) {
+    super.mount(parentDOMElement, siblingDOMElement);
     
-    return this;
+    return this.getDOMElement();
   }
   
   unmount(context) {

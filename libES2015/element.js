@@ -1,31 +1,30 @@
 'use strict';
 
+
+
 class Element {
   constructor(domElement, props) {
     this.domElement = domElement;
+
     this.props = props;
-
-    this.parent = undefined;
-    this.sibling = undefined;
-
     
     this.children = props.children;  ///
   }
 
-  getDOMElement() {
-    return this.domElement;
+  mount(parentDOMElement, siblingDOMElement) {
+    parentDOMElement.insertBefore(this.domElement, siblingDOMElement);
   }
 
-  getParent() {
-    return this.parent;
+  remount() {
+    ///
   }
 
-  getSibling() {
-    return this.sibling;
+  unmount() {
+    this.remove();
   }
 
-  getChildren() {
-    return this.children;
+  remove() {
+    this.domElement.parentElement.removeChild(this.domElement);
   }
 
   setAttribute(attributeName, attributeValue) {
@@ -53,84 +52,9 @@ class Element {
     this.domElement[eventName] = handler;
   }
 
-  mount(parent, sibling) {
-    this.parent = parent;
-    this.sibling = sibling;
-
-    mount(this, parent, sibling);
-  }
-  
-  unmount() {
-    this.remove();
-  }
-
-  remount() {
-    ///
-  }
-
-  remove() {
-    this.domElement.parentElement.removeChild(this.domElement);
-  }
-
-  prepend(child) {
-    var childDOMElement = child.getDOMElement();
-
-    this.domElement.insertBefore(childDOMElement, this.domElement.firstChild);
-
-    return true;
-  }
-
-  appendAfter(sibling) {
-    var siblingDOMElement = sibling.getDOMElement();
-
-    this.domElement.parentElement.insertBefore(siblingDOMElement, this.domElement.nextSibling);
-
-    return true;
+  getDOMElement() {
+    return this.domElement;
   }
 }
 
 module.exports = Element;
-
-function mount(element, parent, sibling) {
-  const lastSibling = sibling;
-
-  if (mountToSiblings(element, lastSibling) || mountToParent(element, parent)) {
-    return true;
-  }
-
-  sibling = parent.getSibling();
-  parent = parent.getParent();
-
-  mount(element, parent, sibling);
-}
-
-function mountToSiblings(element, lastSibling) {
-  var sibling = lastSibling;
-
-  while (sibling !== null) {
-    if (mountToSibling(element, sibling)) {
-      return true;
-    } else {
-      sibling = sibling.getSibling();
-    }
-  }
-
-  return false;
-}
-
-function mountToSibling(element, sibling) {
-  if (sibling.appendAfter(element)) {
-    return true;
-  }
-
-  const siblingChildren = sibling.getChildren(),
-        siblingsLastChild = last(siblingChildren);
-
-  return mount(element, sibling, siblingsLastChild);
-}
-
-function mountToParent(element, parent) {
-  return parent.prepend(element);
-}
-
-function last(array) { return array[array.length - 1]; }

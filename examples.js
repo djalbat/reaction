@@ -495,20 +495,20 @@ var DisplayElement = function (_Element) {
 
   _createClass(DisplayElement, [{
     key: 'mount',
-    value: function mount(parent, sibling, context) {
-      _get(Object.getPrototypeOf(DisplayElement.prototype), 'mount', this).call(this, parent, sibling);
+    value: function mount(parentDOMElement, siblingDOMElement, context) {
+      _get(Object.getPrototypeOf(DisplayElement.prototype), 'mount', this).call(this, parentDOMElement, siblingDOMElement);
 
-      var childParent = this,
-          childSibling = null,
+      var childParentDOMElement = this.getDOMElement(),
+          childSiblingDOMElement = null,
           childContext = context;
 
-      this.children.forEach(function (child) {
-        childSibling = child.mount(childParent, childSibling, childContext);
+      reverse(this.children).forEach(function (child) {
+        childSiblingDOMElement = child.mount(childParentDOMElement, childSiblingDOMElement, childContext);
       });
 
       this.applyProps();
 
-      return this;
+      return this.getDOMElement();
     }
   }, {
     key: 'unmount',
@@ -563,6 +563,10 @@ function eventNameFromPropertyName(propertyName) {
 function propertyNameIsHandlerName(propertyName) {
   return propertyName.match(/^on/);
 }
+
+function reverse(array) {
+  return array.slice().reverse();
+}
 },{"./element":6}],6:[function(require,module,exports){
 'use strict';
 
@@ -577,33 +581,31 @@ var Element = function () {
     _classCallCheck(this, Element);
 
     this.domElement = domElement;
-    this.props = props;
 
-    this.parent = undefined;
-    this.sibling = undefined;
+    this.props = props;
 
     this.children = props.children; ///
   }
 
   _createClass(Element, [{
-    key: 'getDOMElement',
-    value: function getDOMElement() {
-      return this.domElement;
+    key: 'mount',
+    value: function mount(parentDOMElement, siblingDOMElement) {
+      parentDOMElement.insertBefore(this.domElement, siblingDOMElement);
     }
   }, {
-    key: 'getParent',
-    value: function getParent() {
-      return this.parent;
+    key: 'remount',
+    value: function remount() {
+      ///
     }
   }, {
-    key: 'getSibling',
-    value: function getSibling() {
-      return this.sibling;
+    key: 'unmount',
+    value: function unmount() {
+      this.remove();
     }
   }, {
-    key: 'getChildren',
-    value: function getChildren() {
-      return this.children;
+    key: 'remove',
+    value: function remove() {
+      this.domElement.parentElement.removeChild(this.domElement);
     }
   }, {
     key: 'setAttribute',
@@ -635,45 +637,9 @@ var Element = function () {
       this.domElement[eventName] = handler;
     }
   }, {
-    key: 'mount',
-    value: function mount(parent, sibling) {
-      this.parent = parent;
-      this.sibling = sibling;
-
-      _mount(this, parent, sibling);
-    }
-  }, {
-    key: 'unmount',
-    value: function unmount() {
-      this.remove();
-    }
-  }, {
-    key: 'remount',
-    value: function remount() {
-      ///
-    }
-  }, {
-    key: 'remove',
-    value: function remove() {
-      this.domElement.parentElement.removeChild(this.domElement);
-    }
-  }, {
-    key: 'prepend',
-    value: function prepend(child) {
-      var childDOMElement = child.getDOMElement();
-
-      this.domElement.insertBefore(childDOMElement, this.domElement.firstChild);
-
-      return true;
-    }
-  }, {
-    key: 'appendAfter',
-    value: function appendAfter(sibling) {
-      var siblingDOMElement = sibling.getDOMElement();
-
-      this.domElement.parentElement.insertBefore(siblingDOMElement, this.domElement.nextSibling);
-
-      return true;
+    key: 'getDOMElement',
+    value: function getDOMElement() {
+      return this.domElement;
     }
   }]);
 
@@ -681,52 +647,6 @@ var Element = function () {
 }();
 
 module.exports = Element;
-
-function _mount(element, parent, sibling) {
-  var lastSibling = sibling;
-
-  if (mountToSiblings(element, lastSibling) || mountToParent(element, parent)) {
-    return true;
-  }
-
-  sibling = parent.getSibling();
-  parent = parent.getParent();
-
-  _mount(element, parent, sibling);
-}
-
-function mountToSiblings(element, lastSibling) {
-  var sibling = lastSibling;
-
-  while (sibling !== null) {
-    if (mountToSibling(element, sibling)) {
-      return true;
-    } else {
-      sibling = sibling.getSibling();
-    }
-  }
-
-  return false;
-}
-
-function mountToSibling(element, sibling) {
-  if (sibling.appendAfter(element)) {
-    return true;
-  }
-
-  var siblingChildren = sibling.getChildren(),
-      siblingsLastChild = last(siblingChildren);
-
-  return _mount(element, sibling, siblingsLastChild);
-}
-
-function mountToParent(element, parent) {
-  return parent.prepend(element);
-}
-
-function last(array) {
-  return array[array.length - 1];
-}
 },{}],7:[function(require,module,exports){
 'use strict';
 
@@ -1025,8 +945,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Element = require('./element');
-
 var ReactDOM = function () {
   function ReactDOM() {
     _classCallCheck(this, ReactDOM);
@@ -1035,13 +953,10 @@ var ReactDOM = function () {
   _createClass(ReactDOM, null, [{
     key: 'render',
     value: function render(element, parentDOMElement) {
-      var parentProps = { children: [] },
-          ///
-      parent = new Element(parentDOMElement, parentProps),
-          sibling = null,
+      var siblingDOMElement = null,
           context = undefined;
 
-      element.mount(parent, sibling, context);
+      element.mount(parentDOMElement, siblingDOMElement, context);
     }
   }]);
 
@@ -1049,7 +964,7 @@ var ReactDOM = function () {
 }();
 
 module.exports = ReactDOM;
-},{"./element":6}],13:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1062,61 +977,35 @@ var ReactElement = function () {
 
     this.props = props;
 
-    this.parent = undefined;
-    this.sibling = undefined;
+    this.parentDOMElement = undefined;
+    this.siblingDOMElement = undefined;
+
     this.context = undefined;
 
     this.children = props.children; ///
   }
 
   _createClass(ReactElement, [{
-    key: 'getDOMElement',
-    value: function getDOMElement() {
-      return null;
-    }
-  }, {
-    key: 'getParent',
-    value: function getParent() {
-      return this.parent;
-    }
-  }, {
-    key: 'getSibling',
-    value: function getSibling() {
-      return this.sibling;
-    }
-  }, {
-    key: 'getChildren',
-    value: function getChildren() {
-      return this.children;
-    }
-  }, {
-    key: 'forceUpdate',
-    value: function forceUpdate() {
-      this.remove();
-
-      this.remount();
-    }
-  }, {
     key: 'mount',
-    value: function mount(parent, sibling, context) {
-      this.parent = parent;
-      this.sibling = sibling;
+    value: function mount(parentDOMElement, siblingDOMElement, context) {
+      this.parentDOMElement = parentDOMElement;
+      this.siblingDOMElement = siblingDOMElement;
+
       this.context = context;
 
-      var childParent = this,
-          childSibling = null,
-          childContext = this.getChildContext() || context,
-          childOrChildren = this.render();
+      this.children = toArray(this.render());
 
-      this.children = childOrChildren instanceof Array ? childOrChildren : [childOrChildren];
+      var childParentDOMElement = parentDOMElement,
+          childSiblingDOMElement = siblingDOMElement,
+          childContext = this.getChildContext() || context;
 
-      this.children.forEach(function (child) {
-        childSibling = child.mount(childParent, childSibling, childContext);
+      reverse(this.children).forEach(function (child) {
+        childSiblingDOMElement = child.mount(childParentDOMElement, childSiblingDOMElement, childContext);
       });
 
       this.componentDidMount(context);
 
-      return this;
+      return this.getDOMElement();
     }
   }, {
     key: 'unmount',
@@ -1134,17 +1023,19 @@ var ReactElement = function () {
   }, {
     key: 'remount',
     value: function remount() {
-      var context = this.context,
-          childParent = this,
-          childSibling = null,
-          childContext = this.getChildContext() || context,
-          childOrChildren = this.render(context);
-
-      this.children = childOrChildren instanceof Array ? childOrChildren : [childOrChildren];
-
       this.children.forEach(function (child) {
-        childSibling = child.mount(childParent, childSibling, childContext);
+        child.remove();
       });
+
+      this.children = toArray(this.render());
+
+      var childParentDOMElement = this.parentDOMElement,
+          childSiblingDOMElement = this.siblingDOMElement,
+          childContext = this.getChildContext() || this.context;
+
+      reverse(this.children).forEach(function (child) {
+        childSiblingDOMElement = child.mount(childParentDOMElement, childSiblingDOMElement, childContext);
+      }.bind(this));
     }
   }, {
     key: 'remove',
@@ -1154,14 +1045,28 @@ var ReactElement = function () {
       });
     }
   }, {
-    key: 'prepend',
-    value: function prepend(child) {
-      return false;
+    key: 'forceUpdate',
+    value: function forceUpdate() {
+      this.remount();
     }
   }, {
-    key: 'appendAfter',
-    value: function appendAfter(sibling) {
-      return false;
+    key: 'getDOMElement',
+    value: function getDOMElement() {
+      var domElement = null;
+
+      this.children.some(function (child) {
+        var childDOMElement = child.getDOMElement();
+
+        if (childDOMElement !== null) {
+          domElement = childDOMElement;
+
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      return domElement;
     }
   }]);
 
@@ -1169,6 +1074,13 @@ var ReactElement = function () {
 }();
 
 module.exports = ReactElement;
+
+function reverse(array) {
+  return array.slice().reverse();
+}
+function toArray(arrayOrElement) {
+  return arrayOrElement instanceof Array ? arrayOrElement : [arrayOrElement];
+}
 },{}],14:[function(require,module,exports){
 'use strict';
 
@@ -1254,10 +1166,10 @@ var TextElement = function (_Element) {
 
   _createClass(TextElement, [{
     key: 'mount',
-    value: function mount(parent, sibling, context) {
-      _get(Object.getPrototypeOf(TextElement.prototype), 'mount', this).call(this, parent, sibling);
+    value: function mount(parentDOMElement, siblingDOMElement, context) {
+      _get(Object.getPrototypeOf(TextElement.prototype), 'mount', this).call(this, parentDOMElement, siblingDOMElement);
 
-      return this;
+      return this.getDOMElement();
     }
   }, {
     key: 'unmount',
@@ -1625,25 +1537,18 @@ function compose() {
     funcs[_key] = arguments[_key];
   }
 
-  if (funcs.length === 0) {
-    return function (arg) {
-      return arg;
-    };
-  } else {
-    var _ret = function () {
-      var last = funcs[funcs.length - 1];
-      var rest = funcs.slice(0, -1);
-      return {
-        v: function v() {
-          return rest.reduceRight(function (composed, f) {
-            return f(composed);
-          }, last.apply(undefined, arguments));
-        }
-      };
-    }();
+  return function () {
+    if (funcs.length === 0) {
+      return arguments.length <= 0 ? undefined : arguments[0];
+    }
 
-    if (typeof _ret === "object") return _ret.v;
-  }
+    var last = funcs[funcs.length - 1];
+    var rest = funcs.slice(0, -1);
+
+    return rest.reduceRight(function (composed, f) {
+      return f(composed);
+    }, last.apply(undefined, arguments));
+  };
 }
 },{}],21:[function(require,module,exports){
 'use strict';
@@ -1655,10 +1560,6 @@ exports["default"] = createStore;
 var _isPlainObject = require('lodash/isPlainObject');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-
-var _symbolObservable = require('symbol-observable');
-
-var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -1698,8 +1599,6 @@ var ActionTypes = exports.ActionTypes = {
  * and subscribe to changes.
  */
 function createStore(reducer, initialState, enhancer) {
-  var _ref2;
-
   if (typeof initialState === 'function' && typeof enhancer === 'undefined') {
     enhancer = initialState;
     initialState = undefined;
@@ -1856,59 +1755,19 @@ function createStore(reducer, initialState, enhancer) {
     dispatch({ type: ActionTypes.INIT });
   }
 
-  /**
-   * Interoperability point for observable/reactive libraries.
-   * @returns {observable} A minimal observable of state changes.
-   * For more information, see the observable proposal:
-   * https://github.com/zenparsing/es-observable
-   */
-  function observable() {
-    var _ref;
-
-    var outerSubscribe = subscribe;
-    return _ref = {
-      /**
-       * The minimal observable subscription method.
-       * @param {Object} observer Any object that can be used as an observer.
-       * The observer object should have a `next` method.
-       * @returns {subscription} An object with an `unsubscribe` method that can
-       * be used to unsubscribe the observable from the store, and prevent further
-       * emission of values from the observable.
-       */
-
-      subscribe: function subscribe(observer) {
-        if (typeof observer !== 'object') {
-          throw new TypeError('Expected the observer to be an object.');
-        }
-
-        function observeState() {
-          if (observer.next) {
-            observer.next(getState());
-          }
-        }
-
-        observeState();
-        var unsubscribe = outerSubscribe(observeState);
-        return { unsubscribe: unsubscribe };
-      }
-    }, _ref[_symbolObservable2["default"]] = function () {
-      return this;
-    }, _ref;
-  }
-
   // When a store is created, an "INIT" action is dispatched so that every
   // reducer returns their initial state. This effectively populates
   // the initial state tree.
   dispatch({ type: ActionTypes.INIT });
 
-  return _ref2 = {
+  return {
     dispatch: dispatch,
     subscribe: subscribe,
     getState: getState,
     replaceReducer: replaceReducer
-  }, _ref2[_symbolObservable2["default"]] = observable, _ref2;
+  };
 }
-},{"lodash/isPlainObject":27,"symbol-observable":28}],22:[function(require,module,exports){
+},{"lodash/isPlainObject":27}],22:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2124,38 +1983,5 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"./_getPrototype":24,"./_isHostObject":25,"./isObjectLike":26}],28:[function(require,module,exports){
-(function (global){
-/* global window */
-'use strict';
-
-module.exports = require('./ponyfill')(global || window || this);
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill":29}],29:[function(require,module,exports){
-'use strict';
-
-module.exports = function symbolObservablePonyfill(root) {
-	var result;
-	var Symbol = root.Symbol;
-
-	if (typeof Symbol === 'function') {
-		if (Symbol.observable) {
-			result = Symbol.observable;
-		} else {
-			if (typeof Symbol.for === 'function') {
-				result = Symbol.for('observable');
-			} else {
-				result = Symbol('observable');
-			}
-			Symbol.observable = result;
-		}
-	} else {
-		result = '@@observable';
-	}
-
-	return result;
-};
-
-},{}]},{},[1])(1)
+},{"./_getPrototype":24,"./_isHostObject":25,"./isObjectLike":26}]},{},[1])(1)
 });
