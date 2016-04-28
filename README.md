@@ -55,12 +55,11 @@ Contexts are handled differently. React elements can only pass down a context to
 ## Functionality that is not supported
 
 - Component state. Use Redux!
-- Of the component lifecycle, all methods except `componentWillMount()` and `componentWillUnmount()` are *not* supported.
+- Of the component lifecycle, all methods except `componentDidMount()` and `componentWillUnmount()` are *not* supported.
 
 ## Roadmap
 
-- Add an implementation of Redux, possibly,
-- and then look at Falcor?
+- Add an implementation of Redux, possibly.
 
 ## Contact
 
