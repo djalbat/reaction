@@ -1,10 +1,10 @@
 'use strict';
 
-var Redux = require('redux');
+const Redux = require('redux');
 
-var reaction = require('../../index'),
-    ReactDOM = reaction.ReactDOM,
-    React = reaction.React;
+const reaction = require('../../index'),
+      ReactDOM = reaction.ReactDOM,
+      React = reaction.React;
 
 class ReduxApp {
   constructor() {
@@ -12,7 +12,9 @@ class ReduxApp {
   }
 
   static run() {
-    const rootDOMElement = document.getElementById('root');
+    const { Component } = React;
+    const { createStore } = Redux;
+    const { combineReducers } = Redux;
 
     const todo = (state, action) => {
       switch (action.type) {
@@ -63,19 +65,12 @@ class ReduxApp {
       }
     };
 
-    const { combineReducers } = Redux;
-
     const todoApp = combineReducers({
       todos: todos,
       visibilityFilter: visibilityFilter
     });
 
-    const { Component } = React;
-
-    const getVisibleTodos = (
-      todos,
-      filter
-    ) => {
+    const getVisibleTodos = (todos, filter) => {
       switch (filter) {
         case 'SHOW_ALL':
           return todos;
@@ -92,40 +87,35 @@ class ReduxApp {
       }
     };
 
-    const Todo = ({
-      onClick,
-      completed,
-      text
-    }) => (
+    const Todo = ({onClick, completed, text}) => {
+      return (
 
-      <li onClick={onClick}
-          style={{textDecoration:
+          <li onClick={onClick}
+              style={{textDecoration:
                     completed ?
                       'line-through' :
                         'none'}}
-      >
-        {text}
-      </li>
-    );
+          >
+            {text}
+          </li>
+      );
+    };
 
-    const TodoList = ({
-      todos,
-      onTodoClick
-    }) =>  (
+    const TodoList = ({todos, onTodoClick}) =>  {
+      return (
 
-        <ul>
-          {todos.map(todo => <Todo text={todo.text}
-                                   completed={todo.completed}
-                                   onClick={() =>
+          <ul>
+            {todos.map(todo => <Todo text={todo.text}
+                                     completed={todo.completed}
+                                     onClick={() =>
                                  onTodoClick(todo.id)
                                }
-          />)}
-        </ul>
-    );
+            />)}
+          </ul>
+      );
+    };
 
-    const Link = (
-      props
-    ) => {
+    const Link = (props) => {
       const { active, onClick } = props;
 
       if (active) {
@@ -179,22 +169,17 @@ class ReduxApp {
     }
 
     let nextTodoId = 0;
-    const AddTodo = (
-      props,
-      {
-        store
-      }
-    ) => {
+    const AddTodo = (props, {store}) => {
       let input;
 
       return (
 
-        <div>
-          <input ref={domElement => {
+          <div>
+            <input ref={domElement => {
                   input = domElement;
                  }}
-          />
-          <button onClick={() => {
+            />
+            <button onClick={() => {
                     store.dispatch({
                       type: 'ADD_TODO',
                       text: input.value,
@@ -202,10 +187,10 @@ class ReduxApp {
                     });
                     input.value = '';
                   }}
-          >
-            Add todo
-          </button>
-        </div>
+            >
+              Add todo
+            </button>
+          </div>
       );
     };
 
@@ -214,7 +199,7 @@ class ReduxApp {
         const { store } = this.context;
 
         this.unsubscribe = store.subscribe(() =>
-          this.forceUpdate()
+            this.forceUpdate()
         );
       }
 
@@ -228,49 +213,53 @@ class ReduxApp {
 
         return (
 
-          <TodoList todos={
+            <TodoList todos={
                       getVisibleTodos(
                         state.todos,
                         state.visibilityFilter
                       )
                     }
-                    onTodoClick={id =>
+                      onTodoClick={id =>
                       store.dispatch({
                         type: 'TOGGLE_TODO',
                         id: id
                       })
                     }
-          />
+            />
         );
       }
     }
 
-    const Footer = () => (
+    const Footer = () => {
+      return (
 
-      <p>
-        {'Show: '}
-        <FilterLink filter='SHOW_ALL'>
-          All
-        </FilterLink>
-        {' - '}
-        <FilterLink filter='SHOW_ACTIVE'>
-          Active
-        </FilterLink>
-        {' - '}
-        <FilterLink filter='SHOW_COMPLETED'>
-          Completed
-        </FilterLink>
-      </p>
-    );
+          <p>
+            {'Show: '}
+            <FilterLink filter='SHOW_ALL'>
+              All
+            </FilterLink>
+            {' - '}
+            <FilterLink filter='SHOW_COMPLETED'>
+              Completed
+            </FilterLink>
+            {' - '}
+            <FilterLink filter='SHOW_ACTIVE'>
+              Active
+            </FilterLink>
+          </p>
+      );
+    };
 
-    const TodoApp = () => (
+    const TodoApp = () => {
+      return (
 
-      <div>
-        <AddTodo />
-        <VisibleTodoList />
-        <Footer />
-      </div>
-    );
+          <div>
+            <AddTodo />
+            <VisibleTodoList />
+            <Footer />
+          </div>
+      );
+    };
 
     class Provider extends Component {
       getChildContext() {
@@ -283,7 +272,7 @@ class ReduxApp {
       }
     }
 
-    const { createStore } = Redux;
+    const rootDOMElement = document.getElementById('root');
 
     ReactDOM.render(
       <Provider store={createStore(todoApp)}>

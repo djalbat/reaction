@@ -1,8 +1,8 @@
 'use strict';
 
-var reaction = require('../../index'),
-    ReactDOM = reaction.ReactDOM,
-    React = reaction.React;
+const reaction = require('../../index'),
+      ReactDOM = reaction.ReactDOM,
+      React = reaction.React;
 
 class VanillaApp {
   constructor() {
@@ -52,26 +52,6 @@ class VanillaApp {
     var commentsList = <CommentsList />;
 
     ReactDOM.render(commentsList, rootDOMElement);
-
-    // const InnerElement = React.createClass({
-    //   render() {
-    //
-    //     return <div></div>
-    //   }
-    // });
-    //
-    // const OuterElement = React.createClass({
-    //   render() {
-    //
-    //     return <InnerElement />
-    //   }
-    // });
-    //
-    // var outerElement = <OuterElement />;
-    //
-    // ReactDOM.render(outerElement, rootDOMElement);
-    //
-    // outerElement.forceUpdate();
   }
 }
 

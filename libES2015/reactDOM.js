@@ -1,11 +1,14 @@
 'use strict';
 
+const Element = require('./element');
+
 class ReactDOM {
   static render(element, parentDOMElement) {
-    const siblingDOMElement = null,
+    const parent = Element.fromDOMElement(parentDOMElement),
+          reference = null,
           context = undefined;
 
-    element.mount(parentDOMElement, siblingDOMElement, context);
+    element.mount(parent, reference, context);
   }
 }
 

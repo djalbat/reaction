@@ -1,18 +1,20 @@
 'use strict';
 
-var Element = require('./element');
+const Element = require('./element');
 
 class TextElement extends Element {
-  constructor(text, props) {
-    var domElement = document.createTextNode(text);
+  constructor(text) {
+    const domElement = document.createTextNode(text),
+          children = [],
+          props = {
+            children: children
+          };
 
     super(domElement, props);
   }
   
-  mount(parentDOMElement, siblingDOMElement, context) {
-    super.mount(parentDOMElement, siblingDOMElement);
-    
-    return this.getDOMElement();
+  mount(parent, reference, context) {
+    super.mount(parent, reference);
   }
   
   unmount(context) {

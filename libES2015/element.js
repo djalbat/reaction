@@ -1,37 +1,62 @@
 'use strict';
 
-
-
 class Element {
   constructor(domElement, props) {
     this.domElement = domElement;
 
     this.props = props;
-    
+
+    this.parent = undefined;
+
     this.children = props.children;  ///
   }
 
-  mount(parentDOMElement, siblingDOMElement) {
-    parentDOMElement.insertBefore(this.domElement, siblingDOMElement);
+  getDOMElement() {
+    return this.domElement;
   }
 
-  remount() {
-    ///
+  getParent() {
+    return this.parent;
+  }
+
+  mount(parent, reference) {
+    this.parent = parent;
+
+    if (this.domElement === null) {
+      return;
+    }
+
+    var parentDOMElement = this.parentDOMElement(parent),
+        referenceDOMElement = this.referenceDOMElement(reference);
+
+    parentDOMElement.insertBefore(this.domElement, referenceDOMElement);
   }
 
   unmount() {
-    this.remove();
+    if (this.domElement === null) {
+      return;
+    }
+
+    this.domElement.parentElement.removeChild(this.domElement);
   }
 
   remove() {
+    if (this.domElement === null) {
+      return;
+    }
+
     this.domElement.parentElement.removeChild(this.domElement);
   }
 
   setAttribute(attributeName, attributeValue) {
-    if (attributeName === 'className') { attributeName = 'class'; }
-    if (attributeName === 'htmlFor') { attributeName = 'for'; }
+    if (attributeName === 'className') {
+      attributeName = 'class';
+    }
+    if (attributeName === 'htmlFor') {
+      attributeName = 'for';
+    }
 
-    if (false ) {
+    if (false) {
 
     } else if (typeof attributeValue === 'string') {
       this.domElement.setAttribute(attributeName, attributeValue);
@@ -52,9 +77,90 @@ class Element {
     this.domElement[eventName] = handler;
   }
 
-  getDOMElement() {
-    return this.domElement;
+  parentDOMElement(parent) {
+    var parentDOMElement = parent.getDOMElement();
+
+    while (parentDOMElement === null) {
+      parent = parent.getParent();
+
+      parentDOMElement = parent.getDOMElement();
+    }
+
+    return parentDOMElement;
   }
+
+  referenceDOMElement(reference) {
+    var referenceDOMElement = reference !== null ?
+                                reference.getDOMElement() :
+                                  null;
+
+    return referenceDOMElement;
+  }
+
+  childReference(child) {
+    var childReference = this.findChildReference(child);
+
+    if (childReference !== null) {
+      return childReference;
+    }
+
+    var domElement = this.getDOMElement();
+
+    if (domElement !== null) {
+      return null;
+    }
+
+    const parent = this.getParent();
+
+    child = this;
+
+    return parent.childReference(child)
+  }
+
+  findChildReference(child) {
+    var childIndex = indexOf(child, this.children),
+        children = this.children.slice(childIndex + 1),
+        childReference = children.reduce(function(childReference, child) {
+          if (childReference === null) {
+            var childDOMElement = child.getDOMElement();
+
+            if (childDOMElement !== null) {
+              childReference = child;
+            } else {
+              childReference = child.findChildReference(null);
+            }
+          }
+
+          return childReference;
+        }, null);
+
+    return childReference;
+  }
+
+  static fromDOMElement(domElement) {
+    var children = [],
+        props = {
+          children: children
+        };
+
+    return new Element(domElement, props);
+  }
+}
+
+function indexOf(element, array) {
+  var index = -1;
+
+  array.some(function(currentElement, currentElementIndex) {
+    if (currentElement === element) {
+      index = currentElementIndex;
+
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  return index;
 }
 
 module.exports = Element;

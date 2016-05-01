@@ -24,7 +24,10 @@ var ReduxApp = function () {
   _createClass(ReduxApp, null, [{
     key: 'run',
     value: function run() {
-      var rootDOMElement = document.getElementById('root');
+      var Component = React.Component;
+      var createStore = Redux.createStore;
+      var combineReducers = Redux.combineReducers;
+
 
       var todo = function todo(state, action) {
         switch (action.type) {
@@ -80,16 +83,10 @@ var ReduxApp = function () {
         }
       };
 
-      var combineReducers = Redux.combineReducers;
-
-
       var todoApp = combineReducers({
         todos: todos,
         visibilityFilter: visibilityFilter
       });
-
-      var Component = React.Component;
-
 
       var getVisibleTodos = function getVisibleTodos(todos, filter) {
         switch (filter) {
@@ -112,6 +109,7 @@ var ReduxApp = function () {
         var onClick = _ref.onClick;
         var completed = _ref.completed;
         var text = _ref.text;
+
         return React.createElement(
           'li',
           { onClick: onClick,
@@ -124,6 +122,7 @@ var ReduxApp = function () {
       var TodoList = function TodoList(_ref2) {
         var todos = _ref2.todos;
         var onTodoClick = _ref2.onTodoClick;
+
         return React.createElement(
           'ul',
           null,
@@ -305,14 +304,14 @@ var ReduxApp = function () {
           ' - ',
           React.createElement(
             FilterLink,
-            { filter: 'SHOW_ACTIVE' },
-            'Active'
+            { filter: 'SHOW_COMPLETED' },
+            'Completed'
           ),
           ' - ',
           React.createElement(
             FilterLink,
-            { filter: 'SHOW_COMPLETED' },
-            'Completed'
+            { filter: 'SHOW_ACTIVE' },
+            'Active'
           )
         );
       };
@@ -353,8 +352,7 @@ var ReduxApp = function () {
         return Provider;
       }(Component);
 
-      var createStore = Redux.createStore;
-
+      var rootDOMElement = document.getElementById('root');
 
       ReactDOM.render(React.createElement(
         Provider,

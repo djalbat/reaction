@@ -4,7 +4,6 @@ var ReactComponent = require('./reactComponent'),
     ReactClass = require('./reactClass'),
     Element = require('./element'),
     TextElement = require('./textElement'),
-    ReactElement = require('./reactElement'),
     DisplayElement = require('./displayElement'),
     ReactClassElement = require('./reactClassElement'),
     ReactFunctionElement = require('./reactFunctionElement'),
@@ -56,17 +55,12 @@ function childrenFromChildArguments(childArguments) {
   }
 
   return childArguments.map(function(childArgument) {
-    if (childArgument instanceof Element
-     || childArgument instanceof ReactElement) {
+    if (childArgument instanceof Element) {
       return childArgument;
     } else {
-      var text = '' + childArgument,  ///
-          children = [],
-          props = {
-            children: children
-          };
-      
-      return new TextElement(text, props);
+      var text = '' + childArgument;  ///
+
+      return new TextElement(text);
     }
   });
 }

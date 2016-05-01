@@ -1,28 +1,26 @@
 'use strict';
 
-var Element = require('./element');
+const Element = require('./element');
 
 class DisplayElement extends Element {
   constructor(displayName, props) {
-    var domElement = document.createElement(displayName);
+    const domElement = document.createElement(displayName);
 
     super(domElement, props);
   }
 
-  mount(parentDOMElement, siblingDOMElement, context) {
-    super.mount(parentDOMElement, siblingDOMElement);
+  mount(parent, reference, context) {
+    super.mount(parent, reference);
     
-    var childParentDOMElement = this.getDOMElement(),
-        childSiblingDOMElement = null,
-        childContext = context;
+    const childParent = this,
+          childReference = null,
+          childContext = context;
 
-    reverse(this.children).forEach(function(child) {
-      childSiblingDOMElement = child.mount(childParentDOMElement, childSiblingDOMElement, childContext);
+    this.children.forEach(function(child) {
+      child.mount(childParent, childReference, childContext);
     });
 
     this.applyProps();
-
-    return this.getDOMElement();
   }
 
   unmount(context) {
@@ -34,30 +32,26 @@ class DisplayElement extends Element {
   }
 
   applyProps() {
-    if (this.props === null) {
-      return;
-    }
+    var propNames = Object.keys(this.props);
 
-    var propertyNames = Object.keys(this.props);
-
-    propertyNames.forEach(function (propertyName) {
-      var propertyValue = this.props[propertyName];
+    propNames.forEach(function (propName) {
+      var propValue = this.props[propName];
 
       if (false) {
 
-      } else if (propertyName === 'ref') {
-        var callback = propertyValue,
+      } else if (propName === 'ref') {
+        var callback = propValue,
             domElement = this.getDOMElement();
         
         callback(domElement)
-      } else if (propertyNameIsHandlerName(propertyName)) {
-        var eventName = eventNameFromPropertyName(propertyName),
-            handler = propertyValue;
+      } else if (propNameIsHandlerName(propName)) {
+        var eventName = eventNameFromPropertyName(propName),
+            handler = propValue;
 
         this.setHandler(eventName, handler);
       } else {
-        var attributeName = propertyName,
-            attributeValue = propertyValue;
+        var attributeName = propName,
+            attributeValue = propValue;
         
         this.setAttribute(attributeName, attributeValue);
       }
@@ -67,12 +61,10 @@ class DisplayElement extends Element {
 
 module.exports = DisplayElement;
 
-function eventNameFromPropertyName(propertyName) {
-  return propertyName.toLowerCase();
+function propNameIsHandlerName(propName) {
+  return propName.match(/^on/);
 }
 
-function propertyNameIsHandlerName(propertyName) {
-  return propertyName.match(/^on/);
+function eventNameFromPropertyName(propName) {
+  return propName.toLowerCase();
 }
-
-function reverse(array) { return array.slice().reverse(); }

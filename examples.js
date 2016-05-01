@@ -33,7 +33,10 @@ var ReduxApp = function () {
   _createClass(ReduxApp, null, [{
     key: 'run',
     value: function run() {
-      var rootDOMElement = document.getElementById('root');
+      var Component = React.Component;
+      var createStore = Redux.createStore;
+      var combineReducers = Redux.combineReducers;
+
 
       var todo = function todo(state, action) {
         switch (action.type) {
@@ -89,16 +92,10 @@ var ReduxApp = function () {
         }
       };
 
-      var combineReducers = Redux.combineReducers;
-
-
       var todoApp = combineReducers({
         todos: todos,
         visibilityFilter: visibilityFilter
       });
-
-      var Component = React.Component;
-
 
       var getVisibleTodos = function getVisibleTodos(todos, filter) {
         switch (filter) {
@@ -121,6 +118,7 @@ var ReduxApp = function () {
         var onClick = _ref.onClick;
         var completed = _ref.completed;
         var text = _ref.text;
+
         return React.createElement(
           'li',
           { onClick: onClick,
@@ -133,6 +131,7 @@ var ReduxApp = function () {
       var TodoList = function TodoList(_ref2) {
         var todos = _ref2.todos;
         var onTodoClick = _ref2.onTodoClick;
+
         return React.createElement(
           'ul',
           null,
@@ -314,14 +313,14 @@ var ReduxApp = function () {
           ' - ',
           React.createElement(
             FilterLink,
-            { filter: 'SHOW_ACTIVE' },
-            'Active'
+            { filter: 'SHOW_COMPLETED' },
+            'Completed'
           ),
           ' - ',
           React.createElement(
             FilterLink,
-            { filter: 'SHOW_COMPLETED' },
-            'Completed'
+            { filter: 'SHOW_ACTIVE' },
+            'Active'
           )
         );
       };
@@ -362,8 +361,7 @@ var ReduxApp = function () {
         return Provider;
       }(Component);
 
-      var createStore = Redux.createStore;
-
+      var rootDOMElement = document.getElementById('root');
 
       ReactDOM.render(React.createElement(
         Provider,
@@ -436,26 +434,6 @@ var VanillaApp = function VanillaApp() {
   var commentsList = React.createElement(CommentsList, null);
 
   ReactDOM.render(commentsList, rootDOMElement);
-
-  // const InnerElement = React.createClass({
-  //   render() {
-  //
-  //     return <div></div>
-  //   }
-  // });
-  //
-  // const OuterElement = React.createClass({
-  //   render() {
-  //
-  //     return <InnerElement />
-  //   }
-  // });
-  //
-  // var outerElement = <OuterElement />;
-  //
-  // ReactDOM.render(outerElement, rootDOMElement);
-  //
-  // outerElement.forceUpdate();
 };
 
 module.exports = VanillaApp;
@@ -495,20 +473,18 @@ var DisplayElement = function (_Element) {
 
   _createClass(DisplayElement, [{
     key: 'mount',
-    value: function mount(parentDOMElement, siblingDOMElement, context) {
-      _get(Object.getPrototypeOf(DisplayElement.prototype), 'mount', this).call(this, parentDOMElement, siblingDOMElement);
+    value: function mount(parent, reference, context) {
+      _get(Object.getPrototypeOf(DisplayElement.prototype), 'mount', this).call(this, parent, reference);
 
-      var childParentDOMElement = this.getDOMElement(),
-          childSiblingDOMElement = null,
+      var childParent = this,
+          childReference = null,
           childContext = context;
 
-      reverse(this.children).forEach(function (child) {
-        childSiblingDOMElement = child.mount(childParentDOMElement, childSiblingDOMElement, childContext);
+      this.children.forEach(function (child) {
+        child.mount(childParent, childReference, childContext);
       });
 
       this.applyProps();
-
-      return this.getDOMElement();
     }
   }, {
     key: 'unmount',
@@ -522,28 +498,24 @@ var DisplayElement = function (_Element) {
   }, {
     key: 'applyProps',
     value: function applyProps() {
-      if (this.props === null) {
-        return;
-      }
+      var propNames = Object.keys(this.props);
 
-      var propertyNames = Object.keys(this.props);
+      propNames.forEach(function (propName) {
+        var propValue = this.props[propName];
 
-      propertyNames.forEach(function (propertyName) {
-        var propertyValue = this.props[propertyName];
-
-        if (false) {} else if (propertyName === 'ref') {
-          var callback = propertyValue,
+        if (false) {} else if (propName === 'ref') {
+          var callback = propValue,
               domElement = this.getDOMElement();
 
           callback(domElement);
-        } else if (propertyNameIsHandlerName(propertyName)) {
-          var eventName = eventNameFromPropertyName(propertyName),
-              handler = propertyValue;
+        } else if (propNameIsHandlerName(propName)) {
+          var eventName = eventNameFromPropertyName(propName),
+              handler = propValue;
 
           this.setHandler(eventName, handler);
         } else {
-          var attributeName = propertyName,
-              attributeValue = propertyValue;
+          var attributeName = propName,
+              attributeValue = propValue;
 
           this.setAttribute(attributeName, attributeValue);
         }
@@ -556,16 +528,12 @@ var DisplayElement = function (_Element) {
 
 module.exports = DisplayElement;
 
-function eventNameFromPropertyName(propertyName) {
-  return propertyName.toLowerCase();
+function propNameIsHandlerName(propName) {
+  return propName.match(/^on/);
 }
 
-function propertyNameIsHandlerName(propertyName) {
-  return propertyName.match(/^on/);
-}
-
-function reverse(array) {
-  return array.slice().reverse();
+function eventNameFromPropertyName(propName) {
+  return propName.toLowerCase();
 }
 },{"./element":6}],6:[function(require,module,exports){
 'use strict';
@@ -584,27 +552,51 @@ var Element = function () {
 
     this.props = props;
 
+    this.parent = undefined;
+
     this.children = props.children; ///
   }
 
   _createClass(Element, [{
-    key: 'mount',
-    value: function mount(parentDOMElement, siblingDOMElement) {
-      parentDOMElement.insertBefore(this.domElement, siblingDOMElement);
+    key: 'getDOMElement',
+    value: function getDOMElement() {
+      return this.domElement;
     }
   }, {
-    key: 'remount',
-    value: function remount() {
-      ///
+    key: 'getParent',
+    value: function getParent() {
+      return this.parent;
+    }
+  }, {
+    key: 'mount',
+    value: function mount(parent, reference) {
+      this.parent = parent;
+
+      if (this.domElement === null) {
+        return;
+      }
+
+      var parentDOMElement = this.parentDOMElement(parent),
+          referenceDOMElement = this.referenceDOMElement(reference);
+
+      parentDOMElement.insertBefore(this.domElement, referenceDOMElement);
     }
   }, {
     key: 'unmount',
     value: function unmount() {
-      this.remove();
+      if (this.domElement === null) {
+        return;
+      }
+
+      this.domElement.parentElement.removeChild(this.domElement);
     }
   }, {
     key: 'remove',
     value: function remove() {
+      if (this.domElement === null) {
+        return;
+      }
+
       this.domElement.parentElement.removeChild(this.domElement);
     }
   }, {
@@ -637,14 +629,97 @@ var Element = function () {
       this.domElement[eventName] = handler;
     }
   }, {
-    key: 'getDOMElement',
-    value: function getDOMElement() {
-      return this.domElement;
+    key: 'parentDOMElement',
+    value: function parentDOMElement(parent) {
+      var parentDOMElement = parent.getDOMElement();
+
+      while (parentDOMElement === null) {
+        parent = parent.getParent();
+
+        parentDOMElement = parent.getDOMElement();
+      }
+
+      return parentDOMElement;
+    }
+  }, {
+    key: 'referenceDOMElement',
+    value: function referenceDOMElement(reference) {
+      var referenceDOMElement = reference !== null ? reference.getDOMElement() : null;
+
+      return referenceDOMElement;
+    }
+  }, {
+    key: 'childReference',
+    value: function childReference(child) {
+      var childReference = this.findChildReference(child);
+
+      if (childReference !== null) {
+        return childReference;
+      }
+
+      var domElement = this.getDOMElement();
+
+      if (domElement !== null) {
+        return null;
+      }
+
+      var parent = this.getParent();
+
+      child = this;
+
+      return parent.childReference(child);
+    }
+  }, {
+    key: 'findChildReference',
+    value: function findChildReference(child) {
+      var childIndex = indexOf(child, this.children),
+          children = this.children.slice(childIndex + 1),
+          childReference = children.reduce(function (childReference, child) {
+        if (childReference === null) {
+          var childDOMElement = child.getDOMElement();
+
+          if (childDOMElement !== null) {
+            childReference = child;
+          } else {
+            childReference = child.findChildReference(null);
+          }
+        }
+
+        return childReference;
+      }, null);
+
+      return childReference;
+    }
+  }], [{
+    key: 'fromDOMElement',
+    value: function fromDOMElement(domElement) {
+      var children = [],
+          props = {
+        children: children
+      };
+
+      return new Element(domElement, props);
     }
   }]);
 
   return Element;
 }();
+
+function indexOf(element, array) {
+  var index = -1;
+
+  array.some(function (currentElement, currentElementIndex) {
+    if (currentElement === element) {
+      index = currentElementIndex;
+
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  return index;
+}
 
 module.exports = Element;
 },{}],7:[function(require,module,exports){
@@ -658,7 +733,6 @@ var ReactComponent = require('./reactComponent'),
     ReactClass = require('./reactClass'),
     Element = require('./element'),
     TextElement = require('./textElement'),
-    ReactElement = require('./reactElement'),
     DisplayElement = require('./displayElement'),
     ReactClassElement = require('./reactClassElement'),
     ReactFunctionElement = require('./reactFunctionElement'),
@@ -724,17 +798,12 @@ function childrenFromChildArguments(childArguments) {
   }
 
   return childArguments.map(function (childArgument) {
-    if (childArgument instanceof Element || childArgument instanceof ReactElement) {
+    if (childArgument instanceof Element) {
       return childArgument;
     } else {
-      var text = '' + childArgument,
-          ///
-      children = [],
-          props = {
-        children: children
-      };
+      var text = '' + childArgument; ///
 
-      return new TextElement(text, props);
+      return new TextElement(text);
     }
   });
 }
@@ -742,7 +811,7 @@ function childrenFromChildArguments(childArguments) {
 function first(array) {
   return array[0];
 }
-},{"./displayElement":5,"./element":6,"./reactClass":8,"./reactClassElement":9,"./reactComponent":10,"./reactComponentElement":11,"./reactElement":13,"./reactFunctionElement":14,"./textElement":15}],8:[function(require,module,exports){
+},{"./displayElement":5,"./element":6,"./reactClass":8,"./reactClassElement":9,"./reactComponent":10,"./reactComponentElement":11,"./reactFunctionElement":14,"./textElement":15}],8:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -945,6 +1014,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var Element = require('./element');
+
 var ReactDOM = function () {
   function ReactDOM() {
     _classCallCheck(this, ReactDOM);
@@ -953,10 +1024,11 @@ var ReactDOM = function () {
   _createClass(ReactDOM, null, [{
     key: 'render',
     value: function render(element, parentDOMElement) {
-      var siblingDOMElement = null,
+      var parent = Element.fromDOMElement(parentDOMElement),
+          reference = null,
           context = undefined;
 
-      element.mount(parentDOMElement, siblingDOMElement, context);
+      element.mount(parent, reference, context);
     }
   }]);
 
@@ -964,48 +1036,53 @@ var ReactDOM = function () {
 }();
 
 module.exports = ReactDOM;
-},{}],13:[function(require,module,exports){
+},{"./element":6}],13:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ReactElement = function () {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Element = require('./element');
+
+var ReactElement = function (_Element) {
+  _inherits(ReactElement, _Element);
+
   function ReactElement(props) {
     _classCallCheck(this, ReactElement);
 
-    this.props = props;
+    var domElement = null;
 
-    this.parentDOMElement = undefined;
-    this.siblingDOMElement = undefined;
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactElement).call(this, domElement, props));
 
-    this.context = undefined;
-
-    this.children = props.children; ///
+    _this.context = undefined;
+    return _this;
   }
 
   _createClass(ReactElement, [{
     key: 'mount',
-    value: function mount(parentDOMElement, siblingDOMElement, context) {
-      this.parentDOMElement = parentDOMElement;
-      this.siblingDOMElement = siblingDOMElement;
+    value: function mount(parent, reference, context) {
+      _get(Object.getPrototypeOf(ReactElement.prototype), 'mount', this).call(this, parent, reference);
 
       this.context = context;
 
       this.children = toArray(this.render());
 
-      var childParentDOMElement = parentDOMElement,
-          childSiblingDOMElement = siblingDOMElement,
+      var childParent = this,
+          childReference = reference,
           childContext = this.getChildContext() || context;
 
-      reverse(this.children).forEach(function (child) {
-        childSiblingDOMElement = child.mount(childParentDOMElement, childSiblingDOMElement, childContext);
+      this.children.forEach(function (child) {
+        child.mount(childParent, childReference, childContext);
       });
 
       this.componentDidMount(context);
-
-      return this.getDOMElement();
     }
   }, {
     key: 'unmount',
@@ -1029,12 +1106,12 @@ var ReactElement = function () {
 
       this.children = toArray(this.render());
 
-      var childParentDOMElement = this.parentDOMElement,
-          childSiblingDOMElement = this.siblingDOMElement,
+      var childParent = this,
+          childReference = this.getChildReference(),
           childContext = this.getChildContext() || this.context;
 
-      reverse(this.children).forEach(function (child) {
-        childSiblingDOMElement = child.mount(childParentDOMElement, childSiblingDOMElement, childContext);
+      this.children.forEach(function (child) {
+        child.mount(childParent, childReference, childContext);
       }.bind(this));
     }
   }, {
@@ -1050,38 +1127,24 @@ var ReactElement = function () {
       this.remount();
     }
   }, {
-    key: 'getDOMElement',
-    value: function getDOMElement() {
-      var domElement = null;
+    key: 'getChildReference',
+    value: function getChildReference() {
+      var parent = this.getParent(),
+          child = this;
 
-      this.children.some(function (child) {
-        var childDOMElement = child.getDOMElement();
-
-        if (childDOMElement !== null) {
-          domElement = childDOMElement;
-
-          return true;
-        } else {
-          return false;
-        }
-      });
-
-      return domElement;
+      return parent.childReference(child);
     }
   }]);
 
   return ReactElement;
-}();
+}(Element);
 
 module.exports = ReactElement;
 
-function reverse(array) {
-  return array.slice().reverse();
-}
 function toArray(arrayOrElement) {
   return arrayOrElement instanceof Array ? arrayOrElement : [arrayOrElement];
 }
-},{}],14:[function(require,module,exports){
+},{"./element":6}],14:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1156,20 +1219,22 @@ var Element = require('./element');
 var TextElement = function (_Element) {
   _inherits(TextElement, _Element);
 
-  function TextElement(text, props) {
+  function TextElement(text) {
     _classCallCheck(this, TextElement);
 
-    var domElement = document.createTextNode(text);
+    var domElement = document.createTextNode(text),
+        children = [],
+        props = {
+      children: children
+    };
 
     return _possibleConstructorReturn(this, Object.getPrototypeOf(TextElement).call(this, domElement, props));
   }
 
   _createClass(TextElement, [{
     key: 'mount',
-    value: function mount(parentDOMElement, siblingDOMElement, context) {
-      _get(Object.getPrototypeOf(TextElement.prototype), 'mount', this).call(this, parentDOMElement, siblingDOMElement);
-
-      return this.getDOMElement();
+    value: function mount(parent, reference, context) {
+      _get(Object.getPrototypeOf(TextElement.prototype), 'mount', this).call(this, parent, reference);
     }
   }, {
     key: 'unmount',
@@ -1537,18 +1602,25 @@ function compose() {
     funcs[_key] = arguments[_key];
   }
 
-  return function () {
-    if (funcs.length === 0) {
-      return arguments.length <= 0 ? undefined : arguments[0];
-    }
+  if (funcs.length === 0) {
+    return function (arg) {
+      return arg;
+    };
+  } else {
+    var _ret = function () {
+      var last = funcs[funcs.length - 1];
+      var rest = funcs.slice(0, -1);
+      return {
+        v: function v() {
+          return rest.reduceRight(function (composed, f) {
+            return f(composed);
+          }, last.apply(undefined, arguments));
+        }
+      };
+    }();
 
-    var last = funcs[funcs.length - 1];
-    var rest = funcs.slice(0, -1);
-
-    return rest.reduceRight(function (composed, f) {
-      return f(composed);
-    }, last.apply(undefined, arguments));
-  };
+    if (typeof _ret === "object") return _ret.v;
+  }
 }
 },{}],21:[function(require,module,exports){
 'use strict';
@@ -1560,6 +1632,10 @@ exports["default"] = createStore;
 var _isPlainObject = require('lodash/isPlainObject');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+
+var _symbolObservable = require('symbol-observable');
+
+var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -1599,6 +1675,8 @@ var ActionTypes = exports.ActionTypes = {
  * and subscribe to changes.
  */
 function createStore(reducer, initialState, enhancer) {
+  var _ref2;
+
   if (typeof initialState === 'function' && typeof enhancer === 'undefined') {
     enhancer = initialState;
     initialState = undefined;
@@ -1755,19 +1833,59 @@ function createStore(reducer, initialState, enhancer) {
     dispatch({ type: ActionTypes.INIT });
   }
 
+  /**
+   * Interoperability point for observable/reactive libraries.
+   * @returns {observable} A minimal observable of state changes.
+   * For more information, see the observable proposal:
+   * https://github.com/zenparsing/es-observable
+   */
+  function observable() {
+    var _ref;
+
+    var outerSubscribe = subscribe;
+    return _ref = {
+      /**
+       * The minimal observable subscription method.
+       * @param {Object} observer Any object that can be used as an observer.
+       * The observer object should have a `next` method.
+       * @returns {subscription} An object with an `unsubscribe` method that can
+       * be used to unsubscribe the observable from the store, and prevent further
+       * emission of values from the observable.
+       */
+
+      subscribe: function subscribe(observer) {
+        if (typeof observer !== 'object') {
+          throw new TypeError('Expected the observer to be an object.');
+        }
+
+        function observeState() {
+          if (observer.next) {
+            observer.next(getState());
+          }
+        }
+
+        observeState();
+        var unsubscribe = outerSubscribe(observeState);
+        return { unsubscribe: unsubscribe };
+      }
+    }, _ref[_symbolObservable2["default"]] = function () {
+      return this;
+    }, _ref;
+  }
+
   // When a store is created, an "INIT" action is dispatched so that every
   // reducer returns their initial state. This effectively populates
   // the initial state tree.
   dispatch({ type: ActionTypes.INIT });
 
-  return {
+  return _ref2 = {
     dispatch: dispatch,
     subscribe: subscribe,
     getState: getState,
     replaceReducer: replaceReducer
-  };
+  }, _ref2[_symbolObservable2["default"]] = observable, _ref2;
 }
-},{"lodash/isPlainObject":27}],22:[function(require,module,exports){
+},{"lodash/isPlainObject":27,"symbol-observable":28}],22:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1983,5 +2101,38 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"./_getPrototype":24,"./_isHostObject":25,"./isObjectLike":26}]},{},[1])(1)
+},{"./_getPrototype":24,"./_isHostObject":25,"./isObjectLike":26}],28:[function(require,module,exports){
+(function (global){
+/* global window */
+'use strict';
+
+module.exports = require('./ponyfill')(global || window || this);
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./ponyfill":29}],29:[function(require,module,exports){
+'use strict';
+
+module.exports = function symbolObservablePonyfill(root) {
+	var result;
+	var Symbol = root.Symbol;
+
+	if (typeof Symbol === 'function') {
+		if (Symbol.observable) {
+			result = Symbol.observable;
+		} else {
+			if (typeof Symbol.for === 'function') {
+				result = Symbol.for('observable');
+			} else {
+				result = Symbol('observable');
+			}
+			Symbol.observable = result;
+		}
+	} else {
+		result = '@@observable';
+	}
+
+	return result;
+};
+
+},{}]},{},[1])(1)
 });

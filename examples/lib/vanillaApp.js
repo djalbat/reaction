@@ -56,26 +56,6 @@ var VanillaApp = function VanillaApp() {
   var commentsList = React.createElement(CommentsList, null);
 
   ReactDOM.render(commentsList, rootDOMElement);
-
-  // const InnerElement = React.createClass({
-  //   render() {
-  //
-  //     return <div></div>
-  //   }
-  // });
-  //
-  // const OuterElement = React.createClass({
-  //   render() {
-  //
-  //     return <InnerElement />
-  //   }
-  // });
-  //
-  // var outerElement = <OuterElement />;
-  //
-  // ReactDOM.render(outerElement, rootDOMElement);
-  //
-  // outerElement.forceUpdate();
 };
 
 module.exports = VanillaApp;
