@@ -5,7 +5,7 @@ const reaction = require('../../index'),
       React = reaction.React;
 
 class VanillaApp {
-  constructor() {
+  static run() {
     const rootDOMElement = document.getElementById('root');
 
     var Comment = React.createClass({

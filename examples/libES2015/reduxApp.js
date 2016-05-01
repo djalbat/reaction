@@ -7,10 +7,6 @@ const reaction = require('../../index'),
       React = reaction.React;
 
 class ReduxApp {
-  constructor() {
-
-  }
-
   static run() {
     const { Component } = React;
     const { createStore } = Redux;
