@@ -86,28 +86,28 @@ class ReduxApp {
     const Todo = ({onClick, completed, text}) => {
       return (
 
-          <li onClick={onClick}
-              style={{textDecoration:
-                    completed ?
-                      'line-through' :
-                        'none'}}
-          >
-            {text}
-          </li>
+        <li onClick={onClick}
+            style={{textDecoration:
+                  completed ?
+                    'line-through' :
+                      'none'}}
+        >
+          {text}
+        </li>
       );
     };
 
     const TodoList = ({todos, onTodoClick}) =>  {
       return (
 
-          <ul>
-            {todos.map(todo => <Todo text={todo.text}
-                                     completed={todo.completed}
-                                     onClick={() =>
-                                 onTodoClick(todo.id)
-                               }
-            />)}
-          </ul>
+        <ul>
+          {todos.map(todo => <Todo text={todo.text}
+                                   completed={todo.completed}
+                                   onClick={() =>
+                               onTodoClick(todo.id)
+                             }
+          />)}
+        </ul>
       );
     };
 
@@ -119,14 +119,15 @@ class ReduxApp {
       }
 
       return (
-          <a href='#'
-             onClick={e => {
-               e.preventDefault();
-               onClick();
-             }}
-          >
-            {props.children}
-          </a>
+
+        <a href='#'
+           onClick={e => {
+             e.preventDefault();
+             onClick();
+           }}
+        >
+          {props.children}
+        </a>
       );
     };
 
@@ -209,19 +210,19 @@ class ReduxApp {
 
         return (
 
-            <TodoList todos={
-                      getVisibleTodos(
-                        state.todos,
-                        state.visibilityFilter
-                      )
-                    }
-                      onTodoClick={id =>
-                      store.dispatch({
-                        type: 'TOGGLE_TODO',
-                        id: id
-                      })
-                    }
-            />
+          <TodoList todos={
+                    getVisibleTodos(
+                      state.todos,
+                      state.visibilityFilter
+                    )
+                  }
+                    onTodoClick={id =>
+                    store.dispatch({
+                      type: 'TOGGLE_TODO',
+                      id: id
+                    })
+                  }
+          />
         );
       }
     }
@@ -229,31 +230,31 @@ class ReduxApp {
     const Footer = () => {
       return (
 
-          <p>
-            {'Show: '}
-            <FilterLink filter='SHOW_ALL'>
-              All
-            </FilterLink>
-            {' - '}
-            <FilterLink filter='SHOW_COMPLETED'>
-              Completed
-            </FilterLink>
-            {' - '}
-            <FilterLink filter='SHOW_ACTIVE'>
-              Active
-            </FilterLink>
-          </p>
+        <p>
+          {'Show: '}
+          <FilterLink filter='SHOW_ALL'>
+            All
+          </FilterLink>
+          {' - '}
+          <FilterLink filter='SHOW_COMPLETED'>
+            Completed
+          </FilterLink>
+          {' - '}
+          <FilterLink filter='SHOW_ACTIVE'>
+            Active
+          </FilterLink>
+        </p>
       );
     };
 
     const TodoApp = () => {
       return (
 
-          <div>
-            <AddTodo />
-            <VisibleTodoList />
-            <Footer />
-          </div>
+        <div>
+          <AddTodo />
+          <VisibleTodoList />
+          <Footer />
+        </div>
       );
     };
 
