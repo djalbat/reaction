@@ -20,20 +20,33 @@ class VanillaApp {
         );
       },
       componentDidMount: function() {
-        var message = this.props.message;
+        const message = this.props.message;
 
         console.log('comment mounted with message ' + message)
+      },
+      componentWillUnmount: function() {
+        const message = this.props.message;
+
+        console.log('comment will unmount with message ' + message)
       }
     });
 
     var CommentsList = React.createClass({
+      getInitialState: function() {
+        const messages = [
+                'Hello, world!',
+                'Hello world again...'
+              ], 
+              state = {
+                messages: messages
+              };
+        
+        return state;
+      },
       render: function() {
-        var messages = [
-          "Hello, world!",
-          "Hello world again..."
-        ];
+        const messages = this.state.messages;
 
-        var comments = messages.map(function(message) {
+        const comments = messages.map(function(message) {
           return <Comment message={message} />;
         });
 
@@ -49,9 +62,20 @@ class VanillaApp {
       }
     });
 
-    var commentsList = <CommentsList />;
+    const commentsList = <CommentsList />;
 
     ReactDOM.render(commentsList, rootDOMElement);
+
+    setTimeout(function() {
+      const messages = [
+              'Hello world, yet again!!!'
+            ],
+            state = {
+              messages: messages
+            };
+
+      commentsList.setState(state);
+    }, 1000); ///
   }
 }
 

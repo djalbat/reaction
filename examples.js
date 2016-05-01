@@ -346,7 +346,7 @@ var ReduxApp = function () {
 
         _createClass(Provider, [{
           key: 'getChildContext',
-          value: function getChildContext() {
+          value: function getChildContext(context) {
             return {
               store: this.props.store
             };
@@ -414,14 +414,27 @@ var VanillaApp = function () {
           var message = this.props.message;
 
           console.log('comment mounted with message ' + message);
+        },
+        componentWillUnmount: function componentWillUnmount() {
+          var message = this.props.message;
+
+          console.log('comment will unmount with message ' + message);
         }
       });
 
       var CommentsList = React.createClass({
         displayName: 'CommentsList',
 
+        getInitialState: function getInitialState() {
+          var messages = ['Hello, world!', 'Hello world again...'],
+              state = {
+            messages: messages
+          };
+
+          return state;
+        },
         render: function render() {
-          var messages = ["Hello, world!", "Hello world again..."];
+          var messages = this.state.messages;
 
           var comments = messages.map(function (message) {
             return React.createElement(Comment, { message: message });
@@ -441,6 +454,15 @@ var VanillaApp = function () {
       var commentsList = React.createElement(CommentsList, null);
 
       ReactDOM.render(commentsList, rootDOMElement);
+
+      setTimeout(function () {
+        var messages = ['Hello world, yet again!!!'],
+            state = {
+          messages: messages
+        };
+
+        commentsList.setState(state);
+      }, 1000); ///
     }
   }]);
 
@@ -484,15 +506,14 @@ var DisplayElement = function (_Element) {
 
   _createClass(DisplayElement, [{
     key: 'mount',
-    value: function mount(parent, reference, context) {
-      _get(Object.getPrototypeOf(DisplayElement.prototype), 'mount', this).call(this, parent, reference);
+    value: function mount(parent, context) {
+      _get(Object.getPrototypeOf(DisplayElement.prototype), 'mount', this).call(this, parent);
 
       var childParent = this,
-          childReference = null,
           childContext = context;
 
       this.children.forEach(function (child) {
-        child.mount(childParent, childReference, childContext);
+        child.mount(childParent, childContext);
       });
 
       this.applyProps();
@@ -500,8 +521,10 @@ var DisplayElement = function (_Element) {
   }, {
     key: 'unmount',
     value: function unmount(context) {
+      var childContext = context;
+
       this.children.forEach(function (child) {
-        child.unmount(context);
+        child.unmount(childContext);
       });
 
       _get(Object.getPrototypeOf(DisplayElement.prototype), 'unmount', this).call(this);
@@ -546,6 +569,20 @@ function propNameIsHandlerName(propName) {
 function eventNameFromPropertyName(propName) {
   return propName.toLowerCase();
 }
+
+//   mount(parent, reference, context) {
+//     super.mount(parent, reference);
+//   
+//     const childParent = this,
+//           childReference = null,
+//           childContext = context;
+//
+//     this.children.forEach(function(child) {
+//       child.mount(childParent, childReference, childContext);
+//     });
+//
+//     this.applyProps();
+//   }
 },{"./element":6}],6:[function(require,module,exports){
 'use strict';
 
@@ -585,23 +622,16 @@ var Element = function () {
     }
   }, {
     key: 'mount',
-    value: function mount(parent, reference) {
+    value: function mount(parent) {
       this.parent = parent;
 
       if (this.domElement !== null) {
-        parentDOMElement(parent).insertBefore(this.domElement, referenceDOMElement(reference));
+        parentDOMElement(parent).insertBefore(this.domElement, null);
       }
     }
   }, {
     key: 'unmount',
     value: function unmount() {
-      if (this.domElement !== null) {
-        this.domElement.parentElement.removeChild(this.domElement);
-      }
-    }
-  }, {
-    key: 'remove',
-    value: function remove() {
       if (this.domElement !== null) {
         this.domElement.parentElement.removeChild(this.domElement);
       }
@@ -638,10 +668,7 @@ var Element = function () {
   }], [{
     key: 'fromDOMElement',
     value: function fromDOMElement(domElement) {
-      var children = [],
-          props = {
-        children: children
-      };
+      var props = {};
 
       return new Element(domElement, props);
     }
@@ -664,43 +691,53 @@ function parentDOMElement(parent) {
   return parentDOMElement;
 }
 
-function referenceDOMElement(reference) {
-  var referenceDOMElement = reference !== null ? reference.getDOMElement() : null;
+//   mount(parent, reference) {
+//     this.parent = parent;
+//
+//     if (this.domElement !== null) {
+//       parentDOMElement(parent).insertBefore(this.domElement, referenceDOMElement(reference));
+//     }
+//   }
 
-  return referenceDOMElement;
-}
+// function referenceDOMElement(reference) {
+//   var referenceDOMElement = reference !== null ?
+//                               reference.getDOMElement() :
+//                                 null;
+//
+//   return referenceDOMElement;
+// }
 },{}],7:[function(require,module,exports){
 'use strict';
 
 var helpers = {
   toArray: function toArray(arrayOrElement) {
     return arrayOrElement instanceof Array ? arrayOrElement : [arrayOrElement];
-  },
-
-  remaining: function remaining(element, array) {
-    var index = indexOf(element, array);
-
-    return array.slice(index + 1);
   }
 };
 
 module.exports = helpers;
 
-function indexOf(element, array) {
-  var index = -1;
-
-  array.some(function (currentElement, currentElementIndex) {
-    if (currentElement === element) {
-      index = currentElementIndex;
-
-      return true;
-    } else {
-      return false;
-    }
-  });
-
-  return index;
-}
+//   remaining: function(element, array) {
+//     var index = indexOf(element, array);
+//
+//     return array.slice(index + 1);
+//   }
+//
+// function indexOf(element, array) {
+//   var index = -1;
+//
+//   array.some(function(currentElement, currentElementIndex) {
+//     if (currentElement === element) {
+//       index = currentElementIndex;
+//
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   });
+//
+//   return index;
+// }
 },{}],8:[function(require,module,exports){
 'use strict';
 
@@ -765,9 +802,9 @@ var React = function () {
   return React;
 }();
 
-React.Component = ReactComponent;
-
 module.exports = React;
+
+React.Component = ReactComponent;
 
 function childrenFromChildArguments(childArguments) {
   var firstChildArgument = first(childArguments);
@@ -798,10 +835,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ReactClass = function () {
-  function ReactClass(displayName, render, getChildContext, componentDidMount, componentWillUnmount) {
+  function ReactClass(render, getChildContext, componentDidMount, componentWillUnmount) {
     _classCallCheck(this, ReactClass);
-
-    this.displayName = displayName;
 
     if (render) {
       this.render = render;
@@ -820,7 +855,7 @@ var ReactClass = function () {
   _createClass(ReactClass, [{
     key: 'render',
     value: function render() {
-      return undefined;
+      ///
     }
   }, {
     key: 'getChildContext',
@@ -836,13 +871,12 @@ var ReactClass = function () {
   }], [{
     key: 'fromObject',
     value: function fromObject(object) {
-      var displayName = object['displayName'],
-          render = object['render'],
+      var render = object['render'],
           getChildContext = object['getChildContext'],
           componentDidMount = object['componentDidMount'],
           componentWillUnmount = object['componentWillUnmount'];
 
-      return new ReactClass(displayName, render, getChildContext, componentDidMount, componentWillUnmount);
+      return new ReactClass(render, getChildContext, componentDidMount, componentWillUnmount);
     }
   }]);
 
@@ -916,7 +950,7 @@ var ReactComponent = function () {
   _createClass(ReactComponent, [{
     key: 'render',
     value: function render() {
-      return undefined;
+      ///
     }
   }, {
     key: 'getChildContext',
@@ -1004,10 +1038,9 @@ var ReactDOM = function () {
     key: 'render',
     value: function render(element, parentDOMElement) {
       var parent = Element.fromDOMElement(parentDOMElement),
-          reference = null,
           context = undefined;
 
-      element.mount(parent, reference, context);
+      element.mount(parent, context);
     }
   }]);
 
@@ -1015,6 +1048,10 @@ var ReactDOM = function () {
 }();
 
 module.exports = ReactDOM;
+
+//     reference = null,
+//
+// element.mount(parent, reference, context);
 },{"./element":6}],14:[function(require,module,exports){
 'use strict';
 
@@ -1047,22 +1084,37 @@ var ReactElement = function (_Element) {
 
   _createClass(ReactElement, [{
     key: 'mount',
-    value: function mount(parent, reference, context) {
-      _get(Object.getPrototypeOf(ReactElement.prototype), 'mount', this).call(this, parent, reference);
+    value: function mount(parent, context) {
+      _get(Object.getPrototypeOf(ReactElement.prototype), 'mount', this).call(this, parent);
 
       this.context = context;
 
       this.children = helpers.toArray(this.render());
 
       var childParent = this,
-          childReference = reference,
-          childContext = this.getChildContext() || context;
+          childContext = this.getChildContext(context) || context;
 
       this.children.forEach(function (child) {
-        child.mount(childParent, childReference, childContext);
+        child.mount(childParent, childContext);
       });
 
-      this.componentDidMount(context);
+      this.componentDidMount();
+    }
+  }, {
+    key: 'remount',
+    value: function remount() {
+      var childParent = this,
+          childContext = this.context;
+
+      this.children.forEach(function (child) {
+        child.unmount(childContext);
+      });
+
+      this.children = helpers.toArray(this.render());
+
+      this.children.forEach(function (child) {
+        child.mount(childParent, childContext);
+      }.bind(this));
     }
   }, {
     key: 'unmount',
@@ -1071,48 +1123,18 @@ var ReactElement = function (_Element) {
 
       this.componentWillUnmount();
 
-      var childContext = this.getChildContext() || context;
+      var childContext = this.getChildContext(context) || context;
 
       this.children.forEach(function (child) {
         child.unmount(childContext);
       });
-    }
-  }, {
-    key: 'remount',
-    value: function remount() {
-      this.children.forEach(function (child) {
-        child.remove();
-      });
 
-      this.children = helpers.toArray(this.render());
-
-      var childParent = this,
-          childReference = this.getChildReference(),
-          childContext = this.getChildContext() || this.context;
-
-      this.children.forEach(function (child) {
-        child.mount(childParent, childReference, childContext);
-      }.bind(this));
-    }
-  }, {
-    key: 'remove',
-    value: function remove() {
-      this.children.forEach(function (child) {
-        child.remove();
-      });
+      _get(Object.getPrototypeOf(ReactElement.prototype), 'unmount', this).call(this);
     }
   }, {
     key: 'forceUpdate',
     value: function forceUpdate() {
       this.remount();
-    }
-  }, {
-    key: 'getChildReference',
-    value: function getChildReference() {
-      var parent = this.getParent(),
-          child = this;
-
-      return reference(parent, child);
     }
   }]);
 
@@ -1121,42 +1143,90 @@ var ReactElement = function (_Element) {
 
 module.exports = ReactElement;
 
-function reference(parent, child) {
-  var reference = findReference(parent, child),
-      parentDOMElement = parent.getDOMElement();
-
-  while (reference === null && parentDOMElement === null) {
-    child = parent;
-    parent = parent.getParent();
-
-    reference = findReference(parent, child);
-    parentDOMElement = parent.getDOMElement();
-  }
-
-  return reference;
-}
-
-function findReference(parent, child) {
-  var children = parent.getChildren(),
-      remainingChildren = helpers.remaining(child, children);
-
-  return remainingChildren.reduce(function (reference, remainingChild) {
-    if (reference === null) {
-      var remainingChildDOMElement = remainingChild.getDOMElement();
-
-      if (remainingChildDOMElement !== null) {
-        reference = remainingChild;
-      } else {
-        child = null;
-        parent = remainingChild;
-
-        reference = findReference(parent, child);
-      }
-    }
-
-    return reference;
-  }, null);
-}
+//   mount(parent, reference, context) {
+//     super.mount(parent, reference);
+//
+//     this.children.forEach(function(child) {
+//       child.mount(childParent, childReference, childContext);
+//     });
+//
+//     this.componentDidMount(context);
+//   }
+//
+//   unmount(context) {
+//     this.context = context;
+//
+//     this.componentWillUnmount();
+//
+//     const childContext = this.getChildContext() || context;
+//
+//     this.children.forEach(function(child) {
+//       child.unmount(childContext);
+//     });
+//   }
+//
+//   remount() {
+//     this.children.forEach(function(child) {
+//       child.remove();
+//     });
+//
+//     this.children = helpers.toArray(this.render());
+//
+//     const childParent = this,
+//           childReference = this.getChildReference(),
+//           childContext = this.getChildContext() || this.context;
+//
+//     this.children.forEach(function(child) {
+//       child.mount(childParent, childReference, childContext);
+//     }.bind(this));
+//   }
+////
+//
+//   getChildReference() {
+//     var parent = this.getParent(),
+//         child = this;
+//
+//     return reference(parent, child);
+//   }
+// }
+//
+//
+// function reference(parent, child) {
+//   var reference = findReference(parent, child),
+//       parentDOMElement = parent.getDOMElement();
+//
+//   while (reference === null && parentDOMElement === null) {
+//     child = parent;
+//     parent = parent.getParent();
+//
+//     reference = findReference(parent, child);
+//     parentDOMElement = parent.getDOMElement();
+//   }
+//
+//   return reference;
+// }
+//
+// function findReference(parent, child) {
+//   const children = parent.getChildren(),
+//         remainingChildren = helpers.remaining(child, children);
+//
+//   return remainingChildren.reduce(function(reference, remainingChild) {
+//     if (reference === null) {
+//       var remainingChildDOMElement = remainingChild.getDOMElement();
+//
+//       if (remainingChildDOMElement !== null) {
+//         reference = remainingChild;
+//       } else {
+//         child = null;
+//         parent = remainingChild;
+//
+//         reference = findReference(parent, child);
+//       }
+//     }
+//
+//     return reference;
+//   }, null);
+// }
 },{"./element":6,"./helpers":7}],15:[function(require,module,exports){
 'use strict';
 
@@ -1214,6 +1284,25 @@ var ReactFunctionElement = function (_ReactElement) {
 }(ReactElement);
 
 module.exports = ReactFunctionElement;
+
+// class ReactFunctionElement extends ReactElement {
+//   render() {
+//     return this.reactFunction(this.props, this.context);
+//   }
+//
+//
+//   componentDidMount() {
+//     if (this.reactFunction.componentDidMount) {
+//       this.reactFunction.componentDidMount(this.props, this.context);
+//     }
+//   }
+// 
+//   componentWillUnmount() {
+//     if (this.reactFunction.componentWillUnmount) {
+//       this.reactFunction.componentWillUnmount(this.props, this.context);
+//     }
+//   }
+// }
 },{"./reactElement":14}],16:[function(require,module,exports){
 'use strict';
 
@@ -1246,8 +1335,8 @@ var TextElement = function (_Element) {
 
   _createClass(TextElement, [{
     key: 'mount',
-    value: function mount(parent, reference, context) {
-      _get(Object.getPrototypeOf(TextElement.prototype), 'mount', this).call(this, parent, reference);
+    value: function mount(parent, context) {
+      _get(Object.getPrototypeOf(TextElement.prototype), 'mount', this).call(this, parent);
     }
   }, {
     key: 'unmount',
@@ -1615,25 +1704,18 @@ function compose() {
     funcs[_key] = arguments[_key];
   }
 
-  if (funcs.length === 0) {
-    return function (arg) {
-      return arg;
-    };
-  } else {
-    var _ret = function () {
-      var last = funcs[funcs.length - 1];
-      var rest = funcs.slice(0, -1);
-      return {
-        v: function v() {
-          return rest.reduceRight(function (composed, f) {
-            return f(composed);
-          }, last.apply(undefined, arguments));
-        }
-      };
-    }();
+  return function () {
+    if (funcs.length === 0) {
+      return arguments.length <= 0 ? undefined : arguments[0];
+    }
 
-    if (typeof _ret === "object") return _ret.v;
-  }
+    var last = funcs[funcs.length - 1];
+    var rest = funcs.slice(0, -1);
+
+    return rest.reduceRight(function (composed, f) {
+      return f(composed);
+    }, last.apply(undefined, arguments));
+  };
 }
 },{}],22:[function(require,module,exports){
 'use strict';
@@ -1645,10 +1727,6 @@ exports["default"] = createStore;
 var _isPlainObject = require('lodash/isPlainObject');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-
-var _symbolObservable = require('symbol-observable');
-
-var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -1688,8 +1766,6 @@ var ActionTypes = exports.ActionTypes = {
  * and subscribe to changes.
  */
 function createStore(reducer, initialState, enhancer) {
-  var _ref2;
-
   if (typeof initialState === 'function' && typeof enhancer === 'undefined') {
     enhancer = initialState;
     initialState = undefined;
@@ -1846,59 +1922,19 @@ function createStore(reducer, initialState, enhancer) {
     dispatch({ type: ActionTypes.INIT });
   }
 
-  /**
-   * Interoperability point for observable/reactive libraries.
-   * @returns {observable} A minimal observable of state changes.
-   * For more information, see the observable proposal:
-   * https://github.com/zenparsing/es-observable
-   */
-  function observable() {
-    var _ref;
-
-    var outerSubscribe = subscribe;
-    return _ref = {
-      /**
-       * The minimal observable subscription method.
-       * @param {Object} observer Any object that can be used as an observer.
-       * The observer object should have a `next` method.
-       * @returns {subscription} An object with an `unsubscribe` method that can
-       * be used to unsubscribe the observable from the store, and prevent further
-       * emission of values from the observable.
-       */
-
-      subscribe: function subscribe(observer) {
-        if (typeof observer !== 'object') {
-          throw new TypeError('Expected the observer to be an object.');
-        }
-
-        function observeState() {
-          if (observer.next) {
-            observer.next(getState());
-          }
-        }
-
-        observeState();
-        var unsubscribe = outerSubscribe(observeState);
-        return { unsubscribe: unsubscribe };
-      }
-    }, _ref[_symbolObservable2["default"]] = function () {
-      return this;
-    }, _ref;
-  }
-
   // When a store is created, an "INIT" action is dispatched so that every
   // reducer returns their initial state. This effectively populates
   // the initial state tree.
   dispatch({ type: ActionTypes.INIT });
 
-  return _ref2 = {
+  return {
     dispatch: dispatch,
     subscribe: subscribe,
     getState: getState,
     replaceReducer: replaceReducer
-  }, _ref2[_symbolObservable2["default"]] = observable, _ref2;
+  };
 }
-},{"lodash/isPlainObject":28,"symbol-observable":29}],23:[function(require,module,exports){
+},{"lodash/isPlainObject":28}],23:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2114,38 +2150,5 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"./_getPrototype":25,"./_isHostObject":26,"./isObjectLike":27}],29:[function(require,module,exports){
-(function (global){
-/* global window */
-'use strict';
-
-module.exports = require('./ponyfill')(global || window || this);
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill":30}],30:[function(require,module,exports){
-'use strict';
-
-module.exports = function symbolObservablePonyfill(root) {
-	var result;
-	var Symbol = root.Symbol;
-
-	if (typeof Symbol === 'function') {
-		if (Symbol.observable) {
-			result = Symbol.observable;
-		} else {
-			if (typeof Symbol.for === 'function') {
-				result = Symbol.for('observable');
-			} else {
-				result = Symbol('observable');
-			}
-			Symbol.observable = result;
-		}
-	} else {
-		result = '@@observable';
-	}
-
-	return result;
-};
-
-},{}]},{},[1])(1)
+},{"./_getPrototype":25,"./_isHostObject":26,"./isObjectLike":27}]},{},[1])(1)
 });

@@ -1,24 +1,24 @@
 'use strict';
 
-var ReactComponent = require('./reactComponent'),
-    ReactClass = require('./reactClass'),
-    Element = require('./element'),
-    TextElement = require('./textElement'),
-    DisplayElement = require('./displayElement'),
-    ReactClassElement = require('./reactClassElement'),
-    ReactFunctionElement = require('./reactFunctionElement'),
-    ReactComponentElement = require('./reactComponentElement');
+const ReactComponent = require('./reactComponent'),
+      ReactClass = require('./reactClass'),
+      Element = require('./element'),
+      TextElement = require('./textElement'),
+      DisplayElement = require('./displayElement'),
+      ReactClassElement = require('./reactClassElement'),
+      ReactFunctionElement = require('./reactFunctionElement'),
+      ReactComponentElement = require('./reactComponentElement');
 
 class React {
   static createClass(object) {
     return ReactClass.fromObject(object);
   }
 
-  static createElement(reactObjectOrDisplayName, properties, ...childArguments) {
+   static createElement(reactObjectOrDisplayName, properties, ...childArguments) {
     if (reactObjectOrDisplayName === undefined) {
       return undefined;
     }
-    
+
     const children = childrenFromChildArguments(childArguments),
           props = Object.assign({}, properties, {children: children});
 
@@ -43,9 +43,9 @@ class React {
   }
 }
 
-React.Component = ReactComponent;
-
 module.exports = React;
+
+React.Component = ReactComponent;
 
 function childrenFromChildArguments(childArguments) {
   var firstChildArgument = first(childArguments);

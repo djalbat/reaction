@@ -6,17 +6,17 @@ class ReactComponent {
   }
 
   render() {
-    return undefined;
+    ///
   }
-
+  
   getChildContext() {
     return undefined;
   }
 
   componentDidMount() {
-    
+   
   }
-  
+ 
   componentWillUnmount() {
 
   }

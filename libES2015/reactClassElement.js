@@ -16,7 +16,7 @@ class ReactClassElement extends ReactElement {
   getChildContext() {
     return this.reactClass.getChildContext.apply(this);
   }
- 
+  
   componentDidMount() {
     this.reactClass.componentDidMount.apply(this);
   }

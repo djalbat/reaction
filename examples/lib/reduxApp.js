@@ -337,7 +337,7 @@ var ReduxApp = function () {
 
         _createClass(Provider, [{
           key: 'getChildContext',
-          value: function getChildContext() {
+          value: function getChildContext(context) {
             return {
               store: this.props.store
             };

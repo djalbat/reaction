@@ -9,23 +9,24 @@ class DisplayElement extends Element {
     super(domElement, props);
   }
 
-  mount(parent, reference, context) {
-    super.mount(parent, reference);
-    
+  mount(parent, context) {
+    super.mount(parent);
+
     const childParent = this,
-          childReference = null,
           childContext = context;
 
     this.children.forEach(function(child) {
-      child.mount(childParent, childReference, childContext);
+      child.mount(childParent, childContext);
     });
 
     this.applyProps();
   }
 
   unmount(context) {
+    const childContext = context;
+
     this.children.forEach(function(child) {
-      child.unmount(context);
+      child.unmount(childContext);
     });
 
     super.unmount();
@@ -34,7 +35,7 @@ class DisplayElement extends Element {
   applyProps() {
     var propNames = Object.keys(this.props);
 
-    propNames.forEach(function (propName) {
+    propNames.forEach(function(propName) {
       var propValue = this.props[propName];
 
       if (false) {
@@ -42,7 +43,7 @@ class DisplayElement extends Element {
       } else if (propName === 'ref') {
         var callback = propValue,
             domElement = this.getDOMElement();
-        
+
         callback(domElement)
       } else if (propNameIsHandlerName(propName)) {
         var eventName = eventNameFromPropertyName(propName),
@@ -52,7 +53,7 @@ class DisplayElement extends Element {
       } else {
         var attributeName = propName,
             attributeValue = propValue;
-        
+
         this.setAttribute(attributeName, attributeValue);
       }
     }.bind(this));
@@ -68,3 +69,18 @@ function propNameIsHandlerName(propName) {
 function eventNameFromPropertyName(propName) {
   return propName.toLowerCase();
 }
+
+//   mount(parent, reference, context) {
+//     super.mount(parent, reference);
+//    
+//     const childParent = this,
+//           childReference = null,
+//           childContext = context;
+//
+//     this.children.forEach(function(child) {
+//       child.mount(childParent, childReference, childContext);
+//     });
+//
+//     this.applyProps();
+//   }
+

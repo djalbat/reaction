@@ -23,21 +23,15 @@ class Element {
     return this.children;
   }
 
-  mount(parent, reference) {
+  mount(parent) {
     this.parent = parent;
 
     if (this.domElement !== null) {
-      parentDOMElement(parent).insertBefore(this.domElement, referenceDOMElement(reference));
+      parentDOMElement(parent).insertBefore(this.domElement, null);
     }
   }
 
   unmount() {
-    if (this.domElement !== null) {
-      this.domElement.parentElement.removeChild(this.domElement);
-    }
-  }
-
-  remove() {
     if (this.domElement !== null) {
       this.domElement.parentElement.removeChild(this.domElement);
     }
@@ -73,10 +67,7 @@ class Element {
   }
 
   static fromDOMElement(domElement) {
-    var children = [],
-        props = {
-          children: children
-        };
+    var props = {};
 
     return new Element(domElement, props);
   }
@@ -96,10 +87,18 @@ function parentDOMElement(parent) {
   return parentDOMElement;
 }
 
-function referenceDOMElement(reference) {
-  var referenceDOMElement = reference !== null ?
-                              reference.getDOMElement() :
-                                null;
+//   mount(parent, reference) {
+//     this.parent = parent;
+//
+//     if (this.domElement !== null) {
+//       parentDOMElement(parent).insertBefore(this.domElement, referenceDOMElement(reference));
+//     }
+//   }
 
-  return referenceDOMElement;
-}
+// function referenceDOMElement(reference) {
+//   var referenceDOMElement = reference !== null ?
+//                               reference.getDOMElement() :
+//                                 null;
+//
+//   return referenceDOMElement;
+// }
