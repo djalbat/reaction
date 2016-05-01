@@ -61,10 +61,6 @@ Contexts are handled differently. React elements can only pass down a context to
 - Component state. Use Redux!
 - Of the component lifecycle, all methods except `componentDidMount()` and `componentWillUnmount()` are *not* supported.
 
-## Roadmap
-
-- Add an implementation of Redux, possibly.
-
 ## Contact
 
 - james.smith@djalbat.com
