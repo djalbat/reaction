@@ -1,6 +1,7 @@
 'use strict';
 
-const Element = require('./element');
+const helpers = require('./helpers'),
+      Element = require('./element');
 
 class ReactElement extends Element {
   constructor(props) {
@@ -16,7 +17,7 @@ class ReactElement extends Element {
 
     this.context = context;
 
-    this.children = toArray(this.render());
+    this.children = helpers.toArray(this.render());
 
     const childParent = this,
           childReference = reference,
@@ -46,7 +47,7 @@ class ReactElement extends Element {
       child.remove();
     });
 
-    this.children = toArray(this.render());
+    this.children = helpers.toArray(this.render());
 
     const childParent = this,
           childReference = this.getChildReference(),
@@ -71,12 +72,45 @@ class ReactElement extends Element {
     var parent = this.getParent(),
         child = this;
 
-    return parent.childReference(child)
+    return reference(parent, child);
   }
 }
 
 module.exports = ReactElement;
 
-function toArray(arrayOrElement) { return (arrayOrElement instanceof Array) ?
-                                            arrayOrElement :
-                                              [arrayOrElement]; }
+function reference(parent, child) {
+  var reference = findReference(parent, child),
+      parentDOMElement = parent.getDOMElement();
+
+  while (reference === null && parentDOMElement === null) {
+    child = parent;
+    parent = parent.getParent();
+
+    reference = findReference(parent, child);
+    parentDOMElement = parent.getDOMElement();
+  }
+
+  return reference;
+}
+
+function findReference(parent, child) {
+  const children = parent.getChildren(),
+        remainingChildren = helpers.remaining(child, children);
+
+  return remainingChildren.reduce(function(reference, remainingChild) {
+    if (reference === null) {
+      var remainingChildDOMElement = remainingChild.getDOMElement();
+
+      if (remainingChildDOMElement !== null) {
+        reference = remainingChild;
+      } else {
+        child = null;
+        parent = remainingChild;
+
+        reference = findReference(parent, child);
+      }
+    }
+
+    return reference;
+  }, null);
+}

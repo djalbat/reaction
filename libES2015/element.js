@@ -19,33 +19,28 @@ class Element {
     return this.parent;
   }
 
+  getChildren() {
+    return this.children;
+  }
+
   mount(parent, reference) {
     this.parent = parent;
 
-    if (this.domElement === null) {
-      return;
+    if (this.domElement !== null) {
+      parentDOMElement(parent).insertBefore(this.domElement, referenceDOMElement(reference));
     }
-
-    var parentDOMElement = this.parentDOMElement(parent),
-        referenceDOMElement = this.referenceDOMElement(reference);
-
-    parentDOMElement.insertBefore(this.domElement, referenceDOMElement);
   }
 
   unmount() {
-    if (this.domElement === null) {
-      return;
+    if (this.domElement !== null) {
+      this.domElement.parentElement.removeChild(this.domElement);
     }
-
-    this.domElement.parentElement.removeChild(this.domElement);
   }
 
   remove() {
-    if (this.domElement === null) {
-      return;
+    if (this.domElement !== null) {
+      this.domElement.parentElement.removeChild(this.domElement);
     }
-
-    this.domElement.parentElement.removeChild(this.domElement);
   }
 
   setAttribute(attributeName, attributeValue) {
@@ -77,66 +72,6 @@ class Element {
     this.domElement[eventName] = handler;
   }
 
-  parentDOMElement(parent) {
-    var parentDOMElement = parent.getDOMElement();
-
-    while (parentDOMElement === null) {
-      parent = parent.getParent();
-
-      parentDOMElement = parent.getDOMElement();
-    }
-
-    return parentDOMElement;
-  }
-
-  referenceDOMElement(reference) {
-    var referenceDOMElement = reference !== null ?
-                                reference.getDOMElement() :
-                                  null;
-
-    return referenceDOMElement;
-  }
-
-  childReference(child) {
-    var childReference = this.findChildReference(child);
-
-    if (childReference !== null) {
-      return childReference;
-    }
-
-    var domElement = this.getDOMElement();
-
-    if (domElement !== null) {
-      return null;
-    }
-
-    const parent = this.getParent();
-
-    child = this;
-
-    return parent.childReference(child)
-  }
-
-  findChildReference(child) {
-    var childIndex = indexOf(child, this.children),
-        children = this.children.slice(childIndex + 1),
-        childReference = children.reduce(function(childReference, child) {
-          if (childReference === null) {
-            var childDOMElement = child.getDOMElement();
-
-            if (childDOMElement !== null) {
-              childReference = child;
-            } else {
-              childReference = child.findChildReference(null);
-            }
-          }
-
-          return childReference;
-        }, null);
-
-    return childReference;
-  }
-
   static fromDOMElement(domElement) {
     var children = [],
         props = {
@@ -147,20 +82,24 @@ class Element {
   }
 }
 
-function indexOf(element, array) {
-  var index = -1;
+module.exports = Element;
 
-  array.some(function(currentElement, currentElementIndex) {
-    if (currentElement === element) {
-      index = currentElementIndex;
+function parentDOMElement(parent) {
+  var parentDOMElement = parent.getDOMElement();
 
-      return true;
-    } else {
-      return false;
-    }
-  });
+  while (parentDOMElement === null) {
+    parent = parent.getParent();
 
-  return index;
+    parentDOMElement = parent.getDOMElement();
+  }
+
+  return parentDOMElement;
 }
 
-module.exports = Element;
+function referenceDOMElement(reference) {
+  var referenceDOMElement = reference !== null ?
+                              reference.getDOMElement() :
+                                null;
+
+  return referenceDOMElement;
+}
