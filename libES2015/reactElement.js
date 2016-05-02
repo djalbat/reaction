@@ -17,7 +17,7 @@ class ReactElement extends Element {
 
     this.context = context;
 
-    this.children = helpers.toArray(this.render());
+    this.children = helpers.guaranteeArray(this.render());
 
     const childParent = this,
           childReference = reference,
@@ -39,7 +39,7 @@ class ReactElement extends Element {
       child.unmount(childContext);
     });
 
-    this.children = helpers.toArray(this.render());
+    this.children = helpers.guaranteeArray(this.render());
 
     this.children.forEach(function(child) {
       child.mount(childParent, childReference, childContext);

@@ -380,10 +380,6 @@ module.exports = ReduxApp;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var reaction = require('../../index'),
@@ -400,50 +396,53 @@ var VanillaApp = function () {
   _createClass(VanillaApp, null, [{
     key: 'run',
     value: function run() {
-      var A = function (_Component) {
-        _inherits(A, _Component);
-
-        function A() {
-          _classCallCheck(this, A);
-
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(A).apply(this, arguments));
-        }
-
-        _createClass(A, [{
-          key: 'render',
-          value: function render() {
-            var _this2 = this;
-
-            return React.createElement(
-              'a',
-              { onClick: function onClick() {
-                  _this2.forceUpdate();
-                }
-              },
-              'a'
-            );
-          }
-        }]);
-
-        return A;
-      }(Component);
-
-      var B = function B() {
-        return React.createElement(
-          'b',
-          null,
-          'b'
-        );
-      };
-
       var rootDOMElement = document.getElementById('root');
 
-      ReactDOM.render(React.createElement(
-        'p',
-        null,
-        React.createElement(A, null),
-        React.createElement(B, null)
-      ), rootDOMElement);
+      var Comment = React.createClass({
+        displayName: 'Comment',
+
+        render: function render() {
+          return React.createElement(
+            'div',
+            { className: 'comment' },
+            React.createElement(
+              'p',
+              null,
+              this.props.message
+            )
+          );
+        },
+        componentDidMount: function componentDidMount() {
+          var message = this.props.message;
+
+          console.log('comment mounted with message ' + message);
+        }
+      });
+
+      var CommentsList = React.createClass({
+        displayName: 'CommentsList',
+
+        render: function render() {
+          var messages = ["Hello, world!", "Hello world again..."];
+
+          var comments = messages.map(function (message) {
+            return React.createElement(Comment, { message: message });
+          });
+
+          return React.createElement(
+            'div',
+            { className: 'commentsList' },
+            comments
+          );
+        },
+        componentDidMount: function componentDidMount() {
+          console.log('comments list mounted');
+        }
+      });
+
+      var commentsList = React.createElement(CommentsList, null);
+
+      ReactDOM.render(commentsList, rootDOMElement);
     }
   }]);
 
@@ -671,7 +670,7 @@ function referenceDOMElement(reference) {
 'use strict';
 
 var helpers = {
-  toArray: function toArray(arrayOrElement) {
+  guaranteeArray: function guaranteeArray(arrayOrElement) {
     return arrayOrElement instanceof Array ? arrayOrElement : [arrayOrElement];
   },
 
@@ -689,7 +688,7 @@ var helpers = {
 module.exports = helpers;
 
 function indexOf(element, array) {
-  var index = -1;
+  var index = null;
 
   array.some(function (currentElement, currentElementIndex) {
     if (currentElement === element) {
@@ -1051,7 +1050,7 @@ var ReactElement = function (_Element) {
 
       this.context = context;
 
-      this.children = helpers.toArray(this.render());
+      this.children = helpers.guaranteeArray(this.render());
 
       var childParent = this,
           childReference = reference,
@@ -1074,7 +1073,7 @@ var ReactElement = function (_Element) {
         child.unmount(childContext);
       });
 
-      this.children = helpers.toArray(this.render());
+      this.children = helpers.guaranteeArray(this.render());
 
       this.children.forEach(function (child) {
         child.mount(childParent, childReference, childContext);
@@ -1208,25 +1207,6 @@ var ReactFunctionElement = function (_ReactElement) {
 }(ReactElement);
 
 module.exports = ReactFunctionElement;
-
-// class ReactFunctionElement extends ReactElement {
-//   render() {
-//     return this.reactFunction(this.props, this.context);
-//   }
-//
-//
-//   componentDidMount() {
-//     if (this.reactFunction.componentDidMount) {
-//       this.reactFunction.componentDidMount(this.props, this.context);
-//     }
-//   }
-// 
-//   componentWillUnmount() {
-//     if (this.reactFunction.componentWillUnmount) {
-//       this.reactFunction.componentWillUnmount(this.props, this.context);
-//     }
-//   }
-// }
 },{"./reactElement":14}],16:[function(require,module,exports){
 'use strict';
 
@@ -1628,18 +1608,25 @@ function compose() {
     funcs[_key] = arguments[_key];
   }
 
-  return function () {
-    if (funcs.length === 0) {
-      return arguments.length <= 0 ? undefined : arguments[0];
-    }
+  if (funcs.length === 0) {
+    return function (arg) {
+      return arg;
+    };
+  } else {
+    var _ret = function () {
+      var last = funcs[funcs.length - 1];
+      var rest = funcs.slice(0, -1);
+      return {
+        v: function v() {
+          return rest.reduceRight(function (composed, f) {
+            return f(composed);
+          }, last.apply(undefined, arguments));
+        }
+      };
+    }();
 
-    var last = funcs[funcs.length - 1];
-    var rest = funcs.slice(0, -1);
-
-    return rest.reduceRight(function (composed, f) {
-      return f(composed);
-    }, last.apply(undefined, arguments));
-  };
+    if (typeof _ret === "object") return _ret.v;
+  }
 }
 },{}],22:[function(require,module,exports){
 'use strict';
@@ -1651,6 +1638,10 @@ exports["default"] = createStore;
 var _isPlainObject = require('lodash/isPlainObject');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+
+var _symbolObservable = require('symbol-observable');
+
+var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -1690,6 +1681,8 @@ var ActionTypes = exports.ActionTypes = {
  * and subscribe to changes.
  */
 function createStore(reducer, initialState, enhancer) {
+  var _ref2;
+
   if (typeof initialState === 'function' && typeof enhancer === 'undefined') {
     enhancer = initialState;
     initialState = undefined;
@@ -1846,19 +1839,59 @@ function createStore(reducer, initialState, enhancer) {
     dispatch({ type: ActionTypes.INIT });
   }
 
+  /**
+   * Interoperability point for observable/reactive libraries.
+   * @returns {observable} A minimal observable of state changes.
+   * For more information, see the observable proposal:
+   * https://github.com/zenparsing/es-observable
+   */
+  function observable() {
+    var _ref;
+
+    var outerSubscribe = subscribe;
+    return _ref = {
+      /**
+       * The minimal observable subscription method.
+       * @param {Object} observer Any object that can be used as an observer.
+       * The observer object should have a `next` method.
+       * @returns {subscription} An object with an `unsubscribe` method that can
+       * be used to unsubscribe the observable from the store, and prevent further
+       * emission of values from the observable.
+       */
+
+      subscribe: function subscribe(observer) {
+        if (typeof observer !== 'object') {
+          throw new TypeError('Expected the observer to be an object.');
+        }
+
+        function observeState() {
+          if (observer.next) {
+            observer.next(getState());
+          }
+        }
+
+        observeState();
+        var unsubscribe = outerSubscribe(observeState);
+        return { unsubscribe: unsubscribe };
+      }
+    }, _ref[_symbolObservable2["default"]] = function () {
+      return this;
+    }, _ref;
+  }
+
   // When a store is created, an "INIT" action is dispatched so that every
   // reducer returns their initial state. This effectively populates
   // the initial state tree.
   dispatch({ type: ActionTypes.INIT });
 
-  return {
+  return _ref2 = {
     dispatch: dispatch,
     subscribe: subscribe,
     getState: getState,
     replaceReducer: replaceReducer
-  };
+  }, _ref2[_symbolObservable2["default"]] = observable, _ref2;
 }
-},{"lodash/isPlainObject":28}],23:[function(require,module,exports){
+},{"lodash/isPlainObject":28,"symbol-observable":29}],23:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2074,5 +2107,38 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"./_getPrototype":25,"./_isHostObject":26,"./isObjectLike":27}]},{},[1])(1)
+},{"./_getPrototype":25,"./_isHostObject":26,"./isObjectLike":27}],29:[function(require,module,exports){
+(function (global){
+/* global window */
+'use strict';
+
+module.exports = require('./ponyfill')(global || window || this);
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./ponyfill":30}],30:[function(require,module,exports){
+'use strict';
+
+module.exports = function symbolObservablePonyfill(root) {
+	var result;
+	var Symbol = root.Symbol;
+
+	if (typeof Symbol === 'function') {
+		if (Symbol.observable) {
+			result = Symbol.observable;
+		} else {
+			if (typeof Symbol.for === 'function') {
+				result = Symbol.for('observable');
+			} else {
+				result = Symbol('observable');
+			}
+			Symbol.observable = result;
+		}
+	} else {
+		result = '@@observable';
+	}
+
+	return result;
+};
+
+},{}]},{},[1])(1)
 });

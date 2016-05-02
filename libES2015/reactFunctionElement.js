@@ -33,22 +33,3 @@ class ReactFunctionElement extends ReactElement {
 }
 
 module.exports = ReactFunctionElement;
-
-// class ReactFunctionElement extends ReactElement {
-//   render() {
-//     return this.reactFunction(this.props, this.context);
-//   }
-//
-//
-//   componentDidMount() {
-//     if (this.reactFunction.componentDidMount) {
-//       this.reactFunction.componentDidMount(this.props, this.context);
-//     }
-//   }
-//  
-//   componentWillUnmount() {
-//     if (this.reactFunction.componentWillUnmount) {
-//       this.reactFunction.componentWillUnmount(this.props, this.context);
-//     }
-//   }
-// }

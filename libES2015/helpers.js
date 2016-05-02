@@ -1,9 +1,9 @@
 'use strict';
 
 const helpers = {
-  toArray: function(arrayOrElement) { return (arrayOrElement instanceof Array) ?
-                                                arrayOrElement :
-                                                  [arrayOrElement];
+  guaranteeArray: function(arrayOrElement) { return (arrayOrElement instanceof Array) ?
+                                                      arrayOrElement :
+                                                        [arrayOrElement];
   },
 
   remaining: function(element, array) {
@@ -20,7 +20,7 @@ const helpers = {
 module.exports = helpers;
 
 function indexOf(element, array) {
-  var index = -1;
+  var index = null;
 
   array.some(function(currentElement, currentElementIndex) {
     if (currentElement === element) {
