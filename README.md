@@ -10,6 +10,11 @@ There is now a series of videos to complement the Reaction repo:
 
 **[Reverse Engineering React](https://vimeo.com/album/3928246)**
 
+#### Errata
+
+- The `toArray()` helper method is now called `guaranteeArray()`.
+- The `index` variable in the `indexOf()` helper method is now initially set to `null`.
+
 ## Installation
 
     npm reaction
