@@ -23,11 +23,11 @@ class Element {
     return this.children;
   }
 
-  mount(parent) {
+  mount(parent, reference) {
     this.parent = parent;
 
     if (this.domElement !== null) {
-      parentDOMElement(parent).insertBefore(this.domElement, null);
+      parentDOMElement(parent).insertBefore(this.domElement, referenceDOMElement(reference));
     }
   }
 
@@ -67,7 +67,10 @@ class Element {
   }
 
   static fromDOMElement(domElement) {
-    var props = {};
+    var children = [],
+        props = {
+          children: children
+        };
 
     return new Element(domElement, props);
   }
@@ -87,18 +90,10 @@ function parentDOMElement(parent) {
   return parentDOMElement;
 }
 
-//   mount(parent, reference) {
-//     this.parent = parent;
-//
-//     if (this.domElement !== null) {
-//       parentDOMElement(parent).insertBefore(this.domElement, referenceDOMElement(reference));
-//     }
-//   }
+function referenceDOMElement(reference) {
+  var referenceDOMElement = reference !== null ?
+                              reference.getDOMElement() :
+                                null;
 
-// function referenceDOMElement(reference) {
-//   var referenceDOMElement = reference !== null ?
-//                               reference.getDOMElement() :
-//                                 null;
-//
-//   return referenceDOMElement;
-// }
+  return referenceDOMElement;
+}

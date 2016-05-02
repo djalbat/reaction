@@ -9,14 +9,15 @@ class DisplayElement extends Element {
     super(domElement, props);
   }
 
-  mount(parent, context) {
-    super.mount(parent);
+  mount(parent, reference, context) {
+    super.mount(parent, reference);
 
     const childParent = this,
+          childReference = null,
           childContext = context;
 
     this.children.forEach(function(child) {
-      child.mount(childParent, childContext);
+      child.mount(childParent, childReference, childContext);
     });
 
     this.applyProps();
@@ -69,18 +70,3 @@ function propNameIsHandlerName(propName) {
 function eventNameFromPropertyName(propName) {
   return propName.toLowerCase();
 }
-
-//   mount(parent, reference, context) {
-//     super.mount(parent, reference);
-//    
-//     const childParent = this,
-//           childReference = null,
-//           childContext = context;
-//
-//     this.children.forEach(function(child) {
-//       child.mount(childParent, childReference, childContext);
-//     });
-//
-//     this.applyProps();
-//   }
-

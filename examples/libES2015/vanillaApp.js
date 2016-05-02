@@ -4,78 +4,41 @@ const reaction = require('../../index'),
       ReactDOM = reaction.ReactDOM,
       React = reaction.React;
 
+const Component = React.Component;
+
 class VanillaApp {
   static run() {
+
+    class A extends Component {
+      render() {
+        return (
+
+          <a onClick={() => {
+                       this.forceUpdate();
+                     }}
+          >
+            a
+          </a>
+        );
+      }
+    }
+
+    const B = () => (
+
+      <b>
+        b
+      </b>
+    );
+
     const rootDOMElement = document.getElementById('root');
 
-    var Comment = React.createClass({
-      render: function() {
-        return (
-
-          <div className="comment">
-            <p>
-              {this.props.message}
-            </p>
-          </div>
-        );
-      },
-      componentDidMount: function() {
-        const message = this.props.message;
-
-        console.log('comment mounted with message ' + message)
-      },
-      componentWillUnmount: function() {
-        const message = this.props.message;
-
-        console.log('comment will unmount with message ' + message)
-      }
-    });
-
-    var CommentsList = React.createClass({
-      getInitialState: function() {
-        const messages = [
-                'Hello, world!',
-                'Hello world again...'
-              ], 
-              state = {
-                messages: messages
-              };
-        
-        return state;
-      },
-      render: function() {
-        const messages = this.state.messages;
-
-        const comments = messages.map(function(message) {
-          return <Comment message={message} />;
-        });
-
-        return (
-
-          <div className="commentsList">
-            {comments}
-          </div>
-        );
-      },
-      componentDidMount: function() {
-        console.log('comments list mounted')
-      }
-    });
-
-    const commentsList = <CommentsList />;
-
-    ReactDOM.render(commentsList, rootDOMElement);
-
-    setTimeout(function() {
-      const messages = [
-              'Hello world, yet again!!!'
-            ],
-            state = {
-              messages: messages
-            };
-
-      commentsList.setState(state);
-    }, 1000); ///
+    ReactDOM.render(
+      <p>
+        <A />
+        <B />
+      </p>,
+      rootDOMElement
+    );
   }
 }
 

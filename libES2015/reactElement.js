@@ -12,18 +12,19 @@ class ReactElement extends Element {
     this.context = undefined;
   }
 
-  mount(parent, context) {
-    super.mount(parent);
+  mount(parent, reference, context) {
+    super.mount(parent, reference);
 
     this.context = context;
 
     this.children = helpers.toArray(this.render());
 
     const childParent = this,
+          childReference = reference,
           childContext = this.getChildContext(context) || context;
 
     this.children.forEach(function(child) {
-      child.mount(childParent, childContext);
+      child.mount(childParent, childReference, childContext);
     });
 
     this.componentDidMount(); 
@@ -31,6 +32,7 @@ class ReactElement extends Element {
 
   remount() {
     const childParent = this,
+          childReference = this.getChildReference(),
           childContext = this.context;
 
     this.children.forEach(function(child) {
@@ -40,7 +42,7 @@ class ReactElement extends Element {
     this.children = helpers.toArray(this.render());
 
     this.children.forEach(function(child) {
-      child.mount(childParent, childContext);
+      child.mount(childParent, childReference, childContext);
     }.bind(this));
   }
 
@@ -61,91 +63,50 @@ class ReactElement extends Element {
   forceUpdate() {
     this.remount();
   }
+
+  getChildReference() {
+    var parent = this.getParent(),
+        child = this;
+
+    return reference(parent, child);
+  }
 }
 
 module.exports = ReactElement;
 
-//   mount(parent, reference, context) {
-//     super.mount(parent, reference);
-//
-//     this.children.forEach(function(child) {
-//       child.mount(childParent, childReference, childContext);
-//     });
-//
-//     this.componentDidMount(context);
-//   }
-//
-//   unmount(context) {
-//     this.context = context;
-//
-//     this.componentWillUnmount();
-//
-//     const childContext = this.getChildContext() || context;
-//
-//     this.children.forEach(function(child) {
-//       child.unmount(childContext);
-//     });
-//   }
-//
-//   remount() {
-//     this.children.forEach(function(child) {
-//       child.remove();
-//     });
-//
-//     this.children = helpers.toArray(this.render());
-//
-//     const childParent = this,
-//           childReference = this.getChildReference(),
-//           childContext = this.getChildContext() || this.context;
-//
-//     this.children.forEach(function(child) {
-//       child.mount(childParent, childReference, childContext);
-//     }.bind(this));
-//   }
-////
-//
-//   getChildReference() {
-//     var parent = this.getParent(),
-//         child = this;
-//
-//     return reference(parent, child);
-//   }
-// }
-//
-//
-// function reference(parent, child) {
-//   var reference = findReference(parent, child),
-//       parentDOMElement = parent.getDOMElement();
-//
-//   while (reference === null && parentDOMElement === null) {
-//     child = parent;
-//     parent = parent.getParent();
-//
-//     reference = findReference(parent, child);
-//     parentDOMElement = parent.getDOMElement();
-//   }
-//
-//   return reference;
-// }
-//
-// function findReference(parent, child) {
-//   const children = parent.getChildren(),
-//         remainingChildren = helpers.remaining(child, children);
-//
-//   return remainingChildren.reduce(function(reference, remainingChild) {
-//     if (reference === null) {
-//       var remainingChildDOMElement = remainingChild.getDOMElement();
-//
-//       if (remainingChildDOMElement !== null) {
-//         reference = remainingChild;
-//       } else {
-//         child = null;
-//         parent = remainingChild;
-//
-//         reference = findReference(parent, child);
-//       }
-//     }
-//
-//     return reference;
-//   }, null);
-// }
+function reference(parent, child) {
+  var reference = findReference(parent, child),
+      parentDOMElement = parent.getDOMElement();
+
+  while (reference === null && parentDOMElement === null) {
+    child = parent;
+    parent = parent.getParent();
+
+    reference = findReference(parent, child);
+    parentDOMElement = parent.getDOMElement();
+  }
+
+  return reference;
+}
+
+function findReference(parent, child) {
+  const children = parent.getChildren(),
+        remainingChildren = helpers.remaining(child, children);
+
+  return remainingChildren.reduce(function(reference, remainingChild) {
+    if (reference === null) {
+      var remainingChildDOMElement = remainingChild.getDOMElement();
+
+      if (remainingChildDOMElement !== null) {
+        reference = remainingChild;
+      } else {
+        child = null;
+        parent = remainingChild;
+
+        reference = findReference(parent, child);
+      }
+    }
+
+    return reference;
+  }, null);
+}

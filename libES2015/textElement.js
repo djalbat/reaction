@@ -13,8 +13,8 @@ class TextElement extends Element {
     super(domElement, props);
   }
 
-  mount(parent, context) {
-    super.mount(parent);
+  mount(parent, reference, context) {
+    super.mount(parent, reference);
   }
   
   unmount(context) {

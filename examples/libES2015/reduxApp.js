@@ -134,8 +134,8 @@ class ReduxApp {
     class FilterLink extends Component {
       componentDidMount() {
         const { store } = this.context;
-    
-        this.unsubscribe = store.subscribe(() => 
+
+        this.unsubscribe = store.subscribe(() =>
            this.forceUpdate()
         );
       }

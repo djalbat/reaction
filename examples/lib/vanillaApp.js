@@ -2,11 +2,17 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var reaction = require('../../index'),
     ReactDOM = reaction.ReactDOM,
     React = reaction.React;
+
+var Component = React.Component;
 
 var VanillaApp = function () {
   function VanillaApp() {
@@ -16,75 +22,50 @@ var VanillaApp = function () {
   _createClass(VanillaApp, null, [{
     key: 'run',
     value: function run() {
+      var A = function (_Component) {
+        _inherits(A, _Component);
+
+        function A() {
+          _classCallCheck(this, A);
+
+          return _possibleConstructorReturn(this, Object.getPrototypeOf(A).apply(this, arguments));
+        }
+
+        _createClass(A, [{
+          key: 'render',
+          value: function render() {
+            var _this2 = this;
+
+            return React.createElement(
+              'a',
+              { onClick: function onClick() {
+                  _this2.forceUpdate();
+                }
+              },
+              'a'
+            );
+          }
+        }]);
+
+        return A;
+      }(Component);
+
+      var B = function B() {
+        return React.createElement(
+          'b',
+          null,
+          'b'
+        );
+      };
+
       var rootDOMElement = document.getElementById('root');
 
-      var Comment = React.createClass({
-        displayName: 'Comment',
-
-        render: function render() {
-          return React.createElement(
-            'div',
-            { className: 'comment' },
-            React.createElement(
-              'p',
-              null,
-              this.props.message
-            )
-          );
-        },
-        componentDidMount: function componentDidMount() {
-          var message = this.props.message;
-
-          console.log('comment mounted with message ' + message);
-        },
-        componentWillUnmount: function componentWillUnmount() {
-          var message = this.props.message;
-
-          console.log('comment will unmount with message ' + message);
-        }
-      });
-
-      var CommentsList = React.createClass({
-        displayName: 'CommentsList',
-
-        getInitialState: function getInitialState() {
-          var messages = ['Hello, world!', 'Hello world again...'],
-              state = {
-            messages: messages
-          };
-
-          return state;
-        },
-        render: function render() {
-          var messages = this.state.messages;
-
-          var comments = messages.map(function (message) {
-            return React.createElement(Comment, { message: message });
-          });
-
-          return React.createElement(
-            'div',
-            { className: 'commentsList' },
-            comments
-          );
-        },
-        componentDidMount: function componentDidMount() {
-          console.log('comments list mounted');
-        }
-      });
-
-      var commentsList = React.createElement(CommentsList, null);
-
-      ReactDOM.render(commentsList, rootDOMElement);
-
-      setTimeout(function () {
-        var messages = ['Hello world, yet again!!!'],
-            state = {
-          messages: messages
-        };
-
-        commentsList.setState(state);
-      }, 1000); ///
+      ReactDOM.render(React.createElement(
+        'p',
+        null,
+        React.createElement(A, null),
+        React.createElement(B, null)
+      ), rootDOMElement);
     }
   }]);
 
