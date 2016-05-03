@@ -8,7 +8,7 @@ For clarity. The code base is tiny compared to [React](https://facebook.github.i
 
 There is now a series of videos to complement the Reaction repo:
 
-**[Reverse Engineering React](https://vimeo.com/album/3928246)**
+**[Reverse Engineering React](https://vimeo.com/album/3930691)**
 
 #### Errata
 
