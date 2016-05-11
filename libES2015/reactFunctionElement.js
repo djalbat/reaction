@@ -18,9 +18,9 @@ class ReactFunctionElement extends ReactElement {
   getInitialState() {
     if (this.reactFunction.getInitialState) {
       return this.reactFunction.getInitialState(this.props, this.context);
-    } else {
-      return {};
     }
+
+    return {};
   }
 
   getChildContext() {
