@@ -27,8 +27,8 @@ class ReactComponentElement extends ReactElement {
     this.reactComponent.componentDidMount.apply(this);
   }
 
-  componentWillUnMount() {
-    this.reactComponent.componentWillUnMount.apply(this);
+  componentWillUnmount() {
+    this.reactComponent.componentWillUnmount.apply(this);
   }
 }
 
