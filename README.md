@@ -15,6 +15,7 @@ There is now a series of videos to complement the Reaction repo:
 - The `toArray()` helper method is now called `guaranteeArray()`.
 - The `index` variable in the `indexOf()` helper method is now initially set to `null`.
 - Component state has been put back by popular demand.
+- The `remount()` method of the `ReactElement` should call the `getChildContext()` as the `mount()` and `unmount()` methods do.
 
 ## Installation
 

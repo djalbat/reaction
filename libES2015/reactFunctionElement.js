@@ -7,10 +7,20 @@ class ReactFunctionElement extends ReactElement {
     super(props);
 
     this.reactFunction = reactFunction;
+
+    this.state = this.getInitialState();
   }
  
   render() {
     return this.reactFunction(this.props, this.context);
+  }
+
+  getInitialState() {
+    if (this.reactFunction.getInitialState) {
+      return this.reactFunction.getInitialState(this.props, this.context);
+    } else {
+      return {};
+    }
   }
 
   getChildContext() {

@@ -997,6 +997,8 @@ var ReactComponentElement = function (_ReactElement) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactComponentElement).call(this, props));
 
     _this.reactComponent = reactComponent;
+
+    _this.state = _this.getInitialState();
     return _this;
   }
 
@@ -1004,6 +1006,11 @@ var ReactComponentElement = function (_ReactElement) {
     key: 'render',
     value: function render() {
       return this.reactComponent.render.apply(this);
+    }
+  }, {
+    key: 'getInitialState',
+    value: function getInitialState() {
+      return this.reactComponent.getInitialState.apply(this);
     }
   }, {
     key: 'getChildContext',
@@ -1016,9 +1023,9 @@ var ReactComponentElement = function (_ReactElement) {
       this.reactComponent.componentDidMount.apply(this);
     }
   }, {
-    key: 'componentWillUnMount',
-    value: function componentWillUnMount() {
-      this.reactComponent.componentWillUnMount.apply(this);
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.reactComponent.componentWillUnmount.apply(this);
     }
   }]);
 
@@ -1111,7 +1118,7 @@ var ReactElement = function (_Element) {
     value: function remount() {
       var childParent = this,
           childReference = this.getChildReference(),
-          childContext = this.context;
+          childContext = this.getChildContext(this.context) || this.context;
 
       this.children.forEach(function (child) {
         child.unmount(childContext);
@@ -1223,6 +1230,8 @@ var ReactFunctionElement = function (_ReactElement) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactFunctionElement).call(this, props));
 
     _this.reactFunction = reactFunction;
+
+    _this.state = _this.getInitialState();
     return _this;
   }
 
@@ -1230,6 +1239,15 @@ var ReactFunctionElement = function (_ReactElement) {
     key: 'render',
     value: function render() {
       return this.reactFunction(this.props, this.context);
+    }
+  }, {
+    key: 'getInitialState',
+    value: function getInitialState() {
+      if (this.reactFunction.getInitialState) {
+        return this.reactFunction.getInitialState(this.props, this.context);
+      } else {
+        return {};
+      }
     }
   }, {
     key: 'getChildContext',
