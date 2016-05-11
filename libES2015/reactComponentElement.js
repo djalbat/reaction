@@ -7,10 +7,16 @@ class ReactComponentElement extends ReactElement {
     super(props);
 
     this.reactComponent = reactComponent;
+
+    this.state = this.getInitialState();
   }
 
   render() {
     return this.reactComponent.render.apply(this);
+  }
+
+  getInitialState() {
+    return this.reactComponent.getInitialState.apply(this);
   }
 
   getChildContext() {
