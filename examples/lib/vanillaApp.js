@@ -8,8 +8,6 @@ var reaction = require('../../index'),
     ReactDOM = reaction.ReactDOM,
     React = reaction.React;
 
-var Component = React.Component;
-
 var VanillaApp = function () {
   function VanillaApp() {
     _classCallCheck(this, VanillaApp);
@@ -38,14 +36,28 @@ var VanillaApp = function () {
           var message = this.props.message;
 
           console.log('comment mounted with message ' + message);
+        },
+        componentWillUnmount: function componentWillUnmount() {
+          var message = this.props.message;
+
+          console.log('comment unmounted with message ' + message);
         }
       });
 
       var CommentsList = React.createClass({
         displayName: 'CommentsList',
+        getInitialState: function getInitialState() {
+          var messages = ["Hello, world!", "Hello world again..."],
+              state = {
+            messages: messages
+          };
+
+          return state;
+        },
+
 
         render: function render() {
-          var messages = ["Hello, world!", "Hello world again..."];
+          var messages = this.state.messages;
 
           var comments = messages.map(function (message) {
             return React.createElement(Comment, { message: message });
@@ -65,6 +77,15 @@ var VanillaApp = function () {
       var commentsList = React.createElement(CommentsList, null);
 
       ReactDOM.render(commentsList, rootDOMElement);
+
+      setTimeout(function () {
+        var messages = ["Hello world yet again!!!"],
+            state = {
+          messages: messages
+        };
+
+        commentsList.setState(state);
+      }, 1000); ///
     }
   }]);
 

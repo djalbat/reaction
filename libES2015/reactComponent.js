@@ -9,6 +9,10 @@ class ReactComponent {
     ///
   }
   
+  getInitialState() {
+    return {};
+  }
+  
   getChildContext() {
     return undefined;
   }

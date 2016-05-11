@@ -14,6 +14,7 @@ There is now a series of videos to complement the Reaction repo:
 
 - The `toArray()` helper method is now called `guaranteeArray()`.
 - The `index` variable in the `indexOf()` helper method is now initially set to `null`.
+- Component state has been put back by popular demand.
 
 ## Installation
 
@@ -63,7 +64,6 @@ Contexts are handled differently. React elements can only pass down a context to
 
 ## Functionality that is not supported
 
-- Component state. Use Redux!
 - Of the component lifecycle, all methods except `componentDidMount()` and `componentWillUnmount()` are *not* supported.
 
 ## Contact

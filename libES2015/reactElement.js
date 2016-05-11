@@ -9,6 +9,8 @@ class ReactElement extends Element {
 
     super(domElement, props);
 
+    this.state = undefined;
+
     this.context = undefined;
   }
 
@@ -61,6 +63,12 @@ class ReactElement extends Element {
   }
 
   forceUpdate() {
+    this.remount();
+  }
+
+  setState(state) {
+    this.state = state;
+
     this.remount();
   }
 

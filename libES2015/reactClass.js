@@ -1,8 +1,9 @@
 'use strict';
 
 class ReactClass {
-  constructor(render, getChildContext, componentDidMount, componentWillUnmount) {
+  constructor(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount) {
     if (render) { this.render = render; }
+    if (getInitialState) { this.getInitialState = getInitialState; }
     if (getChildContext) { this.getChildContext = getChildContext; }
     if (componentDidMount) { this.componentDidMount = componentDidMount; }
     if (componentWillUnmount) { this.componentWillUnmount = componentWillUnmount; }
@@ -10,6 +11,10 @@ class ReactClass {
 
   render() {
     ///
+  }
+
+  getInitialState() {
+    return {};
   }
 
   getChildContext() {
@@ -26,11 +31,12 @@ class ReactClass {
 
   static fromObject(object) {
     var render = object['render'],
+        getInitialState = object['getInitialState'],
         getChildContext = object['getChildContext'],
         componentDidMount = object['componentDidMount'],
         componentWillUnmount = object['componentWillUnmount'];
    
-    return new ReactClass(render, getChildContext, componentDidMount, componentWillUnmount);
+    return new ReactClass(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount);
   }
 }
 
