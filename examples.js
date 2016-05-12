@@ -386,8 +386,6 @@ var reaction = require('../../index'),
     ReactDOM = reaction.ReactDOM,
     React = reaction.React;
 
-var Component = React.Component;
-
 var VanillaApp = function () {
   function VanillaApp() {
     _classCallCheck(this, VanillaApp);
@@ -416,14 +414,28 @@ var VanillaApp = function () {
           var message = this.props.message;
 
           console.log('comment mounted with message ' + message);
+        },
+        componentWillUnmount: function componentWillUnmount() {
+          var message = this.props.message;
+
+          console.log('comment unmounted with message ' + message);
         }
       });
 
       var CommentsList = React.createClass({
         displayName: 'CommentsList',
+        getInitialState: function getInitialState() {
+          var messages = ["Hello, world!", "Hello world again..."],
+              state = {
+            messages: messages
+          };
+
+          return state;
+        },
+
 
         render: function render() {
-          var messages = ["Hello, world!", "Hello world again..."];
+          var messages = this.state.messages;
 
           var comments = messages.map(function (message) {
             return React.createElement(Comment, { message: message });
@@ -443,6 +455,15 @@ var VanillaApp = function () {
       var commentsList = React.createElement(CommentsList, null);
 
       ReactDOM.render(commentsList, rootDOMElement);
+
+      setTimeout(function () {
+        var messages = ["Hello world yet again!!!"],
+            state = {
+          messages: messages
+        };
+
+        commentsList.setState(state);
+      }, 1000); ///
     }
   }]);
 
@@ -799,11 +820,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ReactClass = function () {
-  function ReactClass(render, getChildContext, componentDidMount, componentWillUnmount) {
+  function ReactClass(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount) {
     _classCallCheck(this, ReactClass);
 
     if (render) {
       this.render = render;
+    }
+    if (getInitialState) {
+      this.getInitialState = getInitialState;
     }
     if (getChildContext) {
       this.getChildContext = getChildContext;
@@ -822,6 +846,11 @@ var ReactClass = function () {
       ///
     }
   }, {
+    key: 'getInitialState',
+    value: function getInitialState() {
+      return {};
+    }
+  }, {
     key: 'getChildContext',
     value: function getChildContext() {
       return undefined;
@@ -836,11 +865,12 @@ var ReactClass = function () {
     key: 'fromObject',
     value: function fromObject(object) {
       var render = object['render'],
+          getInitialState = object['getInitialState'],
           getChildContext = object['getChildContext'],
           componentDidMount = object['componentDidMount'],
           componentWillUnmount = object['componentWillUnmount'];
 
-      return new ReactClass(render, getChildContext, componentDidMount, componentWillUnmount);
+      return new ReactClass(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount);
     }
   }]);
 
@@ -870,6 +900,8 @@ var ReactClassElement = function (_ReactElement) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactClassElement).call(this, props));
 
     _this.reactClass = reactClass;
+
+    _this.state = _this.getInitialState();
     return _this;
   }
 
@@ -877,6 +909,11 @@ var ReactClassElement = function (_ReactElement) {
     key: 'render',
     value: function render() {
       return this.reactClass.render.apply(this);
+    }
+  }, {
+    key: 'getInitialState',
+    value: function getInitialState() {
+      return this.reactClass.getInitialState.apply(this);
     }
   }, {
     key: 'getChildContext',
@@ -917,6 +954,11 @@ var ReactComponent = function () {
       ///
     }
   }, {
+    key: 'getInitialState',
+    value: function getInitialState() {
+      return {};
+    }
+  }, {
     key: 'getChildContext',
     value: function getChildContext() {
       return undefined;
@@ -955,6 +997,8 @@ var ReactComponentElement = function (_ReactElement) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactComponentElement).call(this, props));
 
     _this.reactComponent = reactComponent;
+
+    _this.state = _this.getInitialState();
     return _this;
   }
 
@@ -962,6 +1006,11 @@ var ReactComponentElement = function (_ReactElement) {
     key: 'render',
     value: function render() {
       return this.reactComponent.render.apply(this);
+    }
+  }, {
+    key: 'getInitialState',
+    value: function getInitialState() {
+      return this.reactComponent.getInitialState.apply(this);
     }
   }, {
     key: 'getChildContext',
@@ -974,9 +1023,9 @@ var ReactComponentElement = function (_ReactElement) {
       this.reactComponent.componentDidMount.apply(this);
     }
   }, {
-    key: 'componentWillUnMount',
-    value: function componentWillUnMount() {
-      this.reactComponent.componentWillUnMount.apply(this);
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.reactComponent.componentWillUnmount.apply(this);
     }
   }]);
 
@@ -1039,6 +1088,8 @@ var ReactElement = function (_Element) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactElement).call(this, domElement, props));
 
+    _this.state = undefined;
+
     _this.context = undefined;
     return _this;
   }
@@ -1067,7 +1118,7 @@ var ReactElement = function (_Element) {
     value: function remount() {
       var childParent = this,
           childReference = this.getChildReference(),
-          childContext = this.context;
+          childContext = this.getChildContext(this.context) || this.context;
 
       this.children.forEach(function (child) {
         child.unmount(childContext);
@@ -1097,6 +1148,13 @@ var ReactElement = function (_Element) {
   }, {
     key: 'forceUpdate',
     value: function forceUpdate() {
+      this.remount();
+    }
+  }, {
+    key: 'setState',
+    value: function setState(state) {
+      this.state = state;
+
       this.remount();
     }
   }, {
@@ -1172,6 +1230,8 @@ var ReactFunctionElement = function (_ReactElement) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactFunctionElement).call(this, props));
 
     _this.reactFunction = reactFunction;
+
+    _this.state = _this.getInitialState();
     return _this;
   }
 
@@ -1179,6 +1239,15 @@ var ReactFunctionElement = function (_ReactElement) {
     key: 'render',
     value: function render() {
       return this.reactFunction(this.props, this.context);
+    }
+  }, {
+    key: 'getInitialState',
+    value: function getInitialState() {
+      if (this.reactFunction.getInitialState) {
+        return this.reactFunction.getInitialState(this.props, this.context);
+      }
+
+      return {};
     }
   }, {
     key: 'getChildContext',
@@ -1608,25 +1677,18 @@ function compose() {
     funcs[_key] = arguments[_key];
   }
 
-  if (funcs.length === 0) {
-    return function (arg) {
-      return arg;
-    };
-  } else {
-    var _ret = function () {
-      var last = funcs[funcs.length - 1];
-      var rest = funcs.slice(0, -1);
-      return {
-        v: function v() {
-          return rest.reduceRight(function (composed, f) {
-            return f(composed);
-          }, last.apply(undefined, arguments));
-        }
-      };
-    }();
+  return function () {
+    if (funcs.length === 0) {
+      return arguments.length <= 0 ? undefined : arguments[0];
+    }
 
-    if (typeof _ret === "object") return _ret.v;
-  }
+    var last = funcs[funcs.length - 1];
+    var rest = funcs.slice(0, -1);
+
+    return rest.reduceRight(function (composed, f) {
+      return f(composed);
+    }, last.apply(undefined, arguments));
+  };
 }
 },{}],22:[function(require,module,exports){
 'use strict';
@@ -1638,10 +1700,6 @@ exports["default"] = createStore;
 var _isPlainObject = require('lodash/isPlainObject');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-
-var _symbolObservable = require('symbol-observable');
-
-var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -1681,8 +1739,6 @@ var ActionTypes = exports.ActionTypes = {
  * and subscribe to changes.
  */
 function createStore(reducer, initialState, enhancer) {
-  var _ref2;
-
   if (typeof initialState === 'function' && typeof enhancer === 'undefined') {
     enhancer = initialState;
     initialState = undefined;
@@ -1839,59 +1895,19 @@ function createStore(reducer, initialState, enhancer) {
     dispatch({ type: ActionTypes.INIT });
   }
 
-  /**
-   * Interoperability point for observable/reactive libraries.
-   * @returns {observable} A minimal observable of state changes.
-   * For more information, see the observable proposal:
-   * https://github.com/zenparsing/es-observable
-   */
-  function observable() {
-    var _ref;
-
-    var outerSubscribe = subscribe;
-    return _ref = {
-      /**
-       * The minimal observable subscription method.
-       * @param {Object} observer Any object that can be used as an observer.
-       * The observer object should have a `next` method.
-       * @returns {subscription} An object with an `unsubscribe` method that can
-       * be used to unsubscribe the observable from the store, and prevent further
-       * emission of values from the observable.
-       */
-
-      subscribe: function subscribe(observer) {
-        if (typeof observer !== 'object') {
-          throw new TypeError('Expected the observer to be an object.');
-        }
-
-        function observeState() {
-          if (observer.next) {
-            observer.next(getState());
-          }
-        }
-
-        observeState();
-        var unsubscribe = outerSubscribe(observeState);
-        return { unsubscribe: unsubscribe };
-      }
-    }, _ref[_symbolObservable2["default"]] = function () {
-      return this;
-    }, _ref;
-  }
-
   // When a store is created, an "INIT" action is dispatched so that every
   // reducer returns their initial state. This effectively populates
   // the initial state tree.
   dispatch({ type: ActionTypes.INIT });
 
-  return _ref2 = {
+  return {
     dispatch: dispatch,
     subscribe: subscribe,
     getState: getState,
     replaceReducer: replaceReducer
-  }, _ref2[_symbolObservable2["default"]] = observable, _ref2;
+  };
 }
-},{"lodash/isPlainObject":28,"symbol-observable":29}],23:[function(require,module,exports){
+},{"lodash/isPlainObject":28}],23:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2107,38 +2123,5 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"./_getPrototype":25,"./_isHostObject":26,"./isObjectLike":27}],29:[function(require,module,exports){
-(function (global){
-/* global window */
-'use strict';
-
-module.exports = require('./ponyfill')(global || window || this);
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill":30}],30:[function(require,module,exports){
-'use strict';
-
-module.exports = function symbolObservablePonyfill(root) {
-	var result;
-	var Symbol = root.Symbol;
-
-	if (typeof Symbol === 'function') {
-		if (Symbol.observable) {
-			result = Symbol.observable;
-		} else {
-			if (typeof Symbol.for === 'function') {
-				result = Symbol.for('observable');
-			} else {
-				result = Symbol('observable');
-			}
-			Symbol.observable = result;
-		}
-	} else {
-		result = '@@observable';
-	}
-
-	return result;
-};
-
-},{}]},{},[1])(1)
+},{"./_getPrototype":25,"./_isHostObject":26,"./isObjectLike":27}]},{},[1])(1)
 });

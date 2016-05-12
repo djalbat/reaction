@@ -7,10 +7,16 @@ class ReactComponentElement extends ReactElement {
     super(props);
 
     this.reactComponent = reactComponent;
+
+    this.state = this.getInitialState();
   }
 
   render() {
     return this.reactComponent.render.apply(this);
+  }
+
+  getInitialState() {
+    return this.reactComponent.getInitialState.apply(this);
   }
 
   getChildContext() {
@@ -21,8 +27,8 @@ class ReactComponentElement extends ReactElement {
     this.reactComponent.componentDidMount.apply(this);
   }
 
-  componentWillUnMount() {
-    this.reactComponent.componentWillUnMount.apply(this);
+  componentWillUnmount() {
+    this.reactComponent.componentWillUnmount.apply(this);
   }
 }
 

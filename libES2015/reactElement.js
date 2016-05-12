@@ -9,6 +9,8 @@ class ReactElement extends Element {
 
     super(domElement, props);
 
+    this.state = undefined;
+
     this.context = undefined;
   }
 
@@ -33,7 +35,7 @@ class ReactElement extends Element {
   remount() {
     const childParent = this,
           childReference = this.getChildReference(),
-          childContext = this.context;
+          childContext = this.getChildContext(this.context) || this.context;
 
     this.children.forEach(function(child) {
       child.unmount(childContext);
@@ -61,6 +63,12 @@ class ReactElement extends Element {
   }
 
   forceUpdate() {
+    this.remount();
+  }
+
+  setState(state) {
+    this.state = state;
+
     this.remount();
   }
 

@@ -10,12 +10,14 @@ For clarity. The code base is tiny compared to [React](https://facebook.github.i
 
 There is now a series of videos to complement the Reaction repo:
 
-**[Reverse Engineering React](https://vimeo.com/album/3928246)**
+**[Reverse Engineering React](https://vimeo.com/album/3930691)**
 
 #### Errata
 
 - The `toArray()` helper method is now called `guaranteeArray()`.
 - The `index` variable in the `indexOf()` helper method is now initially set to `null`.
+- Component state has been put back by popular demand.
+- The `remount()` method of the `ReactElement` should call the `getChildContext()` as the `mount()` and `unmount()` methods do.
 
 ## Installation
 
@@ -65,7 +67,6 @@ Contexts are handled differently. React elements can only pass down a context to
 
 ## Functionality that is not supported
 
-- Component state. Use Redux!
 - Of the component lifecycle, all methods except `componentDidMount()` and `componentWillUnmount()` are *not* supported.
 
 ## Contact
