@@ -1,0 +1,126 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@3.7.5
+3 info using node@v5.6.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/home/james/Development/Reaction',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /home/james/.npm/reaction/1.6.5/package.tgz not in flight; packing
+9 verbose correctMkdir /home/james/.npm correctMkdir not in flight; initializing
+10 info lifecycle reaction@1.6.5~prepublish: reaction@1.6.5
+11 silly lifecycle reaction@1.6.5~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/home/james/.npm/reaction/1.6.5/package.tgz',
+12 verbose tar pack   '/home/james/Development/Reaction' ]
+13 verbose tarball /home/james/.npm/reaction/1.6.5/package.tgz
+14 verbose folder /home/james/Development/Reaction
+15 verbose addLocalTarball adding from inside cache /home/james/.npm/reaction/1.6.5/package.tgz
+16 verbose correctMkdir /home/james/.npm correctMkdir not in flight; initializing
+17 silly cache afterAdd reaction@1.6.5
+18 verbose afterAdd /home/james/.npm/reaction/1.6.5/package/package.json not in flight; writing
+19 verbose correctMkdir /home/james/.npm correctMkdir not in flight; initializing
+20 verbose afterAdd /home/james/.npm/reaction/1.6.5/package/package.json written
+21 silly publish { name: 'reaction',
+21 silly publish   author: { name: 'James Smith' },
+21 silly publish   version: '1.6.5',
+21 silly publish   license: 'MIT',
+21 silly publish   repository:
+21 silly publish    { type: 'git',
+21 silly publish      url: 'git+https://github.com/djalbat/Reaction.git' },
+21 silly publish   dependencies: {},
+21 silly publish   devDependencies:
+21 silly publish    { babel: '^6.5.2',
+21 silly publish      'babel-cli': '^6.7.5',
+21 silly publish      'babel-plugin-transform-react-jsx': '^6.7.5',
+21 silly publish      'babel-preset-es2015': '^6.6.0',
+21 silly publish      'babel-preset-react': '^6.5.0',
+21 silly publish      browserify: '^13.0.0',
+21 silly publish      'chokidar-cli': '^1.2.0',
+21 silly publish      'npm-update-outdated': '^0.1.6',
+21 silly publish      redux: '^3.4.0' },
+21 silly publish   scripts:
+21 silly publish    { 'clean:lib': 'rm -rf ./lib/*',
+21 silly publish      'clean:examples': 'rm -rf ./examples/lib/* rm ./exapmles.js',
+21 silly publish      clean: 'npm run clean:lib && npm run clean:examples',
+21 silly publish      'babel:lib': 'babel ./libES2015 --presets=es2015 --out-dir=./lib',
+21 silly publish      'babel:examples': 'babel ./examples/libES2015 --presets es2015,react --plugins transform-react-jsx --out-dir ./examples/lib',
+21 silly publish      'browserify:examples': 'browserify ./examples/index.js --standalone examples > ./examples.js',
+21 silly publish      'babel:lib-debug': 'babel ./libES2015 --presets=es2015 --source-maps inline --out-dir=./lib',
+21 silly publish      'babel:examples-debug': 'babel ./examples/libES2015 --presets es2015,react --plugins transform-react-jsx --source-maps inline --out-dir ./examples/lib',
+21 silly publish      'browserify:examples-debug': 'browserify ./examples/index.js --standalone examples --debug > ./examples.js',
+21 silly publish      babel: 'npm run babel:lib && npm run babel:examples',
+21 silly publish      browserify: 'npm run browserify:examples',
+21 silly publish      build: 'npm run clean && npm run babel && npm run browserify',
+21 silly publish      watch: 'npm run build && chokidar \'./index.js\' \'./examples/index.js\' \'./libES2015/**/*.js\' \'./examples/libES2015/**/*.js\' -c \'npm run build\'',
+21 silly publish      'babel-debug': 'npm run babel:lib-debug && npm run babel:examples-debug',
+21 silly publish      'browserify-debug': 'npm run browserify:examples-debug',
+21 silly publish      'build-debug': 'npm run clean && npm run babel-debug && npm run browserify-debug',
+21 silly publish      'watch-debug': 'npm run build-debug && chokidar \'./index.js\' \'./examples/index.js\' \'./libES2015/**/*.js\' \'./examples/libES2015/**/*.js\' -c \'npm run build-debug\'',
+21 silly publish      'update-outdated': 'npm-update-outdated',
+21 silly publish      git: './bashScripts/git.sh' },
+21 silly publish   readme: '# Reaction\n\nAn alternative implementation of React.\n\n## Why?\n\nFor clarity. The code base is tiny compared to [React](https://facebook.github.io/react/) but React\'s core functionality is nonetheless implemented faithfully. It lead to a greater appreciation of React.\n\n## Reverse Engineering React\n\nThere is now a series of videos to complement the Reaction repo:\n\n**[Reverse Engineering React](https://vimeo.com/album/3928246)**\n\n#### Errata\n\n- The `toArray()` helper method is now called `guaranteeArray()`.\n- The `index` variable in the `indexOf()` helper method is now initially set to `null`.\n\n## Installation\n\n    npm reaction\n\n## Usage\n\n```js\nvar reaction = require(\'reaction\'),\n    ReactDOM = reaction.ReactDOM,\n    React = reaction.React;\n```\n\nNow just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind only  subset of React\'s functionality is supported.\n\nYou can also clone the repository with [git](https://git-scm.com/)...\n\n    git clone https://github.com/djalbat/Reaction.git\n\n...then install the necessary modules with [npm](https://www.npmjs.com/):\n\n    npm install\n\nYou will need to do this if you want to look at the examples.\n\n## Examples\n\nLaunch the `examples.html` file in the root folder. There is a Redux as well as a vanilla example application.\n\n## Compiling from source\n\nAutomation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the `package.json` file. The pertinent commands are:\n\n    npm run build\n    npm run watch\n\n## Supported functionality\n\n- React classes\n- React components\n- React functions\n- References\n- Contexts\n- Mounting and unmounting\n\nContexts are handled differently. React elements can only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of functions, so you can make programmatic decisions about what context to pass down to children.\n\n## Functionality that is not supported\n\n- Component state. Use Redux!\n- Of the component lifecycle, all methods except `componentDidMount()` and `componentWillUnmount()` are *not* supported.\n\n## Contact\n\n- james.smith@djalbat.com\n- http://djalbat.com\n',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: '59b16db6cb78d366d13ab4fdc637adac272e97ca',
+21 silly publish   description: 'An alternative implementation of React.',
+21 silly publish   bugs: { url: 'https://github.com/djalbat/Reaction/issues' },
+21 silly publish   homepage: 'https://github.com/djalbat/Reaction#readme',
+21 silly publish   _id: 'reaction@1.6.5',
+21 silly publish   _shasum: '67fff26cfe341b48c8714ed92f26fd5265dc935e',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name reaction
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry https://registry.npmjs.org/
+26 silly mapToRegistry uri https://registry.npmjs.org/reaction
+27 verbose publish registryBase https://registry.npmjs.org/
+28 silly publish uploading /home/james/.npm/reaction/1.6.5/package.tgz
+29 verbose request uri https://registry.npmjs.org/reaction
+30 verbose request sending authorization for write operation
+31 info attempt registry request try #1 at 7:25:49 PM
+32 verbose request using bearer token for auth
+33 verbose request id 7dbdcbb3403500c4
+34 http request PUT https://registry.npmjs.org/reaction
+35 http 403 https://registry.npmjs.org/reaction
+36 verbose headers { 'content-type': 'application/json',
+36 verbose headers   'cache-control': 'max-age=300',
+36 verbose headers   'content-length': '95',
+36 verbose headers   'accept-ranges': 'bytes',
+36 verbose headers   date: 'Thu, 12 May 2016 18:25:48 GMT',
+36 verbose headers   via: '1.1 varnish',
+36 verbose headers   connection: 'keep-alive',
+36 verbose headers   'x-served-by': 'cache-ams4137-AMS',
+36 verbose headers   'x-cache': 'MISS',
+36 verbose headers   'x-cache-hits': '0',
+36 verbose headers   'x-timer': 'S1463077546.863345,VS0,VE1728',
+36 verbose headers   vary: 'Accept-Encoding' }
+37 verbose request invalidating /home/james/.npm/registry.npmjs.org/reaction on PUT
+38 error publish Failed PUT 403
+39 verbose stack Error: "You cannot publish over the previously published version 1.6.5." : reaction
+39 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+39 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+39 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+39 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:199:22)
+39 verbose stack     at emitTwo (events.js:100:13)
+39 verbose stack     at Request.emit (events.js:185:7)
+39 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1036:10)
+39 verbose stack     at emitOne (events.js:95:20)
+39 verbose stack     at Request.emit (events.js:182:7)
+39 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:963:12)
+40 verbose statusCode 403
+41 verbose pkgid reaction
+42 verbose cwd /home/james/Development/Reaction
+43 error Linux 3.16.0-71-generic
+44 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+45 error node v5.6.0
+46 error npm  v3.7.5
+47 error code E403
+48 error "You cannot publish over the previously published version 1.6.5." : reaction
+49 error If you need help, you may report this error at:
+49 error     <https://github.com/npm/npm/issues>
+50 verbose exit [ 1, true ]
