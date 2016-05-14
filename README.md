@@ -4,7 +4,7 @@ An alternative implementation of React.
 
 #### Why?
 
-For clarity. The code base is tiny compared to [React](https://facebook.github.io/react/) but React's core functionality is nonetheless implemented faithfully. It lead to a greater appreciation of React.
+For clarity. The code base is tiny compared to [React](https://facebook.github.io/react/) but React's core functionality is nonetheless implemented faithfully. It led to a greater appreciation of React.
 
 There is now a series of videos to complement the Reaction repo:
 
