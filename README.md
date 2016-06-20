@@ -4,7 +4,7 @@ An alternative implementation of React.
 
 ## Why?
 
-For clarity. The code base is tiny compared to [React](https://facebook.github.io/react/) but React's core functionality is nonetheless implemented faithfully. It lead to a greater appreciation of React.
+For clarity. The code base is tiny compared to [React](https://facebook.github.io/react/) but React's core functionality is nonetheless implemented faithfully. It led to a greater appreciation of React.
 
 ## Reverse Engineering React
 
@@ -17,7 +17,7 @@ There is now a series of videos to complement the Reaction repo:
 - The `toArray()` helper method is now called `guaranteeArray()`.
 - The `index` variable in the `indexOf()` helper method is now initially set to `null`.
 - Component state has been put back by popular demand.
-- The `remount()` method of the `ReactElement` should call the `getChildContext()` as the `mount()` and `unmount()` methods do.
+- The `remount()` method of the `ReactElement` should call the `getChildContext()` method as the `mount()` and `unmount()` methods do.
 
 ## Installation
 
