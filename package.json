@@ -1,9 +1,14 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "1.6.10",
+  "version": "1.6.11",
   "license": "MIT",
-  "repository": "https://github.com/djalbat/Reaction",
+  "homepage": "https://github.com/djalbat/Reaction",
+  "description": "An alternative implementation of React.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/djalbat/Reaction"
+  },
   "dependencies": {},
   "devDependencies": {
     "babel": "^6.5.2",
