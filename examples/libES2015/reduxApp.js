@@ -264,13 +264,14 @@ class ReduxApp {
           store: this.props.store
         };
       }
+
       render() {
         return this.props.children;
       }
     }
     
     const rootDOMElement = document.getElementById('root');
-    
+
     ReactDOM.render(
       <Provider store={createStore(todoApp)}>
         <TodoApp />
