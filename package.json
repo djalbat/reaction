@@ -1,7 +1,7 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "1.6.13",
+  "version": "1.6.14",
   "license": "MIT",
   "homepage": "https://github.com/djalbat/Reaction",
   "description": "An alternative implementation of React.",
@@ -23,7 +23,7 @@
   },
   "scripts": {
     "clean:lib": "rm -rf ./lib/*",
-    "clean:examples": "rm -rf ./examples/lib/* rm ./exapmles.js",
+    "clean:examples": "rm -rf ./examples/lib/* rm ./examples.js",
     "clean": "npm run clean:lib && npm run clean:examples",
     "babel:lib": "babel ./es6 --presets=es2015 --out-dir=./lib",
     "babel:examples": "babel ./examples/es6 --presets es2015,react --plugins transform-react-jsx --out-dir ./examples/lib",
