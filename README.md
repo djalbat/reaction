@@ -24,16 +24,6 @@ There is now a series of videos to complement the Reaction repo:
 
     npm reaction
 
-## Usage
-
-```js
-var reaction = require('reaction'),
-    ReactDOM = reaction.ReactDOM,
-    React = reaction.React;
-```
-
-Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind only  subset of React's functionality is supported.
-
 You can also clone the repository with [git](https://git-scm.com/)...
 
     git clone https://github.com/djalbat/Reaction.git
@@ -49,6 +39,16 @@ You will need to do this if you want to look at the examples.
 Launch the `examples.html` file in the root folder. There is a Redux as well as a vanilla example application.
 
 ## Compiling from source
+
+## Usage
+
+```js
+var reaction = require('reaction'),
+    ReactDOM = reaction.ReactDOM,
+    React = reaction.React;
+```
+
+Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind only  subset of React's functionality is supported.
 
 Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the `package.json` file. The pertinent commands are:
 
