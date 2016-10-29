@@ -16,9 +16,9 @@ There is now a series of complementary videos:
 
 - The `toArray()` helper method is now called `guaranteeArray()`.
 - The `index` variable in the `indexOf()` helper method is now initially set to `null`.
-- Component state has been put back by popular demand.
 - The `remount()` method of the `ReactElement` should call the `getChildContext()` method.
-- the `libES2015` directories in both the root and `examples` directories have been renamed `es6`.
+- The `libES2015` directories in both the root and `examples` directories have been renamed `es6`.
+- Component state has been put back by popular demand.
 
 ## Installation
 
