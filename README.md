@@ -26,7 +26,7 @@ With [npm](https://www.npmjs.com/):
 
     npm install reaction
 
-You can also clone the repository with [git](https://git-scm.com/)...
+You can also clone the repository with [Git](https://git-scm.com/)...
 
     git clone https://github.com/djalbat/Reaction.git
 
