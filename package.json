@@ -1,7 +1,7 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "1.6.15",
+  "version": "1.6.16",
   "license": "MIT",
   "homepage": "https://github.com/djalbat/Reaction",
   "description": "An alternative implementation of React.",
@@ -18,27 +18,25 @@
     "babel-preset-react": "^6.5.0",
     "browserify": "^13.0.0",
     "chokidar-cli": "^1.2.0",
-    "npm-update-outdated": "^0.1.6",
     "redux": "^3.4.0"
   },
   "scripts": {
-    "clean:lib": "rm -rf ./lib/*",
-    "clean:examples": "rm -rf ./examples/lib/* rm ./examples.js",
+    "clean:lib": "rm -rf ./lib",
+    "clean:examples": "rm -rf ./examples",
     "clean": "npm run clean:lib && npm run clean:examples",
     "babel:lib": "babel ./es6 --presets=es2015 --out-dir=./lib",
-    "babel:examples": "babel ./examples/es6 --presets es2015,react --plugins transform-react-jsx --out-dir ./examples/lib",
-    "browserify:examples": "browserify ./examples/index.js --standalone examples > ./examples.js",
     "babel:lib-debug": "babel ./es6 --presets=es2015 --source-maps inline --out-dir=./lib",
+    "babel:examples": "babel ./examples/es6 --presets es2015,react --plugins transform-react-jsx --out-dir ./examples/lib",
     "babel:examples-debug": "babel ./examples/es6 --presets es2015,react --plugins transform-react-jsx --source-maps inline --out-dir ./examples/lib",
-    "browserify:examples-debug": "browserify ./examples/index.js --standalone examples --debug > ./examples.js",
     "babel": "npm run babel:lib && npm run babel:examples",
-    "browserify": "npm run browserify:examples",
-    "build": "npm run clean && npm run babel && npm run browserify",
-    "watch": "npm run build && chokidar 'index.js' './examples/index.js' './es6/**/*.js' './examples/es6/**/*.js' -c 'npm run build'",
     "babel-debug": "npm run babel:lib-debug && npm run babel:examples-debug",
+    "browserify:examples": "browserify ./examples/index.js --standalone examples > ./examples.js",
+    "browserify:examples-debug": "browserify ./examples/index.js --standalone examples --debug > ./examples.js",
+    "browserify": "npm run browserify:examples",
     "browserify-debug": "npm run browserify:examples-debug",
+    "build": "npm run clean && npm run babel && npm run browserify",
     "build-debug": "npm run clean && npm run babel-debug && npm run browserify-debug",
-    "watch-debug": "npm run build-debug && chokidar 'index.js' './examples/index.js' './es6/**/*.js' './examples/es6/**/*.js' -c 'npm run build-debug'",
-    "update-outdated": "npm-update-outdated"
+    "watch": "npm run build && chokidar 'index.js' './examples/index.js' './es6/**/*.js' './examples/es6/**/*.js' -c 'npm run build'",
+    "watch-debug": "npm run build-debug && chokidar 'index.js' './examples/index.js' './es6/**/*.js' './examples/es6/**/*.js' -c 'npm run build-debug'"
   }
 }
