@@ -4,7 +4,7 @@ An alternative implementation of React.
 
 ## Why?
 
-For clarity. The code base is tiny compared to [React](https://facebook.github.io/react/) but React's core functionality is nonetheless implemented faithfully. It led to a greater appreciation of React.
+For clarity. The code base is tiny compared to [React](https://facebook.github.io/react/) but React's core functionality is nonetheless implemented faithfully, as far as it goes. It led to a greater appreciation of React.
 
 ## Reverse Engineering React
 
@@ -19,6 +19,7 @@ There is now a series of complementary videos:
 - The `remount()` method of the `ReactElement` should call the `getChildContext()` method.
 - The `libES2015` directories in both the root and `examples` directories have been renamed `es6`.
 - Component state has been put back by popular demand.
+- The examples have been moved to the `es6` folder.
 
 ## Installation
 

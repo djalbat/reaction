@@ -2,9 +2,8 @@
 
 const Redux = require('redux');
 
-const reaction = require('../../index'),
-      ReactDOM = reaction.ReactDOM,
-      React = reaction.React;
+const React = require('../react'),
+      ReactDOM = require('../reactDOM');
 
 class ReduxApp {
   static run() {
