@@ -1,10 +1,10 @@
 # Reaction
 
-An alternative implementation of React.
+An alternative implementation of [React](https://facebook.github.io/react/).
 
 ## Why?
 
-For clarity. The code base is tiny compared to [React](https://facebook.github.io/react/) but React's core functionality is nonetheless implemented faithfully, as far as it goes. It led to a greater appreciation of React.
+For clarity. The code base is tiny compared to React but React's core functionality is nonetheless implemented faithfully, as far as it goes. It led to a greater appreciation of React.
 
 ## Reverse Engineering React
 
