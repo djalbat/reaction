@@ -14,32 +14,34 @@ class React {
     return ReactClass.fromObject(object);
   }
 
-   static createElement(reactObjectOrDisplayName, properties, ...childArguments) {
-    if (reactObjectOrDisplayName === undefined) {
-      return undefined;
-    }
+   static createElement(firstArgument, properties, ...childArguments) {
+     var element = undefined;
 
-    const children = childrenFromChildArguments(childArguments),
-          props = Object.assign({}, properties, {children: children});
+     if (firstArgument !== undefined) {
+       const children = childrenFromChildArguments(childArguments),
+             props = Object.assign({}, properties, {children: children});
 
-    if (reactObjectOrDisplayName.prototype instanceof ReactComponent) {
-      var reactComponentConstructor = reactObjectOrDisplayName,
-          reactComponent = new reactComponentConstructor();
+       if (firstArgument.prototype instanceof ReactComponent) {
+         var reactComponentConstructor = firstArgument,  ///
+             reactComponent = new reactComponentConstructor();
 
-      return new ReactComponentElement(reactComponent, props);
-    } else if (reactObjectOrDisplayName instanceof ReactClass) {
-      var reactClass = reactObjectOrDisplayName;
+         element = new ReactComponentElement(reactComponent, props);
+       } else if (firstArgument instanceof ReactClass) {
+         var reactClass = firstArgument; ///
 
-      return new ReactClassElement(reactClass, props);
-    } else if (typeof reactObjectOrDisplayName === 'function') {
-      var reactFunction = reactObjectOrDisplayName;
+         element = new ReactClassElement(reactClass, props);
+       } else if (typeof firstArgument === 'function') {
+         var reactFunction = firstArgument;  ///
 
-      return new ReactFunctionElement(reactFunction, props);
-    } else {
-      var displayName = reactObjectOrDisplayName;
+         element = new ReactFunctionElement(reactFunction, props);
+       } else {
+         var displayName = firstArgument;  ///
 
-      return new DisplayElement(displayName, props);
-    }
+         element = new DisplayElement(displayName, props);
+       }
+     }
+
+     return element;
   }
 }
 
