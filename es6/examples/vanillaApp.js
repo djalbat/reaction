@@ -6,7 +6,7 @@ const React = require('../react'),
 const vanillaApp = () => {
   const rootDOMElement = document.getElementById('root');
 
-  var Comment = React.createClass({
+  const Comment = React.createClass({
     render: function() {
       return (
 
@@ -32,7 +32,7 @@ const vanillaApp = () => {
     }
   });
 
-  var CommentsList = React.createClass({
+  const CommentsList = React.createClass({
     getInitialState() {
       const messages = [
               "Hello, world!",
@@ -46,11 +46,10 @@ const vanillaApp = () => {
     },
 
     render: function() {
-      var messages = this.state.messages;
-
-      var comments = messages.map(function(message) {
-        return <Comment message={message} />;
-      });
+      const messages = this.state.messages,
+          comments = messages.map(function(message) {
+            return <Comment message={message} />;
+          });
 
       return (
 
@@ -66,7 +65,7 @@ const vanillaApp = () => {
     }
   });
 
-  var commentsList = <CommentsList />;
+  const commentsList = <CommentsList />;
 
   ReactDOM.render(commentsList, rootDOMElement);
 

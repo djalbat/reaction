@@ -73,8 +73,8 @@ class ReactElement extends Element {
   }
 
   getChildReference() {
-    var parent = this.getParent(),
-        child = this;
+    const parent = this.getParent(),
+          child = this;
 
     return reference(parent, child);
   }
@@ -83,10 +83,10 @@ class ReactElement extends Element {
 module.exports = ReactElement;
 
 function reference(parent, child) {
-  var reference = findReference(parent, child),
+  let reference = findReference(parent, child),
       parentDOMElement = parent.getDOMElement();
 
-  while (reference === null && parentDOMElement === null) {
+  while ((reference === null) && (parentDOMElement === null)) {
     child = parent;
     parent = parent.getParent();
 
@@ -103,7 +103,7 @@ function findReference(parent, child) {
 
   return remainingChildren.reduce(function(reference, remainingChild) {
     if (reference === null) {
-      var remainingChildDOMElement = remainingChild.getDOMElement();
+      const remainingChildDOMElement = remainingChild.getDOMElement();
 
       if (remainingChildDOMElement !== null) {
         reference = remainingChild;

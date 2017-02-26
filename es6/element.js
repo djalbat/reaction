@@ -50,10 +50,10 @@ class Element {
     } else if (typeof attributeValue === 'string') {
       this.domElement.setAttribute(attributeName, attributeValue);
     } else if (typeof attributeValue === 'object') {
-      var keys = Object.keys(attributeValue);
+      const keys = Object.keys(attributeValue);
 
       keys.forEach(function (key) {
-        var value = attributeValue[key];
+        const value = attributeValue[key];
 
         this.domElement[attributeName][key] = value;
       }.bind(this));
@@ -67,19 +67,20 @@ class Element {
   }
 
   static fromDOMElement(domElement) {
-    var children = [],
-        props = {
-          children: children
-        };
+    const children = [],
+          props = {
+            children: children
+          },
+          element = new Element(domElement, props);
 
-    return new Element(domElement, props);
+    return element;
   }
 }
 
 module.exports = Element;
 
 function parentDOMElement(parent) {
-  var parentDOMElement = parent.getDOMElement();
+  let parentDOMElement = parent.getDOMElement();
 
   while (parentDOMElement === null) {
     parent = parent.getParent();
@@ -91,9 +92,9 @@ function parentDOMElement(parent) {
 }
 
 function referenceDOMElement(reference) {
-  var referenceDOMElement = reference !== null ?
-                              reference.getDOMElement() :
-                                null;
+  const referenceDOMElement = reference !== null ?
+                                reference.getDOMElement() :
+                                  null;
 
   return referenceDOMElement;
 }

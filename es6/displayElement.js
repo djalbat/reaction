@@ -34,26 +34,26 @@ class DisplayElement extends Element {
   }
 
   applyProps() {
-    var propNames = Object.keys(this.props);
+    const propNames = Object.keys(this.props);
 
     propNames.forEach(function(propName) {
-      var propValue = this.props[propName];
+      const propValue = this.props[propName];
 
       if (false) {
 
       } else if (propName === 'ref') {
-        var callback = propValue,
-            domElement = this.getDOMElement();
+        const callback = propValue,
+              domElement = this.getDOMElement();
 
         callback(domElement)
       } else if (propNameIsHandlerName(propName)) {
-        var eventName = eventNameFromPropertyName(propName),
-            handler = propValue;
+        const eventName = eventNameFromPropertyName(propName),
+              handler = propValue;
 
         this.setHandler(eventName, handler);
       } else {
-        var attributeName = propName,
-            attributeValue = propValue;
+        const attributeName = propName,
+              attributeValue = propValue;
 
         this.setAttribute(attributeName, attributeValue);
       }

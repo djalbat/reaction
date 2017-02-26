@@ -23,6 +23,7 @@ There is now a series of complementary videos:
 - In the examples, the static `run()` methods and spurious classes have been replaced with functions.
 - The dependency on [Redux](https://github.com/reactjs/redux) has been replaced with a [barebones, local implementation](https://github.com/djalbat/Reaction/blob/master/es6/examples/redux.js).
 - All children can now be arrays of elements, not just the first.
+- Replaced all the `var`s with `const`s and `let`s!
 
 ## Installation
 

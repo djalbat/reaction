@@ -15,27 +15,27 @@ class React {
   }
 
    static createElement(firstArgument, properties, ...childArguments) {
-     var element = undefined;
+     let element = undefined;
 
      if (firstArgument !== undefined) {
        const children = childrenFromChildArguments(childArguments),
              props = Object.assign({}, properties, {children: children});
 
        if (firstArgument.prototype instanceof ReactComponent) {
-         var reactComponentConstructor = firstArgument,  ///
-             reactComponent = new reactComponentConstructor();
+         const reactComponentConstructor = firstArgument,  ///
+               reactComponent = new reactComponentConstructor();
 
          element = new ReactComponentElement(reactComponent, props);
        } else if (firstArgument instanceof ReactClass) {
-         var reactClass = firstArgument; ///
+         const reactClass = firstArgument; ///
 
          element = new ReactClassElement(reactClass, props);
        } else if (typeof firstArgument === 'function') {
-         var reactFunction = firstArgument;  ///
+         const reactFunction = firstArgument;  ///
 
          element = new ReactFunctionElement(reactFunction, props);
        } else {
-         var displayName = firstArgument;  ///
+         const displayName = firstArgument;  ///
 
          element = new DisplayElement(displayName, props);
        }
@@ -56,8 +56,8 @@ function childrenFromChildArguments(childArguments) {
     return childArguments;
   }, []);
 
-  var children = childArguments.map(function(childArgument) {
-    var child = (childArgument instanceof Element) ?
+  const children = childArguments.map(function(childArgument) {
+    const child = (childArgument instanceof Element) ?
                    childArgument : ///
                      new TextElement(childArgument); ///
 

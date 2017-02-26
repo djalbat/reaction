@@ -11,7 +11,7 @@ const helpers = {
       return array;
     }
     
-    var index = indexOf(element, array);
+    const index = indexOf(element, array);
 
     return array.slice(index + 1);
   }
@@ -20,7 +20,7 @@ const helpers = {
 module.exports = helpers;
 
 function indexOf(element, array) {
-  var index = null;
+  let index = null;
 
   array.some(function(currentElement, currentElementIndex) {
     if (currentElement === element) {

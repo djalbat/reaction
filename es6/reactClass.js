@@ -30,11 +30,11 @@ class ReactClass {
   }
 
   static fromObject(object) {
-    var render = object['render'],
-        getInitialState = object['getInitialState'],
-        getChildContext = object['getChildContext'],
-        componentDidMount = object['componentDidMount'],
-        componentWillUnmount = object['componentWillUnmount'];
+    const render = object['render'],
+          getInitialState = object['getInitialState'],
+          getChildContext = object['getChildContext'],
+          componentDidMount = object['componentDidMount'],
+          componentWillUnmount = object['componentWillUnmount'];
    
     return new ReactClass(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount);
   }
