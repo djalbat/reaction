@@ -10,11 +10,12 @@ const vanillaApp = () => {
     render: function() {
       return (
 
-          <div className="comment">
-            <p>
-              {this.props.message}
-            </p>
-          </div>
+        <div className="comment">
+          <p>
+            {this.props.message}
+          </p>
+        </div>
+
       );
     },
 
@@ -53,9 +54,10 @@ const vanillaApp = () => {
 
       return (
 
-          <div className="commentsList">
-            {comments}
-          </div>
+        <div className="commentsList">
+          {comments}
+        </div>
+
       );
     },
 

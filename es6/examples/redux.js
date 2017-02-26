@@ -48,6 +48,6 @@ const combineReducers = (reducers) => {
   };
 };
 
-const redux = { createStore, combineReducers };
+const Redux = { createStore, combineReducers };
 
-module.exports = redux;
+module.exports = Redux;

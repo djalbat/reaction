@@ -1,8 +1,7 @@
 'use strict';
 
-const Redux = require('./redux');
-
-const React = require('../react'),
+const Redux = require('./redux'),
+      React = require('../react'),
       ReactDOM = require('../reactDOM'),
       { Component } = React,
       { createStore, combineReducers } = Redux;
@@ -90,6 +89,7 @@ const reduxApp = () => {
       >
         {text}
       </li>
+
     );
   };
 
@@ -104,6 +104,7 @@ const reduxApp = () => {
                            }
         />)}
       </ul>
+
     );
   };
 
@@ -124,6 +125,7 @@ const reduxApp = () => {
       >
         {props.children}
       </a>
+
     );
   };
 
@@ -145,6 +147,7 @@ const reduxApp = () => {
       const state = store.getState();
 
       return (
+
         <Link active={
                 this.props.filter === state.visibilityFilter
               }
@@ -157,6 +160,7 @@ const reduxApp = () => {
         >
           {this.props.children}
         </Link>
+
       );
     }
   }
@@ -184,6 +188,7 @@ const reduxApp = () => {
           Add todo
         </button>
       </div>
+
     );
   };
 
@@ -219,6 +224,7 @@ const reduxApp = () => {
                   })
                 }
         />
+
       );
     }
   }
@@ -240,6 +246,7 @@ const reduxApp = () => {
           Active
         </FilterLink>
       </p>
+
     );
   };
 
@@ -251,6 +258,7 @@ const reduxApp = () => {
         <VisibleTodoList />
         <Footer />
       </div>
+
     );
   };
 
