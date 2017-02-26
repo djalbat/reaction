@@ -21,6 +21,7 @@ There is now a series of complementary videos:
 - Component state has been put back by popular demand.
 - The examples have been moved to the `es6` folder.
 - In the examples, the static `run()` methods and spurious classes have been replaced with functions.
+- The dependency on [Redux](https://github.com/reactjs/redux) has been replaced with a [barebones, local implementation](https://github.com/djalbat/Reaction/blob/master/es6/examples/redux.js).
 
 ## Installation
 
