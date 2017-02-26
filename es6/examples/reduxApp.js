@@ -1,6 +1,6 @@
 'use strict';
 
-const Redux = require('redux');
+const Redux = require('./redux');
 
 const React = require('../react'),
       ReactDOM = require('../reactDOM'),
