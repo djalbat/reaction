@@ -43,26 +43,24 @@ class React {
   }
 }
 
-module.exports = React;
-
 React.Component = ReactComponent;
 
+module.exports = React;
+
 function childrenFromChildArguments(childArguments) {
-  var firstChildArgument = first(childArguments);
+  childArguments = childArguments.reduce(function(childArguments, childArgument) {
+    childArguments = childArguments.concat(childArgument);
 
-  if (firstChildArgument instanceof Array) {
-    childArguments = firstChildArgument;
-  }
+    return childArguments;
+  }, []);
 
-  return childArguments.map(function(childArgument) {
-    if (childArgument instanceof Element) {
-      return childArgument;
-    } else {
-      var text = '' + childArgument;  ///
+  var children = childArguments.map(function(childArgument) {
+    var child = (childArgument instanceof Element) ?
+                   childArgument : ///
+                     new TextElement(childArgument); ///
 
-      return new TextElement(text);
-    }
+    return child;
   });
-}
 
-function first(array) { return array[0]; }
+  return children;
+}
