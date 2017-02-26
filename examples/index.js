@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-  VanillaApp: require('../lib/examples/vanillaApp'),
-  ReduxApp: require('../lib/examples/reduxApp')
+  vanillaApp: require('../lib/examples/vanillaApp'),
+  reduxApp: require('../lib/examples/reduxApp')
 };

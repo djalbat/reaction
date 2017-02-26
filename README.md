@@ -20,6 +20,7 @@ There is now a series of complementary videos:
 - The `libES2015` directories in both the root and `examples` directories have been renamed `es6`.
 - Component state has been put back by popular demand.
 - The examples have been moved to the `es6` folder.
+- In the examples, the static `run()` methods and spurious classes have been replaced with functions.
 
 ## Installation
 
