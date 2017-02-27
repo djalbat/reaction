@@ -82,14 +82,14 @@ Contexts are handled slightly differently. React elements can only pass down a c
 
 This methods are meant to be used hand in hand with [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, bar the last, which can only be called against text elements.
 
-- setAttribute(name, value)
-- getAttribute(name)
-- clearAttribute(name)
-- setClass(className)
-- clearClasses()
-- addClass(className)
-- removeClass(className)
-- toggleClass(className)
+- `setAttribute(name, value)`
+- `getAttribute(name)`
+- `clearAttribute(name)`
+- `setClass(className)`
+- `clearClasses()`
+- `addClass(className)`
+- `removeClass(className)`
+- `toggleClass(className)`
 
 ## Contact
 
