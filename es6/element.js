@@ -47,8 +47,6 @@ class Element {
 
     if (false) {
 
-    } else if (typeof attributeValue === 'string') {
-      this.domElement.setAttribute(attributeName, attributeValue);
     } else if (typeof attributeValue === 'object') {
       const keys = Object.keys(attributeValue);
 
@@ -57,8 +55,14 @@ class Element {
 
         this.domElement[attributeName][key] = value;
       }.bind(this));
+    } else if (typeof attributeValue === 'boolean') {
+      if (attributeValue) {
+        attributeValue = attributeName; ///
+
+        this.domElement.setAttribute(attributeName, attributeValue);
+      }
     } else {
-      ///
+      this.domElement.setAttribute(attributeName, attributeValue);
     }
   }
 
