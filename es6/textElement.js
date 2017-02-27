@@ -20,6 +20,21 @@ class TextElement extends Element {
   unmount(context) {
     super.unmount();
   }
+
+  setAttribute(name, value) {
+
+  }
+
+  clearAttribute(name) {
+
+  }
+
+  getText() {
+    const domElement = this.getDOMElement(),
+          text = domElement.nodeValue; ///
+
+    return text;
+  }
 }
 
 module.exports = TextElement;

@@ -19,7 +19,9 @@ class React {
 
      if (firstArgument !== undefined) {
        const children = childrenFromChildArguments(childArguments),
-             props = Object.assign({}, properties, {children: children});
+             props = Object.assign({}, properties, {
+               children: children
+             });
 
        if (firstArgument.prototype instanceof ReactComponent) {
          const reactComponentConstructor = firstArgument,  ///
@@ -58,8 +60,8 @@ function childrenFromChildArguments(childArguments) {
 
   const children = childArguments.map(function(childArgument) {
     const child = (childArgument instanceof Element) ?
-                   childArgument : ///
-                     new TextElement(childArgument); ///
+                     childArgument : ///
+                       new TextElement(childArgument); ///
 
     return child;
   });

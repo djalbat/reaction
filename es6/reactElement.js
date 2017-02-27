@@ -72,6 +72,55 @@ class ReactElement extends Element {
     this.remount();
   }
 
+  setAttribute(name, value) {
+    const firstChild = first(this.children);
+
+    return firstChild.setAttribute(name, value);
+  }
+
+  getAttribute(name) {
+    const firstChild = first(this.children);
+
+    return firstChild.getAttribute(name);
+  }
+
+  clearAttribute(name) {
+    const firstChild = first(this.children);
+
+    firstChild.clearAttribute(name);
+  }
+
+  setClass(className) {
+    const firstChild = first(this.children);
+
+    firstChild.setClass(className);
+  }
+
+  clearClasses() {
+    const firstChild = first(this.children);
+
+    firstChild.clearClasses();
+  }
+
+
+  addClass(className) {
+    const firstChild = first(this.children);
+
+    firstChild.addClass(className);
+  }
+
+  removeClass(className) {
+    const firstChild = first(this.children);
+
+    firstChild.removeClass(className);
+  }
+
+  toggleClass(className) {
+    const firstChild = first(this.children);
+
+    firstChild.toggleClass(className);
+  }
+
   getChildReference() {
     const parent = this.getParent(),
           child = this;
@@ -118,3 +167,6 @@ function findReference(parent, child) {
     return reference;
   }, null);
 }
+
+function first(array) { return array[0]; }
+

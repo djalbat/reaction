@@ -37,33 +37,59 @@ class Element {
     }
   }
 
-  setAttribute(attributeName, attributeValue) {
-    if (attributeName === 'className') {
-      attributeName = 'class';
+  setAttribute(name, value) {
+    if (name === 'className') {
+      name = 'class';
     }
-    if (attributeName === 'htmlFor') {
-      attributeName = 'for';
+    if (name === 'htmlFor') {
+      name = 'for';
     }
 
     if (false) {
 
-    } else if (typeof attributeValue === 'object') {
-      const keys = Object.keys(attributeValue);
+    } else if (typeof value === 'object') {
+      const keys = Object.keys(value);
 
       keys.forEach(function (key) {
-        const value = attributeValue[key];
-
-        this.domElement[attributeName][key] = value;
+        this.domElement[name][key] = value[key];
       }.bind(this));
-    } else if (typeof attributeValue === 'boolean') {
-      if (attributeValue) {
-        attributeValue = attributeName; ///
+    } else if (typeof value === 'boolean') {
+      if (value) {
+        value = name; ///
 
-        this.domElement.setAttribute(attributeName, attributeValue);
+        this.domElement.setAttribute(name, value);
       }
     } else {
-      this.domElement.setAttribute(attributeName, attributeValue);
+      this.domElement.setAttribute(name, value);
     }
+  }
+
+  getAttribute(name) {
+    return this.domElement.getAttribute(name);
+  }
+
+  clearAttribute(name) {
+    this.domElement.removeAttribute(name);
+  }
+
+  setClass(className) {
+    this.domElement.className = className;
+  }
+
+  clearClasses() {
+    this.domElement.className = '';
+  }
+
+  addClass(className) {
+    this.domElement.classList.add(className);
+  }
+
+  removeClass(className) {
+    this.domElement.classList.remove(className);
+  }
+
+  toggleClass(className) {
+    this.domElement.classList.toggle(className);
   }
 
   setHandler(eventName, handler) {
