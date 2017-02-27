@@ -80,7 +80,7 @@ Contexts are handled slightly differently. React elements can only pass down a c
 
 ## Additional functionality not supported by React
 
-This methods are meant to be used hand in hand with [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, bar the last, which can only be called against text elements.
+This methods are meant to be used hand in hand with [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, bar the last two, which can only be called against text elements.
 
 - `setAttribute(name, value)`
 - `getAttribute(name)`
@@ -90,6 +90,8 @@ This methods are meant to be used hand in hand with [Inference](https://github.c
 - `addClass(className)`
 - `removeClass(className)`
 - `toggleClass(className)`
+- `getText()`
+- `setText(text)`
 
 ## Contact
 

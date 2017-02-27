@@ -35,6 +35,12 @@ class TextElement extends Element {
 
     return text;
   }
+
+  setText(text) {
+    const domElement = this.getDOMElement();
+
+    domElement.nodeValue = text;
+  }
 }
 
 module.exports = TextElement;
