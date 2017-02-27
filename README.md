@@ -21,10 +21,10 @@ There is now a series of complementary videos:
 - Component state has been put back by popular demand.
 - The examples have been moved to the `es6` folder.
 - In the examples, the static `run()` methods and spurious classes have been replaced with functions.
+- The `reduxApp` example can now be [found elsewhere](https://github.com/djalbat/Inference/blob/master/es6/examples/reduxApp.js), split up into separate files and tidied up considerably.
 - The dependency on [Redux](https://github.com/reactjs/redux) has been replaced with a [barebones, local implementation](https://github.com/djalbat/Reaction/blob/master/es6/examples/redux.js).
 - All children can now be arrays of elements, not just the first.
 - Replaced all instances of `var` with either `const` or `let`.
-- The `reduxApp` example can now be [found elsewhere](https://github.com/djalbat/Inference/blob/master/es6/examples/reduxApp.js), split up into separate files and tidied up considerably.
 
 ## Installation
 
