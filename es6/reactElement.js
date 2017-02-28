@@ -66,8 +66,14 @@ class ReactElement extends Element {
     this.remount();
   }
 
+  setState(state) {
+    this.state = state;
+
+    this.remount();
+  }
+
   addChild(child) {
-    const start = 0,
+    const start = Infinity,
           deleteCount = 0;
 
     this.children.splice(start, deleteCount, child);
@@ -92,12 +98,6 @@ class ReactElement extends Element {
 
       this.children.splice(start, deleteCount);
     }
-  }
-
-  setState(state) {
-    this.state = state;
-
-    this.remount();
   }
 
   setAttribute(name, value) {
