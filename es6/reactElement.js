@@ -66,6 +66,34 @@ class ReactElement extends Element {
     this.remount();
   }
 
+  addChild(child) {
+    const start = 0,
+          deleteCount = 0;
+
+    this.children.splice(start, deleteCount, child);
+
+    const childParent = this,
+          childReference = this.getChildReference(),
+          childContext = this.getChildContext(this.context);
+
+    child.mount(childParent, childReference, childContext);
+  }
+
+  removeChild(child) {
+    const index = this.children.indexOf(child);
+
+    if (index > -1) {
+      const childContext = this.getChildContext(this.context);
+
+      child.unmount(childContext);
+
+      const start = index,
+            deleteCount = 1;
+
+      this.children.splice(start, deleteCount);
+    }
+  }
+
   setState(state) {
     this.state = state;
 
@@ -101,7 +129,6 @@ class ReactElement extends Element {
 
     firstChild.clearClasses();
   }
-
 
   addClass(className) {
     const firstChild = first(this.children);
