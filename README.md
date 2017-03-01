@@ -89,10 +89,10 @@ This methods are meant to be used hand in hand with [Inference](https://github.c
 - `getAttribute(name)`
 - `clearAttribute(name)`
 - `setClass(className)`
-- `clearClasses()`
 - `addClass(className)`
 - `removeClass(className)`
 - `toggleClass(className)`
+- `clearClasses()`
 - `getText()`
 - `setText(text)`
 

@@ -117,12 +117,6 @@ class ReactElement extends Element {
     firstChild.setClass(className);
   }
 
-  clearClasses() {
-    const firstChild = first(this.children);
-
-    firstChild.clearClasses();
-  }
-
   addClass(className) {
     const firstChild = first(this.children);
 
@@ -139,6 +133,12 @@ class ReactElement extends Element {
     const firstChild = first(this.children);
 
     firstChild.toggleClass(className);
+  }
+
+  clearClasses() {
+    const firstChild = first(this.children);
+
+    firstChild.clearClasses();
   }
 
   getChildReference() {

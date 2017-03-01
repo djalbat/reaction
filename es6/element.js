@@ -76,10 +76,6 @@ class Element {
     this.domElement.className = className;
   }
 
-  clearClasses() {
-    this.domElement.className = '';
-  }
-
   addClass(className) {
     this.domElement.classList.add(className);
   }
@@ -90,6 +86,10 @@ class Element {
 
   toggleClass(className) {
     this.domElement.classList.toggle(className);
+  }
+
+  clearClasses() {
+    this.domElement.className = '';
   }
 
   setHandler(eventName, handler) {
