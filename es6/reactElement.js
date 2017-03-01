@@ -63,7 +63,7 @@ class ReactElement extends Element {
   }
 
   forceUpdate(update) {
-    if (update) {
+    if (update !== undefined) {
       this.render(update);
     } else {
       this.remount();
