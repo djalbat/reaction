@@ -21,14 +21,6 @@ class TextElement extends Element {
     super.unmount();
   }
 
-  setAttribute(name, value) {
-
-  }
-
-  clearAttribute(name) {
-
-  }
-
   getText() {
     const domElement = this.getDOMElement(),
           text = domElement.nodeValue; ///
