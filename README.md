@@ -8,7 +8,7 @@ For clarity. The code base is tiny compared to React but React's core functional
 
 ## Reverse Engineering React
 
-There is now a series of complementary videos:
+There is a series of complementary videos:
 
 **[Reverse Engineering React](https://vimeo.com/album/3930691)**
 
