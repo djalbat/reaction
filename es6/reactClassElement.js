@@ -11,24 +11,24 @@ class ReactClassElement extends ReactElement {
     this.state = this.getInitialState();
   }
 
-  render() {
-    return this.reactClass.render.apply(this);
+  render(update) {
+    return this.reactClass.render.call(this, update);
   }
 
   getInitialState() {
-    return this.reactClass.getInitialState.apply(this);
+    return this.reactClass.getInitialState.call(this);
   }
 
   getChildContext() {
-    return this.reactClass.getChildContext.apply(this);
+    return this.reactClass.getChildContext.call(this);
   }
   
   componentDidMount() {
-    this.reactClass.componentDidMount.apply(this);
+    this.reactClass.componentDidMount.call(this);
   }
 
   componentWillUnmount() {
-    this.reactClass.componentWillUnmount.apply(this);
+    this.reactClass.componentWillUnmount.call(this);
   }
 }
 

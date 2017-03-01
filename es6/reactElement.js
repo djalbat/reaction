@@ -62,8 +62,12 @@ class ReactElement extends Element {
     super.unmount();
   }
 
-  forceUpdate() {
-    this.remount();
+  forceUpdate(update) {
+    if (update) {
+      this.render(update);
+    } else {
+      this.remount();
+    }
   }
 
   setState(state) {

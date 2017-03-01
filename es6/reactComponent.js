@@ -5,7 +5,7 @@ class ReactComponent {
 
   }
 
-  render() {
+  render(update) {
     ///
   }
   
@@ -13,7 +13,7 @@ class ReactComponent {
     return {};
   }
   
-  getChildContext() {
+  getChildContext(context) {
     return undefined;
   }
 
