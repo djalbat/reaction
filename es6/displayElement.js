@@ -59,6 +59,42 @@ class DisplayElement extends Element {
       }
     }.bind(this));
   }
+
+  spliceChildren(start, removeCount, addedChildren, context) {
+    const childParent = this,
+          childReference = null,
+          childContext = context;
+
+    addedChildren.forEach(function(addedChild) {
+      addedChild.mount(childParent, childReference, childContext);
+    });
+
+    const removedChildren = this.children.splice(start, removeCount, addedChildren);
+
+    removedChildren.forEach(function(removedChild) {
+      removedChild.unmount(childContext);
+    });
+  }
+
+  addChild(child, context) {
+    const start = Infinity,
+          removeCount = 0,
+          addedChildren = [child];
+
+    this.spliceChildren(start, removeCount, addedChildren, context);
+  }
+
+  removeChild(child, context) {
+    const index = this.children.indexOf(child);
+
+    if (index > -1) {
+      const start = index,
+            removeCount = 1,
+            addedChildren = [];
+
+      this.spliceChildren(start, removeCount, addedChildren, context);
+    }
+  }
 }
 
 module.exports = DisplayElement;

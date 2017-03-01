@@ -72,32 +72,25 @@ class ReactElement extends Element {
     this.remount();
   }
 
-  addChild(child) {
-    const start = Infinity,
-          deleteCount = 0;
+  spliceChildren(start, removeCount, addedChildren, context = this.context) {
+    const firstChild = first(this.children),
+          childContext = this.getChildContext(context) || context;
 
-    this.children.splice(start, deleteCount, child);
-
-    const childParent = this,
-          childReference = this.getChildReference(),
-          childContext = this.getChildContext(this.context);
-
-    child.mount(childParent, childReference, childContext);
+    firstChild.spliceChildren(start, removeCount, addedChildren, childContext);
   }
 
-  removeChild(child) {
-    const index = this.children.indexOf(child);
+  addChild(child, context = this.context) {
+    const firstChild = first(this.children),
+          childContext = this.getChildContext(context) || context;
 
-    if (index > -1) {
-      const childContext = this.getChildContext(this.context);
+    firstChild.addChild(child, childContext);
+  }
 
-      child.unmount(childContext);
+  removeChild(child, context = this.context) {
+    const firstChild = first(this.children),
+          childContext = this.getChildContext(context) || context;
 
-      const start = index,
-            deleteCount = 1;
-
-      this.children.splice(start, deleteCount);
-    }
+    firstChild.removeChild(child, childContext);
   }
 
   setAttribute(name, value) {
