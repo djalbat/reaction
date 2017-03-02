@@ -18,13 +18,13 @@ There is a series of complementary videos:
 - The `index` variable in the `indexOf()` helper method is now initially set to `null`.
 - The `remount()` method of the `ReactElement` should call the `getChildContext()` method.
 - The `libES2015` directories in both the root and `examples` directories have been renamed `es6`.
-- Component state has been put back by popular demand.
-- The examples have been moved to the `es6` folder.
 - In the examples, the static `run()` methods and spurious classes have been replaced with functions.
 - The `reduxApp` example can now be [found elsewhere](https://github.com/djalbat/Inference/blob/master/es6/examples/reduxApp.js), split up into separate files and tidied up considerably.
 - The dependency on [Redux](https://github.com/reactjs/redux) has been replaced with a [barebones, local implementation](https://github.com/djalbat/Reaction/blob/master/es6/examples/redux.js).
 - All instances of `var` have been replaced with either `const` or `let`.
 - All children can now be arrays of elements, not just the first.
+- Component state has been put back by popular demand.
+- The examples have been moved to the `es6` folder.
 
 ## Installation
 
