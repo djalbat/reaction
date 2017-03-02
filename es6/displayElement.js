@@ -104,5 +104,5 @@ function propNameIsHandlerName(propName) {
 }
 
 function eventNameFromPropertyName(propName) {
-  return propName.toLowerCase();
+  return propName.substr(2).toLowerCase();
 }
