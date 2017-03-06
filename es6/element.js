@@ -88,12 +88,16 @@ class Element {
     this.domElement.classList.toggle(className);
   }
 
+  hasClass(className) {
+    return this.domElement.classList.contains(className);
+  }
+
   clearClasses() {
     this.domElement.className = '';
   }
 
-  setHandler(eventName, handler) {
-    this.domElement[eventName] = handler;
+  setEventHandler(eventType, handler) {
+    this.domElement.addEventListener(eventType,  handler);
   }
 
   static fromDOMElement(domElement) {

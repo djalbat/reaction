@@ -139,6 +139,12 @@ class ReactElement extends Element {
     firstChild.toggleClass(className);
   }
 
+  hasClass(className) {
+    const firstChild = first(this.children);
+
+    return firstChild.hasClass(className);
+  }
+
   clearClasses() {
     const firstChild = first(this.children);
 

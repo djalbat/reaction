@@ -47,10 +47,10 @@ class DisplayElement extends Element {
 
         callback(domElement)
       } else if (isPropNameHandlerName(propName)) {
-        const eventName = eventNameFromPropertyName(propName),
+        const eventType = eventTypeFromPropertyName(propName),
               handler = propValue;
 
-        this.setHandler(eventName, handler);
+        this.setEventHandler(eventType, handler);
       } else {
         const attributeName = propName,
               attributeValue = propValue;
@@ -104,6 +104,6 @@ function isPropNameHandlerName(propName) {
   return propName.match(/^on/);
 }
 
-function eventNameFromPropertyName(propName) {
+function eventTypeFromPropertyName(propName) {
   return propName.substr(2).toLowerCase();
 }
