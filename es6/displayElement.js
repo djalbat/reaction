@@ -60,7 +60,7 @@ class DisplayElement extends Element {
     }.bind(this));
   }
 
-  spliceChildren(start, removeCount, addedChildren, context) {
+  spliceChildren(start, removedChildrenCount, addedChildren, context) {
     const childParent = this,
           childReference = null,
           childContext = context;
@@ -69,7 +69,8 @@ class DisplayElement extends Element {
       addedChild.mount(childParent, childReference, childContext);
     });
 
-    const removedChildren = this.children.splice(start, removeCount, addedChildren);
+    const args = [start, removedChildrenCount].concat(addedChildren),
+          removedChildren = Array.prototype.splice.apply(this.children, args);
 
     removedChildren.forEach(function(removedChild) {
       removedChild.unmount(childContext);
@@ -78,10 +79,10 @@ class DisplayElement extends Element {
 
   addChild(child, context) {
     const start = Infinity,
-          removeCount = 0,
+          removedChildrenCount = 0,
           addedChildren = [child];
 
-    this.spliceChildren(start, removeCount, addedChildren, context);
+    this.spliceChildren(start, removedChildrenCount, addedChildren, context);
   }
 
   removeChild(child, context) {
@@ -89,10 +90,10 @@ class DisplayElement extends Element {
 
     if (index > -1) {
       const start = index,
-            removeCount = 1,
+            removedChildrenCount = 1,
             addedChildren = [];
 
-      this.spliceChildren(start, removeCount, addedChildren, context);
+      this.spliceChildren(start, removedChildrenCount, addedChildren, context);
     }
   }
 }
