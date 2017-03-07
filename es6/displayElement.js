@@ -3,8 +3,8 @@
 const Element = require('./element');
 
 class DisplayElement extends Element {
-  constructor(displayName, props) {
-    const domElement = document.createElement(displayName);
+  constructor(tagName, props) {
+    const domElement = document.createElement(tagName);
 
     super(domElement, props);
   }

@@ -15,6 +15,16 @@ class Element {
     return this.domElement;
   }
 
+  getTagName() {
+    let tagName;
+
+    if (this.domElement !== null) {
+      tagName = this.domElement.tagName
+    }
+
+    return tagName;
+  };
+
   getParent() {
     return this.parent;
   }

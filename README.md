@@ -83,7 +83,7 @@ Contexts are handled slightly differently. React elements can only pass down a c
 
 ## Additional functionality not supported by React
 
-This methods are meant to be used hand in hand with [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, except for the last two, which can only be called against text elements.
+This methods are meant to be used hand in hand with [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, except for the last two, which can only be called against text elements. The `getTagName()` method will return `undefined` for all but display elements.
 
 - `spliceChildren(start, removeCount, addedChildren)`
 - `addChild(child)`
@@ -95,7 +95,9 @@ This methods are meant to be used hand in hand with [Inference](https://github.c
 - `addClass(className)`
 - `removeClass(className)`
 - `toggleClass(className)`
+- `hasClass(className)`
 - `clearClasses()`
+= `getTagName()`
 - `getText()`
 - `setText(text)`
 

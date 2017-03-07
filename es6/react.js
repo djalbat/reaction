@@ -37,9 +37,9 @@ class React {
 
          element = new ReactFunctionElement(reactFunction, props);
        } else {
-         const displayName = firstArgument;  ///
+         const tagName = firstArgument;  ///
 
-         element = new DisplayElement(displayName, props);
+         element = new DisplayElement(tagName, props);
        }
      }
 
