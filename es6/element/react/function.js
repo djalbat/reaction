@@ -13,22 +13,16 @@ class ReactFunctionElement extends ReactElement {
     this.setInitialState(initialState);
   }
  
-  render(update) {
-    return this.reactFunction(this.props, this.context, update);
+  render() {
+    return this.reactFunction(this.props, this.context);
   }
 
   getInitialState() {
-    if (this.reactFunction.getInitialState) {
-      return this.reactFunction.getInitialState(this.props, this.context);
-    }
-
-    return {};
+    return undefined;
   }
 
-  getChildContext() {
-    if (this.reactFunction.getChildContext) {
-      return this.reactFunction.getChildContext(this.props, this.context);
-    }
+  getChildContext(context) {
+    return undefined;
   }
 
   componentDidMount() {

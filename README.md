@@ -80,6 +80,8 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 Contexts are handled slightly differently. React elements can only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of functions, so you can make programmatic decisions about what context to pass down to children.
 
+Functional components are entirely stateless in the sense that any `getInitialState()` method defined on the function in question is ignored. Similarly any `getChildContext()` method is ignored. However, such functions are passed two arguments, namely `props` *and* `context`, the latter being the child context of the parent element, if any.
+
 ## Functionality that is not supported
 
 - Of the component lifecycle, all methods except `componentDidMount()` and `componentWillUnmount()` are *not* supported.
@@ -103,6 +105,8 @@ This methods are meant to be used hand in hand with [Inference](https://github.c
 = `getTagName()`
 - `getText()`
 - `setText(text)`
+
+Note that the `forceUpdate()` method now takes an `update` argument for better integration with Inference. If the `update` argument is undefined, the element is remounted as usual. Otherwise, the element's render method is called and is passed the `update` argument.
 
 ## Contact
 

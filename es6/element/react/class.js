@@ -21,8 +21,8 @@ class ReactClassElement extends ReactElement {
     return this.reactClass.getInitialState.call(this);
   }
 
-  getChildContext() {
-    return this.reactClass.getChildContext.call(this);
+  getChildContext(context) {
+    return this.reactClass.getChildContext.call(this, context);
   }
   
   componentDidMount() {

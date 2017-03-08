@@ -17,7 +17,7 @@ class ReactClass {
     return {};
   }
 
-  getChildContext() {
+  getChildContext(context) {
     return undefined;
   }
   
