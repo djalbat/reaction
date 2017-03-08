@@ -3,11 +3,11 @@
 const ReactComponent = require('./reactComponent'),
       ReactClass = require('./reactClass'),
       Element = require('./element'),
-      TextElement = require('./textElement'),
-      DisplayElement = require('./displayElement'),
-      ReactClassElement = require('./reactClassElement'),
-      ReactFunctionElement = require('./reactFunctionElement'),
-      ReactComponentElement = require('./reactComponentElement');
+      ReactClassElement = require('./element/react/class'),
+      ReactFunctionElement = require('./element/react/function'),
+      ReactComponentElement = require('./element/react/component'),
+      VirtualDOMElement = require('./element/virtualDOMNode/element'),
+      VirtualDOMTextElement = require('./element/virtualDOMNode/textElement');
 
 class React {
   static createClass(object) {
@@ -24,22 +24,26 @@ class React {
              });
 
        if (typeof firstArgument === 'string') {
-         const tagName = firstArgument;  ///
-
-         element = new DisplayElement(tagName, props);
+         const tagName = firstArgument,  ///
+               virtualDOMElement = new VirtualDOMElement(tagName, props);
+         
+         element = virtualDOMElement
        } else if (firstArgument instanceof ReactClass) {
-         const reactClass = firstArgument; ///
-
-         element = new ReactClassElement(reactClass, props);
+         const reactClass = firstArgument, ///
+               reactClassElement = new ReactClassElement(reactClass, props);
+         
+         element = reactClassElement;
        } else if (isTypeOf(firstArgument, ReactComponent)) {
          const ReactComponent = firstArgument,  ///
-               reactComponent = new ReactComponent();
+               reactComponent = new ReactComponent(),
+               reactComponentElement = new ReactComponentElement(reactComponent, props);
 
-         element = new ReactComponentElement(reactComponent, props);
+         element = reactComponentElement;
        } else if (typeof firstArgument === 'function') {
-         const reactFunction = firstArgument;  ///
-
-         element = new ReactFunctionElement(reactFunction, props);
+         const reactFunction = firstArgument,  ///
+               reactFunctionElement = new ReactFunctionElement(reactFunction, props);
+         
+         element = reactFunctionElement;
        }
      }
 
@@ -59,9 +63,16 @@ function childrenFromChildArguments(childArguments) {
   }, []);
 
   const children = childArguments.map(function(childArgument) {
-    const child = (childArgument instanceof Element) ?
-                     childArgument : ///
-                       new TextElement(childArgument); ///
+    let child;
+
+    if (childArgument instanceof Element) {
+      child = childArgument;  ///
+    } else {
+      const text = childArgument, ///
+            virtualDOMTextElement = new VirtualDOMTextElement(text);
+
+      child = virtualDOMTextElement;
+    }
 
     return child;
   });

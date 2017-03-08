@@ -30,6 +30,7 @@ These points are not strictly errata but will help to reconcile the current vers
 - All instances of `var` have been replaced with either `const` or `let`.
 - The `FilterLink` has been made into a `ReactClass` in order to give a usage example.
 - The `React.createElement()` method has been further streamlined.
+- The element classes have been reorganised, please see the source.
 
 ## Installation
 

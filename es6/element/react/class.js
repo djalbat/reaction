@@ -1,6 +1,6 @@
 'use strict';
 
-const ReactElement = require('./reactElement');
+const ReactElement = require('../react');
 
 class ReactClassElement extends ReactElement {
   constructor(reactClass, props) {
@@ -8,7 +8,9 @@ class ReactClassElement extends ReactElement {
 
     this.reactClass = reactClass;
 
-    this.state = this.getInitialState();
+    const initialState = this.getInitialState();
+
+    this.setInitialState(initialState);
   }
 
   render(update) {

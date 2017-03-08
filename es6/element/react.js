@@ -1,21 +1,19 @@
 'use strict';
 
-const helpers = require('./helpers'),
-      Element = require('./element');
+const helpers = require('../helpers'),
+      Element = require('../element');
 
 class ReactElement extends Element {
   constructor(props) {
-    const domElement = null;
-
-    super(domElement, props);
-
-    this.state = undefined;
+    super(props);
+    
+    this.state = undefined; ///
 
     this.context = undefined;
   }
 
   mount(parent, reference, context) {
-    super.mount(parent, reference);
+    super.mount(parent);
 
     this.context = context;
 
@@ -62,18 +60,26 @@ class ReactElement extends Element {
     super.unmount();
   }
 
-  forceUpdate(update) {
-    if (update !== undefined) {
-      this.render(update);
-    } else {
-      this.remount();
-    }
+  getDOMElement() {
+    return null;
+  }
+
+  setInitialState(initialState) {
+    this.state = initialState;  ///
   }
 
   setState(state) {
     this.state = state;
 
     this.remount();
+  }
+
+  forceUpdate(update) {
+    if (update !== undefined) {
+      this.render(update);
+    } else {
+      this.remount();
+    }
   }
 
   spliceChildren(start, removeCount, addedChildren, context = this.context) {

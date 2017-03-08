@@ -1,8 +1,8 @@
 'use strict';
 
-const Element = require('./element');
+const VirtualDOMNode = require('../virtualDOMNode');
 
-class TextElement extends Element {
+class VirtualDOMTextElement extends VirtualDOMNode {
   constructor(text) {
     const domElement = document.createTextNode(text),
           children = [],
@@ -10,7 +10,7 @@ class TextElement extends Element {
             children: children
           };
 
-    super(domElement, props);
+    super(props, domElement);
   }
 
   mount(parent, reference, context) {
@@ -35,4 +35,4 @@ class TextElement extends Element {
   }
 }
 
-module.exports = TextElement;
+module.exports = VirtualDOMTextElement;
