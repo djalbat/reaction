@@ -21,6 +21,10 @@ class VirtualDOMTextElement extends VirtualDOMNode {
     super.unmount();
   }
 
+  getTagName() {
+    return undefined;
+  }
+
   getText() {
     const domElement = this.getDOMElement(),
           text = domElement.nodeValue; ///

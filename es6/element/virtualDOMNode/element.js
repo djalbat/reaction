@@ -35,7 +35,7 @@ class VirtualDOMElement extends VirtualDOMNode {
 
   getTagName() {
     const domElement = this.getDOMElement(),
-        tagName = domElement.tagName;
+          tagName = domElement.tagName; 
 
     return tagName;
   }

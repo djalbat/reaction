@@ -64,6 +64,10 @@ class ReactElement extends Element {
     return null;
   }
 
+  getTagName() {
+    return undefined;
+  }
+  
   setInitialState(initialState) {
     this.state = initialState;  ///
   }
