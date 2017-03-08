@@ -15,7 +15,7 @@ class React {
   }
 
    static createElement(firstArgument, properties, ...childArguments) {
-     let element = undefined;
+     let element = null;
 
      if (firstArgument !== undefined) {
        const children = childrenFromChildArguments(childArguments),
@@ -23,23 +23,23 @@ class React {
                children: children
              });
 
-       if (firstArgument.prototype instanceof ReactComponent) {
-         const reactComponentConstructor = firstArgument,  ///
-               reactComponent = new reactComponentConstructor();
+       if (typeof firstArgument === 'string') {
+         const tagName = firstArgument;  ///
 
-         element = new ReactComponentElement(reactComponent, props);
+         element = new DisplayElement(tagName, props);
        } else if (firstArgument instanceof ReactClass) {
          const reactClass = firstArgument; ///
 
          element = new ReactClassElement(reactClass, props);
+       } else if (isTypeOf(firstArgument, ReactComponent)) {
+         const ReactComponent = firstArgument,  ///
+               reactComponent = new ReactComponent();
+
+         element = new ReactComponentElement(reactComponent, props);
        } else if (typeof firstArgument === 'function') {
          const reactFunction = firstArgument;  ///
 
          element = new ReactFunctionElement(reactFunction, props);
-       } else {
-         const tagName = firstArgument;  ///
-
-         element = new DisplayElement(tagName, props);
        }
      }
 
@@ -67,4 +67,20 @@ function childrenFromChildArguments(childArguments) {
   });
 
   return children;
+}
+
+function isTypeOf(argument, constructor) {
+  let typeOf = false;
+
+  if (argument === constructor) {
+    typeOf = true;
+  } else {
+    argument = Object.getPrototypeOf(argument); ///
+
+    if (argument !== null) {
+      typeOf = isTypeOf(argument, constructor);
+    }
+  }
+
+  return typeOf;
 }

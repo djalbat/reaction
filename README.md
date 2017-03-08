@@ -28,6 +28,8 @@ These points are not strictly errata but will help to reconcile the current vers
 - The `reduxApp` example can now be [found elsewhere](https://github.com/djalbat/Inference/blob/master/es6/examples/reduxApp.js), split up into separate files and tidied up considerably.
 - The dependency on [Redux](https://github.com/reactjs/redux) has been replaced with a [barebones, local implementation](https://github.com/djalbat/Reaction/blob/master/es6/examples/redux.js).
 - All instances of `var` have been replaced with either `const` or `let`.
+- The `FilterLink` has been made into a `ReactClass` in order to give a usage example.
+- The `React.createElement()` method has been further streamlined.
 
 ## Installation
 

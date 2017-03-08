@@ -3,7 +3,7 @@
 const Redux = require('./redux'),
       React = require('../react'),
       ReactDOM = require('../reactDOM'),
-      { Component } = React,
+      { Component, Class } = React,
       { createStore, combineReducers } = Redux;
 
 const reduxApp = () => {
@@ -82,10 +82,9 @@ const reduxApp = () => {
     return (
 
       <li onClick={onClick}
-          style={{textDecoration:
-                completed ?
-                  'line-through' :
-                    'none'}}
+          style={{textDecoration:completed ?
+                                  'line-through' :
+                                    'none'}}
       >
         {text}
       </li>
@@ -100,9 +99,9 @@ const reduxApp = () => {
         {todos.map(todo => <Todo text={todo.text}
                                  completed={todo.completed}
                                  onClick={() =>
-                             onTodoClick(todo.id)
-                           }
-        />)}
+                                   onTodoClick(todo.id)
+                                 }
+                           />)}
       </ul>
 
     );
@@ -129,18 +128,18 @@ const reduxApp = () => {
     );
   };
 
-  class FilterLink extends Component {
+  const FilterLink = React.createClass({
     componentDidMount() {
       const { store } = this.context;
 
       this.unsubscribe = store.subscribe(() =>
          this.forceUpdate()
       );
-    }
+    },
 
     componentWillUnmount() {
       this.unsubscribe();
-    }
+    },
 
     render() {
       const { store } = this.context;
@@ -163,7 +162,7 @@ const reduxApp = () => {
 
       );
     }
-  }
+  });
 
   let nextTodoId = 0;
   const AddTodo = (props, {store}) => {
