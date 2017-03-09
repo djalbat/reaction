@@ -125,6 +125,18 @@ class ReactElement extends Element {
     firstChild.clearAttribute(name);
   }
 
+  addAttribute(name, value) { 
+    const firstChild = first(this.children);
+
+    firstChild.setClassaddAttribute(name, value);
+  }
+  
+  removeAttribute(name) { 
+    const firstChild = first(this.children);
+
+    firstChild.removeAttribute(name)
+  }
+
   setClass(className) {
     const firstChild = first(this.children);
 
