@@ -105,37 +105,21 @@ class VirtualDOMElement extends VirtualDOMNode {
     }
   }
 
-  getAttribute(name) {
-    return this.domElement.getAttribute(name);
-  }
+  getAttribute(name) { return this.domElement.getAttribute(name); }
 
-  clearAttribute(name) {
-    this.domElement.removeAttribute(name);
-  }
+  clearAttribute(name) { this.domElement.removeAttribute(name); }
 
-  setClass(className) {
-    this.domElement.className = className;
-  }
+  setClass(className) { this.domElement.className = className; }
 
-  addClass(className) {
-    this.domElement.classList.add(className);
-  }
+  addClass(className) { this.domElement.classList.add(className); }
 
-  removeClass(className) {
-    this.domElement.classList.remove(className);
-  }
+  removeClass(className) { this.domElement.classList.remove(className); }
 
-  toggleClass(className) {
-    this.domElement.classList.toggle(className);
-  }
+  toggleClass(className) { this.domElement.classList.toggle(className); }
 
-  hasClass(className) {
-    return this.domElement.classList.contains(className);
-  }
+  hasClass(className) { return this.domElement.classList.contains(className); }
 
-  clearClasses() {
-    this.domElement.className = '';
-  }
+  clearClasses() { this.domElement.className = ''; }
 
   applyProps() {
     const names = Object.keys(this.props);
