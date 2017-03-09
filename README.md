@@ -96,6 +96,8 @@ This methods are meant to be used hand in hand with [Inference](https://github.c
 - `setAttribute(name, value)`
 - `getAttribute(name)`
 - `clearAttribute(name)`
+- `addAttribute(name, value)`
+- `removeAttribute(name)`
 - `setClass(className)`
 - `addClass(className)`
 - `removeClass(className)`
