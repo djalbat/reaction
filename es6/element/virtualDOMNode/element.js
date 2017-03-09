@@ -109,6 +109,10 @@ class VirtualDOMElement extends VirtualDOMNode {
 
   clearAttribute(name) { this.domElement.removeAttribute(name); }
 
+  addAttribute(name, value) { this.setAttribute(name, value); }
+  
+  removeAttribute(name) { this.clearAttribute(name); }
+
   setClass(className) { this.domElement.className = className; }
 
   addClass(className) { this.domElement.classList.add(className); }
