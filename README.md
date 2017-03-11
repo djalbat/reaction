@@ -88,7 +88,7 @@ Functional components are entirely stateless in the sense that any `getInitialSt
 
 ## Additional functionality not supported by React
 
-This methods are meant to be used hand in hand with [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, except for the last two, which can only be called against text elements. The `getTagName()` method will return `undefined` for all but virtual DOM elements.
+These methods are meant to support [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, except for the last two, which can only be called against text elements. The `getTagName()` method will return `undefined` for all but virtual DOM elements, that is those elements with an underlying DOM element.
 
 - `spliceChildren(start, removeCount, addedChildren)`
 - `addChild(child)`
