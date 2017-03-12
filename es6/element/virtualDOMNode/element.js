@@ -86,9 +86,7 @@ class VirtualDOMElement extends VirtualDOMNode {
       name = 'for';
     }
 
-    if (false) {
-
-    } else if (typeof value === 'object') {
+    if (typeof value === 'object') {
       const keys = Object.keys(value);
 
       keys.forEach(function (key) {
