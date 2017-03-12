@@ -80,16 +80,16 @@ function childrenFromChildArguments(childArguments) {
   return children;
 }
 
-function isTypeOf(argument, constructor) {
+function isTypeOf(argument, Class) {
   let typeOf = false;
 
-  if (argument === constructor) {
+  if (argument === Class) {
     typeOf = true;
   } else {
     argument = Object.getPrototypeOf(argument); ///
 
     if (argument !== null) {
-      typeOf = isTypeOf(argument, constructor);
+      typeOf = isTypeOf(argument, Class);
     }
   }
 
