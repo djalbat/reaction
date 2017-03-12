@@ -23,7 +23,9 @@ class React {
                children: children
              });
 
-       if (typeof firstArgument === 'string') {
+       if (false) {
+             
+       } else if (typeof firstArgument === 'string') {
          const tagName = firstArgument,  ///
                virtualDOMElement = new VirtualDOMElement(tagName, props);
          
