@@ -1,7 +1,7 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "1.14.4",
+  "version": "1.14.5",
   "license": "MIT",
   "homepage": "https://github.com/djalbat/Reaction",
   "description": "An alternative implementation of React.",
@@ -23,11 +23,11 @@
     "clean": "rm -rf ./lib",
     "babel": "babel ./es6 --presets=es2015,react --plugins transform-react-jsx --out-dir=./lib",
     "babel-debug": "babel ./es6 --presets=es2015,react --plugins transform-react-jsx --source-maps inline --out-dir=./lib",
-    "browserify:examples": "browserify ./examples/index.js --standalone examples > ./examples.js",
-    "browserify:examples-debug": "browserify ./examples/index.js --standalone examples --debug > ./examples.js",
-    "build": "npm run clean && npm run babel && npm run browserify:examples",
-    "build-debug": "npm run clean && npm run babel-debug && npm run browserify:examples-debug",
-    "watch": "npm run build && chokidar './index.js' './examples/index.js' './es6/**/*.js' -c 'npm run build'",
-    "watch-debug": "npm run build-debug && chokidar './index.js' './examples/index.js' './es6/**/*.js' -c 'npm run build-debug'"
+    "browserify": "browserify ./lib/examples.js --standalone examples > ./examples.js",
+    "browserify-debug": "browserify ./lib/examples.js --standalone examples --debug > ./examples.js",
+    "build": "npm run clean && npm run babel && npm run browserify",
+    "build-debug": "npm run clean && npm run babel-debug && npm run browserify-debug",
+    "watch": "npm run build && chokidar './index.js' './lib/examples.js' './es6/**/*.js' -c 'npm run build'",
+    "watch-debug": "npm run build-debug && chokidar './index.js' './lib/examples.js' './es6/**/*.js' -c 'npm run build-debug'"
   }
 }
