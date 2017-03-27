@@ -26,16 +26,16 @@ class VirtualDOMTextElement extends VirtualDOMNode {
   }
 
   getText() {
-    const domElement = this.getDOMElement(),
-          text = domElement.nodeValue; ///
+    const nodeValue = this.domElement.nodeValue,
+          text = nodeValue; ///
 
     return text;
   }
 
   setText(text) {
-    const domElement = this.getDOMElement();
+    const nodeValue = text; ///
 
-    domElement.nodeValue = text;
+    this.domElement.nodeValue = nodeValue;
   }
 }
 
