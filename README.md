@@ -31,6 +31,7 @@ These points are not strictly errata but will help to reconcile the current vers
 - The `FilterLink` has been made into a `ReactClass` in order to give a usage example.
 - The `React.createElement()` method has been further streamlined.
 - The element classes have been reorganised, please see the source.
+- Support for Inference has been added, again please see the source.
 
 ## Installation
 
@@ -88,7 +89,7 @@ Functional components are entirely stateless in the sense that any `getInitialSt
 
 ## Additional functionality not supported by React
 
-These methods are meant to support [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, except for the last two, which can only be called against text elements. The `getTagName()` method will return `undefined` for all but virtual DOM elements, that is those elements with an underlying DOM element.
+These methods are add better support for [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, except for the last two, which can only be called against text elements. The `getTagName()` method will return `null` for all but virtual DOM elements, that is those elements with an underlying DOM element.
 
 - `spliceChildren(start, removeCount, addedChildren)`
 - `addChild(child)`
@@ -104,7 +105,7 @@ These methods are meant to support [Inference](https://github.com/djalbat/Infere
 - `toggleClass(className)`
 - `hasClass(className)`
 - `clearClasses()`
-= `getTagName()`
+- `getTagName()`
 - `getText()`
 - `setText(text)`
 
