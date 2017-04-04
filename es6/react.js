@@ -34,7 +34,7 @@ function createElement(firstArgument, properties, ...childArguments) {
             reactClassElement = new ReactClassElement(reactClass, props);
 
       element = reactClassElement;
-    } else if (isTypeOf(firstArgument, ReactComponent)) {
+    } else if (isSubclassOf(firstArgument, ReactComponent)) {
       const ReactComponent = firstArgument,  ///
             reactComponent = new ReactComponent(),
             reactComponentElement = new ReactComponentElement(reactComponent, props);
@@ -85,7 +85,7 @@ function childrenFromChildArguments(childArguments) {
   return children;
 }
 
-function isTypeOf(argument, Class) {
+function isSubclassOf(argument, Class) {
   let typeOf = false;
 
   if (argument === Class) {   ///
@@ -94,7 +94,7 @@ function isTypeOf(argument, Class) {
     argument = Object.getPrototypeOf(argument); ///
 
     if (argument !== null) {
-      typeOf = isTypeOf(argument, Class);
+      typeOf = isSubclassOf(argument, Class);
     }
   }
 
