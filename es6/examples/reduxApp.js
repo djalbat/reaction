@@ -2,8 +2,9 @@
 
 const Redux = require('./redux'),
       React = require('../react'),
-      ReactDOM = require('../reactDOM'),
-      { Component, Class } = React,
+      ReactDOM = require('../reactDOM');
+
+const { Component, Class } = React,
       { createStore, combineReducers } = Redux;
 
 const reduxApp = () => {
