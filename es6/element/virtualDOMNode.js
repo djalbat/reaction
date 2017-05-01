@@ -13,7 +13,9 @@ class VirtualDOMNode extends Element {
     return this.domElement;
   }
 
-  mount(parent, children, reference) {
+  mount(parent, reference) {
+    const children = this.getChildren();
+    
     super.mount(parent, children);
 
     parentDOMElement(parent).insertBefore(this.domElement, referenceDOMElement(reference));

@@ -14,9 +14,7 @@ class VirtualDOMTextElement extends VirtualDOMNode {
   }
 
   mount(parent, reference, context) {
-    const children = [];
-    
-    super.mount(parent, children, reference);
+    super.mount(parent, reference);
   }
   
   unmount(context) {

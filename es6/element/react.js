@@ -14,6 +14,8 @@ class ReactElement extends Element {
   }
 
   mount(parent, reference, context) {
+    this.context = context;
+
     const childContext = this.getChildContext(context) || context,
           children = helpers.guaranteeArray(this.render());
 
@@ -25,8 +27,6 @@ class ReactElement extends Element {
 
       child.mount(childParent, childReference, childContext);
     }.bind(this));
-
-    this.context = context;
 
     this.componentDidMount();
   }
