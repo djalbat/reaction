@@ -1,7 +1,7 @@
 'use strict';
 
 const VirtualDOMNode = require('../virtualDOMNode'),
-      inferenceMixin = require('./inferenceMixin');
+      inferenceMixin = require('../../mixin/virtualDOMNode/inference');
 
 class VirtualDOMElement extends VirtualDOMNode {
   constructor(tagName, props) {

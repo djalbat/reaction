@@ -2,7 +2,7 @@
 
 const helpers = require('../helpers'),
       Element = require('../element'),
-      inferenceMixin = require('./react/inferenceMixin');
+      inferenceMixin = require('../mixin/react/inference');
 
 class ReactElement extends Element {
   constructor(props) {
