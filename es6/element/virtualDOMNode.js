@@ -9,6 +9,10 @@ class VirtualDOMNode extends Element {
     this.domElement = domElement;
   }
 
+  getDOMElement() {
+    return this.domElement;
+  }
+
   mount(parent, children, reference) {
     super.mount(parent, children);
 
@@ -19,10 +23,6 @@ class VirtualDOMNode extends Element {
     this.domElement.parentElement.removeChild(this.domElement);
 
     super.unmount();
-  }
-
-  getDOMElement() {
-    return this.domElement;
   }
 
   static fromDOMElement(domElement) {

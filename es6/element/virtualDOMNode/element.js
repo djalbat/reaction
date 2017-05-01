@@ -11,12 +11,13 @@ class VirtualDOMElement extends VirtualDOMNode {
   }
 
   mount(parent, reference, context) {
-    super.mount(parent, reference);
+    const children = this.getChildren();  ///
+    
+    super.mount(parent, children, reference);
 
     const childParent = this,
           childReference = null,
-          childContext = context,
-          children = this.getChildren();
+          childContext = context;
 
     children.forEach(function(child) {
       child.mount(childParent, childReference, childContext);
