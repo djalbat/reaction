@@ -9,8 +9,8 @@ class VirtualDOMNode extends Element {
     this.domElement = domElement;
   }
 
-  mount(parent, reference) {
-    super.mount(parent);
+  mount(parent, children, reference) {
+    super.mount(parent, children);
 
     parentDOMElement(parent).insertBefore(this.domElement, referenceDOMElement(reference));
   }

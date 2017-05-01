@@ -14,21 +14,36 @@ class ReactElement extends Element {
   }
 
   mount(parent, reference, context) {
-    super.mount(parent);
+    const childContext = this.getChildContext(context) || context,
+          children = helpers.guaranteeArray(this.render());
+
+    super.mount(parent, children);
+
+    children.forEach(function(child) {
+      const childParent = this,
+            childReference = reference;
+
+      child.mount(childParent, childReference, childContext);
+    }.bind(this));
 
     this.context = context;
 
-    this.children = helpers.guaranteeArray(this.render());
+    this.componentDidMount();
+  }
 
-    const childParent = this,
-          childReference = reference,
-          childContext = this.getChildContext(context) || context;
+  unmount(context) {
+    this.context = context;
 
-    this.children.forEach(function(child) {
-      child.mount(childParent, childReference, childContext);
+    this.componentWillUnmount();
+
+    const childContext = this.getChildContext(context) || context,
+          children = this.getChildren();
+
+    children.forEach(function(child) {
+      child.unmount(childContext);
     });
 
-    this.componentDidMount(); 
+    super.unmount();
   }
 
   remount() {
@@ -45,20 +60,6 @@ class ReactElement extends Element {
     this.children.forEach(function(child) {
       child.mount(childParent, childReference, childContext);
     }.bind(this));
-  }
-
-  unmount(context) {
-    this.context = context;
-
-    this.componentWillUnmount();
-
-    const childContext = this.getChildContext(context) || context;
-
-    this.children.forEach(function(child) {
-      child.unmount(childContext);
-    });
-    
-    super.unmount();
   }
 
   getDOMElement() {

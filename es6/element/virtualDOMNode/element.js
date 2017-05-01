@@ -15,9 +15,10 @@ class VirtualDOMElement extends VirtualDOMNode {
 
     const childParent = this,
           childReference = null,
-          childContext = context;
+          childContext = context,
+          children = this.getChildren();
 
-    this.children.forEach(function(child) {
+    children.forEach(function(child) {
       child.mount(childParent, childReference, childContext);
     });
 
@@ -25,9 +26,10 @@ class VirtualDOMElement extends VirtualDOMNode {
   }
 
   unmount(context) {
-    const childContext = context;
+    const childContext = context,
+          children = this.getChildren();
 
-    this.children.forEach(function(child) {
+    children.forEach(function(child) {
       child.unmount(childContext);
     });
 

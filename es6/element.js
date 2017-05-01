@@ -9,20 +9,24 @@ class Element {
     this.children = props.children;  ///
   }
 
-  mount(parent) {
-    this.parent = parent;
-  }
-
-  unmount() {
-    this.parent = null;
-  }
-
   getParent() {
     return this.parent;
   }
 
   getChildren() {
     return this.children;
+  }
+
+  mount(parent, children) {
+    this.parent = parent;
+
+    this.children = children;
+  }
+
+  unmount() {
+    this.parent = null;
+
+    this.children = null;
   }
 }
 

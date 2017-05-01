@@ -14,15 +14,13 @@ class VirtualDOMTextElement extends VirtualDOMNode {
   }
 
   mount(parent, reference, context) {
-    super.mount(parent, reference);
+    const children = [];
+    
+    super.mount(parent, children, reference);
   }
   
   unmount(context) {
     super.unmount();
-  }
-
-  getTagName() {
-    return undefined;
   }
 
   getText() {
