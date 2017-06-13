@@ -1,9 +1,10 @@
 'use strict';
 
 const helpers = {
-  guaranteeArray: function(arrayOrElement) { return (arrayOrElement instanceof Array) ?
-                                                      arrayOrElement :
-                                                        [arrayOrElement];
+  guaranteeArray: function(arrayOrElement) { 
+    return (arrayOrElement instanceof Array) ?
+              arrayOrElement :
+               [arrayOrElement];
   },
 
   remaining: function(element, array) {
