@@ -111,6 +111,16 @@ These methods are to add better support for [Inference](https://github.com/djalb
 
 Note that the `forceUpdate()` method now takes an `update` argument for better integration with Inference. If the `update` argument is undefined, the element is remounted as usual. Otherwise, the element's render method is called and is passed the `update` argument.
 
+## Functionality that is different
+
+There are the following methods to handle state:
+
+- `getState()`
+- `setState()`
+- `updateState()`
+
+The `setState()` method will set the React element's state to the given state. The `updateState()` method will assign the given state to the element's state, which is more akin to React's `setState()` method. Both will force an update.
+
 ## Contact
 
 - james.smith@djalbat.com
