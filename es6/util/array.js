@@ -1,7 +1,39 @@
 'use strict';
 
-class arrayUtil {
-  static first(array) { return array[0]; }
+function first(array) { return array[0]; }
+
+function guarantee(arrayOrElement) {
+  return (arrayOrElement instanceof Array) ?
+           arrayOrElement :
+            [arrayOrElement];
 }
 
-module.exports = arrayUtil;
+function remaining(element, array) {
+  if (element === null) {
+    return array;
+  }
+
+  const index = indexOf(element, array);
+
+  return array.slice(index + 1);
+}
+
+module.exports = {
+  first: first,
+  guarantee: guarantee,
+  remaining: remaining
+};
+
+function indexOf(element, array) {
+  let index = null;
+
+  array.some(function(currentElement, currentElementIndex) {
+    if (currentElement === element) {
+      index = currentElementIndex;
+
+      return true;
+    }
+  });
+
+  return index;
+}

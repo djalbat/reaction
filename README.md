@@ -21,6 +21,7 @@ There is a series of complementary videos:
 - All children can now be arrays of elements, not just the first.
 - Component state has been put back by popular demand.
 - The examples have been moved to the `es6` folder.
+- The helpers file has been replaced with an array utilities file.
 
 These points are not strictly errata but will help to reconcile the current `master` branch with the older `videos` branch:
 
