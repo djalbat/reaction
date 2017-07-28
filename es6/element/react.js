@@ -66,12 +66,22 @@ class ReactElement extends Element {
     return null;
   }
 
+  getState() {
+    return this.state;
+  }
+
   setInitialState(initialState) {
     this.state = initialState;  ///
   }
 
   setState(state) {
     this.state = state;
+
+    this.remount();
+  }
+
+  updateState(update) {
+    Object.assign(this.state, update);
 
     this.remount();
   }

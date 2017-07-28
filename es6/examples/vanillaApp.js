@@ -46,10 +46,11 @@ const vanillaApp = () => {
     },
 
     render: function() {
-      const messages = this.state.messages,
-          comments = messages.map(function(message) {
-            return <Comment message={message} />;
-          });
+      const state = this.getState(),
+            { messages } = state,
+            comments = messages.map(function(message) {
+              return <Comment message={message} />;
+            });
 
       return (
 
