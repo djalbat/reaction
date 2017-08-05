@@ -1,11 +1,9 @@
 'use strict';
 
-function first(array) { return array[0]; }
-
 function guarantee(arrayOrElement) {
   return (arrayOrElement instanceof Array) ?
-           arrayOrElement :
-            [arrayOrElement];
+            arrayOrElement :
+              [arrayOrElement];
 }
 
 function remaining(element, array) {
@@ -19,7 +17,6 @@ function remaining(element, array) {
 }
 
 module.exports = {
-  first: first,
   guarantee: guarantee,
   remaining: remaining
 };

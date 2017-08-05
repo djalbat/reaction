@@ -1,7 +1,7 @@
 'use strict';
 
 const Element = require('../element'),
-      arrayUtil = require('../util/array'),
+      arrayUtilities = require('../utilities/array'),
       inferenceMixin = require('../mixin/react/inference');
 
 class ReactElement extends Element {
@@ -17,7 +17,7 @@ class ReactElement extends Element {
     this.context = context;
 
     const childContext = this.getChildContext(context) || context,
-          children = arrayUtil.guarantee(this.render());
+          children = arrayUtilities.guarantee(this.render());
 
     super.mount(parent, children);
 
@@ -55,7 +55,7 @@ class ReactElement extends Element {
       child.unmount(childContext);
     });
 
-    this.children = arrayUtil.guarantee(this.render());
+    this.children = arrayUtilities.guarantee(this.render());
 
     this.children.forEach(function(child) {
       child.mount(childParent, childReference, childContext);
@@ -123,7 +123,7 @@ function reference(parent, child) {
 
 function findReference(parent, child) {
   const children = parent.getChildren(),
-      remainingChildren = arrayUtil.remaining(child, children);
+      remainingChildren = arrayUtilities.remaining(child, children);
 
   return remainingChildren.reduce(function(reference, remainingChild) {
     if (reference === null) {
