@@ -58,8 +58,7 @@ Launch the `examples.html` file in the project's root directory. There is a Redu
 
 ```js
 var reaction = require('reaction'),
-    ReactDOM = reaction.ReactDOM,
-    React = reaction.React;
+    { React, ReactDOM } = reaction;
 ```
 
 Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind only  subset of React's functionality is supported.
