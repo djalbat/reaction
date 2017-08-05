@@ -14,6 +14,7 @@ There is a series of complementary videos:
 
 #### Errata
 
+- The `examples.html` file has moved to `examples/index.html`. 
 - The `toArray()` helper method is now called `guaranteeArray()`.
 - The `index` variable in the `indexOf()` helper method is now initially set to `null`.
 - The `remount()` method of the `ReactElement` should call the `getChildContext()` method.
@@ -52,7 +53,7 @@ You will need to do this if you want to look at the examples.
 
 ## Examples
 
-Launch the `examples.html` file in the project's root directory. There is a Redux as well as a vanilla example application.
+Launch the `examples/index.html` file. There is a Redux as well as a vanilla example application.
 
 ## Usage
 
