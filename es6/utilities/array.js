@@ -1,5 +1,9 @@
 'use strict';
 
+const necessary = require('necessary');
+
+const { arrayUtilities } = necessary;
+
 function guarantee(arrayOrElement) {
   return (arrayOrElement instanceof Array) ?
             arrayOrElement :
@@ -16,10 +20,10 @@ function remaining(element, array) {
   return array.slice(index + 1);
 }
 
-module.exports = {
+module.exports = Object.assign(arrayUtilities, {
   guarantee: guarantee,
   remaining: remaining
-};
+});
 
 function indexOf(element, array) {
   let index = null;

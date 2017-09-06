@@ -1,9 +1,8 @@
 'use strict';
 
-const necessary = require('necessary');
+const arrayUtilities = require('../../utilities/array');
 
-const { array } = necessary,
-      { first } = array;
+const { first } = arrayUtilities;
 
 function spliceChildren(start, removeCount, addedChildren, context = this.context) {
   const firstChild = first(this.children),
