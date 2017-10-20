@@ -90,7 +90,7 @@ Functional components are entirely stateless in the sense that any `getInitialSt
 
 ## Additional functionality not supported by React
 
-These methods are to add better support for [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, except for the last two, which can only be called against text elements. The `getTagName()` method will return `null` for all but virtual DOM elements, that is those elements with an underlying DOM element.
+These methods are to add better support for [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, except for the last two, which can only be called against text elements. The `getTagName()` method will return `null` for all but virtual DOM elements, namely those elements with an underlying DOM element.
 
 - `spliceChildren(start, removeCount, addedChildren)`
 - `addChild(child)`
@@ -110,7 +110,7 @@ These methods are to add better support for [Inference](https://github.com/djalb
 - `getText()`
 - `setText(text)`
 
-Note that the `forceUpdate()` method now takes an `update` argument for better integration with Inference. If the `update` argument is undefined, the element is remounted as usual. Otherwise, the element's render method is called and is passed the `update` argument.
+Note that the `forceUpdate()` method now takes an `update` argument for better integration with Inference. If the `update` argument is undefined, the element is remounted as usual. Otherwise, the element's `render()` method is called and is passed the `update` argument.
 
 ## Functionality that is different
 
