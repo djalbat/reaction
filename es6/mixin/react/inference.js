@@ -85,6 +85,12 @@ function hasClass(className) {
   return firstChild.hasClass(className);
 }
 
+function hasClasses(classNames) {
+  const firstChild = first(this.children);
+
+  return firstChild.hasClasses(classNames);
+}
+
 function clearClasses() {
   const firstChild = first(this.children);
 
@@ -109,6 +115,7 @@ const inferenceMixin = {
   removeClass: removeClass,
   toggleClass: toggleClass,
   hasClass: hasClass,
+  hasClasses: hasClasses,
   clearClasses: clearClasses,
   getTagName: getTagName
 };

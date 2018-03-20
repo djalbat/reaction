@@ -81,6 +81,12 @@ function toggleClass(className) { this.domElement.classList.toggle(className); }
 
 function hasClass(className) { return this.domElement.classList.contains(className); }
 
+function hasClasses(classNames) {
+  return classNames.every(function(className) {
+    return this.hasClass(className);
+  }.bind(this));
+}
+
 function clearClasses() { this.domElement.className = ''; }
 
 function getTagName() { return this.domElement.tagName; }
@@ -99,6 +105,7 @@ const inferenceMixin = {
   removeClass: removeClass,
   toggleClass: toggleClass,
   hasClass: hasClass,
+  hasClasses: hasClasses,
   clearClasses: clearClasses,
   getTagName: getTagName
 };

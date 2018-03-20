@@ -105,6 +105,7 @@ These methods are to add better support for [Inference](https://github.com/djalb
 - `removeClass(className)`
 - `toggleClass(className)`
 - `hasClass(className)`
+- `hasClasses(classNames)`
 - `clearClasses()`
 - `getTagName()`
 - `getText()`
