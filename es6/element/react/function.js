@@ -26,15 +26,11 @@ class ReactFunctionElement extends ReactElement {
   }
 
   componentDidMount() {
-    if (this.reactFunction.componentDidMount) {
-      this.reactFunction.componentDidMount(this.props, this.context);
-    }
+
   }
  
   componentWillUnmount() {
-    if (this.reactFunction.componentWillUnmount) {
-      this.reactFunction.componentWillUnmount(this.props, this.context);
-    }
+
   }
 }
 
