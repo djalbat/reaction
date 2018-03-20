@@ -5,6 +5,8 @@ const necessary = require('necessary');
 const { arrayUtilities } = necessary;
 
 function guarantee(arrayOrElement) {
+  arrayOrElement = arrayOrElement || [];
+
   return (arrayOrElement instanceof Array) ?
             arrayOrElement :
               [arrayOrElement];

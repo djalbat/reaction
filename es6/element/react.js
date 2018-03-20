@@ -4,6 +4,8 @@ const Element = require('../element'),
       arrayUtilities = require('../utilities/array'),
       inferenceMixin = require('../mixin/react/inference');
 
+const { guarantee, remaining } = arrayUtilities;
+
 class ReactElement extends Element {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ class ReactElement extends Element {
     this.context = context;
 
     const childContext = this.getChildContext(context) || context,
-          children = arrayUtilities.guarantee(this.render());
+          children = guarantee(this.render());
 
     super.mount(parent, children);
 
@@ -46,7 +48,7 @@ class ReactElement extends Element {
     super.unmount();
   }
 
-  remount() {
+  remount(update) {
     const childParent = this,
           childReference = this.getChildReference(),
           childContext = this.getChildContext(this.context) || this.context;
@@ -55,7 +57,7 @@ class ReactElement extends Element {
       child.unmount(childContext);
     });
 
-    this.children = arrayUtilities.guarantee(this.render());
+    this.children = guarantee(this.render(update));
 
     this.children.forEach(function(child) {
       child.mount(childParent, childReference, childContext);
@@ -80,18 +82,16 @@ class ReactElement extends Element {
     this.remount();
   }
 
-  updateState(update) {
-    Object.assign(this.state, update);
+  updateState(newState) {
+    const oldState = this.state;  ///
+
+    this.state = Object.assign(oldState, newState);
 
     this.remount();
   }
 
   forceUpdate(update) {
-    if (update !== undefined) {
-      this.render(update);
-    } else {
-      this.remount();
-    }
+    this.remount(update);
   }
 
   getChildReference() {
@@ -123,7 +123,7 @@ function reference(parent, child) {
 
 function findReference(parent, child) {
   const children = parent.getChildren(),
-      remainingChildren = arrayUtilities.remaining(child, children);
+      remainingChildren = remaining(child, children);
 
   return remainingChildren.reduce(function(reference, remainingChild) {
     if (reference === null) {

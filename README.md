@@ -84,9 +84,9 @@ Contexts are handled slightly differently. React elements can only pass down a c
 
 Functional components are entirely stateless in the sense that any `getInitialState()` method defined on the function in question is ignored. Similarly any `getChildContext()` method is ignored. However, such functions are passed two arguments, namely `props` *and* `context`, the latter being the child context of the parent element, if any.
 
-## Functionality that is not supported
+## Supported lifecycle methods
 
-- Of the component lifecycle, all methods except `componentDidMount()` and `componentWillUnmount()` are *not* supported.
+- Of the component lifecycle methods, only the `render()`, `setInitialState()`, `getChildContext()`, `componentDidMount()` and `componentWillUnmount()` methods are supported.
 
 ## Additional functionality not supported by React
 
@@ -111,8 +111,6 @@ These methods are to add better support for [Inference](https://github.com/djalb
 - `getText()`
 - `setText(text)`
 
-Note that the `forceUpdate()` method now takes an `update` argument for better integration with Inference. If the `update` argument is undefined, the element is remounted as usual. Otherwise, the element's `render()` method is called and is passed the `update` argument.
-
 ## Functionality that is different
 
 There are the following methods to handle state:
@@ -121,7 +119,25 @@ There are the following methods to handle state:
 - `setState()`
 - `updateState()`
 
-The `setState()` method will set the React element's state to the given state. The `updateState()` method will assign the given state to the element's state, which is more akin to React's `setState()` method. Both will force an update.
+The `setState()` method will set the React element's state to the given state. The `updateState()` method will assign the given state to the element's state, which is more akin to React's `setState()` method. Both will force the component to be remounted.
+
+## The consequences of changing of the functionality of the `forceUpdate()` method
+
+As of version 1.6 the functionality of the `forceUpdate()` method has been changed. Previously, if its `update` argument was defined it would call the `render()` method and pass on the update, otherwise it would call the `remount()` method and not pass on the update. Now, since the `remount()` method itself calls the `render()` method, it was thought best to have the option to also pass it an update so as to give an element the chance to remount itself as a direct consequence of an update. Therefore the `forceUpdate()`` method now simply calls the `remount()` method and passes on the update. To summarise:
+
+* When an element is first mounted, its `render()` method is called without an update and should return the element's children.
+
+* When an element's state is changed, its `render()` method is again called without an update and should return the element's children.
+
+It is perfectly safe to return `null` from a `render()` method or in fact leave the return value undefined. In this case it will be coerced to an empty array.
+
+If you want to change an element as the result of an update you now have two clear choices:
+
+* If you *do not* want the element to remount itself, call its `render()` method directly with the update.
+
+* If you *do* want the element to remount itself, call the `forceUpdate()` method as before, but you can now pass the update.
+
+Quite how you write your `render()` methods to behave in the presence of an update or otherwise is down to you. However, your choices should now be clearer.
 
 ## Contact
 
