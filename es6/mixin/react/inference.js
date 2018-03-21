@@ -46,7 +46,7 @@ function clearAttribute(name) {
 function addAttribute(name, value) { 
   const firstChild = first(this.children);
 
-  firstChild.setClassaddAttribute(name, value);
+  firstChild.addAttribute(name, value);
 }
 
 function removeAttribute(name) { 
