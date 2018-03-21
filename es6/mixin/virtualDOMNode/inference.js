@@ -69,7 +69,7 @@ function clearAttribute(name) { this.domElement.removeAttribute(name); }
 
 function addAttribute(name, value) { this.setAttribute(name, value); }
 
-function removeAttribute(name) { this.clearAttribute(name); }
+function removeAttribute(name) { this.domElement.removeAttribute(name); }
 
 function setClass(className) { this.domElement.className = className; }
 
