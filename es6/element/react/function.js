@@ -8,9 +8,9 @@ class ReactFunctionElement extends ReactElement {
 
     this.reactFunction = reactFunction;
 
-    const initialState = this.getInitialState();
 
-    this.setInitialState(initialState);
+
+
   }
  
   render() {
@@ -18,11 +18,11 @@ class ReactFunctionElement extends ReactElement {
   }
 
   getInitialState() {
-    return undefined;
+
   }
 
   getChildContext(context) {
-    return undefined;
+
   }
 
   componentDidMount() {
