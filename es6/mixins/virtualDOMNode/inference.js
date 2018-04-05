@@ -91,7 +91,7 @@ function clearClasses() { this.domElement.className = ''; }
 
 function getTagName() { return this.domElement.tagName; }
 
-const inferenceMixin = {
+module.exports = {
   spliceChildren: spliceChildren,
   addChild: addChild,
   removeChild: removeChild,
@@ -109,5 +109,3 @@ const inferenceMixin = {
   clearClasses: clearClasses,
   getTagName: getTagName
 };
-
-module.exports = inferenceMixin;

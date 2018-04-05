@@ -101,7 +101,7 @@ function getTagName() {
   return null;
 }
 
-const inferenceMixin = {
+module.exports = {
   spliceChildren: spliceChildren,
   addChild: addChild,
   removeChild: removeChild,
@@ -119,5 +119,3 @@ const inferenceMixin = {
   clearClasses: clearClasses,
   getTagName: getTagName
 };
-
-module.exports = inferenceMixin;

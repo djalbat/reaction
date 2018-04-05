@@ -2,7 +2,7 @@
 
 const Element = require('../element'),
       arrayUtilities = require('../utilities/array'),
-      inferenceMixin = require('../mixin/react/inference');
+      inferenceMixins = require('../mixins/react/inference');
 
 const { guarantee, remaining } = arrayUtilities;
 
@@ -102,7 +102,7 @@ class ReactElement extends Element {
   }
 }
 
-Object.assign(ReactElement.prototype, inferenceMixin);
+Object.assign(ReactElement.prototype, inferenceMixins);
 
 module.exports = ReactElement;
 

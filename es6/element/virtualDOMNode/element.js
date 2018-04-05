@@ -1,7 +1,7 @@
 'use strict';
 
 const VirtualDOMNode = require('../virtualDOMNode'),
-      inferenceMixin = require('../../mixin/virtualDOMNode/inference');
+      inferenceMixins = require('../../mixins/virtualDOMNode/inference');
 
 class VirtualDOMElement extends VirtualDOMNode {
   constructor(tagName, props) {
@@ -64,7 +64,7 @@ class VirtualDOMElement extends VirtualDOMNode {
   }
 }
 
-Object.assign(VirtualDOMElement.prototype, inferenceMixin);
+Object.assign(VirtualDOMElement.prototype, inferenceMixins);
 
 module.exports = VirtualDOMElement;
 
