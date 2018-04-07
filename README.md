@@ -34,7 +34,7 @@ These points are not strictly errata but will help to reconcile the current `mas
 - The `React.createElement()` method has been further streamlined.
 - The element classes have been reorganised, please see the source.
 - Support for Inference has been added, again please see the source.
-- Contexts are treated slightly differently. Please see the section below.
+- Contexts are now handled slightly differently. Please see the section below.
 
 ## Installation
 
@@ -161,7 +161,7 @@ Whilst you should not use mixins to get around the fact that it is not wise to e
 
 ## Contexts
 
-Contexts are handled slightly differently to React. The default context is an empty plain old JavaScript object `{}` and this is passed down from parent elements to their children *by reference*. If you choose to implement a `getChildContext()` method, it is recommended that you pass it *by value*. To do so, make use of the native `Object.assign()` function to effectively clone the context passed in, before amending it and passing it on. Suppose you wish to appraise child elements of their parent element, for example. The parent element's component class might look like the following:
+Contexts are handled slightly differently to React. The default context is an empty plain old JavaScript object `{}` and this is passed down from parent elements to their children *by reference*. If you implement a `getChildContext()` methods, however, it is recommended that you contexts *by value*. To do so, you can make use of the native `Object.assign()` function to effectively clone the context passed in, before amending it and passing it on. Suppose you wish to appraise child elements of their parent element, for example. The parent element's component class might look like the following:
 ```js
 class ParentComponent extends Component {
   getChildContext(context) {
@@ -190,7 +190,7 @@ class ChildComponent extends Component {
   ...
 }
 ```
-Passing contexts by value in this way will stop one set of components adversely affecting the context of others, so long as unique property names are used. The use of the `parentElement` property name is perhaps not such a good choice, because it is generic, however these patterns or something similar should be adopted unless passing contexts by reference is the required behaviour.
+Passing contexts by value in this way will stop one set of components adversely affecting the contexts of others, so long as unique property names are used. The use of the generic `parentElement` property name is perhaps not such a good choice, however these patterns or something similar should be adopted unless passing contexts by reference is actually the required behaviour.
 
 ## Updates
 
