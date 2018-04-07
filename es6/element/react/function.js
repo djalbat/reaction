@@ -13,24 +13,24 @@ class ReactFunctionElement extends ReactElement {
 
   }
  
-  render() {
+  render(update) {
     return this.reactFunction(this.props, this.context);
   }
 
   getInitialState() {
-
+    ///
   }
 
   getChildContext(context) {
-
+    return context;
   }
 
   componentDidMount() {
-
+    ///
   }
  
   componentWillUnmount() {
-
+    ///
   }
 }
 

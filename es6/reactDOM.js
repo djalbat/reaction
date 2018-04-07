@@ -6,7 +6,7 @@ class ReactDOM {
   static render(element, parentDOMElement) {
     const parent = VirtualDOMNode.fromDOMElement(parentDOMElement),
           reference = null,
-          context = undefined;
+          context = {};
 
     element.mount(parent, reference, context);
   }

@@ -4,23 +4,23 @@ const arrayUtilities = require('../../utilities/array');
 
 const { first } = arrayUtilities;
 
-function spliceChildren(start, removeCount, addedChildren, context = this.context) {
+function spliceChildren(start, removeCount, addedChildren) {
   const firstChild = first(this.children),
-        childContext = this.getChildContext(context) || context;
+        childContext = this.getChildContext(this.context);
 
   firstChild.spliceChildren(start, removeCount, addedChildren, childContext);
 }
 
-function addChild(child, context = this.context) {
+function addChild(child) {
   const firstChild = first(this.children),
-        childContext = this.getChildContext(context) || context;
+        childContext = this.getChildContext(this.context);
 
   firstChild.addChild(child, childContext);
 }
 
-function removeChild(child, context = this.context) {
+function removeChild(child) {
   const firstChild = first(this.children),
-        childContext = this.getChildContext(context) || context;
+        childContext = this.getChildContext(this.context);
 
   firstChild.removeChild(child, childContext);
 }

@@ -12,13 +12,13 @@ class ReactElement extends Element {
     
     this.state = undefined; ///
 
-    this.context = undefined;
+    this.context = undefined; ///
   }
 
   mount(parent, reference, context) {
     this.context = context;
 
-    const childContext = this.getChildContext(context) || context,
+    const childContext = this.getChildContext(context),
           children = guarantee(this.render());
 
     super.mount(parent, children);
@@ -38,7 +38,7 @@ class ReactElement extends Element {
 
     this.componentWillUnmount();
 
-    const childContext = this.getChildContext(context) || context,
+    const childContext = this.getChildContext(context),
           children = this.getChildren();
 
     children.forEach(function(child) {
@@ -51,7 +51,7 @@ class ReactElement extends Element {
   remount(update) {
     const childParent = this,
           childReference = this.getChildReference(),
-          childContext = this.getChildContext(this.context) || this.context;
+          childContext = this.getChildContext(this.context);
 
     this.children.forEach(function(child) {
       child.unmount(childContext);
@@ -96,7 +96,7 @@ class ReactElement extends Element {
 
   getChildReference() {
     const parent = this.getParent(),
-          child = this;
+          child = this; ///
 
     return reference(parent, child);
   }
@@ -111,10 +111,12 @@ function reference(parent, child) {
       parentDOMElement = parent.getDOMElement();
 
   while ((reference === null) && (parentDOMElement === null)) {
-    child = parent;
+    child = parent; ///
+
     parent = parent.getParent();
 
     reference = findReference(parent, child);
+
     parentDOMElement = parent.getDOMElement();
   }
 
@@ -123,17 +125,18 @@ function reference(parent, child) {
 
 function findReference(parent, child) {
   const children = parent.getChildren(),
-      remainingChildren = remaining(child, children);
+        remainingChildren = remaining(child, children);
 
   return remainingChildren.reduce(function(reference, remainingChild) {
     if (reference === null) {
       const remainingChildDOMElement = remainingChild.getDOMElement();
 
       if (remainingChildDOMElement !== null) {
-        reference = remainingChild;
+        reference = remainingChild; ///
       } else {
         child = null;
-        parent = remainingChild;
+
+        parent = remainingChild;  ///
 
         reference = findReference(parent, child);
       }

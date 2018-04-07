@@ -7,10 +7,7 @@ const Element = require('./element'),
       ReactFunctionElement = require('./element/react/function'),
       ReactComponentElement = require('./element/react/component'),
       VirtualDOMTextElement = require('./element/virtualDOMNode/textElement'),
-      VirtualDOMElement = require('./element/virtualDOMNode/element'),
-      mixinUtilities = require('./utilities/mixin');
-
-const { assign } = mixinUtilities;
+      VirtualDOMElement = require('./element/virtualDOMNode/element');
 
 function createClass(object) {
   return ReactClass.fromObject(object);
@@ -38,11 +35,7 @@ function createElement(firstArgument, properties, ...childArguments) {
 
       element = reactClassElement;
 
-      const { mixins } = reactClass;
-
-      if (mixins) {
-        assign(element, mixins);
-      }
+      assignMixins(reactClass, element);
     } else if (isSubclassOf(firstArgument, ReactComponent)) {
       const ReactComponent = firstArgument,  ///
             reactComponent = new ReactComponent(),
@@ -50,11 +43,7 @@ function createElement(firstArgument, properties, ...childArguments) {
 
       element = reactComponentElement;
 
-      const { mixins } = ReactComponent;
-
-      if (mixins) {
-        assign(element, mixins);
-      }
+      assignMixins(ReactComponent, element);
     } else if (typeof firstArgument === 'function') {
       const reactFunction = firstArgument,  ///
             reactFunctionElement = new ReactFunctionElement(reactFunction, props);
@@ -98,6 +87,18 @@ function childrenFromChildArguments(childArguments) {
   });
 
   return children;
+}
+
+function assignMixins(reactClassOrReactComponent, element) {
+  const { mixins } = reactClassOrReactComponent;
+
+  if (mixins) {
+    mixins.forEach(function(mixin) {
+      const { name } = mixin;
+
+      element[name] = mixin;
+    });
+  }
 }
 
 function isSubclassOf(argument, Class) {

@@ -34,6 +34,7 @@ These points are not strictly errata but will help to reconcile the current `mas
 - The `React.createElement()` method has been further streamlined.
 - The element classes have been reorganised, please see the source.
 - Support for Inference has been added, again please see the source.
+- Contexts are treated slightly differently. Please see the section below.
 
 ## Installation
 
@@ -161,6 +162,8 @@ Whilst you should not use mixins to get around the fact that it is not wise to e
 ## Contexts
 
 Contexts are handled slightly differently. React elements can only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of functions, so you can make programmatic decisions about what context to pass down to children.
+
+By default contexts are the empty plain old JavaScript object `{}`;
 
 ## Updates
 

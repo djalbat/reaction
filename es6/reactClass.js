@@ -2,15 +2,12 @@
 
 class ReactClass {
   constructor(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount) {
-    if (render) { this.render = render; }
+    this.render = render;
+
     if (getInitialState) { this.getInitialState = getInitialState; }
     if (getChildContext) { this.getChildContext = getChildContext; }
     if (componentDidMount) { this.componentDidMount = componentDidMount; }
     if (componentWillUnmount) { this.componentWillUnmount = componentWillUnmount; }
-  }
-
-  render() {
-    ///
   }
 
   getInitialState() {
@@ -18,7 +15,7 @@ class ReactClass {
   }
 
   getChildContext(context) {
-    return undefined;
+    return context;
   }
   
   componentDidMount() {
