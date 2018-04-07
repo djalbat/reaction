@@ -74,10 +74,10 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 ## Supported functionality
 
-- React classes
 - React components
 - React functions
-= Component state
+- React classes
+- Component state
 - References (via the `ref` property)
 - Contexts
 
