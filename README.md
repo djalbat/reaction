@@ -125,9 +125,7 @@ The `setState()` method will set the React element's state to the given state. T
 
 ## Mixins
 
-Mixins are supported for components created either by way of extending the `Component` class or by calling the `React.createClass()` method.
-
-When extending the `Component` class you should assign the mixins to the class itself. For example:
+Mixins are supported for components created either by way of extending the `Component` class or by calling the `React.createClass()` method. When extending the `Component` class you should assign the mixins to the class itself. For example:
 ```js
 class ExampleComponent extends Component {
   ...
@@ -156,7 +154,9 @@ const exampleComponent React.createClass({
   mixins: mixins
 });
 ```
-What defines a mixin is that it is bound to the corresponding *element* class and not the component class. This means that you may safely call it from within lifecycle methods, which if not bound to the element class are nonetheless always called against it. Whilst you should not use mixins to get around the fact that it is not wise to extend component classes, there is nothing wrong with the judicious use. All of the methods listed in the additional functionality section above, except the last two, can be called directly from mixins, for example.
+What defines a mixin is that it is bound to the corresponding *element* class and not the component class. This means that you may safely call it from within lifecycle methods, which if not bound to the element class are nonetheless always called against it.
+
+Whilst you should not use mixins to get around the fact that it is not wise to extend component classes, there is nothing wrong with their judicious use. All of the methods listed in the additional functionality section above except the last two can be called directly from mixins, for example.
 
 ## Contexts
 
