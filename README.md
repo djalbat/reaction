@@ -161,9 +161,36 @@ Whilst you should not use mixins to get around the fact that it is not wise to e
 
 ## Contexts
 
-Contexts are handled slightly differently. React elements can only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of functions, so you can make programmatic decisions about what context to pass down to children.
+Contexts are handled slightly differently to React. The default context is an empty plain old JavaScript object `{}` and this is passed down from parent elements to their children *by reference*. If you choose to implement a `getChildContext()` method, it is recommended that you pass it *by value*. To do so, make use of the native `Object.assign()` function to effectively clone the context passed in, before amending it and passing it on. Suppose you wish to appraise child elements of their parent element, for example. The parent element's component class might look like the following:
+```js
+class ParentComponent extends Component {
+  getChildContext(context) {
+    const parentElement = this, ///
+          childContext = Object.assign({}, context, {
+            parentElement: parentElement
+          });
 
-By default contexts are the empty plain old JavaScript object `{}`;
+    return childContext;
+  }
+
+  ...
+}
+```
+And the child element's component class might look like the following:
+```js
+class ChildComponent extends Component {
+  getChildContext(context) {
+    const childContext = Object.assign({}, context);
+
+    delete childContext.parentElement;
+
+    return childContext;
+  }
+
+  ...
+}
+```
+Passing contexts by value in this way will stop one set of components adversely affecting the context of others, so long as unique property names are used. The use of the `parentElement` property name is perhaps not such a good choice, because it is generic, however these patterns or something similar should be adopted unless passing contexts by reference is the required behaviour.
 
 ## Updates
 
