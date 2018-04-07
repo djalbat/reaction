@@ -80,10 +80,6 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - Contexts
 - Mounting and unmounting
 
-Contexts are handled slightly differently. React elements can only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of functions, so you can make programmatic decisions about what context to pass down to children.
-
-Functional components are entirely stateless in the sense that any `getInitialState()` method defined on the function in question is ignored. Similarly any `getChildContext()` method is ignored. However, such functions are passed two arguments, namely `props` *and* `context`, the latter being the child context of the parent element, if any.
-
 ## Supported lifecycle methods
 
 Of the component lifecycle methods, only these methods are supported:
@@ -127,7 +123,46 @@ There are the following methods to handle state:
 
 The `setState()` method will set the React element's state to the given state. The `updateState()` method will assign the given state to the element's state, which is more akin to React's `setState()` method. Both will force the component to be remounted.
 
-## Changes in forcing updates
+## Mixins
+
+Mixins are supported for components created either by way of extending the `Component` class or by calling the `React.createClass()` method.
+
+When extending the `Component` class you should assign the mixins to the class itself. For example:
+```js
+class ExampleComponent extends Component {
+  ...
+}
+
+const mixins = [
+  expand,
+  collapse
+];
+
+Object.assign(ExampleComponent, {
+  mixins: mixins
+});
+```
+
+When calling the `React.createClass()` method you should add a `mixin` property to the plain old JavaScript object that you pass in. For example:
+```js
+const mixins = [
+  expand,
+  collapse
+];
+
+const exampleComponent React.createClass({
+  ...
+
+  mixins: mixins
+});
+```
+What defines a mixin is that it is bound to the corresponding *element* class and not the component class. This means that you may safely call it from within lifecycle methods, which if not bound to the element class are nonetheless always called against it. Whilst you should not use mixins to get around the fact that it is not wise to extend component classes, there is nothing wrong with the judicious use. All of the methods listed in the additional functionality section above, except the last two, can be called directly from mixins, for example.
+
+## Contexts
+
+Contexts are handled slightly differently. React elements can only pass down a context to child elements, and those child elements can only receive a context, in its entirety. However, the current context is available as `this.context` when the `getChildContext()` method is invoked, or passed as the second argument of the `getChildContext()` method in the case of functions, so you can make programmatic decisions about what context to pass down to children.
+
+## Updates
 
 The functionality of the `forceUpdate()` method has recently changed. Previously, if its `update` argument was defined it would call the `render()` method and pass on the update, otherwise it would call the `remount()` method and not pass on the update. Now, since the `remount()` method itself calls the `render()` method, it was thought best to have the option to also pass it an update so as to give an element the chance to remount itself as a direct consequence of an update. Therefore the `forceUpdate()` method now simply calls the `remount()` method and passes on the update.
 

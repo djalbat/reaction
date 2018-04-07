@@ -1,13 +1,16 @@
 'use strict';
 
-const ReactComponent = require('./reactComponent'),
+const Element = require('./element'),
       ReactClass = require('./reactClass'),
-      Element = require('./element'),
+      ReactComponent = require('./reactComponent'),
       ReactClassElement = require('./element/react/class'),
       ReactFunctionElement = require('./element/react/function'),
       ReactComponentElement = require('./element/react/component'),
+      VirtualDOMTextElement = require('./element/virtualDOMNode/textElement'),
       VirtualDOMElement = require('./element/virtualDOMNode/element'),
-      VirtualDOMTextElement = require('./element/virtualDOMNode/textElement');
+      mixinUtilities = require('./utilities/mixin');
+
+const { assign } = mixinUtilities;
 
 function createClass(object) {
   return ReactClass.fromObject(object);
@@ -34,12 +37,24 @@ function createElement(firstArgument, properties, ...childArguments) {
             reactClassElement = new ReactClassElement(reactClass, props);
 
       element = reactClassElement;
+
+      const { mixins } = reactClass;
+
+      if (mixins) {
+        assign(element, mixins);
+      }
     } else if (isSubclassOf(firstArgument, ReactComponent)) {
       const ReactComponent = firstArgument,  ///
             reactComponent = new ReactComponent(),
             reactComponentElement = new ReactComponentElement(reactComponent, props);
 
       element = reactComponentElement;
+
+      const { mixins } = ReactComponent;
+
+      if (mixins) {
+        assign(element, mixins);
+      }
     } else if (typeof firstArgument === 'function') {
       const reactFunction = firstArgument,  ///
             reactFunctionElement = new ReactFunctionElement(reactFunction, props);
