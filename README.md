@@ -77,9 +77,9 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - React classes
 - React components
 - React functions
-- References
+= Component state
+- References (via the `ref` property)
 - Contexts
-- Mounting and unmounting
 
 ## Supported lifecycle methods
 
