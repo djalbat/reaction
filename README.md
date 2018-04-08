@@ -157,7 +157,7 @@ const exampleComponent React.createClass({
 ```
 What defines a mixin is that it is bound to the corresponding *element* class and not the component class. This means that you may safely call it from within lifecycle methods, which if not bound to the element class are nonetheless always called against it.
 
-Whilst you should not use mixins to get around the fact that it is not wise to extend component classes, there is nothing wrong with their judicious use. All of the methods listed in the additional functionality section above except the last two can be called directly from mixins, for example.
+Whilst you should not use mixins to get around the fact that it is not wise to extend component classes, there is nothing wrong with their judicious use. All of the methods listed in the additional functionality section above can be called directly from mixins, for example.
 
 ## Contexts
 
@@ -190,7 +190,7 @@ class ChildComponent extends Component {
   ...
 }
 ```
-Passing contexts by value in this way will stop one set of components adversely affecting the contexts of others, so long as unique property names are used. The use of the generic `parentElement` property name is perhaps not such a good choice, however these patterns or something similar should be adopted unless passing contexts by reference is actually the required behaviour.
+Passing contexts by value in this way will stop one set of components adversely affecting the contexts of others, so long as unique property names are used.
 
 ## Updates
 
