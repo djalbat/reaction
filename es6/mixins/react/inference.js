@@ -4,27 +4,6 @@ const arrayUtilities = require('../../utilities/array');
 
 const { first } = arrayUtilities;
 
-function spliceChildren(start, removeCount, addedChildren) {
-  const firstChild = first(this.children),
-        childContext = this.getChildContext(this.context);
-
-  firstChild.spliceChildren(start, removeCount, addedChildren, childContext);
-}
-
-function addChild(child) {
-  const firstChild = first(this.children),
-        childContext = this.getChildContext(this.context);
-
-  firstChild.addChild(child, childContext);
-}
-
-function removeChild(child) {
-  const firstChild = first(this.children),
-        childContext = this.getChildContext(this.context);
-
-  firstChild.removeChild(child, childContext);
-}
-
 function setAttribute(name, value) {
   const firstChild = first(this.children);
 
@@ -98,13 +77,18 @@ function clearClasses() {
 }
 
 function getTagName() {
-  return null;
+  const firstChild = first(this.children);
+
+  return firstChild.getTagName();
+}
+
+function setStyle(name, value) {
+  const firstChild = first(this.children);
+
+  firstChild.setStyle(name, value);
 }
 
 module.exports = {
-  spliceChildren: spliceChildren,
-  addChild: addChild,
-  removeChild: removeChild,
   setAttribute: setAttribute,
   getAttribute: getAttribute,
   clearAttribute: clearAttribute,
@@ -117,5 +101,6 @@ module.exports = {
   hasClass: hasClass,
   hasClasses: hasClasses,
   clearClasses: clearClasses,
-  getTagName: getTagName
+  getTagName: getTagName,
+  setStyle: setStyle
 };

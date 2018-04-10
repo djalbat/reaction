@@ -1,42 +1,5 @@
 'use strict';
 
-function spliceChildren(start, removedChildrenCount, addedChildren, context) {
-  const childParent = this,
-        childReference = null,
-        childContext = context;
-
-  addedChildren.forEach(function(addedChild) {
-    addedChild.mount(childParent, childReference, childContext);
-  });
-
-  const args = [start, removedChildrenCount].concat(addedChildren),
-        removedChildren = Array.prototype.splice.apply(this.children, args);
-
-  removedChildren.forEach(function(removedChild) {
-    removedChild.unmount(childContext);
-  });
-}
-
-function addChild(child, context) {
-  const start = Infinity,
-        removedChildrenCount = 0,
-        addedChildren = [child];
-
-  this.spliceChildren(start, removedChildrenCount, addedChildren, context);
-}
-
-function removeChild(child, context) {
-  const index = this.children.indexOf(child);
-
-  if (index > -1) {
-    const start = index,
-          removedChildrenCount = 1,
-          addedChildren = [];
-
-    this.spliceChildren(start, removedChildrenCount, addedChildren, context);
-  }
-}
-
 function setAttribute(name, value) {
   if (name === 'className') {
     name = 'class';
@@ -91,10 +54,11 @@ function clearClasses() { this.domElement.className = ''; }
 
 function getTagName() { return this.domElement.tagName; }
 
+function setStyle(name, value) {
+  this.domElement.style[name] = value;
+}
+
 module.exports = {
-  spliceChildren: spliceChildren,
-  addChild: addChild,
-  removeChild: removeChild,
   setAttribute: setAttribute,
   getAttribute: getAttribute,
   clearAttribute: clearAttribute,
@@ -107,5 +71,6 @@ module.exports = {
   hasClass: hasClass,
   hasClasses: hasClasses,
   clearClasses: clearClasses,
-  getTagName: getTagName
+  getTagName: getTagName,
+  setStyle: setStyle
 };

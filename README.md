@@ -95,9 +95,6 @@ Of the component lifecycle methods, only these methods are supported:
 
 These methods are to add better support for [Inference](https://github.com/djalbat/Inference). They can be called against any element bar text elements, except for the last two, which can only be called against text elements. The `getTagName()` method will return `null` for all but virtual DOM elements, namely those elements with an underlying DOM element.
 
-- `spliceChildren(start, removeCount, addedChildren)`
-- `addChild(child)`
-- `removeChild(child)`
 - `setAttribute(name, value)`
 - `getAttribute(name)`
 - `clearAttribute(name)`
@@ -111,6 +108,7 @@ These methods are to add better support for [Inference](https://github.com/djalb
 - `hasClasses(classNames)`
 - `clearClasses()`
 - `getTagName()`
+- `setStyle(name, value)`
 - `getText()`
 - `setText(text)`
 
