@@ -31,8 +31,6 @@ class ReactComponent {
 
 
 
-
-
 }
 
 module.exports = ReactComponent;
