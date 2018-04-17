@@ -77,9 +77,7 @@ function clearClasses() {
 }
 
 function getTagName() {
-  const firstChild = first(this.children);
-
-  return firstChild.getTagName();
+  return null;  ///
 }
 
 function setStyle(name, value) {
