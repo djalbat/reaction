@@ -208,7 +208,7 @@ If you want to change an element as the result of an update you now have two cho
 
 * If you *do* want the element to remount itself, call the `forceUpdate()` method, but you can now pass the update and this will be passed to the `render()` method during the process of remounting.
 
-Quite how you write your `render()` methods to behave in the presence of an update or otherwise is down to you. Hopefully, however, your choices should now be clearer.
+Quite how you write your `render()` methods to behave in the presence of an update or otherwise is down to you. There is some detail guidance in the 'Recommended patterns' section at the foot of the Inference readme file, however.
 
 ## Contact
 
