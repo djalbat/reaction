@@ -96,7 +96,7 @@ function assignMixins(reactClassOrReactComponent, element) {
     mixins.forEach(function(mixin) {
       const { name } = mixin;
 
-      element[name] = mixin;
+      element[name] = mixin.bind(element);
     });
   }
 }
