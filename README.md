@@ -159,7 +159,7 @@ Whilst you should not use mixins to get around the fact that it is not wise to e
 
 ## Contexts
 
-Contexts are handled slightly differently to React. The default context is an empty plain old JavaScript object `{}` and this is passed down from parent elements to their children *by reference*. If you implement a `getChildContext()` methods, however, it is recommended that you contexts *by value*. To do so, you can make use of the native `Object.assign()` function to effectively clone the context passed in, before amending it and passing it on. Suppose you wish to appraise child elements of their parent element, for example. The parent element's component class might look like the following:
+Contexts are handled slightly differently to React. The default context is an empty plain old JavaScript object `{}` and this is passed down from parent elements to their children *by reference*. If you implement any `getChildContext()` methods, however, it is recommended that you pass down contexts *by value*. To do so, you can make use of the native `Object.assign()` function to effectively clone the context passed in, before amending it and passing it on. Suppose you wish to appraise child elements of their parent element, for example. The parent element's component class might look like the following:
 ```js
 class ParentComponent extends Component {
   getChildContext(context) {
