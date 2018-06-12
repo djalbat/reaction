@@ -178,7 +178,8 @@ And the child element's component class might look like the following:
 ```js
 class ChildComponent extends Component {
   getChildContext(context) {
-    const childContext = Object.assign({}, context);
+    const { parentElement } = context,
+          childContext = Object.assign({}, context);
 
     delete childContext.parentElement;
 
