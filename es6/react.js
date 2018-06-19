@@ -19,11 +19,11 @@ function createElement(firstArgument, properties, ...childArguments) {
   if (firstArgument !== undefined) {
     const children = childrenFromChildArguments(childArguments),
           props = Object.assign({}, properties, {
-            children: children
+            children
           });
 
     if (false) {
-
+      ///
     } else if (typeof firstArgument === 'string') {
       const tagName = firstArgument,  ///
             virtualDOMElement = new VirtualDOMElement(tagName, props);
@@ -57,9 +57,9 @@ function createElement(firstArgument, properties, ...childArguments) {
 
 const Component = ReactComponent, ///
       React = {
-        Component: Component,
-        createClass: createClass,
-        createElement: createElement
+        Component,
+        createClass,
+        createElement
       };
 
 module.exports = React;

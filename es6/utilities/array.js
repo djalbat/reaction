@@ -21,9 +21,9 @@ function remaining(element, array) {
 }
 
 module.exports = {
-  first: first,
-  guarantee: guarantee,
-  remaining: remaining
+  first,
+  guarantee,
+  remaining
 };
 
 function indexOf(element, array) {
