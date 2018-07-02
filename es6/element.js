@@ -1,5 +1,9 @@
 'use strict';
 
+const arrayUtilities = require('./utilities/array');
+
+const { first } = arrayUtilities;
+
 class Element {
   constructor(props) {
     this.props = props;
@@ -15,6 +19,12 @@ class Element {
 
   getChildren() {
     return this.children;
+  }
+
+  getFirstChild() {
+    const firstChild = first(this.children);
+
+    return firstChild;
   }
 
   mount(parent, children) {
