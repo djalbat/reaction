@@ -7,7 +7,7 @@ class VirtualDOMTextElement extends VirtualDOMNode {
     const domElement = document.createTextNode(text),
           children = [],
           props = {
-            children: children
+            children
           };
 
     super(props, domElement);

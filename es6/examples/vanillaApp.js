@@ -39,7 +39,7 @@ const vanillaApp = () => {
               "Hello world again..."
             ],
             state = {
-              messages: messages
+              messages
             };
 
       return state;
@@ -75,7 +75,7 @@ const vanillaApp = () => {
             "Hello world yet again!!!"
           ],
           state = {
-            messages: messages
+            messages
           };
 
     commentsList.setState(state);

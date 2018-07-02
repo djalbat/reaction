@@ -83,18 +83,18 @@ function setStyle(name, value) {
 }
 
 module.exports = {
-  setAttribute: setAttribute,
-  getAttribute: getAttribute,
-  clearAttribute: clearAttribute,
-  addAttribute: addAttribute,
-  removeAttribute: removeAttribute,
-  setClass: setClass,
-  addClass: addClass,
-  removeClass: removeClass,
-  toggleClass: toggleClass,
-  hasClass: hasClass,
-  hasClasses: hasClasses,
-  clearClasses: clearClasses,
-  getTagName: getTagName,
-  setStyle: setStyle
+  setAttribute,
+  getAttribute,
+  clearAttribute,
+  addAttribute,
+  removeAttribute,
+  setClass,
+  addClass,
+  removeClass,
+  toggleClass,
+  hasClass,
+  hasClasses,
+  clearClasses,
+  getTagName,
+  setStyle
 };

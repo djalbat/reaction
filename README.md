@@ -159,7 +159,7 @@ Whilst you should not use mixins to get around the fact that it is not wise to e
 
 ## Contexts
 
-Contexts are handled slightly differently to React. The default context is an empty plain old JavaScript object `{}` and this is passed down from parent elements to their children *by reference*. If you implement a `getChildContext()` methods, however, it is recommended that you contexts *by value*. To do so, you can make use of the native `Object.assign()` function to effectively clone the context passed in, before amending it and passing it on. Suppose you wish to appraise child elements of their parent element, for example. The parent element's component class might look like the following:
+Contexts are handled slightly differently to React. The default context is an empty plain old JavaScript object `{}` and this is passed down from parent elements to their children *by reference*. If you implement any `getChildContext()` methods, however, it is recommended that you pass down contexts *by value*. To do so, you can make use of the native `Object.assign()` function to effectively clone the context passed in, before amending it and passing it on. Suppose you wish to appraise child elements of their parent element, for example. The parent element's component class might look like the following:
 ```js
 class ParentComponent extends Component {
   getChildContext(context) {
@@ -178,7 +178,8 @@ And the child element's component class might look like the following:
 ```js
 class ChildComponent extends Component {
   getChildContext(context) {
-    const childContext = Object.assign({}, context);
+    const { parentElement } = context,
+          childContext = Object.assign({}, context);
 
     delete childContext.parentElement;
 
@@ -192,23 +193,25 @@ Passing contexts by value in this way will stop one set of components adversely 
 
 ## Updates
 
-The functionality of the `forceUpdate()` method has recently changed. Previously, if its `update` argument was defined it would call the `render()` method and pass on the update, otherwise it would call the `remount()` method and not pass on the update. Now, since the `remount()` method itself calls the `render()` method, it was thought best to have the option to also pass it an update so as to give an element the chance to remount itself as a direct consequence of an update. Therefore the `forceUpdate()` method now simply calls the `remount()` method and passes on the update.
-
-To summarise:
+The functionality of the `forceUpdate()` method has recently changed. It now simply calls the `remount()` method and passes on the update it receives as an argument. This impacts updates in the following ways:
 
 * When an element is first mounted, its `render()` method is called without an update.
 
 * When an element's state is changed, its `render()` method is again called without an update.
 
-In either case the `render()` method should return the element's children. However, It is perfectly safe to return `null` or in fact to leave the return value undefined. In either case the return value will be coerced to an empty array.
+In either case, because the element is being mounted or re-mounted, the `render()` method should return the element's children. It is perfectly safe to return `null`, however, or in fact to leave the return value undefined. In either case the return value will be coerced to an empty array.
 
 If you want to change an element as the result of an update you now have two choices:
 
-* If you *do not* want the element to remount itself, call its `render()` method directly with the update.
+* If you *do not* want the element to be remounted, call its `render()` method directly with the update.
 
-* If you *do* want the element to remount itself, call the `forceUpdate()` method, but you can now pass the update and this will be passed to the `render()` method during the process of remounting.
+* If you *do* want the element to be remounted, call the `forceUpdate()` method with the update.
 
-Quite how you write your `render()` methods is down to you. However, detailed guidance can be found in the 'Recommended patterns' section at the foot of the Inference readme file.
+In the former case, you would most likely want the `render()` method to make benign changes such as changing the classes or attributes of child elements. In the latter case, you would most likely want the `render()` method to return an entirely new set of child elements.
+
+Quite how you write your `render()` methods is down to you. One common pattern is to check for the presence of an update. If it is missing, the `render()` method can return the element's children on the assumption that the element is being mounted. On the other hand if an update is present, the `render()` method can make benign changes to these children on the assumption that the element is not being mounted. This pattern depends on calling the `render()` method directly upon receipt of an update, however, rather than indirectly by way of the `forceUpdate()` method.
+
+In short, the makeup of any `render()` method will depend on its usage and there is no "one size fits all" solution. Further, detailed guidance can be found in the 'Recommended patterns' section at the foot of the Inference readme file.
 
 ## Contact
 

@@ -30,7 +30,7 @@ class VirtualDOMNode extends Element {
   static fromDOMElement(domElement) {
     const children = [],
           props = {
-            children: children
+            children
           },
           virtualDOMNode = new VirtualDOMNode(props, domElement);
 

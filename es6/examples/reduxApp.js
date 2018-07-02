@@ -10,21 +10,28 @@ const { Component, Class } = React,
 const reduxApp = () => {
   const todo = (state, action) => {
     switch (action.type) {
-      case 'ADD_TODO':
-        return {
-          id: action.id,
-          text: action.text,
-          completed: false
-        };
+      case 'ADD_TODO': {
+        const { id, text } = action,
+              completed = false;
 
-      case 'TOGGLE_TODO':
+        return {
+          id,
+          text,
+          completed
+        };
+      }
+
+      case 'TOGGLE_TODO': {
         if (state.id !== action.id) {
           return state;
         }
 
+        const completed = !state.completed; ///
+
         return Object.assign({}, state, {
-          completed: !state.completed
+          completed
         });
+      }
 
       default:
         return state;
@@ -59,7 +66,7 @@ const reduxApp = () => {
 
   const todoApp = combineReducers({
     todos: todos,
-    visibilityFilter: visibilityFilter
+    visibilityFilter
   });
 
   const getVisibleTodos = (todos, filter) => {
@@ -151,12 +158,15 @@ const reduxApp = () => {
         <Link active={
                 this.props.filter === state.visibilityFilter
               }
-              onClick={() =>
+              onClick={() => {
+                const type = 'SET_VISIBILITY_FILTER',
+                      { filter } = this.props;
+
                 store.dispatch({
-                  type: 'SET_VISIBILITY_FILTER',
-                  filter: this.props.filter
-                })
-              }
+                  type,
+                  filter
+                });
+              }}
         >
           {this.props.children}
         </Link>
@@ -177,11 +187,17 @@ const reduxApp = () => {
                }}
         />
         <button onClick={() => {
+                  const type = 'ADD_TODO',
+                        { value } = input,
+                        text = value, ///
+                        id = nextTodoId++;
+
                   store.dispatch({
-                    type: 'ADD_TODO',
-                    text: input.value,
-                    id: nextTodoId++
+                    type,
+                    text,
+                    id
                   });
+
                   input.value = '';
                 }}
         >
@@ -212,17 +228,19 @@ const reduxApp = () => {
       return (
 
         <TodoList todos={
-                  getVisibleTodos(
-                    state.todos,
-                    state.visibilityFilter
-                  )
-                }
-                  onTodoClick={id =>
-                  store.dispatch({
-                    type: 'TOGGLE_TODO',
-                    id: id
-                  })
-                }
+                    getVisibleTodos(
+                      state.todos,
+                      state.visibilityFilter
+                    )
+                  }
+                  onTodoClick={(id) => {
+                    const type = 'TOGGLE_TODO';
+
+                    store.dispatch({
+                      type,
+                      id
+                    });
+                  }}
         />
 
       );
@@ -264,8 +282,10 @@ const reduxApp = () => {
 
   class Provider extends Component {
     getChildContext(context) {
+      const { store } = this.props;
+
       return {
-        store: this.props.store
+        store
       };
     }
 
