@@ -100,6 +100,7 @@ These methods can be called against any element bar text elements, except for th
 - `clearAttribute(name)`
 - `addAttribute(name, value)`
 - `removeAttribute(name)`
+- `hasAttribute(name)`
 - `setClass(className)`
 - `addClass(className)`
 - `removeClass(className)`

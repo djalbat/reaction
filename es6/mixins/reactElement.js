@@ -24,10 +24,16 @@ function addAttribute(name, value) {
   firstChild.addAttribute(name, value);
 }
 
-function removeAttribute(name) { 
+function removeAttribute(name) {
   const firstChild = this.getFirstChild();
 
   firstChild.removeAttribute(name)
+}
+
+function hasAttribute(name, value) {
+  const firstChild = this.getFirstChild();
+
+  return firstChild.hasAttribute(name, value);
 }
 
 function setClass(className) {

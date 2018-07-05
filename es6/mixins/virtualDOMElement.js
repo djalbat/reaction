@@ -34,6 +34,8 @@ function addAttribute(name, value) { this.setAttribute(name, value); }
 
 function removeAttribute(name) { this.domElement.removeAttribute(name); }
 
+function hasAttribute(name) { this.domElement.hasAttribute(name); }
+
 function setClass(className) { this.domElement.className = className; }
 
 function addClass(className) { this.domElement.classList.add(className); }
@@ -64,6 +66,7 @@ module.exports = {
   clearAttribute,
   addAttribute,
   removeAttribute,
+  hasAttribute,
   setClass,
   addClass,
   removeClass,
