@@ -34,7 +34,7 @@ function addAttribute(name, value) { this.setAttribute(name, value); }
 
 function removeAttribute(name) { this.domElement.removeAttribute(name); }
 
-function hasAttribute(name) { this.domElement.hasAttribute(name); }
+function hasAttribute(name) { return this.domElement.hasAttribute(name); }
 
 function setClass(className) { this.domElement.className = className; }
 

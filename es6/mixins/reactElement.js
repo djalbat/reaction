@@ -30,10 +30,10 @@ function removeAttribute(name) {
   firstChild.removeAttribute(name)
 }
 
-function hasAttribute(name, value) {
+function hasAttribute(name) {
   const firstChild = this.getFirstChild();
 
-  return firstChild.hasAttribute(name, value);
+  return firstChild.hasAttribute(name);
 }
 
 function setClass(className) {
