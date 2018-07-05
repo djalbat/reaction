@@ -94,6 +94,7 @@ module.exports = {
   clearAttribute,
   addAttribute,
   removeAttribute,
+  hasAttribute,
   setClass,
   addClass,
   removeClass,
