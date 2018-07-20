@@ -162,7 +162,7 @@ class ParentComponent extends Component {
   getChildContext(context) {
     const parentElement = this, ///
           childContext = Object.assign({}, context, {
-            parentElement: parentElement
+            parentElement
           });
 
     return childContext;
