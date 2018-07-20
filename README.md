@@ -131,27 +131,23 @@ class ExampleComponent extends Component {
   ...
 }
 
-const mixins = [
-  expand,
-  collapse
-];
-
 Object.assign(ExampleComponent, {
-  mixins: mixins
+  mixins: [
+    expand,
+    collapse
+  ]
 });
 ```
 
 When calling the `React.createClass()` method you should add a `mixin` property to the plain old JavaScript object that you pass in:
 ```js
-const mixins = [
-  expand,
-  collapse
-];
-
 const exampleComponent React.createClass({
   ...
 
-  mixins: mixins
+  mixins: [
+    expand,
+    collapse
+  ]
 });
 ```
 What defines a mixin is that it is bound to the corresponding *element* class and not the component class. This means that you may safely call it from within lifecycle methods, which if not bound to the element class are nonetheless always called against it.
