@@ -49,7 +49,7 @@ class ReactElement extends Element {
   }
 
   remount(update) {
-z    const childParent = this,
+    const childParent = this,
           childReference = this.getChildReference(),
           childContext = this.getChildContext(this.context);
 

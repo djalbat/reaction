@@ -22,7 +22,7 @@ class Element {
   }
 
   getFirstChild() {
-    const firstChild = first(this.children);
+    const firstChild = first(this.children) || null;
 
     return firstChild;
   }
