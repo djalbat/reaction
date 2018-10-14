@@ -44,7 +44,7 @@ With [npm](https://www.npmjs.com/):
 
 You can also clone the repository with [Git](https://git-scm.com/)...
 
-    git clone https://github.com/djalbat/Reaction.git
+    git clone https://github.com/djalbat/reaction.git
 
 ...then install the necessary modules with npm from within the project's root directory:
 
