@@ -35,7 +35,7 @@ function createElement(firstArgument, properties, ...childArguments) {
 
       element = reactClassElement;
 
-      assignMixins(reactClass, element);
+      assignReactClassMixins(reactClass, element);
     } else if (isSubclassOf(firstArgument, ReactComponent)) {
       const ReactComponent = firstArgument,  ///
             reactComponent = new ReactComponent(),
@@ -43,7 +43,7 @@ function createElement(firstArgument, properties, ...childArguments) {
 
       element = reactComponentElement;
 
-      assignMixins(ReactComponent, element);
+      assignReactComponentMixins(ReactComponent, element);
     } else if (typeof firstArgument === 'function') {
       const reactFunction = firstArgument,  ///
             reactFunctionElement = new ReactFunctionElement(reactFunction, props);
@@ -89,9 +89,27 @@ function childrenFromChildArguments(childArguments) {
   return children;
 }
 
-function assignMixins(reactClassOrReactComponent, element) {
-  const { mixins } = reactClassOrReactComponent;
+function assignReactComponentMixins(reactComponent, element) {
+  const { mixins } = reactComponent;
 
+  reactComponent = Object.getPrototypeOf(reactComponent); ///
+
+  if (reactComponent === ReactComponent) {
+    return;
+  }
+
+  assignReactComponentMixins(reactComponent, element);
+
+  assignMixins(mixins, element);
+}
+
+function assignReactClassMixins(reactClass, element) {
+  const { mixins } = reactClass;
+
+  assignMixins(mixins, element);
+}
+
+function assignMixins(mixins, element) {
   if (mixins) {
     mixins.forEach(function(mixin) {
       const { name } = mixin;
@@ -102,17 +120,17 @@ function assignMixins(reactClassOrReactComponent, element) {
 }
 
 function isSubclassOf(argument, Class) {
-  let typeOf = false;
+  let subclass = false;
 
   if (argument === Class) {   ///
-    typeOf = true;
+    subclass = true;
   } else {
     argument = Object.getPrototypeOf(argument); ///
 
     if (argument !== null) {
-      typeOf = isSubclassOf(argument, Class);
+      subclass = isSubclassOf(argument, Class);
     }
   }
 
-  return typeOf;
+  return subclass;
 }
