@@ -63,7 +63,7 @@ var reaction = require('reaction'),
     { React, ReactDOM } = reaction;
 ```
 
-Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind only  subset of React's functionality is supported.
+Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind that only a subset of React's functionality is supported.
 
 ## Compiling from source
 
@@ -150,9 +150,9 @@ const exampleComponent React.createClass({
   ]
 });
 ```
-What defines a mixin is that it is bound to the corresponding *element* class and not the component class. This means that you may safely call it from within lifecycle methods, which if not bound to the element class are nonetheless always called against it.
+What defines mixins is that they are bound to the corresponding *element* class and not the component class. This means that you may safely call them from within lifecycle methods, which if not bound to the element class are nonetheless always called against it.
 
-Whilst you should not use mixins to get around the fact that it is not wise to extend component classes, there is nothing wrong with their judicious use. All of the methods listed in the additional functionality section above can be called directly from mixins, for example.
+Whilst you should not use mixins to get around the fact that it is not always wise to extend component classes, there is nothing wrong with their judicious use. All of the methods listed in the additional functionality section above can be called directly from mixins, for example.
 
 ## Contexts
 
@@ -208,7 +208,7 @@ In the former case, you would most likely want the `render()` method to make ben
 
 Quite how you write your `render()` methods is down to you. One common pattern is to check for the presence of an update. If it is missing, the `render()` method can return the element's children on the assumption that the element is being mounted. On the other hand if an update is present, the `render()` method can make benign changes to these children on the assumption that the element is not being mounted. This pattern depends on calling the `render()` method directly upon receipt of an update, however, rather than indirectly by way of the `forceUpdate()` method.
 
-In short, the makeup of any `render()` method will depend on its usage and there is no "one size fits all" solution. Further, detailed guidance can be found in the 'Recommended patterns' section at the foot of the Inference readme file.
+In short, the makeup of any `render()` method will depend on its usage and there is no "one size fits all" solution. Further guidance can be found in the 'Recommended patterns' section at the foot of the Inference readme file.
 
 ## Contact
 
