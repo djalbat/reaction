@@ -94,12 +94,10 @@ function assignReactComponentMixins(reactComponent, element) {
 
   reactComponent = Object.getPrototypeOf(reactComponent); ///
 
-  if (reactComponent === ReactComponent) {
-    return;
+  if (reactComponent !== ReactComponent) {
+    assignReactComponentMixins(reactComponent, element);
   }
-
-  assignReactComponentMixins(reactComponent, element);
-
+  
   assignMixins(mixins, element);
 }
 
