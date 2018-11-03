@@ -51,10 +51,6 @@ function createElement(firstArgument, properties, ...childArguments) {
             reactFunctionElement = new ReactFunctionElement(reactFunction, props);
 
       element = reactFunctionElement; ///
-
-      const { mixins } = reactFunction;
-
-      assignMixins(mixins, element);
     }
   }
 
