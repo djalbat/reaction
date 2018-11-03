@@ -28,7 +28,7 @@ class ReactClass {
 
   }
 
-  static fromObject(object) {
+  static create(object) {
     const { render, getInitialState, getChildContext, componentDidMount, componentWillUnmount, mixins } = object;
 
     return new ReactClass(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount, mixins);

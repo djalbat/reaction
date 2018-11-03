@@ -10,7 +10,7 @@ const Element = require('./element'),
       VirtualDOMElement = require('./element/virtualDOMNode/element');
 
 function createClass(object) {
-  return ReactClass.fromObject(object);
+  return ReactClass.create(object);
 }
 
 function createElement(firstArgument, properties, ...childArguments) {
@@ -28,27 +28,33 @@ function createElement(firstArgument, properties, ...childArguments) {
       const tagName = firstArgument,  ///
             virtualDOMElement = new VirtualDOMElement(tagName, props);
 
-      element = virtualDOMElement
+      element = virtualDOMElement ///
     } else if (firstArgument instanceof ReactClass) {
       const reactClass = firstArgument, ///
             reactClassElement = new ReactClassElement(reactClass, props);
 
-      element = reactClassElement;
+      element = reactClassElement;  ///
 
-      assignReactClassMixins(reactClass, element);
+      const { mixins } = reactClass;
+
+      assignMixins(mixins, element);
     } else if (isSubclassOf(firstArgument, ReactComponent)) {
       const ReactComponent = firstArgument,  ///
             reactComponent = new ReactComponent(),
             reactComponentElement = new ReactComponentElement(reactComponent, props);
 
-      element = reactComponentElement;
+      element = reactComponentElement;  ///
 
       assignReactComponentMixins(ReactComponent, element);
     } else if (typeof firstArgument === 'function') {
       const reactFunction = firstArgument,  ///
             reactFunctionElement = new ReactFunctionElement(reactFunction, props);
 
-      element = reactFunctionElement;
+      element = reactFunctionElement; ///
+
+      const { mixins } = reactFunction;
+
+      assignMixins(mixins, element);
     }
   }
 
@@ -97,12 +103,6 @@ function assignReactComponentMixins(reactComponent, element) {
   if (reactComponent !== ReactComponent) {
     assignReactComponentMixins(reactComponent, element);
   }
-  
-  assignMixins(mixins, element);
-}
-
-function assignReactClassMixins(reactClass, element) {
-  const { mixins } = reactClass;
 
   assignMixins(mixins, element);
 }
