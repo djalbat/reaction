@@ -14,7 +14,7 @@ class ReactFunctionElement extends ReactElement {
   }
  
   render(update) {
-    return this.reactFunction.call(this, this.props, this.context);
+    return this.reactFunction(this.props, this.context, this, update);
   }
 
   getInitialState() {
