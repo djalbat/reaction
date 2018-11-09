@@ -70,7 +70,7 @@ function childrenFromChildArguments(childArguments) {
   const children = childArguments.map(function(childArgument) {
     let child;
 
-    if (isSubclassOf(childArgument.constructor, Element)) {
+    if (isSubclassOf(childArgument.constructor, Element)) { ///
       child = childArgument;  ///
     } else {
       const text = childArgument, ///
@@ -110,7 +110,7 @@ function assignMixins(mixins, element) {
 function isSubclassOf(argument, Class) {
   let subclass = false;
 
-  if (argument === Class) {   ///
+  if (argument.name === Class.name) { ///
     subclass = true;
   } else {
     argument = Object.getPrototypeOf(argument); ///
