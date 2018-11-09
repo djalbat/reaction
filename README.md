@@ -59,8 +59,8 @@ Launch the `examples/index.html` file. There is a Redux as well as a vanilla exa
 ## Usage
 
 ```js
-var reaction = require('reaction'),
-    { React, ReactDOM } = reaction;
+const reaction = require('reaction'),
+      { React, ReactDOM } = reaction;
 ```
 
 Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind that only a subset of React's functionality is supported.
