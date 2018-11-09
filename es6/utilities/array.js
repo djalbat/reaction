@@ -2,6 +2,14 @@
 
 function first(array) { return array[0]; }
 
+function flatten(array) {
+  return array.reduce(function(array, element) {
+    array = array.concat(element);  ///
+    
+    return array;
+  }, []);
+}
+
 function guarantee(arrayOrElement) {
   arrayOrElement = arrayOrElement || [];
 
@@ -22,6 +30,7 @@ function remaining(element, array) {
 
 module.exports = {
   first,
+  flatten,
   guarantee,
   remaining
 };

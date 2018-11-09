@@ -3,11 +3,14 @@
 const Element = require('./element'),
       ReactClass = require('./reactClass'),
       ReactComponent = require('./reactComponent'),
+      arrayUtilities = require('./utilities/array'),
       ReactClassElement = require('./element/react/class'),
       ReactFunctionElement = require('./element/react/function'),
       ReactComponentElement = require('./element/react/component'),
       VirtualDOMTextElement = require('./element/virtualDOMNode/textElement'),
       VirtualDOMElement = require('./element/virtualDOMNode/element');
+
+const { flatten } = arrayUtilities;
 
 function createClass(object) {
   return ReactClass.create(object);
@@ -67,6 +70,8 @@ const Component = ReactComponent, ///
 module.exports = React;
 
 function childrenFromChildArguments(childArguments) {
+  childArguments = flatten(childArguments); ///
+
   const children = childArguments.map(function(childArgument) {
     let child;
 

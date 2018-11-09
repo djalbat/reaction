@@ -1,7 +1,7 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "2.1.18",
+  "version": "2.1.19",
   "license": "MIT",
   "homepage": "https://github.com/djalbat/reaction",
   "description": "An alternative implementation of React.",
