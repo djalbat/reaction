@@ -67,16 +67,10 @@ const Component = ReactComponent, ///
 module.exports = React;
 
 function childrenFromChildArguments(childArguments) {
-  childArguments = childArguments.reduce(function(childArguments, childArgument) {
-    childArguments = childArguments.concat(childArgument);
-
-    return childArguments;
-  }, []);
-
   const children = childArguments.map(function(childArgument) {
     let child;
 
-    if (childArgument instanceof Element) {
+    if (isSubclassOf(childArgument.constructor, Element)) {
       child = childArgument;  ///
     } else {
       const text = childArgument, ///
