@@ -4,12 +4,12 @@ function isSVGTagName(tagName) {
 	return svgTagNames.includes(tagName);
 }
 
-function isSVGAttributeName(tagName) {
-	return svgAttributeNames.includes(tagName);
+function isSVGAttributeName(attributeName) {
+	return svgAttributeNames.includes(attributeName);
 }
 
-function isHTMLAttributeName(tagName) {
-	return htmlAttributeNames.includes(tagName);
+function isHTMLAttributeName(attributeName) {
+	return htmlAttributeNames.includes(attributeName);
 }
 
 module.exports = {
