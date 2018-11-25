@@ -19,7 +19,7 @@ module.exports = {
 };
 
 const svgTagNames = [
-				'a', 'altGlyph', 'animate', 'animateColor', 'animateMotion', 'animateTransform', 'animation', 'audio',
+				'altGlyph', 'animate', 'animateColor', 'animateMotion', 'animateTransform', 'animation', 'audio',
 				'canvas', 'circle', 'clipPath', 'color-profile', 'cursor',
 				'defs', 'desc', 'discard',
 				'ellipse',
