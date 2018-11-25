@@ -8,7 +8,7 @@ const Element = require('./element'),
       ReactFunctionElement = require('./element/react/function'),
       ReactComponentElement = require('./element/react/component'),
       VirtualDOMTextElement = require('./element/virtualDOMNode/textElement'),
-      VirtualDOMElement = require('./element/virtualDOMNode/element');
+      VirtualDOMHTMLElement = require('./element/virtualDOMNode/element/html');
 
 const { flatten } = arrayUtilities;
 
@@ -29,7 +29,7 @@ function createElement(firstArgument, properties, ...childArguments) {
       ///
     } else if (typeof firstArgument === 'string') {
       const tagName = firstArgument,  ///
-            virtualDOMElement = new VirtualDOMElement(tagName, props);
+            virtualDOMElement = new VirtualDOMHTMLElement(tagName, props);
 
       element = virtualDOMElement ///
     } else if (firstArgument instanceof ReactClass) {
