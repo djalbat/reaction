@@ -2,15 +2,18 @@
 
 const Element = require('./element'),
       ReactClass = require('./reactClass'),
-      ReactComponent = require('./reactComponent'),
+			nameUtilities = require('./utilities/name'),
       arrayUtilities = require('./utilities/array'),
+			ReactComponent = require('./reactComponent'),
       ReactClassElement = require('./element/react/class'),
       ReactFunctionElement = require('./element/react/function'),
       ReactComponentElement = require('./element/react/component'),
       VirtualDOMTextElement = require('./element/virtualDOMNode/textElement'),
-      VirtualDOMHTMLElement = require('./element/virtualDOMNode/element/html');
+      VirtualDOMHTMLElement = require('./element/virtualDOMNode/element/html'),
+			VirtualDOMSVGElement = require('./element/virtualDOMNode/element/svg');
 
-const { flatten } = arrayUtilities;
+const { flatten } = arrayUtilities,
+			{ isSVGTagName } = nameUtilities;
 
 function createClass(object) {
   return ReactClass.create(object);
@@ -29,7 +32,9 @@ function createElement(firstArgument, properties, ...childArguments) {
       ///
     } else if (typeof firstArgument === 'string') {
       const tagName = firstArgument,  ///
-            virtualDOMElement = new VirtualDOMHTMLElement(tagName, props);
+            virtualDOMElement = isSVGTagName(tagName) ?
+																	new VirtualDOMSVGElement(tagName, props) :
+																		new VirtualDOMHTMLElement(tagName, props);
 
       element = virtualDOMElement ///
     } else if (firstArgument instanceof ReactClass) {

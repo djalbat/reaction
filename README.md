@@ -212,6 +212,10 @@ Quite how you write your `render()` methods is down to you. One common pattern i
 
 In short, the makeup of any `render()` method will depend on its usage and there is no "one size fits all" solution. Further guidance can be found in the 'Recommended patterns' section at the foot of the Inference readme file.
 
+## Acknowledgements
+
+* The SVG tag and attribute names were taken from Titus Wormer's [svg-element-attributes](https://github.com/wooorm/svg-element-attributes) package.
+
 ## Contact
 
 - james.smith@djalbat.com
