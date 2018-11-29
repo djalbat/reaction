@@ -20,7 +20,7 @@ module.exports = {
 
 const svgTagNames = [
 				'altGlyph', 'animate', 'animateColor', 'animateMotion', 'animateTransform', 'animation', 'audio',
-				'canvas', 'circle', 'clipPath', 'color-profile', 'cursor',
+				'circle', 'clipPath', 'color-profile', 'cursor',
 				'defs', 'desc', 'discard',
 				'ellipse',
 				'feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite', 'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feDistantLight', 'feDropShadow', 'feFlood', 'feFuncA', 'feFuncB', 'feFuncG', 'feFuncR', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode', 'feMorphology', 'feOffset', 'fePointLight', 'feSpecularLighting', 'feSpotLight', 'feTile', 'feTurbulence', 'filter', 'font', 'font-face', 'font-face-format', 'font-face-name', 'font-face-uri', 'foreignObject',
