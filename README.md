@@ -59,6 +59,8 @@ You will need to do this if you want to look at the examples.
 ```js
 const reaction = require('reaction'),
       { React, ReactDOM } = reaction;
+
+...
 ```
 
 Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind that only a subset of React's functionality is supported.
