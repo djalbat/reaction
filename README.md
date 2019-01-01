@@ -54,10 +54,6 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 You will need to do this if you want to look at the examples.
 
-## Examples
-
-Launch the `examples/index.html` file. There is a Redux as well as a vanilla example application.
-
 ## Usage
 
 ```js
@@ -66,6 +62,10 @@ const reaction = require('reaction'),
 ```
 
 Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind that only a subset of React's functionality is supported.
+
+## Examples
+
+Launch the `examples/index.html` file. There is a Redux as well as a vanilla example application.
 
 ## Compiling from source
 
