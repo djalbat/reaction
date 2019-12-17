@@ -1,13 +1,13 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "license": "MIT, Anti-886",
   "homepage": "https://github.com/djalbat/reaction",
   "description": "An alternative implementation of React.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/djalbat/Reaction"
+    "url": "https://github.com/djalbat/reaction"
   },
   "dependencies": {},
   "devDependencies": {
