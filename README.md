@@ -14,7 +14,7 @@ There is a series of complementary videos:
 
 **[Reverse Engineering React](https://vimeo.com/album/3930691)**
 
-#### Errata
+#### Corrigenda
 
 - The `examples.html` file has moved to `examples/index.html`. 
 - The `toArray()` helper method is now called `guaranteeArray()`.
@@ -25,9 +25,6 @@ There is a series of complementary videos:
 - Component state has been put back by popular demand.
 - The examples have been moved to the `es6` folder.
 - The helpers file has been replaced with an array utilities file.
-
-These points are not strictly errata but will help to reconcile the current `master` branch with the older `videos` branch:
-
 - In the examples, the static `run()` methods and spurious classes have been replaced with functions.
 - The `reduxApp` example can now be [found elsewhere](https://github.com/djalbat/Inference/blob/master/es6/examples/reduxApp.js), split up into separate files and tidied up considerably.
 - The dependency on [Redux](https://github.com/reactjs/redux) has been replaced with a [barebones, local implementation](https://github.com/djalbat/Reaction/blob/master/es6/examples/redux.js).
