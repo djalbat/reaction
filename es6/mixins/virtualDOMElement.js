@@ -12,9 +12,9 @@ function setAttribute(name, value) {
   if (typeof value === 'object') {
     const keys = Object.keys(value);
 
-    keys.forEach(function (key) {
+    keys.forEach((key) => {
       this.domElement[name][key] = value[key];
-    }.bind(this));
+    });
   } else if (typeof value === 'boolean') {
     if (value) {
       value = name; ///
