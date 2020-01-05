@@ -12,9 +12,7 @@ class VirtualDOMElement extends VirtualDOMNode {
           childContext = context,
           children = this.getChildren();
 
-    children.forEach(function(child) {
-      child.mount(childParent, childReference, childContext);
-    });
+    children.forEach((child) => child.mount(childParent, childReference, childContext));
 
     this.applyProps();
   }
@@ -23,9 +21,7 @@ class VirtualDOMElement extends VirtualDOMNode {
     const childContext = context,
           children = this.getChildren();
 
-    children.forEach(function(child) {
-      child.unmount(childContext);
-    });
+    children.forEach((child) => child.unmount(childContext));
 
     super.unmount();
   }
@@ -33,7 +29,7 @@ class VirtualDOMElement extends VirtualDOMNode {
   applyProps() {
     const names = Object.keys(this.props);
 
-    names.forEach(function(name) {
+    names.forEach((name) => {
       const value = this.props[name];
 
       if (false) {
@@ -47,7 +43,7 @@ class VirtualDOMElement extends VirtualDOMNode {
         
         callback(this.domElement);
       }
-    }.bind(this));
+    });
   }
 
   setHandler(name, value) {

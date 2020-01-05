@@ -77,7 +77,7 @@ module.exports = React;
 function childrenFromChildArguments(childArguments) {
   childArguments = flatten(childArguments); ///
 
-  const children = childArguments.map(function(childArgument) {
+  const children = childArguments.map((childArgument) => {
     let child;
 
     if (isSubclassOf(childArgument.constructor, Element)) { ///
@@ -109,7 +109,7 @@ function assignReactComponentMixins(reactComponent, element) {
 
 function assignMixins(mixins, element) {
   if (mixins) {
-    mixins.forEach(function(mixin) {
+    mixins.forEach((mixin) => {
       const { name } = mixin;
 
       element[name] = mixin.bind(element);

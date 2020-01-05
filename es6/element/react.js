@@ -23,12 +23,12 @@ class ReactElement extends Element {
 
     super.mount(parent, children);
 
-    children.forEach(function(child) {
+    children.forEach((child) => {
       const childParent = this,
             childReference = reference;
 
       child.mount(childParent, childReference, childContext);
-    }.bind(this));
+    });
 
     this.componentDidMount();
   }
@@ -41,9 +41,7 @@ class ReactElement extends Element {
     const childContext = this.getChildContext(context),
           children = this.getChildren();
 
-    children.forEach(function(child) {
-      child.unmount(childContext);
-    });
+    children.forEach((child) => child.unmount(childContext));
 
     super.unmount();
   }
@@ -53,15 +51,11 @@ class ReactElement extends Element {
           childReference = this.getChildReference(),
           childContext = this.getChildContext(this.context);
 
-    this.children.forEach(function(child) {
-      child.unmount(childContext);
-    });
+    this.children.forEach((child) => child.unmount(childContext));
 
     this.children = guarantee(this.render(update));
 
-    this.children.forEach(function(child) {
-      child.mount(childParent, childReference, childContext);
-    }.bind(this));
+    this.children.forEach((child) => child.mount(childParent, childReference, childContext));
   }
 
   getDOMElement() {
@@ -127,7 +121,7 @@ function findReference(parent, child) {
   const children = parent.getChildren(),
         remainingChildren = remaining(child, children);
 
-  return remainingChildren.reduce(function(reference, remainingChild) {
+  return remainingChildren.reduce((reference, remainingChild) => {
     if (reference === null) {
       const remainingChildDOMElement = remainingChild.getDOMElement();
 

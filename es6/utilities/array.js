@@ -3,7 +3,7 @@
 function first(array) { return array[0]; }
 
 function flatten(array) {
-  return array.reduce(function(array, element) {
+  return array.reduce((array, element) => {
     array = array.concat(element);  ///
     
     return array;
@@ -38,7 +38,7 @@ module.exports = {
 function indexOf(element, array) {
   let index = null;
 
-  array.some(function(currentElement, currentElementIndex) {
+  array.some((currentElement, currentElementIndex) => {
     if (currentElement === element) {
       index = currentElementIndex;
 
