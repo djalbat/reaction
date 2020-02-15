@@ -19,6 +19,8 @@ class VirtualDOMNode extends Element {
     super.mount(parent, children);
 
     parentDOMElement(parent).insertBefore(this.domElement, referenceDOMElement(reference));
+
+    return this.domElement;
   }
 
   unmount() {

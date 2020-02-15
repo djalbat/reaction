@@ -18,7 +18,7 @@ class ReactComponent {
     return context;
   }
 
-  componentDidMount() {
+  componentDidMount(domElement) {
    
   }
  

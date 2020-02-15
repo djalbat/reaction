@@ -19,9 +19,8 @@ class ReactElement extends Element {
     this.context = context;
 
     const childContext = this.getChildContext(context),
-          children = guarantee(this.render());
-
-    super.mount(parent, children);
+          children = guarantee(this.render()),
+          domElement = super.mount(parent, children);
 
     children.forEach((child) => {
       const childParent = this,
@@ -30,7 +29,9 @@ class ReactElement extends Element {
       child.mount(childParent, childReference, childContext);
     });
 
-    this.componentDidMount();
+    this.componentDidMount(domElement);
+
+    return domElement;
   }
 
   unmount(context) {

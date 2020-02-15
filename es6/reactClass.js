@@ -20,7 +20,7 @@ class ReactClass {
     return context;
   }
   
-  componentDidMount() {
+  componentDidMount(domElement) {
 
   }
 
