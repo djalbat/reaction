@@ -92,7 +92,7 @@ Of the component lifecycle methods, only these methods are supported:
 - `componentDidMount(domElement)`
 - `componentWillUnmount()`
 
-Note that the `componentDidMount()` method has a `domElement` argument, namely the DOM element that underlies any element, be it a virtual or React element. It is in fact created when the element is created and not specifically when it is mounted, however providing it by way of this method when an element is mounted turns out to be useful. Unlike React, the underlying DOM element persists as long as the element itself persists, even if it is unmounted and subsequently re-mounted.
+Note that the `componentDidMount()` method has a `domElement` argument, namely the DOM element that underlies any element, be it a virtual or React element. It is in fact created when the element is created and not specifically when it is mounted, however providing it by way of this method turns out to be useful. Unlike React, the underlying DOM element persists as long as the element itself persists, even if it is unmounted and subsequently re-mounted.
 
 ## Additional functionality not supported by React
 
