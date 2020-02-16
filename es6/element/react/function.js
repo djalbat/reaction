@@ -25,7 +25,7 @@ class ReactFunctionElement extends ReactElement {
     return context;
   }
 
-  componentDidMount(domElement) {
+  componentDidMount() {
     ///
   }
  

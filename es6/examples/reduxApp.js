@@ -136,7 +136,7 @@ const Link = (props) => {
 };
 
 const FilterLink = React.createClass({
-  componentDidMount(domElement) {
+  componentDidMount() {
     const { store } = this.context;
 
     this.unsubscribe = store.subscribe(() =>
@@ -208,7 +208,7 @@ const AddTodo = (props, {store}) => {
 };
 
 class VisibleTodoList extends Component {
-  componentDidMount(domElement) {
+  componentDidMount() {
     const { store } = this.context;
 
     this.unsubscribe = store.subscribe(() =>

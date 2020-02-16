@@ -25,8 +25,8 @@ class ReactClassElement extends ReactElement {
     return this.reactClass.getChildContext.call(this, context);
   }
   
-  componentDidMount(domElement) {
-    this.reactClass.componentDidMount.call(this, domElement);
+  componentDidMount() {
+    this.reactClass.componentDidMount.call(this);
   }
 
   componentWillUnmount() {
