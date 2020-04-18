@@ -197,19 +197,9 @@ The functionality of the `forceUpdate()` method has recently changed. It now sim
 
 * When an element's state is changed, its `render()` method is again called without an update.
 
-In either case, because the element is being mounted or re-mounted, the `render()` method should return the element's children. It is perfectly safe to return `null`, however, or in fact to leave the return value undefined. In either case the return value will be coerced to an empty array.
+In either case, because the element is being mounted or re-mounted, the `render()` method should return the element's children. It is perfectly safe to return `null` or `undefined` on occasion, however. In either case the return value will be coerced to an empty array.
 
-If you want to change an element as the result of an update you now have two choices:
-
-* If you *do not* want the element to be remounted, call its `render()` method directly with the update.
-
-* If you *do* want the element to be remounted, call the `forceUpdate()` method with the update.
-
-In the former case, you would most likely want the `render()` method to make benign changes such as changing the classes or attributes of child elements. In the latter case, you would most likely want the `render()` method to return an entirely new set of child elements.
-
-Quite how you write your `render()` methods is down to you. One common pattern is to check for the presence of an update. If it is missing, the `render()` method can return the element's children on the assumption that the element is being mounted. On the other hand if an update is present, the `render()` method can make benign changes to these children on the assumption that the element is not being mounted. This pattern depends on calling the `render()` method directly upon receipt of an update, however, rather than indirectly by way of the `forceUpdate()` method.
-
-In short, the makeup of any `render()` method will depend on its usage and there is no "one size fits all" solution. Further guidance can be found in the 'Recommended patterns' section at the foot of the Inference readme file.
+Guidance on how to handle updates can be found in the 'Recommended patterns' section at the foot of the Inference readme file.
 
 ## Acknowledgements
 
