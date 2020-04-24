@@ -1,21 +1,21 @@
-'use strict';
+"use strict";
 
 function setAttribute(name, value) {
-  if (name === 'className') {
-    name = 'class';
+  if (name === "className") {
+    name = "class";
   }
 
-  if (name === 'htmlFor') {
-    name = 'for';
+  if (name === "htmlFor") {
+    name = "for";
   }
 
-  if (typeof value === 'object') {
+  if (typeof value === "object") {
     const keys = Object.keys(value);
 
     keys.forEach((key) => {
       this.domElement[name][key] = value[key];
     });
-  } else if (typeof value === 'boolean') {
+  } else if (typeof value === "boolean") {
     if (value) {
       value = name; ///
 
@@ -48,7 +48,7 @@ function hasClass(className) { return this.domElement.classList.contains(classNa
 
 function hasClasses(classNames) { return classNames.every((className) => this.hasClass(className)); }
 
-function clearClasses() { this.domElement.className = ''; }
+function clearClasses() { this.domElement.className = ""; }
 
 function getTagName() { return this.domElement.tagName; }
 

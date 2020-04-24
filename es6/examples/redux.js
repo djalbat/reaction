@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const createStore = (reducer) => {
   let state,

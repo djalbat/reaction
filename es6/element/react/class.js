@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const ReactElement = require('../react');
+const ReactElement = require("../react");
 
 class ReactClassElement extends ReactElement {
   constructor(reactClass, props) {

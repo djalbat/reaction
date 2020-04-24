@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const nameUtilities = require('../../../utilities/name'),
-      VirtualDOMElement = require('../element');
+const nameUtilities = require("../../../utilities/name"),
+      VirtualDOMElement = require("../element");
 
 const { isHTMLAttributeName } = nameUtilities;
 

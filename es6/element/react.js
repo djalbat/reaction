@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-const Element = require('../element'),
-      arrayUtilities = require('../utilities/array'),
-      reactElementMixins = require('../mixins/reactElement');
+const Element = require("../element"),
+      arrayUtilities = require("../utilities/array"),
+      reactElementMixins = require("../mixins/reactElement");
 
 const { guarantee, remaining } = arrayUtilities;
 

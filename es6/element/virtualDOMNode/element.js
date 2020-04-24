@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const VirtualDOMNode = require('../virtualDOMNode'),
-      virtualDOMElementMixins = require('../../mixins/virtualDOMElement');
+const VirtualDOMNode = require("../virtualDOMNode"),
+      virtualDOMElementMixins = require("../../mixins/virtualDOMElement");
 
 class VirtualDOMElement extends VirtualDOMNode {
   mount(parent, reference, context) {
@@ -38,7 +38,7 @@ class VirtualDOMElement extends VirtualDOMNode {
         this.setHandler(name, value);
       } else if (this.isAttributeName(name)) {
         this.setAttribute(name, value);
-      } else if (name === 'ref') {
+      } else if (name === "ref") {
         const callback = value; ///
         
         callback(this.domElement);

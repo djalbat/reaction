@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
-const Redux = require('./redux'),
-      React = require('../react'),
-      ReactDOM = require('../reactDOM');
+const Redux = require("./redux"),
+      React = require("../react"),
+      ReactDOM = require("../reactDOM");
 
 const { Component } = React,
       { createStore, combineReducers } = Redux;
 
 const todo = (state, action) => {
   switch (action.type) {
-    case 'ADD_TODO' : {
+    case "ADD_TODO" : {
       const { id, text } = action,
         completed = false;
 
@@ -20,7 +20,7 @@ const todo = (state, action) => {
       };
     }
 
-    case 'TOGGLE_TODO' : {
+    case "TOGGLE_TODO" : {
       if (state.id !== action.id) {
         return state;
       }
@@ -39,13 +39,13 @@ const todo = (state, action) => {
 
 const todos = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_TODO' :
+    case "ADD_TODO" :
       return [
         ...state,
         todo(undefined, action)
       ];
 
-    case 'TOGGLE_TODO' :
+    case "TOGGLE_TODO" :
       return state.map(t => todo(t, action));
 
     default:
@@ -53,9 +53,9 @@ const todos = (state = [], action) => {
   }
 };
 
-const visibilityFilter = ( state = 'SHOW_ALL', action) => {
+const visibilityFilter = ( state = "SHOW_ALL", action) => {
   switch (action.type) {
-    case 'SET_VISIBILITY_FILTER' :
+    case "SET_VISIBILITY_FILTER" :
       return action.filter;
 
     default:
@@ -70,15 +70,15 @@ const todoApp = combineReducers({
 
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
-    case 'SHOW_ALL' :
+    case "SHOW_ALL" :
       return todos;
 
-    case 'SHOW_COMPLETED' :
+    case "SHOW_COMPLETED" :
       return todos.filter(
         t => t.completed
       );
 
-    case 'SHOW_ACTIVE' :
+    case "SHOW_ACTIVE" :
       return todos.filter(
         t => !t.completed
       );
@@ -90,8 +90,8 @@ const Todo = ({onClick, completed, text}) => {
 
     <li onClick={onClick}
         style={{textDecoration:completed ?
-            'line-through' :
-            'none'}}
+            "line-through" :
+            "none"}}
     >
       {text}
     </li>
@@ -123,7 +123,7 @@ const Link = (props) => {
 
   return (
 
-    <a href='#'
+    <a href="#"
        onClick={e => {
          e.preventDefault();
          onClick();
@@ -158,7 +158,7 @@ const FilterLink = React.createClass({
         this.props.filter === state.visibilityFilter
       }
             onClick={() => {
-              const type = 'SET_VISIBILITY_FILTER',
+              const type = "SET_VISIBILITY_FILTER",
                 { filter } = this.props;
 
               store.dispatch({
@@ -186,7 +186,7 @@ const AddTodo = (props, {store}) => {
       }}
       />
       <button onClick={() => {
-        const type = 'ADD_TODO',
+        const type = "ADD_TODO",
           { value } = input,
           text = value, ///
           id = nextTodoId++;
@@ -197,7 +197,7 @@ const AddTodo = (props, {store}) => {
           id
         });
 
-        input.value = '';
+        input.value = "";
       }}
       >
         Add todo
@@ -233,7 +233,7 @@ class VisibleTodoList extends Component {
         )
       }
                 onTodoClick={(id) => {
-                  const type = 'TOGGLE_TODO';
+                  const type = "TOGGLE_TODO";
 
                   store.dispatch({
                     type,
@@ -250,16 +250,16 @@ const Footer = () => {
   return (
 
     <p>
-      {'Show: '}
-      <FilterLink filter='SHOW_ALL'>
+      {"Show: "}
+      <FilterLink filter="SHOW_ALL">
         All
       </FilterLink>
-      {' - '}
-      <FilterLink filter='SHOW_COMPLETED'>
+      {" - "}
+      <FilterLink filter="SHOW_COMPLETED">
         Completed
       </FilterLink>
-      {' - '}
-      <FilterLink filter='SHOW_ACTIVE'>
+      {" - "}
+      <FilterLink filter="SHOW_ACTIVE">
         Active
       </FilterLink>
     </p>
@@ -295,7 +295,7 @@ class Provider extends Component {
 
 const reduxApp = () => {
   const store = createStore(todoApp),
-        rootDOMElement = document.getElementById('root');
+        rootDOMElement = document.getElementById("root");
 
   ReactDOM.render(
 

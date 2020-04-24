@@ -1,16 +1,16 @@
-'use strict';
+"use strict";
 
-const Element = require('./element'),
-      ReactClass = require('./reactClass'),
-      nameUtilities = require('./utilities/name'),
-      arrayUtilities = require('./utilities/array'),
-      ReactComponent = require('./reactComponent'),
-      ReactClassElement = require('./element/react/class'),
-      ReactFunctionElement = require('./element/react/function'),
-      ReactComponentElement = require('./element/react/component'),
-      VirtualDOMTextElement = require('./element/virtualDOMNode/textElement'),
-      VirtualDOMHTMLElement = require('./element/virtualDOMNode/element/html'),
-      VirtualDOMSVGElement = require('./element/virtualDOMNode/element/svg');
+const Element = require("./element"),
+      ReactClass = require("./reactClass"),
+      nameUtilities = require("./utilities/name"),
+      arrayUtilities = require("./utilities/array"),
+      ReactComponent = require("./reactComponent"),
+      ReactClassElement = require("./element/react/class"),
+      ReactFunctionElement = require("./element/react/function"),
+      ReactComponentElement = require("./element/react/component"),
+      VirtualDOMTextElement = require("./element/virtualDOMNode/textElement"),
+      VirtualDOMHTMLElement = require("./element/virtualDOMNode/element/html"),
+      VirtualDOMSVGElement = require("./element/virtualDOMNode/element/svg");
 
 const { flatten } = arrayUtilities,
       { isSVGTagName } = nameUtilities;
@@ -30,7 +30,7 @@ function createElement(firstArgument, properties, ...childArguments) {
 
     if (false) {
       ///
-    } else if (typeof firstArgument === 'string') {
+    } else if (typeof firstArgument === "string") {
       const tagName = firstArgument,  ///
             virtualDOMElement = isSVGTagName(tagName) ?
                                   new VirtualDOMSVGElement(tagName, props) :
@@ -54,7 +54,7 @@ function createElement(firstArgument, properties, ...childArguments) {
       element = reactComponentElement;  ///
 
       assignReactComponentMixins(ReactComponent, element);
-    } else if (typeof firstArgument === 'function') {
+    } else if (typeof firstArgument === "function") {
       const reactFunction = firstArgument,  ///
             reactFunctionElement = new ReactFunctionElement(reactFunction, props);
 

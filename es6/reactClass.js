@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class ReactClass {
   constructor(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount, mixins) {

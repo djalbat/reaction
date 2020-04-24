@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const VirtualDOMNode = require('./element/virtualDOMNode');
+const VirtualDOMNode = require("./element/virtualDOMNode");
 
 class ReactDOM {
   static render(element, parentDOMElement) {

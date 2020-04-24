@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const React = require('../react'),
-      ReactDOM = require('../reactDOM');
+const React = require("../react"),
+      ReactDOM = require("../reactDOM");
 
 const Comment = React.createClass({
   render: function() {
@@ -19,21 +19,21 @@ const Comment = React.createClass({
   componentDidMount: function() {
     const message = this.props.message;
 
-    console.log('Comment mounted with message: ' + message)
+    console.log("Comment mounted with message: " + message)
   },
 
   componentWillUnmount: function() {
     const message = this.props.message;
 
-    console.log('Comment unmounted with message: ' + message)
+    console.log("Comment unmounted with message: " + message)
   }
 });
 
 const CommentsList = React.createClass({
   getInitialState() {
     const messages = [
-            'Hello, world!',
-            'Hello world again...'
+            "Hello, world!",
+            "Hello world again..."
           ],
           state = {
             messages
@@ -43,7 +43,7 @@ const CommentsList = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log('Comments list mounted.')
+    console.log("Comments list mounted.")
   },
 
   render: function() {
@@ -71,7 +71,7 @@ const vanillaApp = () => {
           <CommentsList />
 
         ,
-        rootDOMElement = document.getElementById('root');
+        rootDOMElement = document.getElementById("root");
 
 
   ReactDOM.render(
@@ -81,7 +81,7 @@ const vanillaApp = () => {
 
   setTimeout(function() {
     const messages = [
-            'Hello world yet again!!!'
+            "Hello world yet again!!!"
           ],
           state = {
             messages

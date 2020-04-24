@@ -15,11 +15,11 @@
     "@babel/plugin-transform-react-jsx": "^7.8.3",
     "@babel/preset-env": "^7.8.6",
     "browserify": "^16.5.0",
-    "watchful-cli": "^1.0.10"
+    "watchful-cli": "^1.4.6"
   },
   "scripts": {
     "clean": "rm -rf ./lib",
-    "watchful": "watchful --source-directory=./es6 --temp-directory=./lib --entry-file=examples.js --bundle-file=./examples.js",
+    "watchful": "watchful --source-directory=./es6 --temp-directory=./lib --entry-file=examples.js --bundle-file=./examples.js --pause=100",
     "batch": "npm run watchful batch --",
     "batch-debug": "npm run watchful batch -- --debug",
     "incremental": "npm run watchful incremental --",

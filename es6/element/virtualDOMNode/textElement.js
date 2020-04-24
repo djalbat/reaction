@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const VirtualDOMNode = require('../virtualDOMNode');
+const VirtualDOMNode = require("../virtualDOMNode");
 
 class VirtualDOMTextElement extends VirtualDOMNode {
   constructor(text) {
