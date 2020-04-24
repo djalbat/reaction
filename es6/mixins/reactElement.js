@@ -1,107 +1,89 @@
 "use strict";
 
-function setAttribute(name, value) {
+export function setAttribute(name, value) {
   const firstChild = this.getFirstChild();
 
   return firstChild.setAttribute(name, value);
 }
 
-function getAttribute(name) {
+export function getAttribute(name) {
   const firstChild = this.getFirstChild();
 
   return firstChild.getAttribute(name);
 }
 
-function clearAttribute(name) {
+export function clearAttribute(name) {
   const firstChild = this.getFirstChild();
 
   firstChild.clearAttribute(name);
 }
 
-function addAttribute(name, value) { 
+export function addAttribute(name, value) {
   const firstChild = this.getFirstChild();
 
   firstChild.addAttribute(name, value);
 }
 
-function removeAttribute(name) {
+export function removeAttribute(name) {
   const firstChild = this.getFirstChild();
 
   firstChild.removeAttribute(name)
 }
 
-function hasAttribute(name) {
+export function hasAttribute(name) {
   const firstChild = this.getFirstChild();
 
   return firstChild.hasAttribute(name);
 }
 
-function setClass(className) {
+export function setClass(className) {
   const firstChild = this.getFirstChild();
 
   firstChild.setClass(className);
 }
 
-function addClass(className) {
+export function addClass(className) {
   const firstChild = this.getFirstChild();
 
   firstChild.addClass(className);
 }
 
-function removeClass(className) {
+export function removeClass(className) {
   const firstChild = this.getFirstChild();
 
   firstChild.removeClass(className);
 }
 
-function toggleClass(className) {
+export function toggleClass(className) {
   const firstChild = this.getFirstChild();
 
   firstChild.toggleClass(className);
 }
 
-function hasClass(className) {
+export function hasClass(className) {
   const firstChild = this.getFirstChild();
 
   return firstChild.hasClass(className);
 }
 
-function hasClasses(classNames) {
+export function hasClasses(classNames) {
   const firstChild = this.getFirstChild();
 
   return firstChild.hasClasses(classNames);
 }
 
-function clearClasses() {
+export function clearClasses() {
   const firstChild = this.getFirstChild();
 
   firstChild.clearClasses();
 }
 
-function getTagName() {
+export function getTagName() {
   return null;  ///
 }
 
-function setStyle(name, value) {
+export function setStyle(name, value) {
   const firstChild = this.getFirstChild();
 
   firstChild.setStyle(name, value);
 }
-
-module.exports = {
-  setAttribute,
-  getAttribute,
-  clearAttribute,
-  addAttribute,
-  removeAttribute,
-  hasAttribute,
-  setClass,
-  addClass,
-  removeClass,
-  toggleClass,
-  hasClass,
-  hasClasses,
-  clearClasses,
-  getTagName,
-  setStyle
-};

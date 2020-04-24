@@ -2,9 +2,39 @@
 
 import VirtualDOMNode from "../virtualDOMNode";
 
-import virtualDOMElementMixins from "../../mixins/virtualDOMElement";
+import { setAttribute,
+         getAttribute,
+         clearAttribute,
+         addAttribute,
+         removeAttribute,
+         hasAttribute,
+         setClass,
+         addClass,
+         removeClass,
+         toggleClass,
+         hasClass,
+         hasClasses,
+         clearClasses,
+         getTagName,
+         setStyle } from "../../mixins/virtualDOMElement";
 
-class VirtualDOMElement extends VirtualDOMNode {
+export default class VirtualDOMElement extends VirtualDOMNode {
+  setAttribute = setAttribute;
+  getAttribute = getAttribute;
+  clearAttribute = clearAttribute;
+  addAttribute = addAttribute;
+  removeAttribute = removeAttribute;
+  hasAttribute = hasAttribute;
+  setClass = setClass;
+  addClass = addClass;
+  removeClass = removeClass;
+  toggleClass = toggleClass;
+  hasClass = hasClass;
+  hasClasses = hasClasses;
+  clearClasses = clearClasses;
+  getTagName = getTagName;
+  setStyle = setStyle;
+
   mount(parent, reference, context) {
     super.mount(parent, reference);
 
@@ -58,7 +88,3 @@ class VirtualDOMElement extends VirtualDOMNode {
 		return name.match(/^on/);
 	}
 }
-
-Object.assign(VirtualDOMElement.prototype, virtualDOMElementMixins);
-
-module.exports = VirtualDOMElement;

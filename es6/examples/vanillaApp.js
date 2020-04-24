@@ -65,7 +65,7 @@ const CommentsList = React.createClass({
   }
 });
 
-const vanillaApp = () => {
+export default function vanillaApp() {
   const commentsList =
 
           <CommentsList />
@@ -90,5 +90,3 @@ const vanillaApp = () => {
     commentsList.setState(state);
   }, 1000); ///
 };
-
-module.exports = vanillaApp;

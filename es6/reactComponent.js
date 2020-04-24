@@ -1,6 +1,6 @@
 "use strict";
 
-class ReactComponent {
+export default class ReactComponent {
 
 
 
@@ -32,5 +32,3 @@ class ReactComponent {
 
 
 }
-
-module.exports = ReactComponent;

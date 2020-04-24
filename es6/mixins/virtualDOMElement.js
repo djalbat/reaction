@@ -1,6 +1,6 @@
 "use strict";
 
-function setAttribute(name, value) {
+export function setAttribute(name, value) {
   if (name === "className") {
     name = "class";
   }
@@ -26,50 +26,32 @@ function setAttribute(name, value) {
   }
 }
 
-function getAttribute(name) { return this.domElement.getAttribute(name); }
+export function getAttribute(name) { return this.domElement.getAttribute(name); }
 
-function clearAttribute(name) { this.domElement.removeAttribute(name); }
+export function clearAttribute(name) { this.domElement.removeAttribute(name); }
 
-function addAttribute(name, value) { this.setAttribute(name, value); }
+export function addAttribute(name, value) { this.setAttribute(name, value); }
 
-function removeAttribute(name) { this.domElement.removeAttribute(name); }
+export function removeAttribute(name) { this.domElement.removeAttribute(name); }
 
-function hasAttribute(name) { return this.domElement.hasAttribute(name); }
+export function hasAttribute(name) { return this.domElement.hasAttribute(name); }
 
-function setClass(className) { this.domElement.className = className; }
+export function setClass(className) { this.domElement.className = className; }
 
-function addClass(className) { this.domElement.classList.add(className); }
+export function addClass(className) { this.domElement.classList.add(className); }
 
-function removeClass(className) { this.domElement.classList.remove(className); }
+export function removeClass(className) { this.domElement.classList.remove(className); }
 
-function toggleClass(className) { this.domElement.classList.toggle(className); }
+export function toggleClass(className) { this.domElement.classList.toggle(className); }
 
-function hasClass(className) { return this.domElement.classList.contains(className); }
+export function hasClass(className) { return this.domElement.classList.contains(className); }
 
-function hasClasses(classNames) { return classNames.every((className) => this.hasClass(className)); }
+export function hasClasses(classNames) { return classNames.every((className) => this.hasClass(className)); }
 
-function clearClasses() { this.domElement.className = ""; }
+export function clearClasses() { this.domElement.className = ""; }
 
-function getTagName() { return this.domElement.tagName; }
+export function getTagName() { return this.domElement.tagName; }
 
-function setStyle(name, value) {
+export function setStyle(name, value) {
   this.domElement.style[name] = value;
 }
-
-module.exports = {
-  setAttribute,
-  getAttribute,
-  clearAttribute,
-  addAttribute,
-  removeAttribute,
-  hasAttribute,
-  setClass,
-  addClass,
-  removeClass,
-  toggleClass,
-  hasClass,
-  hasClasses,
-  clearClasses,
-  getTagName,
-  setStyle
-};

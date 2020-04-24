@@ -2,7 +2,7 @@
 
 import VirtualDOMNode from "../virtualDOMNode";
 
-class VirtualDOMTextElement extends VirtualDOMNode {
+export default class VirtualDOMTextElement extends VirtualDOMNode {
   constructor(text) {
     const domElement = document.createTextNode(text),
           children = [],
@@ -34,5 +34,3 @@ class VirtualDOMTextElement extends VirtualDOMNode {
     this.domElement.nodeValue = nodeValue;
   }
 }
-
-module.exports = VirtualDOMTextElement;

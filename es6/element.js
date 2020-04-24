@@ -1,10 +1,8 @@
 "use strict";
 
-const arrayUtilities = require("./utilities/array");
+import { first } from "./utilities/array";
 
-const { first } = arrayUtilities;
-
-class Element {
+export default class Element {
   constructor(props) {
     this.props = props;
 
@@ -39,5 +37,3 @@ class Element {
     this.children = null;
   }
 }
-
-module.exports = Element;

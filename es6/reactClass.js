@@ -1,6 +1,6 @@
 "use strict";
 
-class ReactClass {
+export default class ReactClass {
   constructor(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount, mixins) {
     this.render = render;
 
@@ -34,5 +34,3 @@ class ReactClass {
     return new ReactClass(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount, mixins);
   }
 }
-
-module.exports = ReactClass;

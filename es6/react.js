@@ -1,19 +1,17 @@
 "use strict";
 
-const Element = require("./element"),
-      ReactClass = require("./reactClass"),
-      nameUtilities = require("./utilities/name"),
-      arrayUtilities = require("./utilities/array"),
-      ReactComponent = require("./reactComponent"),
-      ReactClassElement = require("./element/react/class"),
-      ReactFunctionElement = require("./element/react/function"),
-      ReactComponentElement = require("./element/react/component"),
-      VirtualDOMTextElement = require("./element/virtualDOMNode/textElement"),
-      VirtualDOMHTMLElement = require("./element/virtualDOMNode/element/html"),
-      VirtualDOMSVGElement = require("./element/virtualDOMNode/element/svg");
+import Element from "./element";
+import ReactClass from "./reactClass";
+import ReactComponent from "./reactComponent";
+import ReactClassElement from "./element/react/class";
+import ReactFunctionElement from "./element/react/function";
+import ReactComponentElement from "./element/react/component";
+import VirtualDOMTextElement from "./element/virtualDOMNode/textElement";
+import VirtualDOMHTMLElement from "./element/virtualDOMNode/element/html";
+import VirtualDOMSVGElement from "./element/virtualDOMNode/element/svg";
 
-const { flatten } = arrayUtilities,
-      { isSVGTagName } = nameUtilities;
+import { flatten } from "./utilities/array";
+import { isSVGTagName } from "./utilities/name";
 
 function createClass(object) {
   return ReactClass.create(object);
@@ -72,7 +70,7 @@ const Component = ReactComponent, ///
         createElement
       };
 
-module.exports = React;
+export default React;
 
 function childrenFromChildArguments(childArguments) {
   childArguments = flatten(childArguments); ///

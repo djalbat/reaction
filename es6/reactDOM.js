@@ -1,8 +1,8 @@
 "use strict";
 
-const VirtualDOMNode = require("./element/virtualDOMNode");
+import VirtualDOMNode from "./element/virtualDOMNode";
 
-class ReactDOM {
+export default class ReactDOM {
   static render(element, parentDOMElement) {
     const parent = VirtualDOMNode.fromDOMElement(parentDOMElement),
           reference = null,
@@ -11,5 +11,3 @@ class ReactDOM {
     element.mount(parent, reference, context);
   }
 }
-
-module.exports = ReactDOM;

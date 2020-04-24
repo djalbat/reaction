@@ -1,8 +1,8 @@
 "use strict";
 
 import Redux from "./redux";
-import React from "../react";
-import ReactDOM from "../reactDOM";
+
+import { React, ReactDOM } from "../index"; ///
 
 const { Component } = React,
       { createStore, combineReducers } = Redux;
@@ -293,7 +293,7 @@ class Provider extends Component {
   }
 }
 
-const reduxApp = () => {
+export default function reduxApp() {
   const store = createStore(todoApp),
         rootDOMElement = document.getElementById("root");
 
@@ -307,5 +307,3 @@ const reduxApp = () => {
     rootDOMElement
   );
 };
-
-module.exports = reduxApp;

@@ -1,8 +1,9 @@
 "use strict";
 
-const examples = {
-  vanillaApp: require("./examples/vanillaApp"),
-  reduxApp: require("./examples/reduxApp")
-};
+import reduxApp from "./examples/reduxApp";
+import vanillaApp from "./examples/vanillaApp";
 
-Object.assign(window, examples);
+Object.assign(window, {
+  reduxApp,
+  vanillaApp
+});

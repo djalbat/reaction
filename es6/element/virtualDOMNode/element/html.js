@@ -4,7 +4,7 @@ import VirtualDOMElement from "../element";
 
 import { isHTMLAttributeName } from "../../../utilities/name";
 
-class VirtualDOMHTMLElement extends VirtualDOMElement {
+export default class VirtualDOMHTMLElement extends VirtualDOMElement {
   constructor(tagName, props) {
     const domElement = document.createElement(tagName);
 
@@ -15,6 +15,3 @@ class VirtualDOMHTMLElement extends VirtualDOMElement {
     return isHTMLAttributeName(name);
   }
 }
-
-module.exports = VirtualDOMHTMLElement;
-

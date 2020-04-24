@@ -34,6 +34,7 @@ There is a series of complementary videos:
 - The element classes have been reorganised, please see the source.
 - Support for Inference has been added, again please see the source.
 - Contexts are now handled slightly differently. Please see the section below.
+- More ES6 and some experimental syntax has been adopted, for example ES6 imports and exports.
 
 ## Installation
 

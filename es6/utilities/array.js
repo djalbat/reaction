@@ -1,8 +1,8 @@
 "use strict";
 
-function first(array) { return array[0]; }
+export function first(array) { return array[0]; }
 
-function flatten(array) {
+export function flatten(array) {
   return array.reduce((array, element) => {
     array = array.concat(element);  ///
     
@@ -10,7 +10,7 @@ function flatten(array) {
   }, []);
 }
 
-function guarantee(arrayOrElement) {
+export function guarantee(arrayOrElement) {
   arrayOrElement = arrayOrElement || [];
 
   return (arrayOrElement instanceof Array) ?
@@ -18,7 +18,7 @@ function guarantee(arrayOrElement) {
               [arrayOrElement];
 }
 
-function remaining(element, array) {
+export function remaining(element, array) {
   if (element === null) {
     return array;
   }
@@ -27,13 +27,6 @@ function remaining(element, array) {
 
   return array.slice(index + 1);
 }
-
-module.exports = {
-  first,
-  flatten,
-  guarantee,
-  remaining
-};
 
 function indexOf(element, array) {
   let index = null;

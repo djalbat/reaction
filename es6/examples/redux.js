@@ -50,4 +50,4 @@ const combineReducers = (reducers) => {
 
 const Redux = { createStore, combineReducers };
 
-module.exports = Redux;
+export default Redux;

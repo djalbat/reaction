@@ -1,22 +1,16 @@
 "use strict";
 
-function isSVGTagName(tagName) {
+export function isSVGTagName(tagName) {
   return svgTagNames.includes(tagName);
 }
 
-function isSVGAttributeName(attributeName) {
+export function isSVGAttributeName(attributeName) {
   return svgAttributeNames.includes(attributeName);
 }
 
-function isHTMLAttributeName(attributeName) {
+export function isHTMLAttributeName(attributeName) {
   return htmlAttributeNames.includes(attributeName);
 }
-
-module.exports = {
-  isSVGTagName,
-  isSVGAttributeName,
-  isHTMLAttributeName
-};
 
 const svgTagNames = [
         "altGlyph", "animate", "animateColor", "animateMotion", "animateTransform", "animation", "audio",

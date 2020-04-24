@@ -9,7 +9,9 @@
     "type": "git",
     "url": "https://github.com/djalbat/reaction"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/plugin-transform-react-jsx": "^7.8.3",
@@ -28,5 +30,6 @@
     "build-debug": "npm run clean && npm run batch-debug",
     "watch": "npm run clean && npm run batch && npm run incremental",
     "watch-debug": "npm run clean && npm run batch-debug && npm run incremental-debug"
-  }
+  },
+  "main": "./lib/index.js"
 }

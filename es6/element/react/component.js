@@ -2,7 +2,7 @@
 
 import ReactElement from "../../element/react";
 
-class ReactComponentElement extends ReactElement {
+export default class ReactComponentElement extends ReactElement {
   constructor(reactComponent, props) {
     super(props);
 
@@ -33,5 +33,3 @@ class ReactComponentElement extends ReactElement {
     this.reactComponent.componentWillUnmount.call(this);
   }
 }
-
-module.exports = ReactComponentElement;

@@ -2,7 +2,7 @@
 
 import Element from "../element";
 
-class VirtualDOMNode extends Element {
+export default class VirtualDOMNode extends Element {
   constructor(props, domElement) {
     super(props);
     
@@ -39,8 +39,6 @@ class VirtualDOMNode extends Element {
     return virtualDOMNode;
   }
 }
-
-module.exports = VirtualDOMNode;
 
 function parentDOMElement(parent) {
   let parentDOMElement = parent.getDOMElement();
