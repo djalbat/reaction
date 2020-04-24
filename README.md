@@ -54,9 +54,10 @@ You will need to do this if you want to look at the examples.
 
 ## Usage
 
-```js
-const reaction = require('reaction'),
-      { React, ReactDOM } = reaction;
+```
+import reaction from "reaction";
+
+const { React, ReactDOM } = reaction;
 
 ...
 ```
@@ -127,8 +128,10 @@ The `setState()` method will set the React element's state to the given state. T
 
 ## Mixins
 
-Mixins are supported for components whether created by way of extending the `Component` class or by calling the `React.createClass()` method. When extending the `Component` class you should assign the mixins to the class itself:
-```js
+Mixins are supported for components, whether created by way of extending the `Component` class or by calling the `React.createClass()` method.
+
+When extending the `Component` class you can assign the mixins to the class...
+```
 class ExampleComponent extends Component {
   ...
 }
@@ -141,8 +144,19 @@ Object.assign(ExampleComponent, {
 });
 ```
 
+...or, equivalently, use static class fields:
+
+```
+class ExampleComponent extends Component {
+  static mixins = [
+    expand,
+    collapse
+  ]
+}
+```
+
 When calling the `React.createClass()` method you should add a `mixin` property to the plain old JavaScript object that you pass in:
-```js
+```
 const exampleComponent React.createClass({
   ...
 
@@ -159,7 +173,7 @@ Whilst you should not use mixins to get around the fact that it is not always wi
 ## Contexts
 
 Contexts are handled slightly differently to React. The default context is an empty plain old JavaScript object `{}` and this is passed down from parent elements to their children *by reference*. If you implement any `getChildContext()` methods, however, it is recommended that you pass down contexts *by value*. To do so, you can make use of `Object.assign()` to effectively clone the context passed in, before amending it and passing it on. Suppose you wish to appraise child elements of their parent element, for example. The parent element's component class might look like the following:
-```js
+```
 class ParentComponent extends Component {
   getChildContext(context) {
     const parentElement = this, ///
@@ -174,7 +188,7 @@ class ParentComponent extends Component {
 }
 ```
 And the child element's component class might look like the following:
-```js
+```
 class ChildComponent extends Component {
   getChildContext(context) {
     const { parentElement } = context,
