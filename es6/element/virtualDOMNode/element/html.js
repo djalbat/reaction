@@ -1,9 +1,8 @@
 "use strict";
 
-const nameUtilities = require("../../../utilities/name"),
-      VirtualDOMElement = require("../element");
+import VirtualDOMElement from "../element";
 
-const { isHTMLAttributeName } = nameUtilities;
+import { isHTMLAttributeName } from "../../../utilities/name";
 
 class VirtualDOMHTMLElement extends VirtualDOMElement {
   constructor(tagName, props) {

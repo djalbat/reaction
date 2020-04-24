@@ -1,10 +1,9 @@
 "use strict";
 
-const Element = require("../element"),
-      arrayUtilities = require("../utilities/array"),
-      reactElementMixins = require("../mixins/reactElement");
+import Element from "../element";
+import reactElementMixins from "../mixins/reactElement";
 
-const { guarantee, remaining } = arrayUtilities;
+import { guarantee, remaining } from "../utilities/array";
 
 class ReactElement extends Element {
   constructor(props) {

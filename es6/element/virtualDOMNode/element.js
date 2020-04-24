@@ -1,7 +1,8 @@
 "use strict";
 
-const VirtualDOMNode = require("../virtualDOMNode"),
-      virtualDOMElementMixins = require("../../mixins/virtualDOMElement");
+import VirtualDOMNode from "../virtualDOMNode";
+
+import virtualDOMElementMixins from "../../mixins/virtualDOMElement";
 
 class VirtualDOMElement extends VirtualDOMNode {
   mount(parent, reference, context) {
@@ -61,4 +62,3 @@ class VirtualDOMElement extends VirtualDOMNode {
 Object.assign(VirtualDOMElement.prototype, virtualDOMElementMixins);
 
 module.exports = VirtualDOMElement;
-

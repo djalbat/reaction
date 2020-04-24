@@ -1,8 +1,8 @@
 "use strict";
 
-const Redux = require("./redux"),
-      React = require("../react"),
-      ReactDOM = require("../reactDOM");
+import Redux from "./redux";
+import React from "../react";
+import ReactDOM from "../reactDOM";
 
 const { Component } = React,
       { createStore, combineReducers } = Redux;

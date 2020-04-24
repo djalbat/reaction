@@ -1,7 +1,7 @@
 "use strict";
 
-const React = require("../react"),
-      ReactDOM = require("../reactDOM");
+import React from "../react";
+import ReactDOM from "../reactDOM";
 
 const Comment = React.createClass({
   render: function() {

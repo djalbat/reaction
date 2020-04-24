@@ -1,9 +1,8 @@
 "use strict";
 
-const nameUtilities = require("../../../utilities/name"),
-      VirtualDOMElement = require("../element");
+import VirtualDOMElement from "../element";
 
-const { isSVGAttributeName } = nameUtilities;
+import { isSVGAttributeName } from "../../../utilities/name";
 
 class VirtualDOMSVGElement extends VirtualDOMElement {
   constructor(tagName, props) {

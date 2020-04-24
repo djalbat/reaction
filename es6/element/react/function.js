@@ -1,6 +1,6 @@
 "use strict";
 
-const ReactElement = require("../react");
+import ReactElement from "../../element/react";
 
 class ReactFunctionElement extends ReactElement {
   constructor(reactFunction, props) {
