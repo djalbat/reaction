@@ -89,9 +89,12 @@ const Todo = ({onClick, completed, text}) => {
   return (
 
     <li onClick={onClick}
-        style={{textDecoration:completed ?
-            "line-through" :
-            "none"}}
+        style={{
+
+          textDecoration:completed ? "line-through" :
+                                       "none"
+
+        }}
     >
       {text}
     </li>
@@ -103,12 +106,18 @@ const TodoList = ({todos, onTodoClick}) =>  {
   return (
 
     <ul>
-      {todos.map(todo => <Todo text={todo.text}
-                               completed={todo.completed}
-                               onClick={() =>
-                                 onTodoClick(todo.id)
-                               }
-      />)}
+      {todos.map((todo) =>
+
+        <Todo text={todo.text}
+              completed={todo.completed}
+              onClick={() =>
+
+                onTodoClick(todo.id)
+
+              }
+        />
+
+      )}
     </ul>
 
   );
@@ -124,9 +133,12 @@ const Link = (props) => {
   return (
 
     <a href="#"
-       onClick={e => {
-         e.preventDefault();
+       onClick={(event) => {
+
+         event.preventDefault();
+
          onClick();
+
        }}
     >
       {props.children}
@@ -154,17 +166,17 @@ const FilterLink = React.createClass({
 
     return (
 
-      <Link active={
-        this.props.filter === state.visibilityFilter
-      }
+      <Link active={ this.props.filter === state.visibilityFilter }
             onClick={() => {
+
               const type = "SET_VISIBILITY_FILTER",
-                { filter } = this.props;
+                    { filter } = this.props;
 
               store.dispatch({
                 type,
                 filter
               });
+
             }}
       >
         {this.props.children}
@@ -181,24 +193,28 @@ const AddTodo = (props, {store}) => {
   return (
 
     <div>
-      <input ref={domElement => {
-        input = domElement;
-      }}
+      <input ref={(domElement) => {
+
+               input = domElement;
+
+             }}
       />
       <button onClick={() => {
-        const type = "ADD_TODO",
-          { value } = input,
-          text = value, ///
-          id = nextTodoId++;
 
-        store.dispatch({
-          type,
-          text,
-          id
-        });
+                const type = "ADD_TODO",
+                      { value } = input,
+                      text = value, ///
+                      id = nextTodoId++;
 
-        input.value = "";
-      }}
+                store.dispatch({
+                  type,
+                  text,
+                  id
+                });
+
+                input.value = "";
+
+              }}
       >
         Add todo
       </button>
@@ -227,18 +243,20 @@ class VisibleTodoList extends Component {
     return (
 
       <TodoList todos={
-        getVisibleTodos(
-          state.todos,
-          state.visibilityFilter
-        )
-      }
+                  getVisibleTodos(
+                    state.todos,
+                    state.visibilityFilter
+                  )
+                }
                 onTodoClick={(id) => {
+
                   const type = "TOGGLE_TODO";
 
                   store.dispatch({
                     type,
                     id
                   });
+
                 }}
       />
 
