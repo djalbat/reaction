@@ -17,11 +17,11 @@ function createClass(object) {
   return ReactClass.create(object);
 }
 
-function createElement(firstArgument, properties, ...childArguments) {
+function createElement(firstArgument, properties, ...remainingArguments) {
   let element = null;
 
   if (firstArgument !== undefined) {
-    const children = childrenFromChildArguments(childArguments),
+    const children = childrenFromRemainingArguments(remainingArguments),
           props = Object.assign({}, properties, {
             children
           });
@@ -72,10 +72,10 @@ const Component = ReactComponent, ///
 
 export default React;
 
-function childrenFromChildArguments(childArguments) {
-  childArguments = flatten(childArguments); ///
+function childrenFromRemainingArguments(remainingArguments) {
+  remainingArguments = flatten(remainingArguments); ///
 
-  const children = childArguments.map((childArgument) => {
+  const children = remainingArguments.map((childArgument) => {
     let child;
 
     if (isSubclassOf(childArgument.constructor, Element)) { ///
