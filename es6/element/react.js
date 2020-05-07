@@ -2,40 +2,11 @@
 
 import Element from "../element";
 
+import reactElementMixins from "../mixins/reactElement";
+
 import { guarantee, remaining } from "../utilities/array";
-import { setAttribute,
-         getAttribute,
-         clearAttribute,
-         addAttribute,
-         removeAttribute,
-         hasAttribute,
-         setClass,
-         addClass,
-         removeClass,
-         toggleClass,
-         hasClass,
-         hasClasses,
-         clearClasses,
-         getTagName,
-         setStyle } from "../mixins/reactElement";
 
-export default class ReactElement extends Element {
-  setAttribute = setAttribute;
-  getAttribute = getAttribute;
-  clearAttribute = clearAttribute;
-  addAttribute = addAttribute;
-  removeAttribute = removeAttribute;
-  hasAttribute = hasAttribute;
-  setClass = setClass;
-  addClass = addClass;
-  removeClass = removeClass;
-  toggleClass = toggleClass;
-  hasClass = hasClass;
-  hasClasses = hasClasses;
-  clearClasses = clearClasses;
-  getTagName = getTagName;
-  setStyle = setStyle;
-
+class ReactElement extends Element {
   constructor(props) {
     super(props);
     
@@ -124,6 +95,10 @@ export default class ReactElement extends Element {
     return reference(parent, child);
   }
 }
+
+Object.assign(ReactElement, reactElementMixins);
+
+export default ReactElement;
 
 function reference(parent, child) {
   let reference = findReference(parent, child),
