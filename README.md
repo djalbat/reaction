@@ -36,6 +36,7 @@ There is a series of complementary videos:
 - Contexts are now handled slightly differently. Please see the section below.
 - More ES6 and some experimental syntax has been adopted, for example ES6 imports and exports.
 - The `examples/index.html` file is now `examples.html`.
+- The Redux example application has now been split up into separate files.
 
 ## Installation
 
