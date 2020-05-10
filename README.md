@@ -35,6 +35,7 @@ There is a series of complementary videos:
 - Support for Inference has been added, again please see the source.
 - Contexts are now handled slightly differently. Please see the section below.
 - More ES6 and some experimental syntax has been adopted, for example ES6 imports and exports.
+- The `examples/index.html` file is now `examples.html`.
 
 ## Installation
 
@@ -66,7 +67,7 @@ Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.htm
 
 ## Examples
 
-Launch the `examples/index.html` file. There is a Redux as well as a vanilla example application.
+Launch the `examples.html` file. There is a Redux as well as a vanilla example application.
 
 ## Compiling from source
 
