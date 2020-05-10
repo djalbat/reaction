@@ -59,6 +59,6 @@ class VirtualDOMElement extends VirtualDOMNode {
 	}
 }
 
-Object.assign(VirtualDOMElement, virtualDOMElementMixins);
+Object.assign(VirtualDOMElement.prototype, virtualDOMElementMixins);
 
 export default VirtualDOMElement;

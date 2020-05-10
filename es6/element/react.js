@@ -96,7 +96,7 @@ class ReactElement extends Element {
   }
 }
 
-Object.assign(ReactElement, reactElementMixins);
+Object.assign(ReactElement.prototype, reactElementMixins);
 
 export default ReactElement;
 
