@@ -3,67 +3,7 @@
 import React from "../react";
 import ReactDOM from "../reactDOM";
 
-const Comment = React.createClass({
-  render: function() {
-    return (
-
-      <div className="comment">
-        <p>
-          {this.props.message}
-        </p>
-      </div>
-
-    );
-  },
-
-  componentDidMount: function() {
-    const message = this.props.message;
-
-    console.log("Comment mounted with message: " + message)
-  },
-
-  componentWillUnmount: function() {
-    const message = this.props.message;
-
-    console.log("Comment unmounted with message: " + message)
-  }
-});
-
-const CommentsList = React.createClass({
-  getInitialState() {
-    const messages = [
-            "Hello, world!",
-            "Hello world again..."
-          ],
-          state = {
-            messages
-          };
-
-    return state;
-  },
-
-  componentDidMount: function() {
-    console.log("Comments list mounted.")
-  },
-
-  render: function() {
-    const state = this.getState(),
-          { messages } = state,
-          comments = messages.map((message) =>
-
-            <Comment message={message} />
-
-          );
-
-    return (
-
-      <div className="comments-list">
-        {comments}
-      </div>
-
-    );
-  }
-});
+import CommentsList from "./vanillaApp/commentsList";
 
 export default function vanillaApp() {
   const commentsList =
