@@ -1,6 +1,6 @@
 "use strict";
 
-import { React } from "reaction";
+import { React } from "../../../index";
 
 const TodoListItem = (props, context) => {
   const { clickHandler, completed, text } = props,

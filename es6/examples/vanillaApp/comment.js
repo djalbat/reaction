@@ -3,7 +3,7 @@
 import React from "../../react";
 
 const Comment = React.createClass({
-  render: function() {
+  render: () => {
     return (
 
       <div className="comment">
@@ -15,13 +15,13 @@ const Comment = React.createClass({
     );
   },
 
-  componentDidMount: function() {
+  componentDidMount: () => {
     const message = this.props.message;
 
     console.log("Comment mounted with message: " + message)
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount: () => {
     const message = this.props.message;
 
     console.log("Comment unmounted with message: " + message)

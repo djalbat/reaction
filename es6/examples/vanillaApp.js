@@ -19,7 +19,7 @@ export default function vanillaApp() {
     rootDOMElement
   );
 
-  setTimeout(function() {
+  setTimeout(() => {
     const messages = [
             "Hello world yet again!!!"
           ],

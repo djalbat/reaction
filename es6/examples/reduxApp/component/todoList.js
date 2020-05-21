@@ -1,6 +1,6 @@
 "use strict";
 
-import { React } from "reaction";
+import { React } from "../../../index";
 
 import TodoListItems from "./todoListItems";
 

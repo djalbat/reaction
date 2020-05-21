@@ -1,6 +1,6 @@
 "use strict";
 
-import { React } from "reaction";
+import { React } from "../../../index";
 
 import { SET_VISIBILITY_FILTER } from "../constants";
 
