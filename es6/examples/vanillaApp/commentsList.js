@@ -17,11 +17,11 @@ const CommentsList = React.createClass({
     return state;
   },
 
-  componentDidMount: () => {
+  componentDidMount: function() {
     console.log("Comments list mounted.")
   },
 
-  render: () => {
+  render: function(update) {
     const state = this.getState(),
           { messages } = state,
           comments = messages.map((message) =>
