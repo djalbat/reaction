@@ -56,14 +56,14 @@ You will need to do this if you want to look at the examples.
 
 ## Usage
 
-In order to make use of JSX, you must import the `React` object at the top of the file:
+In order to make use of JSX, you must import the `React` object at the top of the file in question:
 
 ```
 import { React } from "reaction";
 
 ...
 ```
-Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind that only a subset of React's functionality is supported.
+Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way.
 
 The `ReactDOM` class is also available:
 
