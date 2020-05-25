@@ -56,15 +56,23 @@ You will need to do this if you want to look at the examples.
 
 ## Usage
 
-```
-import reaction from "reaction";
+In order to make use of JSX, you must import the `React` object at the top of the file:
 
-const { React, ReactDOM } = reaction;
+```
+import { React } from "reaction";
 
 ...
 ```
-
 Now just write your [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and React code in the normal way, although bear in mind that only a subset of React's functionality is supported.
+
+The `ReactDOM` class is also available:
+
+```
+import { ReactDOM } from "reaction";
+
+...
+```
+You will need to call the `ReactDOM.render(...)` method at least once from somewhere.
 
 ## Examples
 
