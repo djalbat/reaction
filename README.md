@@ -219,7 +219,7 @@ In either case, because the element is being mounted or re-mounted, the `render(
 
 Guidance on how to handle updates can be found in the 'Recommended patterns' section at the foot of the Inference readme file.
 
-## Compiling from source
+## Building
 
 Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the `package.json` file. The pertinent commands are:
 
