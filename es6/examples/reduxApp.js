@@ -1,6 +1,6 @@
 "use strict";
 
-import { React, ReactDOM } from "../index";
+import { React, ReactDOM } from "../index"; ///
 
 import { createStore } from "./reduxApp/redux";
 

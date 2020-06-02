@@ -1,6 +1,6 @@
 "use strict";
 
-import { React } from "../../../index";
+import { React } from "../../../index"; ///
 
 import Footer from "./footer";
 import AddTodo from "./addTodo";

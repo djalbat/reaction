@@ -1,6 +1,6 @@
 "use strict";
 
-import { React } from "../../../index";
+import { React } from "../../../index"; ///
 
 import { ADD_TODO } from "../constants";
 
