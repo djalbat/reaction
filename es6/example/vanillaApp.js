@@ -13,7 +13,6 @@ export default function vanillaApp() {
         ,
         rootDOMElement = document.getElementById("root");
 
-
   ReactDOM.render(
     commentsList,
     rootDOMElement

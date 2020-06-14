@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reaction Examples - Vanilla Application</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="root"> </div>
+
+    <script src="../examples.js"> </script>
+
+    <script>
+
+      vanillaApp();
+
+    </script>
+
+    <script>
+
+      var xmlHttpRequest = new XMLHttpRequest();
+
+      xmlHttpRequest.onreadystatechange = function() {
+        if (xmlHttpRequest.readyState == 4) {
+          if (xmlHttpRequest.status == 200) {
+            location.reload();
+          }
+        }
+      };
+
+      xmlHttpRequest.open("GET", "http://localhost:3333");
+
+      xmlHttpRequest.send();
+
+    </script>
+
+  </body>
+</html>

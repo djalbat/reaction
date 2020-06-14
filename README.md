@@ -16,7 +16,8 @@ There is a series of complementary videos:
 
 #### Corrigenda
 
-- The `examples.html` file has moved to `examples/index.html`. 
+- The `examples.html` file has moved to `index.html`.
+- The `examples` directory in the `es6` directory has been renamed to `example`.
 - The `toArray()` helper method is now called `guaranteeArray()`.
 - The `index` variable in the `indexOf()` helper method is now initially set to `null`.
 - The `remount()` method of the `ReactElement` should call the `getChildContext()` method.
@@ -35,7 +36,6 @@ There is a series of complementary videos:
 - Support for Inference has been added, again please see the source.
 - Contexts are now handled slightly differently. Please see the section below.
 - More ES6 and some experimental syntax has been adopted, for example ES6 imports and exports.
-- The `examples/index.html` file is now `examples.html`.
 - The Redux example application has now been split up into separate files.
 
 ## Installation
@@ -225,6 +225,12 @@ Automation is thanks to [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
     npm run build-debug
     npm run watch-debug
+
+You can also start a small development server:
+
+    npm start
+
+The example will then be available at http://localhost:8888/ and will reload automatically when changes are made.
 
 ## Acknowledgements
 

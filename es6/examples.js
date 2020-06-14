@@ -1,7 +1,7 @@
 "use strict";
 
-import reduxApp from "./examples/reduxApp";
-import vanillaApp from "./examples/vanillaApp";
+import reduxApp from "./example/reduxApp";
+import vanillaApp from "./example/vanillaApp";
 
 Object.assign(window, {
   reduxApp,
