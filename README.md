@@ -239,4 +239,3 @@ The example will then be available at http://localhost:8888/ and will reload aut
 ## Contact
 
 - james.smith@djalbat.com
-- http://djalbat.com
