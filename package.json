@@ -20,7 +20,7 @@
   "scripts": {
     "start": "node ./bin/main.js",
     "clean": "rm -rf ./lib",
-    "watchful": "watchful -mp=4 --transpiler=swc --bundler=esbuild --source-directory=./src --lib-directory=./lib --entry-file=examples.js --bundle-file=./examples.js --pause=100",
+    "watchful": "watchful -m --transpiler=swc --bundler=esbuild --source-directory=./src --lib-directory=./lib --entry-file=examples.js --bundle-file=./examples.js --pause=100",
     "batch": "npm run watchful batch --",
     "batch-debug": "npm run watchful batch -- --debug",
     "incremental": "npm run watchful incremental --",
