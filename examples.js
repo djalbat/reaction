@@ -88,7 +88,7 @@
         _defineProperties(Constructor, staticProps);
       return Constructor;
     }
-    var Element1 = function() {
+    var Element1 = /* @__PURE__ */ function() {
       function Element12(props) {
         _classCallCheck(this, Element12);
         this.props = props;
@@ -111,7 +111,7 @@
         {
           key: "getFirstChild",
           value: function getFirstChild() {
-            var firstChild = _array.first(this.children) || null;
+            var firstChild = (0, _array).first(this.children) || null;
             return firstChild;
           }
         },
@@ -164,7 +164,7 @@
         _defineProperties(Constructor, staticProps);
       return Constructor;
     }
-    var ReactClass = function() {
+    var ReactClass = /* @__PURE__ */ function() {
       function ReactClass2(render, getInitialState, getChildContext, componentDidMount, componentWillUnmount, mixins) {
         _classCallCheck(this, ReactClass2);
         this.render = render;
@@ -248,7 +248,7 @@
         _defineProperties(Constructor, staticProps);
       return Constructor;
     }
-    var ReactComponent = function() {
+    var ReactComponent = /* @__PURE__ */ function() {
       function ReactComponent2() {
         _classCallCheck(this, ReactComponent2);
       }
@@ -535,8 +535,8 @@
       };
       return _wrapNativeSuper(Class);
     }
-    var ReactElement = function(Element1) {
-      _inherits(ReactElement2, _element.default);
+    var ReactElement = /* @__PURE__ */ function(Element1) {
+      _inherits(ReactElement2, Element1);
       function ReactElement2(props) {
         _classCallCheck(this, ReactElement2);
         var _this;
@@ -550,7 +550,7 @@
           key: "mount",
           value: function mount(parent, reference2, context) {
             this.context = context;
-            var childContext = this.getChildContext(context), children = _array.guarantee(this.render());
+            var childContext = this.getChildContext(context), children = (0, _array).guarantee(this.render());
             _get(_getPrototypeOf(ReactElement2.prototype), "mount", this).call(this, parent, children);
             children.forEach(function(child) {
               var childParent = this, childReference = reference2;
@@ -578,7 +578,7 @@
             this.children.forEach(function(child) {
               return child.unmount(childContext);
             });
-            this.children = _array.guarantee(this.render(update));
+            this.children = (0, _array).guarantee(this.render(update));
             this.children.forEach(function(child) {
               return child.mount(childParent, childReference, childContext);
             });
@@ -647,7 +647,7 @@
       return reference1;
     }
     function findReference(parent, child) {
-      var children = parent.getChildren(), remainingChildren = _array.remaining(child, children);
+      var children = parent.getChildren(), remainingChildren = (0, _array).remaining(child, children);
       return remainingChildren.reduce(function(reference1, remainingChild) {
         if (reference1 === null) {
           var remainingChildDOMElement = remainingChild.getDOMElement();
@@ -741,8 +741,8 @@
     var _typeof = function(obj) {
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
-    var ReactClassElement = function(ReactElement) {
-      _inherits(ReactClassElement2, _react.default);
+    var ReactClassElement = /* @__PURE__ */ function(ReactElement) {
+      _inherits(ReactClassElement2, ReactElement);
       function ReactClassElement2(reactClass, props) {
         _classCallCheck(this, ReactClassElement2);
         var _this;
@@ -866,8 +866,8 @@
     var _typeof = function(obj) {
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
-    var ReactFunctionElement = function(ReactElement) {
-      _inherits(ReactFunctionElement2, _react.default);
+    var ReactFunctionElement = /* @__PURE__ */ function(ReactElement) {
+      _inherits(ReactFunctionElement2, ReactElement);
       function ReactFunctionElement2(reactFunction, props) {
         _classCallCheck(this, ReactFunctionElement2);
         var _this;
@@ -986,8 +986,8 @@
     var _typeof = function(obj) {
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
-    var ReactComponentElement = function(ReactElement) {
-      _inherits(ReactComponentElement2, _react.default);
+    var ReactComponentElement = /* @__PURE__ */ function(ReactElement) {
+      _inherits(ReactComponentElement2, ReactElement);
       function ReactComponentElement2(reactComponent, props) {
         _classCallCheck(this, ReactComponentElement2);
         var _this;
@@ -1200,8 +1200,8 @@
       };
       return _wrapNativeSuper(Class);
     }
-    var VirtualDOMNode = function(Element1) {
-      _inherits(VirtualDOMNode2, _element.default);
+    var VirtualDOMNode = /* @__PURE__ */ function(Element1) {
+      _inherits(VirtualDOMNode2, Element1);
       function VirtualDOMNode2(props, domElement) {
         _classCallCheck(this, VirtualDOMNode2);
         var _this;
@@ -1362,8 +1362,8 @@
     var _typeof = function(obj) {
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
-    var VirtualDOMTextElement = function(VirtualDOMNode) {
-      _inherits(VirtualDOMTextElement2, _virtualDOMNode.default);
+    var VirtualDOMTextElement = /* @__PURE__ */ function(VirtualDOMNode) {
+      _inherits(VirtualDOMTextElement2, VirtualDOMNode);
       function VirtualDOMTextElement2(text) {
         _classCallCheck(this, VirtualDOMTextElement2);
         var domElement = document.createTextNode(text), children = [], props = {
@@ -1599,8 +1599,8 @@
     var _typeof = function(obj) {
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
-    var VirtualDOMElement = function(VirtualDOMNode) {
-      _inherits(VirtualDOMElement2, _virtualDOMNode.default);
+    var VirtualDOMElement = /* @__PURE__ */ function(VirtualDOMNode) {
+      _inherits(VirtualDOMElement2, VirtualDOMNode);
       function VirtualDOMElement2() {
         _classCallCheck(this, VirtualDOMElement2);
         return _possibleConstructorReturn(this, _getPrototypeOf(VirtualDOMElement2).apply(this, arguments));
@@ -2273,8 +2273,8 @@
     var _typeof = function(obj) {
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
-    var VirtualDOMHTMLElement = function(VirtualDOMElement) {
-      _inherits(VirtualDOMHTMLElement2, _element.default);
+    var VirtualDOMHTMLElement = /* @__PURE__ */ function(VirtualDOMElement) {
+      _inherits(VirtualDOMHTMLElement2, VirtualDOMElement);
       function VirtualDOMHTMLElement2(tagName, props) {
         _classCallCheck(this, VirtualDOMHTMLElement2);
         var domElement = document.createElement(tagName);
@@ -2284,7 +2284,7 @@
         {
           key: "isAttributeName",
           value: function isAttributeName(name) {
-            return _name.isHTMLAttributeName(name);
+            return (0, _name).isHTMLAttributeName(name);
           }
         }
       ]);
@@ -2371,8 +2371,8 @@
     var _typeof = function(obj) {
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
-    var VirtualDOMSVGElement = function(VirtualDOMElement) {
-      _inherits(VirtualDOMSVGElement2, _element.default);
+    var VirtualDOMSVGElement = /* @__PURE__ */ function(VirtualDOMElement) {
+      _inherits(VirtualDOMSVGElement2, VirtualDOMElement);
       function VirtualDOMSVGElement2(tagName, props) {
         _classCallCheck(this, VirtualDOMSVGElement2);
         var domElement = document.createElementNS("http://www.w3.org/2000/svg", tagName);
@@ -2382,7 +2382,7 @@
         {
           key: "isAttributeName",
           value: function isAttributeName(name) {
-            return _name.isSVGAttributeName(name);
+            return (0, _name).isSVGAttributeName(name);
           }
         }
       ]);
@@ -2435,7 +2435,7 @@
         });
         if (false) {
         } else if (typeof firstArgument === "string") {
-          var tagName = firstArgument, virtualDOMElement = _name.isSVGTagName(tagName) ? new _svg.default(tagName, props) : new _html.default(tagName, props);
+          var tagName = firstArgument, virtualDOMElement = (0, _name).isSVGTagName(tagName) ? new _svg.default(tagName, props) : new _html.default(tagName, props);
           element = virtualDOMElement;
         } else if (_instanceof(firstArgument, _reactClass.default)) {
           var reactClass = firstArgument, reactClassElement = new _class.default(reactClass, props);
@@ -2462,16 +2462,19 @@
     var _default = React;
     exports.default = _default;
     function childrenFromRemainingArguments(remainingArguments) {
-      remainingArguments = _array.flatten(remainingArguments);
-      var children = remainingArguments.map(function(childArgument) {
+      remainingArguments = (0, _array).flatten(remainingArguments);
+      var children = [];
+      remainingArguments.forEach(function(childArgument) {
         var child;
-        if (isSubclassOf(childArgument.constructor, _element.default)) {
-          child = childArgument;
-        } else {
-          var text = childArgument, virtualDOMTextElement = new _textElement.default(text);
-          child = virtualDOMTextElement;
+        if (childArgument) {
+          if (isSubclassOf(childArgument.constructor, _element.default)) {
+            child = childArgument;
+          } else {
+            var text = childArgument, virtualDOMTextElement = new _textElement.default(text);
+            child = virtualDOMTextElement;
+          }
+          children.push(child);
         }
-        return child;
       });
       return children;
     }
@@ -2540,7 +2543,7 @@
         default: obj
       };
     }
-    var ReactDOM = function() {
+    var ReactDOM = /* @__PURE__ */ function() {
       function ReactDOM2() {
         _classCallCheck(this, ReactDOM2);
       }
@@ -2664,6 +2667,7 @@
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
+    exports.default = todos;
     var _constants = require_constants();
     function _arrayWithoutHoles(arr) {
       if (Array.isArray(arr)) {
@@ -2698,7 +2702,6 @@
       state = todos1;
       return state;
     }
-    exports.default = todos;
     function addTodoToTodos(todos1, action) {
       var id = action.id, text = action.text, completed = false, todo = {
         id,
@@ -2730,6 +2733,7 @@
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
+    exports.default = visibilityFilter;
     var _constants = require_constants();
     function visibilityFilter(param, param1) {
       var state = param === void 0 ? _constants.SHOW_ALL : param, action = param1 === void 0 ? {} : param1;
@@ -2742,7 +2746,6 @@
       }
       return state;
     }
-    exports.default = visibilityFilter;
   });
 
   // lib/example/reduxApp/reducer.js
@@ -2760,7 +2763,7 @@
         default: obj
       };
     }
-    var reducer = _redux.combineReducers({
+    var reducer = (0, _redux).combineReducers({
       todos: _todos.default,
       visibilityFilter: _visibilityFilter.default
     });
@@ -2842,8 +2845,8 @@
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
     var Component = _index.React.Component;
-    var FilterLink = function(Component2) {
-      _inherits(FilterLink2, Component2);
+    var FilterLink = /* @__PURE__ */ function(Component1) {
+      _inherits(FilterLink2, Component1);
       function FilterLink2() {
         _classCallCheck(this, FilterLink2);
         return _possibleConstructorReturn(this, _getPrototypeOf(FilterLink2).apply(this, arguments));
@@ -2869,9 +2872,9 @@
           value: function render() {
             var _context = this.context, store = _context.store, state = store.getState(), visibilityFilter = state.visibilityFilter, _props = this.props, children = _props.children, filter = _props.filter, active = filter === visibilityFilter;
             if (active) {
-              return _index.React.createElement("span", null, children);
+              return /* @__PURE__ */ _index.React.createElement("span", null, children);
             }
-            return _index.React.createElement("a", {
+            return /* @__PURE__ */ _index.React.createElement("a", {
               href: "#",
               className: "filter",
               onClick: function(event) {
@@ -2907,11 +2910,11 @@
       };
     }
     var Footer = function(props, context) {
-      return _index.React.createElement("p", null, "Show: ", _index.React.createElement(_filterLink.default, {
+      return _index.React.createElement("p", null, "Show: ", /* @__PURE__ */ _index.React.createElement(_filterLink.default, {
         filter: _constants.SHOW_ALL
-      }, "All"), " - ", _index.React.createElement(_filterLink.default, {
+      }, "All"), " - ", /* @__PURE__ */ _index.React.createElement(_filterLink.default, {
         filter: _constants.SHOW_ACTIVE
-      }, "Active"), " - ", _index.React.createElement(_filterLink.default, {
+      }, "Active"), " - ", /* @__PURE__ */ _index.React.createElement(_filterLink.default, {
         filter: _constants.SHOW_COMPLETED
       }, "Completed"));
     };
@@ -2932,11 +2935,11 @@
     var inputDOMElement;
     var AddTodo = function(props, context) {
       var store = context.store;
-      return _index.React.createElement("div", null, _index.React.createElement("input", {
+      return /* @__PURE__ */ _index.React.createElement("div", null, /* @__PURE__ */ _index.React.createElement("input", {
         ref: function(domElement) {
           inputDOMElement = domElement;
         }
-      }), _index.React.createElement("button", {
+      }), /* @__PURE__ */ _index.React.createElement("button", {
         onClick: function() {
           var type = _constants.ADD_TODO, text = inputDOMElement.value, action = {
             type,
@@ -2965,7 +2968,7 @@
       var clickHandler = props.clickHandler, completed = props.completed, text = props.text, textDecoration = completed ? "line-through" : "none", style = {
         textDecoration
       };
-      return _index.React.createElement("li", {
+      return /* @__PURE__ */ _index.React.createElement("li", {
         style,
         onClick: clickHandler
       }, text);
@@ -3054,8 +3057,8 @@
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
     var Component = _index.React.Component;
-    var TodoListItems = function(Component2) {
-      _inherits(TodoListItems2, Component2);
+    var TodoListItems = /* @__PURE__ */ function(Component1) {
+      _inherits(TodoListItems2, Component1);
       function TodoListItems2() {
         _classCallCheck(this, TodoListItems2);
         return _possibleConstructorReturn(this, _getPrototypeOf(TodoListItems2).apply(this, arguments));
@@ -3081,7 +3084,7 @@
           value: function render() {
             var _context = this.context, store = _context.store, state = store.getState(), todos = state.todos, visibilityFilter = state.visibilityFilter, visibleTodos = getVisibleTodos(todos, visibilityFilter), items = visibleTodos.map(function(visibleTodo) {
               var id = visibleTodo.id, text = visibleTodo.text, completed = visibleTodo.completed;
-              return _index.React.createElement(_todoListItem.default, {
+              return /* @__PURE__ */ _index.React.createElement(_todoListItem.default, {
                 text,
                 completed,
                 clickHandler: function() {
@@ -3138,7 +3141,7 @@
       };
     }
     var TodoList = function(props, context) {
-      return _index.React.createElement("ul", null, _index.React.createElement(_todoListItems.default, null));
+      return _index.React.createElement("ul", null, /* @__PURE__ */ _index.React.createElement(_todoListItems.default, null));
     };
     var _default = TodoList;
     exports.default = _default;
@@ -3161,7 +3164,7 @@
       };
     }
     var TodoApp = function(props, context) {
-      return _index.React.createElement("div", null, _index.React.createElement(_addTodo.default, null), _index.React.createElement(_todoList.default, null), _index.React.createElement(_footer.default, null));
+      return _index.React.createElement("div", null, /* @__PURE__ */ _index.React.createElement(_addTodo.default, null), /* @__PURE__ */ _index.React.createElement(_todoList.default, null), /* @__PURE__ */ _index.React.createElement(_footer.default, null));
     };
     var _default = TodoApp;
     exports.default = _default;
@@ -3240,8 +3243,8 @@
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
     var Component = _index.React.Component;
-    var Provider = function(Component2) {
-      _inherits(Provider2, Component2);
+    var Provider = /* @__PURE__ */ function(Component1) {
+      _inherits(Provider2, Component1);
       function Provider2() {
         _classCallCheck(this, Provider2);
         return _possibleConstructorReturn(this, _getPrototypeOf(Provider2).apply(this, arguments));
@@ -3275,6 +3278,7 @@
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
+    exports.default = reduxApp;
     var _index = require_lib();
     var _redux = require_redux();
     var _reducer = _interopRequireDefault2(require_reducer());
@@ -3286,12 +3290,11 @@
       };
     }
     function reduxApp() {
-      var store = _redux.createStore(_reducer.default), rootDOMElement = document.getElementById("root");
-      _index.ReactDOM.render(_index.React.createElement(_provider.default, {
+      var store = (0, _redux).createStore(_reducer.default), rootDOMElement = document.getElementById("root");
+      _index.ReactDOM.render(/* @__PURE__ */ _index.React.createElement(_provider.default, {
         store
-      }, _index.React.createElement(_todoApp.default, null)), rootDOMElement);
+      }, /* @__PURE__ */ _index.React.createElement(_todoApp.default, null)), rootDOMElement);
     }
-    exports.default = reduxApp;
   });
 
   // lib/example/vanillaApp/comment.js
@@ -3309,9 +3312,9 @@
     }
     var Comment1 = _react.default.createClass({
       render: function render(update) {
-        return _react.default.createElement("div", {
+        return /* @__PURE__ */ _react.default.createElement("div", {
           className: "comment"
-        }, _react.default.createElement("p", null, this.props.message));
+        }, /* @__PURE__ */ _react.default.createElement("p", null, this.props.message));
       },
       componentDidMount: function componentDidMount() {
         var message = this.props.message;
@@ -3360,7 +3363,7 @@
             message
           });
         });
-        return _react.default.createElement("div", {
+        return /* @__PURE__ */ _react.default.createElement("div", {
           className: "comments-list"
         }, comments);
       },
@@ -3376,6 +3379,7 @@
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
+    exports.default = vanillaApp;
     var _react = _interopRequireDefault2(require_react2());
     var _reactDOM = _interopRequireDefault2(require_reactDOM());
     var _commentsList = _interopRequireDefault2(require_commentsList());
@@ -3385,7 +3389,7 @@
       };
     }
     function vanillaApp() {
-      var commentsList = _react.default.createElement(_commentsList.default, null), rootDOMElement = document.getElementById("root");
+      var commentsList = /* @__PURE__ */ _react.default.createElement(_commentsList.default, null), rootDOMElement = document.getElementById("root");
       _reactDOM.default.render(commentsList, rootDOMElement);
       setTimeout(function() {
         var messages = [
@@ -3396,7 +3400,6 @@
         commentsList.setState(state);
       }, 1e3);
     }
-    exports.default = vanillaApp;
   });
 
   // lib/examples.js

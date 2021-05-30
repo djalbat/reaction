@@ -75,19 +75,23 @@ export default React;
 function childrenFromRemainingArguments(remainingArguments) {
   remainingArguments = flatten(remainingArguments); ///
 
-  const children = remainingArguments.map((childArgument) => {
+  const children = [];
+
+  remainingArguments.forEach((childArgument) => {
     let child;
 
-    if (isSubclassOf(childArgument.constructor, Element)) { ///
-      child = childArgument;  ///
-    } else {
-      const text = childArgument, ///
-            virtualDOMTextElement = new VirtualDOMTextElement(text);
+    if (childArgument) {  ///
+      if (isSubclassOf(childArgument.constructor, Element)) { ///
+        child = childArgument;  ///
+      } else {
+        const text = childArgument, ///
+              virtualDOMTextElement = new VirtualDOMTextElement(text);
 
-      child = virtualDOMTextElement;
+        child = virtualDOMTextElement;
+      }
+
+      children.push(child);
     }
-
-    return child;
   });
 
   return children;
