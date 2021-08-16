@@ -10,10 +10,12 @@ export default function todos(state = [], action = {}) {
   switch (type) {
     case ADD_TODO :
       todos = addTodoToTodos(todos, action);
+
       break;
 
     case TOGGLE_TODO :
       todos = toggleTodos(todos, action);
+
       break;
   }
 

@@ -5,13 +5,15 @@ import ReactDOM from "../reactDOM";
 
 import CommentsList from "./vanillaApp/commentsList";
 
+import { ROOT, TIMEOUT } from "./vanillaApp/constants";
+
 export default function vanillaApp() {
   const commentsList =
 
-          <CommentsList />
+          <CommentsList/>
 
         ,
-        rootDOMElement = document.getElementById("root");
+        rootDOMElement = document.getElementById(ROOT);
 
   ReactDOM.render(
     commentsList,
@@ -27,5 +29,5 @@ export default function vanillaApp() {
           };
 
     commentsList.setState(state);
-  }, 1000); ///
+  }, TIMEOUT);
 };

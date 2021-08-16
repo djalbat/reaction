@@ -57,15 +57,17 @@ const getVisibleTodos = (todos, visibilityFilter) => {
   switch (visibilityFilter) {
     case SHOW_ALL:
       visibleTodos = todos;
+
       break;
 
     case SHOW_ACTIVE:
       visibleTodos = todos.filter((todo) => {
         const { completed } = todo,
-            active = !completed;
+              active = !completed;
 
         return active;
       });
+
       break;
 
     case SHOW_COMPLETED:
@@ -74,6 +76,7 @@ const getVisibleTodos = (todos, visibilityFilter) => {
 
         return completed;
       });
+
       break;
   }
 

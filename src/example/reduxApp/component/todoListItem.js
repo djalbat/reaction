@@ -2,11 +2,13 @@
 
 import { React } from "../../../index"; ///
 
+import { NONE, LINE_THROUGH } from "../constants";
+
 const TodoListItem = (props, context) => {
   const { clickHandler, completed, text } = props,
         textDecoration = completed ?
-                          "line-through" :
-                            "none",
+                          LINE_THROUGH :
+                            NONE,
         style = {
           textDecoration
         };

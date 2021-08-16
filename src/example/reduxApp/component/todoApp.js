@@ -9,9 +9,9 @@ import TodoList from "./todoList";
 const TodoApp = (props, context) =>
 
   <div>
-    <AddTodo />
-    <TodoList />
-    <Footer />
+    <AddTodo/>
+    <TodoList/>
+    <Footer/>
   </div>
 
 ;

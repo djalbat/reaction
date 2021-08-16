@@ -1,21 +1,23 @@
 "use strict";
 
+import { FOR, CLASS, OBJECT, BOOLEAN, CLASS_NAME, HTML_FOR, EMPTY_STRING } from "../constants";
+
 function setAttribute(name, value) {
-  if (name === "className") {
-    name = "class";
+  if (name === CLASS_NAME) {
+    name = CLASS;
   }
 
-  if (name === "htmlFor") {
-    name = "for";
+  if (name === HTML_FOR) {
+    name = FOR;
   }
 
-  if (typeof value === "object") {
+  if (typeof value === OBJECT) {
     const keys = Object.keys(value);
 
     keys.forEach((key) => {
       this.domElement[name][key] = value[key];
     });
-  } else if (typeof value === "boolean") {
+  } else if (typeof value === BOOLEAN) {
     if (value) {
       value = name; ///
 
@@ -48,7 +50,7 @@ function hasClass(className) { return this.domElement.classList.contains(classNa
 
 function hasClasses(classNames) { return classNames.every((className) => this.hasClass(className)); }
 
-function clearClasses() { this.domElement.className = ""; }
+function clearClasses() { this.domElement.className = EMPTY_STRING; }
 
 function getTagName() { return this.domElement.tagName; }
 

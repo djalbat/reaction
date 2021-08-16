@@ -18,13 +18,13 @@ const Comment = React.createClass({
   componentDidMount: function() {
     const message = this.props.message;
 
-    console.log("Comment mounted with message: " + message)
+    console.log(`Comment mounted with message: '${message}'.`)
   },
 
   componentWillUnmount: function() {
     const message = this.props.message;
 
-    console.log("Comment unmounted with message: " + message)
+    console.log(`Comment unmounted with message: '${message}'.`)
   }
 });
 

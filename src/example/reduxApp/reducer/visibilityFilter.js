@@ -10,6 +10,7 @@ export default function visibilityFilter(state = SHOW_ALL, action = {}) {
       const { visibilityFilter } = action;
 
       state = visibilityFilter;
+
       break;
   }
 

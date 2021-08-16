@@ -7,7 +7,7 @@ import TodoListItems from "./todoListItems";
 const TodoList = (props, context) =>
 
   <ul>
-    <TodoListItems />
+    <TodoListItems/>
   </ul>
 
 ;

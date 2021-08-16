@@ -2,7 +2,7 @@
 
 import { React } from "../../../index"; ///
 
-import { ADD_TODO } from "../constants";
+import { ADD_TODO, EMPTY_STRING } from "../constants";
 
 let id = 0,
     inputDOMElement;
@@ -33,7 +33,7 @@ const AddTodo = (props, context) => {
 
                 store.dispatch(action);
 
-                inputDOMElement.value = "";
+                inputDOMElement.value = EMPTY_STRING;
 
               }}
       >

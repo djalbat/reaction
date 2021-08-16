@@ -8,14 +8,16 @@ import reducer from "./reduxApp/reducer";
 import TodoApp from "./reduxApp/component/todoApp";
 import Provider from "./reduxApp/component/provider";
 
+import { ROOT } from "./reduxApp/constants";
+
 export default function reduxApp() {
   const store = createStore(reducer),
-        rootDOMElement = document.getElementById("root");
+        rootDOMElement = document.getElementById(ROOT);
 
   ReactDOM.render(
 
       <Provider store={store}>
-        <TodoApp />
+        <TodoApp/>
       </Provider>
 
     ,

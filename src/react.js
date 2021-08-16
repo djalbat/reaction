@@ -12,6 +12,7 @@ import VirtualDOMSVGElement from "./element/virtualDOMNode/element/svg";
 
 import { flatten } from "./utilities/array";
 import { isSVGTagName } from "./utilities/name";
+import { STRING, FUNCTION } from "./constants";
 
 function createClass(object) {
   return ReactClass.create(object);
@@ -28,7 +29,7 @@ function createElement(firstArgument, properties, ...remainingArguments) {
 
     if (false) {
       ///
-    } else if (typeof firstArgument === "string") {
+    } else if (typeof firstArgument === STRING) {
       const tagName = firstArgument,  ///
             virtualDOMElement = isSVGTagName(tagName) ?
                                   new VirtualDOMSVGElement(tagName, props) :
@@ -52,7 +53,7 @@ function createElement(firstArgument, properties, ...remainingArguments) {
       element = reactComponentElement;  ///
 
       assignReactComponentMixins(ReactComponent, element);
-    } else if (typeof firstArgument === "function") {
+    } else if (typeof firstArgument === FUNCTION) {
       const reactFunction = firstArgument,  ///
             reactFunctionElement = new ReactFunctionElement(reactFunction, props);
 
