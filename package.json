@@ -1,7 +1,7 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "2.2.56",
+  "version": "2.2.57",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/reaction",
   "description": "An alternative implementation of React.",
@@ -20,7 +20,7 @@
   "scripts": {
     "start": "node ./bin/main.js",
     "clean": "rm -rf ./lib",
-    "watchful": "watchful -m --transpiler=swc --bundler=esbuild --source-directory=./src --lib-directory=./lib --entry-file=examples.js --bundle-file=./examples.js --pause=100",
+    "watchful": "watchful -m --transpiler=swc --bundler=esbuild --source-directory=./src --lib-directory=./lib --entry-file=examples.js --bundle-file=./examples.js --wait=100",
     "batch": "npm run watchful batch --",
     "batch-debug": "npm run watchful batch -- --debug",
     "incremental": "npm run watchful incremental --",
