@@ -8,36 +8,6 @@ For clarity. The code base is tiny compared to React but React's core functional
 
 If you like Reaction you might like [Reaction with Style](https://github.com/djalbat/reaction-with-style).
 
-## Reverse Engineering React
-
-There is a series of complementary videos:
-
-**[Reverse Engineering React](https://vimeo.com/album/3930691)**
-
-#### Corrigenda
-
-- The `examples.html` file has moved to `index.html`.
-- The `examples` directory in the `es6` directory has been renamed to `example`.
-- The `toArray()` helper method is now called `guaranteeArray()`.
-- The `index` variable in the `indexOf()` helper method is now initially set to `null`.
-- The `remount()` method of the `ReactElement` should call the `getChildContext()` method.
-- The `libES2015` directories in both the root and `examples` directories have been renamed `es6`.
-- All children can now be arrays of elements, not just the first.
-- Component state has been put back by popular demand.
-- The examples have been moved to the `es6` folder.
-- The helpers file has been replaced with an array utilities file.
-- In the examples, the static `run()` methods and spurious classes have been replaced with functions.
-- The `reduxApp` example can now be [found elsewhere](https://github.com/djalbat/Inference/blob/master/es6/examples/reduxApp.js), split up into separate files and tidied up considerably.
-- The dependency on [Redux](https://github.com/reactjs/redux) has been replaced with a [barebones, local implementation](https://github.com/djalbat/Reaction/blob/master/es6/examples/redux.js).
-- All instances of `var` have been replaced with either `const` or `let`.
-- The `FilterLink` has been made into a `ReactClass` in order to give a usage example.
-- The `React.createElement()` method has been further streamlined.
-- The element classes have been reorganised, please see the source.
-- Support for Inference has been added, again please see the source.
-- Contexts are now handled slightly differently. Please see the section below.
-- More ES6 and some experimental syntax has been adopted, for example ES6 imports and exports.
-- The Redux example application has now been split up into separate files.
-
 ## Installation
 
 With [npm](https://www.npmjs.com/):
