@@ -200,7 +200,7 @@ You can also start a small development server:
 
     npm start
 
-The example will then be available at http://localhost:8888/ and will reload automatically when changes are made.
+The example will then be available at http://localhost:8888 and will reload automatically when changes are made.
 
 ## Acknowledgements
 
