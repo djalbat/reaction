@@ -54,9 +54,9 @@ function clearClasses() { this.domElement.className = EMPTY_STRING; }
 
 function getTagName() { return this.domElement.tagName; }
 
-function setStyle(name, value) {
-  this.domElement.style[name] = value;
-}
+function getStyle() { return this.domElement.style[name]; }
+
+function setStyle(name, value) { this.domElement.style[name] = value; }
 
 export default {
   setAttribute,
@@ -73,5 +73,6 @@ export default {
   hasClasses,
   clearClasses,
   getTagName,
+  getStyle,
   setStyle
 };

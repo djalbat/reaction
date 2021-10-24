@@ -82,6 +82,12 @@ function getTagName() {
   return null;  ///
 }
 
+function getStyle(name) {
+  const firstChild = this.getFirstChild();
+
+  return firstChild.getStyle(name);
+}
+
 function setStyle(name, value) {
   const firstChild = this.getFirstChild();
 
@@ -103,5 +109,6 @@ export default {
   hasClasses,
   clearClasses,
   getTagName,
+  getStyle,
   setStyle
 };

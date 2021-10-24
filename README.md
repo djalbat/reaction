@@ -86,6 +86,7 @@ These methods can be called against any element bar text elements, except for th
 - `clearClasses()`
 - `getTagName()`
 - `setStyle(name, value)`
+- `getStyle()`
 - `getText()`
 - `setText(text)`
 
