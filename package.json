@@ -1,7 +1,7 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "2.2.65",
+  "version": "2.2.66",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/reaction",
   "description": "An alternative implementation of React.",
@@ -14,7 +14,7 @@
     "@swc/core": "^1.2.50",
     "esbuild": "^0.9.2",
     "express": "^4.17.1",
-    "lively-cli": "^2.0.17",
+    "lively-cli": "^2.0.19",
     "watchful-cli": "^1.7.10"
   },
   "scripts": {
