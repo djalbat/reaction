@@ -47,10 +47,12 @@ function createElement(firstArgument, properties, ...remainingArguments) {
       assignMixins(mixins, element);
     } else if (isSubclassOf(firstArgument, ReactComponent)) {
       const ReactComponent = firstArgument,  ///
-            reactComponent = new ReactComponent(),
-            reactComponentElement = new ReactComponentElement(reactComponent, props);
+            reactComponent = new ReactComponent(props);
+            // reactComponentElement = new ReactComponentElement(reactComponent, props);*/
 
-      element = reactComponentElement;  ///
+      // element = reactComponentElement;  ///
+
+      element = reactComponent; ///
 
       assignReactComponentMixins(ReactComponent, element);
     } else if (typeof firstArgument === FUNCTION) {
@@ -99,13 +101,13 @@ function childrenFromRemainingArguments(remainingArguments) {
 }
 
 function assignReactComponentMixins(reactComponent, element) {
-  const { mixins } = reactComponent;
-
   reactComponent = Object.getPrototypeOf(reactComponent); ///
 
   if (reactComponent !== ReactComponent) {
     assignReactComponentMixins(reactComponent, element);
   }
+
+  const { mixins } = reactComponent;
 
   assignMixins(mixins, element);
 }
