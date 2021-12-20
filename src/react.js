@@ -101,19 +101,17 @@ function childrenFromRemainingArguments(remainingArguments) {
 }
 
 function assignReactComponentMixins(ReactComponentSubClass, element) {
+  const { mixins } = ReactComponentSubClass;
+
   const ReactComponentSubClassPrototype = Object.getPrototypeOf(ReactComponentSubClass); ///
 
-  if (ReactComponentSubClassPrototype === ReactComponent) {
-    const { mixins } = ReactComponentSubClass;
+  if (ReactComponentSubClassPrototype !== ReactComponent) {
+    ReactComponentSubClass = ReactComponentSubClassPrototype; ///
 
-    assignMixins(mixins, element);
-
-    return;
+    assignReactComponentMixins(ReactComponentSubClass, element);
   }
 
-  ReactComponentSubClass = ReactComponentSubClassPrototype; ///
-
-  assignReactComponentMixins(ReactComponentSubClass, element);
+  assignMixins(mixins, element);
 }
 
 function assignMixins(mixins, element) {
