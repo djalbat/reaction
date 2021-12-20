@@ -46,15 +46,15 @@ function createElement(firstArgument, properties, ...remainingArguments) {
 
       assignMixins(mixins, element);
     } else if (isSubclassOf(firstArgument, ReactComponent)) {
-      const ReactComponent = firstArgument,  ///
-            reactComponent = new ReactComponent(props);
+      const ReactComponentSubClass = firstArgument,  ///
+            reactComponent = new ReactComponentSubClass(props);
             // reactComponentElement = new ReactComponentElement(reactComponent, props);*/
 
       // element = reactComponentElement;  ///
 
       element = reactComponent; ///
 
-      assignReactComponentMixins(ReactComponent, element);
+      assignReactComponentMixins(ReactComponentSubClass, element);
     } else if (typeof firstArgument === FUNCTION) {
       const reactFunction = firstArgument,  ///
             reactFunctionElement = new ReactFunctionElement(reactFunction, props);
@@ -100,16 +100,20 @@ function childrenFromRemainingArguments(remainingArguments) {
   return children;
 }
 
-function assignReactComponentMixins(reactComponent, element) {
-  reactComponent = Object.getPrototypeOf(reactComponent); ///
+function assignReactComponentMixins(ReactComponentSubClass, element) {
+  const ReactComponentSubClassPrototype = Object.getPrototypeOf(ReactComponentSubClass); ///
 
-  if (reactComponent !== ReactComponent) {
-    assignReactComponentMixins(reactComponent, element);
+  if (ReactComponentSubClassPrototype === ReactComponent) {
+    const { mixins } = ReactComponentSubClass;
+
+    assignMixins(mixins, element);
+
+    return;
   }
 
-  const { mixins } = reactComponent;
+  ReactComponentSubClass = ReactComponentSubClassPrototype; ///
 
-  assignMixins(mixins, element);
+  assignReactComponentMixins(ReactComponentSubClass, element);
 }
 
 function assignMixins(mixins, element) {
