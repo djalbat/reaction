@@ -1,6 +1,7 @@
 "use strict";
 
 export const FOR = "for";
+export const REF = "ref";
 export const CLASS = "class";
 export const STRING = "string";
 export const OBJECT = "object";

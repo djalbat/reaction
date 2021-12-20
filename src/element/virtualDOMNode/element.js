@@ -4,6 +4,8 @@ import VirtualDOMNode from "../virtualDOMNode";
 
 import virtualDOMElementMixins from "../../mixins/virtualDOMElement";
 
+import { REF } from "../../constants";
+
 class VirtualDOMElement extends VirtualDOMNode {
   mount(parent, reference, context) {
     super.mount(parent, reference);
@@ -39,7 +41,7 @@ class VirtualDOMElement extends VirtualDOMNode {
         this.setHandler(name, value);
       } else if (this.isAttributeName(name)) {
         this.setAttribute(name, value);
-      } else if (name === "ref") {
+      } else if (name === REF) {
         const callback = value; ///
         
         callback(this.domElement);
@@ -55,7 +57,7 @@ class VirtualDOMElement extends VirtualDOMNode {
   }
 
 	isHandlerName(name) {
-		return name.match(/^on/);
+		return /^on/.test(name);
 	}
 }
 
