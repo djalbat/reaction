@@ -11,8 +11,8 @@ export default class FilterLink extends Component {
   //   updateHandler
   // ];
 
-  updateHandler(update) {
-    this.forceUpdate(update);
+  updateHandler() {
+    this.forceUpdate();
   }
 
   componentDidMount() {
@@ -65,6 +65,6 @@ export default class FilterLink extends Component {
   }
 }
 
-// function updateHandler(update) {
-//   this.forceUpdate(update);
+// function updateHandler() {
+//   this.forceUpdate();
 // }
