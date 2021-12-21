@@ -5,7 +5,7 @@ import ReactClass from "./reactClass";
 import ReactComponent from "./reactComponent";
 import ReactClassElement from "./element/react/class";
 import ReactFunctionElement from "./element/react/function";
-import ReactComponentElement from "./element/react/component";
+// import ReactComponentElement from "./element/react/component";
 import VirtualDOMTextElement from "./element/virtualDOMNode/textElement";
 import VirtualDOMHTMLElement from "./element/virtualDOMNode/element/html";
 import VirtualDOMSVGElement from "./element/virtualDOMNode/element/svg";
