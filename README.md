@@ -117,9 +117,7 @@ Object.assign(ExampleComponent, {
   ]
 });
 ```
-
 ...or, equivalently, use static class fields:
-
 ```
 class ExampleComponent extends Component {
   static mixins = [
@@ -128,7 +126,6 @@ class ExampleComponent extends Component {
   ]
 }
 ```
-
 When calling the `React.createClass()` method you should add a `mixin` property to the plain old JavaScript object that you pass in:
 ```
 const exampleComponent = React.createClass({
@@ -140,14 +137,11 @@ const exampleComponent = React.createClass({
   ]
 });
 ```
-What defines mixins is that they are bound to the corresponding *element* class and not the component class. This means that you may safely call them from within lifecycle methods, which if not bound to the element class are nonetheless always called against it.
-
-Whilst you should not use mixins to get around the fact that it is not always wise to extend component classes, there is nothing wrong with their judicious use. All of the methods listed in the additional functionality section above can be called directly from mixins, for example.
+You can safely call mixins from within lifecycle methods and there is nothing wrong with their judicious use.
 
 ## Component methods
 
 Reaction now supports component methods, in line with React, making mixins redundant in the case of extending the `Component` class. For example, instead of...
-
 ```
 class ExampleComponent extends Component {
   static mixins = [
@@ -164,9 +158,7 @@ function collapse() {
   ...
 }
 ```
-
 ...the following will do:
-
 ```
 class ExampleComponent extends Component {
   expand() {
@@ -178,7 +170,6 @@ class ExampleComponent extends Component {
   }
 }
 ```
-
 Note that mixins will continue to be supported for backwards compatibility. Note also that component methods can be invoked from mixins by way of the `this` keyword and vice versa.
 
 ## Contexts
