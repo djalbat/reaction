@@ -1,14 +1,14 @@
 "use strict";
 
-import Element from "./element";
 import ReactClass from "./reactClass";
 import ReactComponent from "./reactComponent";
-import ReactClassElement from "./element/react/class";
-import ReactFunctionElement from "./element/react/function";
-// import ReactComponentElement from "./element/react/component";
-import VirtualDOMTextElement from "./element/virtualDOMNode/textElement";
-import VirtualDOMHTMLElement from "./element/virtualDOMNode/element/html";
-import VirtualDOMSVGElement from "./element/virtualDOMNode/element/svg";
+import VirtualDOMElement from "./virtualDOMElement";
+
+import SVGElement from "./virtualDOM/container/element/svg";
+import TextElement from "./virtualDOM/container/textElement";
+import HTMLElement from "./virtualDOM/container/element/html";
+import ReactClassElement from "./virtualDOM/react/class";
+import ReactFunctionElement from "./virtualDOM/react/function";
 
 import { flatten } from "./utilities/array";
 import { isSVGTagName } from "./utilities/name";
@@ -30,12 +30,11 @@ function createElement(firstArgument, properties, ...remainingArguments) {
     if (false) {
       ///
     } else if (typeof firstArgument === STRING) {
-      const tagName = firstArgument,  ///
-            virtualDOMElement = isSVGTagName(tagName) ?
-                                  new VirtualDOMSVGElement(tagName, props) :
-                                    new VirtualDOMHTMLElement(tagName, props);
+      const tagName = firstArgument;  ///
 
-      element = virtualDOMElement ///
+      element = isSVGTagName(tagName) ?
+                  new SVGElement(tagName, props) :
+                    new HTMLElement(tagName, props);
     } else if (firstArgument instanceof ReactClass) {
       const reactClass = firstArgument, ///
             reactClassElement = new ReactClassElement(reactClass, props);
@@ -48,9 +47,6 @@ function createElement(firstArgument, properties, ...remainingArguments) {
     } else if (isSubclassOf(firstArgument, ReactComponent)) {
       const ReactComponentSubClass = firstArgument,  ///
             reactComponent = new ReactComponentSubClass(props);
-            // reactComponentElement = new ReactComponentElement(reactComponent, props);*/
-
-      // element = reactComponentElement;  ///
 
       element = reactComponent; ///
 
@@ -84,13 +80,13 @@ function childrenFromRemainingArguments(remainingArguments) {
     let child;
 
     if (childArgument) {  ///
-      if (isSubclassOf(childArgument.constructor, Element)) { ///
+      if (isSubclassOf(childArgument.constructor, VirtualDOMElement)) { ///
         child = childArgument;  ///
       } else {
         const text = childArgument, ///
-              virtualDOMTextElement = new VirtualDOMTextElement(text);
+              textElement = new TextElement(text);
 
-        child = virtualDOMTextElement;
+        child = textElement;
       }
 
       children.push(child);

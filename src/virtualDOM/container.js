@@ -1,8 +1,8 @@
 "use strict";
 
-import Element from "../element";
+import VirtualDOMElement from "../virtualDOMElement";
 
-export default class VirtualDOMNode extends Element {
+export default class ContainerElement extends VirtualDOMElement {
   constructor(props, domElement) {
     super(props);
     
@@ -34,7 +34,7 @@ export default class VirtualDOMNode extends Element {
           props = {
             children
           },
-          virtualDOMNode = new VirtualDOMNode(props, domElement);
+          virtualDOMNode = new ContainerElement(props, domElement);
 
     return virtualDOMNode;
   }

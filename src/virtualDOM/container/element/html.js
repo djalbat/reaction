@@ -1,10 +1,10 @@
 "use strict";
 
-import VirtualDOMElement from "../element";
+import Element from "../element";
 
 import { isHTMLAttributeName } from "../../../utilities/name";
 
-export default class VirtualDOMHTMLElement extends VirtualDOMElement {
+export default class HTMLElement extends Element {
   constructor(tagName, props) {
     const domElement = document.createElement(tagName);
 

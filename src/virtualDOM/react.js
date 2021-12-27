@@ -1,12 +1,11 @@
 "use strict";
 
-import Element from "../element";
-
+import VirtualDOMElement from "../virtualDOMElement";
 import reactElementMixins from "../mixins/reactElement";
 
 import { guarantee, remaining } from "../utilities/array";
 
-class ReactElement extends Element {
+class ReactElement extends VirtualDOMElement {
   constructor(props) {
     super(props);
     

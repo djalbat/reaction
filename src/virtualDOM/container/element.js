@@ -1,12 +1,11 @@
 "use strict";
 
-import VirtualDOMNode from "../virtualDOMNode";
-
-import virtualDOMElementMixins from "../../mixins/virtualDOMElement";
+import ContainerElement from "../container";
+import containerElementMixins from "../../mixins/containerElement";
 
 import { REF } from "../../constants";
 
-class VirtualDOMElement extends VirtualDOMNode {
+class Element extends ContainerElement {
   mount(parent, reference, context) {
     super.mount(parent, reference);
 
@@ -61,6 +60,6 @@ class VirtualDOMElement extends VirtualDOMNode {
 	}
 }
 
-Object.assign(VirtualDOMElement.prototype, virtualDOMElementMixins);
+Object.assign(Element.prototype, containerElementMixins);
 
-export default VirtualDOMElement;
+export default Element;

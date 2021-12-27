@@ -102,7 +102,7 @@ The `setState()` method will set the React element's state to the given state. T
 
 ## Mixins
 
-Mixins are supported for components, whether created by way of extending the `Component` class or by calling the `React.createClass()` method.
+Mixins are supported for components, whether created by way of extending the `Component` class or by calling the `React.createClass()` method. However, Reaction now supports component methods, in line with React, making mixins redundant in the case of extending the `Component` class. See the subsection immediately below for more details.
 
 When extending the `Component` class you can assign the mixins to the class...
 ```
@@ -131,7 +131,7 @@ class ExampleComponent extends Component {
 
 When calling the `React.createClass()` method you should add a `mixin` property to the plain old JavaScript object that you pass in:
 ```
-const exampleComponent React.createClass({
+const exampleComponent = React.createClass({
   ...
 
   mixins: [
@@ -143,6 +143,43 @@ const exampleComponent React.createClass({
 What defines mixins is that they are bound to the corresponding *element* class and not the component class. This means that you may safely call them from within lifecycle methods, which if not bound to the element class are nonetheless always called against it.
 
 Whilst you should not use mixins to get around the fact that it is not always wise to extend component classes, there is nothing wrong with their judicious use. All of the methods listed in the additional functionality section above can be called directly from mixins, for example.
+
+## Component methods
+
+Reaction now supports component methods, in line with React, making mixins redundant in the case of extending the `Component` class. For example, instead of...
+
+```
+class ExampleComponent extends Component {
+  static mixins = [
+    expand,
+    collapse
+  ]
+}
+
+function expand() {
+  ...
+}
+
+function collapse() {
+  ...
+}
+```
+
+...the following will do:
+
+```
+class ExampleComponent extends Component {
+  expand() {
+    ...
+  }
+    
+  collapse() {
+    ...
+  }
+}
+```
+
+Note that mixins will continue to be supported for backwards compatibility. Note also that component methods can be invoked from mixins by way of the `this` keyword and vice versa.
 
 ## Contexts
 

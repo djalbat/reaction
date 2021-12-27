@@ -1,6 +1,6 @@
 "use strict";
 
-import ReactElement from "./element/react";
+import ReactElement from "./virtualDOM/react";
 
 export default class ReactComponent extends ReactElement {
   constructor(props) {

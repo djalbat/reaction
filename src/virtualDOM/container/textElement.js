@@ -1,8 +1,8 @@
 "use strict";
 
-import VirtualDOMNode from "../virtualDOMNode";
+import ContainerElement from "../container";
 
-export default class VirtualDOMTextElement extends VirtualDOMNode {
+export default class TextElement extends ContainerElement {
   constructor(text) {
     const domElement = document.createTextNode(text),
           children = [],

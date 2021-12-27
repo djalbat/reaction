@@ -1,6 +1,6 @@
 "use strict";
 
-import ReactElement from "../../element/react";
+import ReactElement from "../react";
 
 export default class ReactFunctionElement extends ReactElement {
   constructor(reactFunction, props) {

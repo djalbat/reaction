@@ -2,7 +2,7 @@
 
 import { first } from "./utilities/array";
 
-export default class Element {
+export default class VirtualDOMElement {
   constructor(props) {
     this.props = props;
 
