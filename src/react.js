@@ -2,10 +2,8 @@
 
 import ReactClass from "./reactClass";
 import ReactComponent from "./reactComponent";
-import VirtualDOMElement from "./virtualDOMElement";
 
 import SVGElement from "./virtualDOM/container/element/svg";
-import TextElement from "./virtualDOM/container/textElement";
 import HTMLElement from "./virtualDOM/container/element/html";
 import ReactClassElement from "./virtualDOM/react/class";
 import ReactFunctionElement from "./virtualDOM/react/function";
@@ -13,19 +11,21 @@ import ReactFunctionElement from "./virtualDOM/react/function";
 import { flatten } from "./utilities/array";
 import { isSVGTagName } from "./utilities/name";
 import { STRING, FUNCTION } from "./constants";
+import { removeFalseyChildren, replaceStringsWithTextChildren } from "./utilities/sanitiise";
 
 function createClass(object) {
   return ReactClass.create(object);
 }
 
-function createElement(firstArgument, properties, ...remainingArguments) {
+function createElement(firstArgument, properties, ...children) {
   let element = null;
 
   if (firstArgument !== undefined) {
-    const children = childrenFromRemainingArguments(remainingArguments),
-          props = Object.assign({}, properties, {
-            children
-          });
+    children = sanitiseChildren(children);
+
+    const props = Object.assign({}, properties, {
+      children
+    });
 
     if (false) {
       ///
@@ -71,27 +71,12 @@ const Component = ReactComponent, ///
 
 export default React;
 
-function childrenFromRemainingArguments(remainingArguments) {
-  remainingArguments = flatten(remainingArguments); ///
+function sanitiseChildren(children) {
+  children = flatten(children);
 
-  const children = [];
+  children = removeFalseyChildren(children);
 
-  remainingArguments.forEach((childArgument) => {
-    let child;
-
-    if (childArgument) {  ///
-      if (isSubclassOf(childArgument.constructor, VirtualDOMElement)) { ///
-        child = childArgument;  ///
-      } else {
-        const text = childArgument, ///
-              textElement = new TextElement(text);
-
-        child = textElement;
-      }
-
-      children.push(child);
-    }
-  });
+  children = replaceStringsWithTextChildren(children);
 
   return children;
 }
