@@ -105,16 +105,16 @@ function assignMixins(mixins, element) {
   }
 }
 
-function isSubclassOf(argument, Class) {
+function isSubclassOf(ClassA, ClassB) {
   let subclass = false;
 
-  if (argument.name === Class.name) { ///
+  if (ClassA.name === ClassB.name) { ///
     subclass = true;
   } else {
-    argument = Object.getPrototypeOf(argument); ///
+    ClassA = Object.getPrototypeOf(ClassA); ///
 
-    if (argument !== null) {
-      subclass = isSubclassOf(argument, Class);
+    if (ClassA !== null) {
+      subclass = isSubclassOf(ClassA, ClassB);
     }
   }
 
