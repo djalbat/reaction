@@ -7,10 +7,6 @@ export default class ReactFunctionElement extends ReactElement {
     super(props);
 
     this.reactFunction = reactFunction;
-
-
-
-
   }
  
   render(update) {
