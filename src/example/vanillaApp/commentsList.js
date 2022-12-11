@@ -22,8 +22,7 @@ const CommentsList = React.createClass({
   },
 
   render: function(update) {
-    const state = this.getState(),
-          { messages } = state,
+    const { messages } = this.getState(),
           comments = messages.map((message) =>
 
             <Comment message={message} />
