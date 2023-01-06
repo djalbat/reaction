@@ -1,6 +1,6 @@
 MIT And Anti-996 Licenses
 
-Copyright (c) 2019 James Smith
+Copyright (c) 2023 James Smith
 
 These licenses shall be included in all copies or substantial portions of
 this software and associated documentation files (the "Software").
