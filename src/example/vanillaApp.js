@@ -5,7 +5,7 @@ import ReactDOM from "../reactDOM";
 
 import CommentsList from "./vanillaApp/commentsList";
 
-import { ROOT, TIMEOUT } from "./vanillaApp/constants";
+import { ROOT, DELAY } from "./vanillaApp/constants";
 
 export default function vanillaApp() {
   const commentsList =
@@ -29,5 +29,5 @@ export default function vanillaApp() {
           };
 
     commentsList.setState(state);
-  }, TIMEOUT);
+  }, DELAY);
 };
