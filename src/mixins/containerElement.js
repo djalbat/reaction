@@ -48,7 +48,13 @@ function toggleClass(className) { this.domElement.classList.toggle(className); }
 
 function hasClass(className) { return this.domElement.classList.contains(className); }
 
-function hasClasses(classNames) { return classNames.every((className) => this.hasClass(className)); }
+function hasClasses(classNames) {
+  return classNames.every((className) => {
+    if (this.hasClass(className)) {
+      return true;
+    }
+  });
+}
 
 function clearClasses() { this.domElement.className = EMPTY_STRING; }
 

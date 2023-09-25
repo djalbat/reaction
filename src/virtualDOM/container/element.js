@@ -14,7 +14,9 @@ class Element extends ContainerElement {
           childContext = context,
           children = this.getChildren();
 
-    children.forEach((child) => child.mount(childParent, childReference, childContext));
+    children.forEach((child) => {
+      child.mount(childParent, childReference, childContext);
+    });
 
     this.applyProps();
   }
@@ -23,7 +25,9 @@ class Element extends ContainerElement {
     const childContext = context,
           children = this.getChildren();
 
-    children.forEach((child) => child.unmount(childContext));
+    children.forEach((child) => {
+      child.unmount(childContext);
+    });
 
     super.unmount();
   }

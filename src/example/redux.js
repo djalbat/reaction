@@ -11,7 +11,9 @@ const createStore = (reducer) => {
   const dispatch = (action) => {
     state = reducer(state, action);
 
-    listeners.forEach((listener) => listener());
+    listeners.forEach((listener) => {
+      listener();
+    });
   };
 
   const subscribe = (listener) => {
@@ -24,7 +26,9 @@ const createStore = (reducer) => {
 
   const unsubscribe = (l) => {
     listeners = listeners.filter((listener) => {
-      return (listener !== l);
+      if (listener !== l) {
+        return true;
+      }
     });
   };
 

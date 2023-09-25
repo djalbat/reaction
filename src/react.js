@@ -20,7 +20,7 @@ function createClass(object) {
 function createElement(firstArgument, properties, ...children) {
   let element = null;
 
-  if (firstArgument !== undefined) {
+  if (firstArgument) {
     children = sanitiseChildren(children);
 
     const props = Object.assign({}, properties, {
