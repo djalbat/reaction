@@ -17,8 +17,9 @@ class ReactElement extends VirtualDOMElement {
   mount(parent, reference, context) {
     this.context = context;
 
-    const childContext = this.getChildContext(context),
-          children = guarantee(this.render());
+    const update = null,
+          childContext = this.getChildContext(context),
+          children = guarantee(this.render(update, this));
 
     super.mount(parent, children);
 
@@ -56,7 +57,7 @@ class ReactElement extends VirtualDOMElement {
       child.unmount(childContext);
     });
 
-    this.children = guarantee(this.render(update));
+    this.children = guarantee(this.render(update, this));
 
     this.children.forEach((child) => {
       child.mount(childParent, childReference, childContext);

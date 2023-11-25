@@ -1,13 +1,13 @@
 "use strict";
 
-import {useState} from "../../../hooks";
+import { useState } from "../../../hooks";
 
-const { createClass } = React;
+const { Component } = React;
 
 let initialCount = 0;
 
-export const ClassUseStateParagraph = createClass({
-  render: function(update, element) {
+export class ComponentUseStateParagraph extends Component {
+  render(update, element) {
     const [ count, setCount ] = useState(initialCount, element);
 
     return (
@@ -18,4 +18,4 @@ export const ClassUseStateParagraph = createClass({
 
     );
   }
-});
+}
