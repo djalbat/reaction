@@ -1,6 +1,6 @@
 "use strict";
 
-import {useState} from "../../../hooks";
+import { useState } from "../../../hooks";
 
 const { createClass } = React;
 
