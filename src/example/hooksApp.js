@@ -1,7 +1,8 @@
 "use strict";
 
-import React from "../react";
 import ReactDOM from "../reactDOM";
+
+import "./hooksApp/preamble";
 
 import View from "./hooksApp/view";
 
