@@ -4,7 +4,7 @@ import { useState } from "../../../hooks";
 
 const initialCount = 0;
 
-const UseStateParagraph = (props, context, element) => {
+export const FunctionUseStateParagraph = (props, context, element) => {
   const [ count, setCount ] = useState(initialCount, element);
 
   return (
@@ -15,5 +15,3 @@ const UseStateParagraph = (props, context, element) => {
 
   );
 };
-
-export default UseStateParagraph;

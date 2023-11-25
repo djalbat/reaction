@@ -2,7 +2,9 @@
 
 import React from "../../react";
 
-const Comment = React.createClass({
+const { createClass } = React;
+
+const Comment = createClass({
   render: function(update) {
     return (
 

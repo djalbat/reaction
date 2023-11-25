@@ -2,14 +2,16 @@
 
 const { Component } = React;
 
-import UseStateParagraph from "./paragraph/useState";
+import { ClassUseStateParagraph } from "./useState/class";
+import { FunctionUseStateParagraph } from "./useState/function";
 
 export default class View extends Component {
   render(update) {
     return (
 
       <div className="view">
-        <UseStateParagraph/>
+        <ClassUseStateParagraph/>
+        <FunctionUseStateParagraph/>
       </div>
 
     );

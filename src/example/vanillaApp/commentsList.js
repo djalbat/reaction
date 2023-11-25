@@ -4,7 +4,9 @@ import React from "../../react";
 
 import Comment from "./comment";
 
-const CommentsList = React.createClass({
+const { createClass } = React;
+
+const CommentsList = createClass({
   getInitialState() {
     const messages = [
             "Hello, world!",

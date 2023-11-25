@@ -14,7 +14,7 @@ export default class ReactClassElement extends ReactElement {
   }
 
   render(update) {
-    return this.reactClass.render.call(this, update);
+    return this.reactClass.render.call(this, update, this);
   }
 
   getInitialState() {
