@@ -23,3 +23,7 @@ export function useState(initialState, element) {
     element.remount(update);
   }]);
 }
+
+export default {
+  useState
+};
