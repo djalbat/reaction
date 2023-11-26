@@ -18,6 +18,8 @@ export function useState(initialState, element) {
 
     elementToStateWeakMap.set(element, state);
 
-    element.remount();
+    const update = null;
+
+    element.remount(update);
   }]);
 }

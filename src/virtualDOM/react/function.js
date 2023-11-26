@@ -10,7 +10,7 @@ export default class ReactFunctionElement extends ReactElement {
   }
  
   render(update) {
-    return this.reactFunction(this.props, this.context, this);
+    return this.reactFunction(this.props, this.context, update, this);
   }
 
   getInitialState() {
