@@ -19,13 +19,17 @@ export default class ReactClass {
   getChildContext(context) {
     return context;
   }
-  
-  componentDidMount() {
 
+  childContextSet(context) {
+    ///
+  }
+
+  componentDidMount() {
+    ///
   }
 
   componentWillUnmount() {
-
+    ///
   }
 
   static create(object) {

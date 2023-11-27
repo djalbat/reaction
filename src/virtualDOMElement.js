@@ -5,10 +5,12 @@ import { first } from "./utilities/array";
 export default class VirtualDOMElement {
   constructor(props) {
     this.props = props;
-
     this.parent = null;
-
     this.children = props.children;  ///
+  }
+
+  getProps() {
+    return this.props;
   }
 
   getParent() {
@@ -27,13 +29,11 @@ export default class VirtualDOMElement {
 
   mount(parent, children) {
     this.parent = parent;
-
     this.children = children;
   }
 
   unmount() {
     this.parent = null;
-
     this.children = null;
   }
 }

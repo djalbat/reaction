@@ -14,6 +14,10 @@ export default class Provider extends Component {
     return childContext;
   }
 
+  childContextSet(context) {
+    ///
+  }
+
   render() {
     const { children } = this.props;
 

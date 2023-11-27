@@ -10,16 +10,57 @@ class ReactElement extends VirtualDOMElement {
     super(props);
     
     this.state = null;
-
     this.context = null;
+  }
+
+  getState() {
+    return this.state;
+  }
+
+  getContext() {
+    return this.context;
+  }
+
+  getDOMElement() {
+    return null;
+  }
+
+  getChildReference() {
+    const parent = this.getParent(),
+          child = this; ///
+
+    return reference(parent, child);
+  }
+
+  setState(state) {
+    this.state = state;
+
+    this.redraw();
+  }
+
+  updateState(state) {
+    const oldState = this.state,  ///
+      newState = state; ///
+
+    this.state = Object.assign(oldState, newState);
+
+    this.redraw();
+  }
+
+  setInitialState(initialState) {
+    this.state = initialState;  ///
+  }
+
+  forceUpdate(update) {
+    this.redraw(update);
   }
 
   mount(parent, reference, context) {
     this.context = context;
 
     const update = null,
-          childContext = this.getChildContext(context),
-          children = guarantee(this.render(update, this));
+          children = guarantee(this.render(update, this)),
+          childContext = this.getChildContext(context);
 
     super.mount(parent, children);
 
@@ -30,6 +71,8 @@ class ReactElement extends VirtualDOMElement {
       child.mount(childParent, childReference, childContext);
     });
 
+    this.childContextSet(context);
+
     this.componentDidMount();
   }
 
@@ -38,20 +81,22 @@ class ReactElement extends VirtualDOMElement {
 
     this.componentWillUnmount();
 
-    const childContext = this.getChildContext(context),
-          children = this.getChildren();
+    const children = this.getChildren(),
+          childContext = this.getChildContext(context);
 
     children.forEach((child) => {
       child.unmount(childContext);
     });
 
+    this.childContextSet(context);
+
     super.unmount();
   }
 
-  remount(update) {
+  redraw(update) {
     const childParent = this,
-          childReference = this.getChildReference(),
-          childContext = this.getChildContext(this.context);
+          childContext = this.getChildContext(this.context),
+          childReference = this.getChildReference();
 
     this.children.forEach((child) => {
       child.unmount(childContext);
@@ -62,43 +107,8 @@ class ReactElement extends VirtualDOMElement {
     this.children.forEach((child) => {
       child.mount(childParent, childReference, childContext);
     });
-  }
 
-  getDOMElement() {
-    return null;
-  }
-
-  getState() {
-    return this.state;
-  }
-
-  setInitialState(initialState) {
-    this.state = initialState;  ///
-  }
-
-  setState(state) {
-    this.state = state;
-
-    this.remount();
-  }
-
-  updateState(newState) {
-    const oldState = this.state;  ///
-
-    this.state = Object.assign(oldState, newState);
-
-    this.remount();
-  }
-
-  forceUpdate(update) {
-    this.remount(update);
-  }
-
-  getChildReference() {
-    const parent = this.getParent(),
-          child = this; ///
-
-    return reference(parent, child);
+    this.childContextSet(this.context);
   }
 }
 
