@@ -20,7 +20,7 @@ export default class ReactClass {
     return context;
   }
 
-  childContextSet(context) {
+  childContextSet(childContext) {
     ///
   }
 

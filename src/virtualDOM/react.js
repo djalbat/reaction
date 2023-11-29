@@ -72,7 +72,7 @@ class ReactElement extends VirtualDOMElement {
       child.mount(childParent, childReference, childContext);
     });
 
-    this.childContextSet(context);
+    this.childContextSet(childContext);
 
     this.componentDidMount();
   }
@@ -90,7 +90,7 @@ class ReactElement extends VirtualDOMElement {
       child.unmount(childContext);
     });
 
-    this.childContextSet(context);
+    this.childContextSet(childContext);
 
     super.unmount();
   }
@@ -110,7 +110,7 @@ class ReactElement extends VirtualDOMElement {
       child.mount(childParent, childReference, childContext);
     });
 
-    this.childContextSet(this.context);
+    this.childContextSet(childContext);
   }
 }
 

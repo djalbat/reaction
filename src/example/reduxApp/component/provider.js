@@ -14,7 +14,7 @@ export default class Provider extends Component {
     return childContext;
   }
 
-  childContextSet(context) {
+  childContextSet(childContext) {
     ///
   }
 

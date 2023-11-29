@@ -21,7 +21,7 @@ export default class ReactFunctionElement extends ReactElement {
     return context;
   }
 
-  childContextSet(context) {
+  childContextSet(childContext) {
     ///
   }
 

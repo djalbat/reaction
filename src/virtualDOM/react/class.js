@@ -25,8 +25,8 @@ export default class ReactClassElement extends ReactElement {
     return this.reactClass.getChildContext.call(this, context);
   }
 
-  childContextSet(context) {
-    this.reactClass.childContextSet.call(this, context);
+  childContextSet(childContext) {
+    this.reactClass.childContextSet.call(this, childContext);
   }
 
   componentDidMount() {

@@ -19,7 +19,7 @@ export default class ReactComponent extends ReactElement {
     return context;
   }
 
-  childContextSet(context) {
+  childContextSet(childContext) {
     ///
   }
 
