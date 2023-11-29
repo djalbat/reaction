@@ -2,6 +2,10 @@
 
 import { FOR, CLASS, OBJECT, BOOLEAN, CLASS_NAME, HTML_FOR, EMPTY_STRING } from "../constants";
 
+function on(eventType, handler) { this.domElement.addEventListener(eventType, handler); } ///
+
+function off(eventType, handler) { this.domElement.removeEventListener(eventType, handler); }
+
 function setAttribute(name, value) {
   if (name === CLASS_NAME) {
     name = CLASS;
@@ -65,6 +69,8 @@ function getStyle(name) { return this.domElement.style[name]; }
 function setStyle(name, value) { this.domElement.style[name] = value; }
 
 export default {
+  on,
+  off,
   setAttribute,
   getAttribute,
   clearAttribute,

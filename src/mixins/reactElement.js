@@ -2,6 +2,18 @@
 
 
 
+function on(eventType, handler) {
+  const firstChild = this.getFirstChild();
+
+  return firstChild.on(eventType, handler);
+}
+
+function off(eventType, handler) {
+  const firstChild = this.getFirstChild();
+
+  return firstChild.off(eventType, handler);
+}
+
 function setAttribute(name, value) {
   const firstChild = this.getFirstChild();
 
@@ -97,6 +109,8 @@ function setStyle(name, value) {
 }
 
 export default {
+  on,
+  off,
   setAttribute,
   getAttribute,
   clearAttribute,
