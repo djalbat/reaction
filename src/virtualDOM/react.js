@@ -40,7 +40,7 @@ class ReactElement extends VirtualDOMElement {
 
   updateState(state) {
     const oldState = this.state,  ///
-      newState = state; ///
+          newState = state; ///
 
     this.state = Object.assign(oldState, newState);
 
@@ -77,36 +77,31 @@ class ReactElement extends VirtualDOMElement {
     this.componentDidMount();
   }
 
-  unmount(context) {
-    this.context = context;
-
+  unmount() {
     this.componentWillUnmount();
-
-    const childContext = this.getChildContext(context) || null;
 
     const children = this.getChildren();
 
     children.forEach((child) => {
-      child.unmount(childContext);
+      child.unmount();
     });
-
-    this.childContextSet(childContext);
 
     super.unmount();
   }
 
   redraw(update) {
-    const childParent = this,
-          childContext = this.getChildContext(this.context) || null,
-          childReference = this.getChildReference();
+    const childContext = this.getChildContext(this.context) || null;
 
     this.children.forEach((child) => {
-      child.unmount(childContext);
+      child.unmount();
     });
 
     this.children = guarantee(this.render(update, this));
 
     this.children.forEach((child) => {
+      const childParent = this,
+            childReference = this.getChildReference();
+
       child.mount(childParent, childReference, childContext);
     });
 
