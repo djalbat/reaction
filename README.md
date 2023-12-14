@@ -4,9 +4,9 @@ An alternative implementation of [React](https://facebook.github.io/react/).
 
 ## Why?
 
-For clarity. The code base is tiny compared to React but React's core functionality is nonetheless implemented faithfully, as far as it goes. It led to a greater appreciation of React. There is now also [Inference](https://github.com/djalbat/Inference) to go hand in hand with Reaction.
+For clarity. The code base is tiny compared to React but React's core functionality is nonetheless implemented faithfully, as far as it goes. It led to a greater appreciation of React. There is also [Inference](https://github.com/djalbat/Inference) to go hand in hand with Reaction, although you may find the `useEffects()` hook just as useful.
 
-If you like Reaction you might like [Reaction with Style](https://github.com/djalbat/reaction-with-style).
+If you like Reaction you might like [Reaction with Style](https://github.com/djalbat/reaction-with-style) and you should also look at [Raction Hooks](https://github.com/djalbat/reaction-hooks).
 
 ## Installation
 
