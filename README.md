@@ -73,7 +73,7 @@ There is one additional lifecycle method:
 
 - `childContextSet()`
 
-For details see the [](https://github.com/djalbat/reaction-hooks) readme file.
+For details see the [Raction Hooks](https://github.com/djalbat/reaction-hooks) readme file.
 
 These methods can be called against any element bar text elements, except for the last two, which can only be called against text elements. The `getTagName()` method will return `null` for all but virtual DOM elements, namely those elements with an underlying DOM element.
 
