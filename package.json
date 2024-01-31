@@ -1,7 +1,7 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "4.0.47",
+  "version": "4.0.48",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/reaction",
   "description": "An alternative implementation of React.",
@@ -13,8 +13,8 @@
     "@swc/core": "^1.2.50",
     "esbuild": "^0.9.2",
     "express": "^4.17.1",
-    "lively-cli": "^2.0.51",
-    "watchful-cli": "^1.7.43"
+    "lively-cli": "^2.0.52",
+    "watchful-cli": "^1.7.44"
   },
   "scripts": {
     "start": "node ./bin/main.js",
