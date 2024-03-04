@@ -1,7 +1,6 @@
 "use strict";
 
-import React from "../react";
-import ReactDOM from "../reactDOM";
+import { React, ReactDOM } from "../index"; ///
 
 import CommentsList from "./vanillaApp/commentsList";
 

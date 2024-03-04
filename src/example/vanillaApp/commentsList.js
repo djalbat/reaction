@@ -1,8 +1,8 @@
 "use strict";
 
-import React from "../../react";
+import { React } from "../../index";  ///
 
-import Comment from "./comment";
+import CommentItem from "./commentItem";
 
 const { createClass } = React;
 
@@ -25,17 +25,17 @@ const CommentsList = createClass({
 
   render: function(update) {
     const { messages } = this.getState(),
-          comments = messages.map((message) =>
+          commentItems = messages.map((message) =>
 
-            <Comment message={message} />
+            <CommentItem message={message} />
 
           );
 
     return (
 
-      <div className="comments-list">
-        {comments}
-      </div>
+      <ul className="comments">
+        {commentItems}
+      </ul>
 
     );
   }

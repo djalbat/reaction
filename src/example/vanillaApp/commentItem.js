@@ -1,18 +1,18 @@
 "use strict";
 
-import React from "../../react";
+import { React } from "../../index";  ///
 
 const { createClass } = React;
 
-const Comment = createClass({
+const CommentItem = createClass({
   render: function(update) {
     return (
 
-      <div className="comment">
+      <li className="comment">
         <p>
           {this.props.message}
         </p>
-      </div>
+      </li>
 
     );
   },
@@ -20,14 +20,14 @@ const Comment = createClass({
   componentDidMount: function() {
     const message = this.props.message;
 
-    console.log(`Comment mounted with message: '${message}'.`)
+    console.log(`Comment item mounted with message: '${message}'.`)
   },
 
   componentWillUnmount: function() {
     const message = this.props.message;
 
-    console.log(`Comment unmounted with message: '${message}'.`)
+    console.log(`Comment item unmounted with message: '${message}'.`)
   }
 });
 
-export default Comment;
+export default CommentItem;
