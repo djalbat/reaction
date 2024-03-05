@@ -9,9 +9,7 @@ const CommentItem = createClass({
     return (
 
       <li className="comment">
-        <p>
-          {this.props.message}
-        </p>
+        {this.props.message}
       </li>
 
     );
