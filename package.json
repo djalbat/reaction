@@ -1,7 +1,7 @@
 {
   "name": "reaction",
   "author": "James Smith",
-  "version": "4.0.65",
+  "version": "4.0.67",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/reaction",
   "description": "An alternative implementation of React.",
@@ -29,5 +29,9 @@
     "watch": "npm run clean && npm run batch && npm run incremental",
     "watch-debug": "npm run clean && npm run batch-debug && npm run incremental-debug"
   },
+  "files": [
+    "src",
+    "lib"
+  ],
   "main": "./lib/index.js"
 }

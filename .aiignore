@@ -4,9 +4,10 @@ node_modules
 npm-debug.log
 package-lock.json
 
+lib
+example.js
+
 .git
 .swcrc
 .gitignore
-lib
 license.txt
-example.js
