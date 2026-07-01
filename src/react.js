@@ -35,7 +35,7 @@ function createElement(firstArgument, properties, ...children) {
       element = isSVGTagName(tagName) ?
                   new SVGElement(tagName, props) :
                     new HTMLElement(tagName, props);
-    } else if (firstArgument instanceof ReactClass) {
+    } else if (ReactClass.prototype.isPrototypeOf(firstArgument)) {
       const reactClass = firstArgument, ///
             reactClassElement = new ReactClassElement(reactClass, props);
 
@@ -44,7 +44,7 @@ function createElement(firstArgument, properties, ...children) {
       const { mixins } = reactClass;
 
       assignMixins(mixins, element);
-    } else if (isSubclassOf(firstArgument, ReactComponent)) {
+    } else if (ReactComponent.prototype.isPrototypeOf(firstArgument)) {
       const ReactComponentSubClass = firstArgument,  ///
             reactComponent = new ReactComponentSubClass(props);
 
@@ -103,10 +103,4 @@ function assignMixins(mixins, element) {
       element[name] = mixin.bind(element);
     });
   }
-}
-
-function isSubclassOf(argument, Class) {
-  const subclassOf = (argument.prototype instanceof Class);
-
-  return subclassOf;
 }
